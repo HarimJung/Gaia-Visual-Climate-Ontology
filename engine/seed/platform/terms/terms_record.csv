@@ -1,0 +1,11 @@
+term_code,label_ko,label_en,defined_in_doc,defined_in_clause,definition_verbatim,normalizes_to_class,normalizes_to_attribute,definition_group
+TERM-OBSERVED,관측,observed,record-runtime docs/DEFINITIONS.md,§ observed,"An observed value is read from bytes we hold, with the file, the fetch time and the SHA-256 hash recorded.",CLS-RECORD-VALUE,,DG-OBSERVED
+TERM-PLEDGED,약속,pledged,record-runtime docs/DEFINITIONS.md,§ pledged,"A pledged value is a stated intention read from a submitted document, not a measurement.",CLS-RECORD-VALUE,,DG-PLEDGED
+TERM-UNKNOWN,미상,unknown,record-runtime docs/DEFINITIONS.md,§ unknown,"An unknown value is one the runtime looked for and could not establish, and it always carries the reason in writing.",CLS-RECORD-VALUE,,DG-UNKNOWN
+TERM-ABSENT,부재,absent,record-runtime docs/DEFINITIONS.md,§ absent,"An absent value marks a socket the evidence says is genuinely empty, and it always carries the reason in writing.",CLS-RECORD-VALUE,,DG-ABSENT
+TERM-REFUSAL,거절,refusal,record-runtime docs/DEFINITIONS.md,§ refusal,"A refusal is a value left in state unknown or absent together with the written reason the runtime declined to fill it.",,ATTR-STATE-REASON,DG-REFUSAL
+TERM-RECEIPT,영수증,receipt,record-runtime docs/DEFINITIONS.md,§ receipt,"A receipt is the recorded ingest event for one fetch: which source answered, when, and the SHA-256 hash and size of the bytes received.",CLS-RECEIPT,,DG-RECEIPT
+TERM-ANCHOR,앵커,anchor,record-runtime docs/DEFINITIONS.md,§ anchor,"An anchor is a pointer into bytes we hold: a specific file copy plus the exact place inside it that a value or claim rests on.",CLS-ANCHOR,,DG-ANCHOR
+TERM-CLAIM,주장,claim,record-runtime docs/DEFINITIONS.md,§ claim,A claim is an authored sentence that cites one or more anchors by explicit anchor id.,CLS-CLAIM,,DG-CLAIM
+TERM-VERDICT,판정,verdict,record-runtime docs/DEFINITIONS.md,§ verdict,"A verdict is a human judgment recorded on one claim, and no machine ever produces one.",CLS-VERDICT,,DG-VERDICT
+TERM-CENSUS-KEY,센서스 키,census key,record-runtime docs/DEFINITIONS.md,§ census key,"A census key is a named counter computed at build time, and every number a published document or screen shows must link to one.",CLS-CENSUS-KEY,,DG-CENSUS

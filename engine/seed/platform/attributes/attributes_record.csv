@@ -1,0 +1,15 @@
+attribute_code,name_ko,name_en,datatype,unit_code,description_ko
+ATTR-ISO3,ISO3,ISO3,string,,ISO 3166-1 alpha-3 국가 코드
+ATTR-SHA256,SHA-256,SHA-256,string,,바이트의 SHA-256 해시
+ATTR-SIZE-BYTES,크기,Size,integer,UNIT-BYTE,바이트 단위 크기
+ATTR-PAGES,쪽수,Pages,integer,UNIT-PAGE,문서 전체 쪽수
+ATTR-URL,URL,URL,string,,수집 주소
+ATTR-RETRIEVED-AT,수집 시각,Retrieved at,dateTime,,바이트를 받은 시각
+ATTR-STALENESS-BUDGET-DAYS,최대 허용 나이,Staleness budget,integer,UNIT-DAY,소스의 최대 허용 나이
+ATTR-AS-OF,기준일,As of,date,,기록 기준일
+ATTR-SEMVER,시드 버전,Seed version,string,,빌드가 쓴 플랫폼 시드 semver
+ATTR-STATE-REASON,사유,State reason,string,,unknown·absent 상태의 이유 문장
+ATTR-PAGE-NO,쪽 번호,Page number,integer,UNIT-PAGE,앵커가 지목한 쪽
+ATTR-SENTENCE,인용 문장,Quoted sentence,string,,사람이 확정한 인용 문장
+ATTR-CELL-REF,셀 주소,Cell reference,string,,Sheet!Cell 표기의 셀 주소
+ATTR-CELL-LITERAL,셀 원문,Cell literal,string,,변환 없이 보관한 셀 원문

@@ -1,0 +1,21 @@
+id,parent_id,class_code,name_en,name_ko,description_en,description_ko
+P-001,CLS-LOCATION,CLS-COUNTRY,Country,국가,"One country or territory tracked by the record runtime, keyed by ISO3",ISO3로 식별하는 국가·영토
+P-002,CLS-DOCUMENT,CLS-COUNTRY-RECORD,Country record,국가 기록,"The published record for one country, assembled by one build",한 빌드가 조립한 한 나라의 기록
+P-003,CLS-DOCUMENT,CLS-FILING,Filing,제출 문서,A document a country submitted to an official registry or list,공식 등록부·목록에 제출된 문서
+P-004,CLS-ASSET,CLS-FILE-COPY,File copy,파일 사본,"The exact bytes we hold for a filing, identified by SHA-256",보유한 바이트. SHA-256으로 식별
+P-005,CLS-EVENT,CLS-RECEIPT,Receipt,영수증,"The recorded ingest event for one fetch, with hash and time",수집 1건의 해시·시각 기록
+P-006,CLS-CONCEPT,CLS-SOURCE,Source,소스,"A named origin the runtime fetches from, with a staleness budget",수집 원천. 최대 허용 나이를 가짐
+P-007,CLS-ASSET,CLS-DATASET-SNAPSHOT,Dataset snapshot,데이터셋 스냅숏,One hashed capture of a dataset at a fetch time,한 시점의 데이터셋 캡처
+P-008,CLS-ASSET,CLS-BUILD-SNAPSHOT,Build snapshot,빌드 스냅숏,One immutable hashed build of the whole record set,전체 기록의 불변 빌드
+P-009,CLS-CONCEPT,CLS-ANCHOR,Anchor,앵커,A pointer into held bytes that a value or claim rests on,값·주장이 기대는 바이트 내 위치
+P-010,P-009,CLS-SENTENCE-ANCHOR,Sentence anchor,문장 앵커,An anchor naming a page and a quoted sentence in a file copy,쪽과 인용 문장을 지목하는 앵커
+P-011,P-009,CLS-CELL-ANCHOR,Cell anchor,셀 앵커,An anchor naming a workbook cell and its literal content,워크북 셀과 원문 리터럴을 지목하는 앵커
+P-012,CLS-CONCEPT,CLS-RECORD-VALUE,Record value,기록 값,"One published field value in a country record, carrying an epistemic state",기록의 필드 값 하나. 인식 상태를 가짐
+P-013,P-012,CLS-TREATY-STATUS,Treaty status,조약 지위,A record value stating a country's standing under a legal instrument,법적 수단 아래의 지위 값
+P-014,CLS-CONCEPT,CLS-CLAIM,Claim,주장,An authored sentence that cites anchors by explicit anchor id,앵커를 명시 인용한 저작 문장
+P-015,CLS-EVENT,CLS-VERDICT,Verdict,판정,A human judgment recorded on one claim; machines never produce one,사람이 주장에 내린 판정
+P-016,CLS-CONCEPT,CLS-DIFF-ENTRY,Diff entry,차이 항목,One structural change found between two build snapshots,두 빌드 사이의 구조적 변경 1건
+P-017,CLS-CONCEPT,CLS-CENSUS-KEY,Census key,센서스 키,A named counter computed at build time; published numbers must link to one,빌드가 계산한 이름 있는 계수기
+P-018,CLS-DOCUMENT,CLS-LEGAL-INSTRUMENT,Legal instrument,법적 수단,"A treaty, law or decree that statuses and parameters attach to",지위·파라미터가 걸리는 조약·법령
+P-019,CLS-ORGANIZATION,CLS-INSTITUTION,Institution,기관,A national body listed in a country's institution register,기관 등록부에 실린 국가 기관
+P-020,CLS-CONCEPT,CLS-REGULATORY-PARAMETER,Regulatory parameter,규제 파라미터,"A setting fixed by a legal instrument, such as a rate or threshold",법적 수단이 정한 설정값

@@ -1,0 +1,22 @@
+facet_code,facet_name_ko,applicable_class_codes,cardinality,value_code,label_ko,sort_order,source_standard,source_clause_ref
+FACET-EPISTEMIC-STATE,인식 상태,CLS-RECORD-VALUE;CLS-FILING,1..1,OBSERVED,관측,1,record-runtime docs/DEFINITIONS.md,§ observed
+FACET-EPISTEMIC-STATE,인식 상태,CLS-RECORD-VALUE;CLS-FILING,1..1,PLEDGED,약속,2,record-runtime docs/DEFINITIONS.md,§ pledged
+FACET-EPISTEMIC-STATE,인식 상태,CLS-RECORD-VALUE;CLS-FILING,1..1,UNKNOWN,미상,3,record-runtime docs/DEFINITIONS.md,§ unknown
+FACET-EPISTEMIC-STATE,인식 상태,CLS-RECORD-VALUE;CLS-FILING,1..1,ABSENT,부재,4,record-runtime docs/DEFINITIONS.md,§ absent
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,TREATY-STATUS-LIST,조약 지위 목록,1,record-runtime docs/DEFINITIONS.md,§ treaty-status-list
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,NDC,NDC,2,record-runtime docs/DEFINITIONS.md,§ ndc
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,BTR,BTR,3,record-runtime docs/DEFINITIONS.md,§ btr
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,LEGISLATION,법령,4,record-runtime docs/DEFINITIONS.md,§ legislation
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,INSTITUTION-REGISTER,기관 등록부,5,record-runtime docs/DEFINITIONS.md,§ institution-register
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,REGULATORY-PARAMETER,규제 파라미터,6,record-runtime docs/DEFINITIONS.md,§ regulatory-parameter
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,DATASET,데이터셋,7,record-runtime docs/DEFINITIONS.md,§ dataset
+FACET-DOC-TYPE,문서 종류,CLS-FILING,1..1,ASSESSMENT,평가,8,record-runtime docs/DEFINITIONS.md,§ assessment
+FACET-FRESHNESS-TIER,갱신 등급,CLS-SOURCE;CLS-RECORD-VALUE,1..1,AUTO,자동,1,record-runtime docs/DEFINITIONS.md,§ auto
+FACET-FRESHNESS-TIER,갱신 등급,CLS-SOURCE;CLS-RECORD-VALUE,1..1,MANUAL,수동,2,record-runtime docs/DEFINITIONS.md,§ manual
+FACET-AUTHOR-VERDICT,저작 판정,CLS-VERDICT,1..1,ANCHORED,앵커 유효,1,record-runtime docs/DEFINITIONS.md,§ anchored
+FACET-AUTHOR-VERDICT,저작 판정,CLS-VERDICT,1..1,OUTDATED,낡음,2,record-runtime docs/DEFINITIONS.md,§ outdated
+FACET-AUTHOR-VERDICT,저작 판정,CLS-VERDICT,1..1,UNSUPPORTED,무근거,3,record-runtime docs/DEFINITIONS.md,§ unsupported
+FACET-PARTY-STANDING,당사 지위,CLS-TREATY-STATUS,1..1,PARTY,당사국,1,record-runtime docs/DEFINITIONS.md,§ party
+FACET-PARTY-STANDING,당사 지위,CLS-TREATY-STATUS,1..1,SIGNED-NOT-RATIFIED,서명·미비준,2,record-runtime docs/DEFINITIONS.md,§ signed-not-ratified
+FACET-PARTY-STANDING,당사 지위,CLS-TREATY-STATUS,1..1,WITHDRAWN,탈퇴,3,record-runtime docs/DEFINITIONS.md,§ withdrawn
+FACET-PARTY-STANDING,당사 지위,CLS-TREATY-STATUS,1..1,NOT-LISTED,미등재,4,record-runtime docs/DEFINITIONS.md,§ not-listed

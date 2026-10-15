@@ -1,0 +1,110 @@
+meta:
+  subject: RECORD-RUNTIME-PLATFORM v0.1.0
+questions:
+  - id: CQ-P01
+    question: "Which file, page and sentence does this value rest on?"
+    dimension: semantic
+    path:
+      - [CLS-RECORD-VALUE, REL-RESTS-ON, CLS-SENTENCE-ANCHOR]
+      - [CLS-SENTENCE-ANCHOR, REL-ANCHORED-IN, CLS-FILE-COPY]
+    note: "3-minute demo step: page and sentence are ATTR-PAGE-NO and ATTR-SENTENCE on the anchor."
+  - id: CQ-P02
+    question: "What does this draft sentence cite?"
+    dimension: professional
+    path:
+      - [CLS-CLAIM, REL-CITES-ANCHOR, CLS-ANCHOR]
+  - id: CQ-P03
+    question: "Which claims did this amendment shake?"
+    dimension: professional
+    path:
+      - [CLS-DIFF-ENTRY, REL-SHAKES, CLS-CLAIM]
+  - id: CQ-P04
+    question: "What is this country's treaty status and where is it anchored?"
+    dimension: semantic
+    path:
+      - [CLS-COUNTRY-RECORD, REL-PUBLISHES-VALUE, CLS-TREATY-STATUS]
+      - [CLS-TREATY-STATUS, REL-RESTS-ON, CLS-ANCHOR]
+      - [CLS-ANCHOR, REL-ANCHORED-IN, CLS-FILE-COPY]
+  - id: CQ-P05
+    question: "Why is this socket empty?"
+    dimension: applicability
+    path:
+      - [CLS-COUNTRY-RECORD, REL-PUBLISHES-VALUE, CLS-RECORD-VALUE]
+    note: "A refusal is a value in state unknown or absent; the reason is ATTR-STATE-REASON on the value, not a class."
+  - id: CQ-P06
+    question: "Which country is this record the record of?"
+    dimension: semantic
+    path:
+      - [CLS-COUNTRY-RECORD, REL-RECORD-OF, CLS-COUNTRY]
+  - id: CQ-P07
+    question: "Which bytes do we hold for this filing, and which ingest receipt recorded their hash and time?"
+    dimension: professional
+    path:
+      - [CLS-FILING, ^REL-READ-FROM, CLS-FILE-COPY]
+      - [CLS-FILE-COPY, REL-HASHED-IN, CLS-RECEIPT]
+  - id: CQ-P08
+    question: "Which source answered the fetch this receipt records?"
+    dimension: professional
+    path:
+      - [CLS-RECEIPT, REL-FETCHED-FROM, CLS-SOURCE]
+  - id: CQ-P09
+    question: "Which dataset snapshot was this observed value drawn from, and which source does that snapshot capture?"
+    dimension: semantic
+    path:
+      - [CLS-RECORD-VALUE, REL-DRAWN-FROM, CLS-DATASET-SNAPSHOT]
+      - [CLS-DATASET-SNAPSHOT, REL-SNAPSHOT-OF-SOURCE, CLS-SOURCE]
+  - id: CQ-P10
+    question: "In which receipt was this dataset snapshot hashed?"
+    dimension: professional
+    path:
+      - [CLS-DATASET-SNAPSHOT, REL-HASHED-IN, CLS-RECEIPT]
+  - id: CQ-P11
+    question: "Which build produced this country record, and which earlier build did that build supersede?"
+    dimension: semantic
+    path:
+      - [CLS-COUNTRY-RECORD, REL-BUILT-FROM, CLS-BUILD-SNAPSHOT]
+      - [CLS-BUILD-SNAPSHOT, REL-SUPERSEDES, CLS-BUILD-SNAPSHOT]
+  - id: CQ-P12
+    question: "What verdict stands on this claim?"
+    dimension: professional
+    path:
+      - [CLS-CLAIM, ^REL-VERDICT-ON, CLS-VERDICT]
+  - id: CQ-P13
+    question: "Which census key counts this published value, and in which build was that counter computed?"
+    dimension: applicability
+    path:
+      - [CLS-RECORD-VALUE, ^REL-COUNTS, CLS-CENSUS-KEY]
+      - [CLS-CENSUS-KEY, REL-COUNTED-IN, CLS-BUILD-SNAPSHOT]
+  - id: CQ-P14
+    question: "Which legal instrument fixes this regulatory parameter?"
+    dimension: semantic
+    path:
+      - [CLS-REGULATORY-PARAMETER, REL-GOVERNED-BY, CLS-LEGAL-INSTRUMENT]
+  - id: CQ-P15
+    question: "Which parent body does this institution belong to, and in which country is that body seated?"
+    dimension: semantic
+    path:
+      - [CLS-INSTITUTION, REL-MEMBER-OF, CLS-INSTITUTION]
+      - [CLS-INSTITUTION, REL-SEATED-IN, CLS-COUNTRY]
+  - id: CQ-P16
+    question: "Which filings does this country record hold, and which country submitted them?"
+    dimension: applicability
+    path:
+      - [CLS-COUNTRY-RECORD, REL-HOLDS-FILING, CLS-FILING]
+      - [CLS-FILING, REL-FILED-BY, CLS-COUNTRY]
+  - id: CQ-P17
+    question: "Which workbook cell does this reported figure quote, and in which file copy does that cell live?"
+    dimension: semantic
+    path:
+      - [CLS-RECORD-VALUE, REL-RESTS-ON, CLS-CELL-ANCHOR]
+      - [CLS-CELL-ANCHOR, REL-ANCHORED-IN, CLS-FILE-COPY]
+  - id: CQ-P18
+    question: "Which two builds does this diff entry compare?"
+    dimension: professional
+    path:
+      - [CLS-DIFF-ENTRY, REL-COMPARES, CLS-BUILD-SNAPSHOT]
+  - id: CQ-P19
+    question: "Under which legal instrument does this treaty status stand?"
+    dimension: semantic
+    path:
+      - [CLS-TREATY-STATUS, REL-UNDER-INSTRUMENT, CLS-LEGAL-INSTRUMENT]

@@ -1,0 +1,22 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # R15: lockfile-exact install only
+      - run: npm ci
+      - run: node --test
+      - run: node engine/gates/run.mjs
+
+# No deploy job yet. Publishing will be a CI-only path (R8 / AD-11), added with
+# the app: a rebuild that passes all gates merges and publishes automatically;
+# publish credentials live only in CI secrets, so no manual path exists.

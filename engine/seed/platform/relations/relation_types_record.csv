@@ -1,0 +1,24 @@
+id,relation_code,name_en,name_ko,description_en,description_ko,domain_class_hint,range_class_hint
+R-01,REL-RECORD-OF,record of,기록 대상,[card 1..1] the country this record covers,기록이 다루는 나라,CLS-COUNTRY-RECORD,CLS-COUNTRY
+R-02,REL-HOLDS-FILING,holds filing,보유 문서,[card 0..N] newest first,기록이 보유한 제출 문서,CLS-COUNTRY-RECORD,CLS-FILING
+R-03,REL-FILED-BY,filed by,제출 국가,[card 1..1] the country that submitted the filing,문서를 제출한 나라,CLS-FILING,CLS-COUNTRY
+R-04,REL-READ-FROM,read from,판독 원본,[card 1..1] the filing these bytes were read as,이 바이트가 읽힌 제출 문서,CLS-FILE-COPY,CLS-FILING
+R-05,REL-HASHED-IN,hashed in,해시 영수증,[card 1..1] the ingest receipt that recorded hash and time,해시·시각을 기록한 영수증,CLS-FILE-COPY|CLS-DATASET-SNAPSHOT,CLS-RECEIPT
+R-06,REL-FETCHED-FROM,fetched from,수집 원천,[card 1..1] the source that answered this fetch,이 수집에 응답한 소스,CLS-RECEIPT,CLS-SOURCE
+R-07,REL-SNAPSHOT-OF-SOURCE,snapshot of source,스냅숏 원천,[card 1..1] the source this snapshot captures,이 스냅숏이 캡처한 소스,CLS-DATASET-SNAPSHOT,CLS-SOURCE
+R-08,REL-PUBLISHES-VALUE,publishes value,발행 값,[card 0..N] every published value carries a state or a reason,기록이 발행한 값,CLS-COUNTRY-RECORD,CLS-RECORD-VALUE
+R-09,REL-RESTS-ON,rests on,근거 앵커,[card 0..N] empty only when the state is unknown or absent with a reason,값이 기대는 앵커,CLS-RECORD-VALUE,CLS-ANCHOR
+R-10,REL-DRAWN-FROM,drawn from,출처 스냅숏,[card 0..1] the dataset snapshot an observed value was read from,관측값이 읽힌 데이터셋 스냅숏,CLS-RECORD-VALUE,CLS-DATASET-SNAPSHOT
+R-11,REL-ANCHORED-IN,anchored in,앵커 파일,[card 1..1] the file copy the anchor points into,앵커가 가리키는 파일 사본,CLS-ANCHOR,CLS-FILE-COPY
+R-12,REL-CITES-ANCHOR,cites anchor,인용 앵커,[card 0..N] sentences citing no anchor are flagged unsupported,주장이 인용한 앵커,CLS-CLAIM,CLS-ANCHOR
+R-13,REL-VERDICT-ON,verdict on,판정 대상,[card 1..1] the claim this verdict judges,판정이 다루는 주장,CLS-VERDICT,CLS-CLAIM
+R-14,REL-BUILT-FROM,built from,생성 빌드,[card 1..1] the build snapshot that produced this record,기록을 만든 빌드 스냅숏,CLS-COUNTRY-RECORD,CLS-BUILD-SNAPSHOT
+R-15,REL-SUPERSEDES,supersedes,대체,[card 0..1] the build this build replaces,이 빌드가 대체한 직전 빌드,CLS-BUILD-SNAPSHOT,CLS-BUILD-SNAPSHOT
+R-16,REL-COMPARES,compares,비교 빌드,[card 2..2] the older and the newer build this entry compares,항목이 비교한 두 빌드,CLS-DIFF-ENTRY,CLS-BUILD-SNAPSHOT
+R-17,REL-SHAKES,shakes,흔든 주장,[card 0..N] claims whose cited anchors this change disturbs,변경이 흔든 주장,CLS-DIFF-ENTRY,CLS-CLAIM
+R-18,REL-COUNTS,counts,계수 대상,[card 0..N] what the counter counts,계수기가 세는 대상,CLS-CENSUS-KEY,CLS-RECORD-VALUE|CLS-COUNTRY-RECORD
+R-19,REL-COUNTED-IN,counted in,계산 빌드,[card 1..1] the build in which the counter was computed,계수가 계산된 빌드,CLS-CENSUS-KEY,CLS-BUILD-SNAPSHOT
+R-20,REL-UNDER-INSTRUMENT,under instrument,지위 근거 수단,[card 1..1] the legal instrument the status stands under,지위가 걸린 법적 수단,CLS-TREATY-STATUS,CLS-LEGAL-INSTRUMENT
+R-21,REL-GOVERNED-BY,governed by,설정 근거 수단,[card 1..1] the legal instrument that fixes the parameter,파라미터를 정한 법적 수단,CLS-REGULATORY-PARAMETER,CLS-LEGAL-INSTRUMENT
+R-22,REL-MEMBER-OF,member of,소속,[card 0..N] the parent body the institution belongs to,기관이 속한 상위 기관,CLS-INSTITUTION,CLS-INSTITUTION
+R-23,REL-SEATED-IN,seated in,소재 국가,[card 1..1] the country whose register lists this institution,기관이 등재된 나라,CLS-INSTITUTION,CLS-COUNTRY

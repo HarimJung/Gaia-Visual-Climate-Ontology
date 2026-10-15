@@ -1,0 +1,4 @@
+unit_code,symbol_canonical,symbol_variants,quantity_kind,factor_to_si,external_ref
+UNIT-BYTE,B,byte|bytes|바이트,Information,,
+UNIT-PAGE,p.,page|pages|쪽,Count,,
+UNIT-DAY,d,day|days|일,Time,86400,
