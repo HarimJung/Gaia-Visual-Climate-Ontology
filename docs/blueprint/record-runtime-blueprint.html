@@ -1,0 +1,761 @@
+<title>Record Runtime Blueprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: fixed left wiki nav on desktop, content column ~72ch; nav collapses to a <details> bar on phones. */
+:root {
+  --paper: #FAFCFD;
+  --ink: #1C3D5A;
+  --ink-soft: #46647E;
+  --accent: #0077B8;      /* UN-blue family; exact house value per VC kit */
+  --accent-soft: #D9EEF8;
+  --line: #C9D9E4;
+  --panel: #F0F6FA;
+  --warn-bg: #FCF4E4;
+  --warn-line: #E0C890;
+  --ok: #2E7D5B;
+  --mono-bg: #EBF3F8;
+  --display: "Newsreader", Georgia, serif;
+  --body: "Public Sans", "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0E1B26; --ink: #D7E3EC; --ink-soft: #93ACC0; --accent: #41B6E6;
+  --accent-soft: #123A50; --line: #27475D; --panel: #14283A; --warn-bg: #31270F;
+  --warn-line: #6B5A26; --ok: #5FBD94; --mono-bg: #10273A; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --paper: #0E1B26; --ink: #D7E3EC; --ink-soft: #93ACC0; --accent: #41B6E6;
+  --accent-soft: #123A50; --line: #27475D; --panel: #14283A; --warn-bg: #31270F;
+  --warn-line: #6B5A26; --ok: #5FBD94; --mono-bg: #10273A; color-scheme: dark;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--body);
+  font-size: 16px; line-height: 1.65; margin: 0; }
+.wrap { display: flex; gap: 0; min-height: 100vh; }
+
+nav.toc { width: 248px; flex: 0 0 auto; border-right: 1px solid var(--line);
+  padding: 28px 18px 48px max(16px, env(safe-area-inset-left, 0px));
+  position: sticky; top: 0; align-self: flex-start; max-height: 100vh; overflow-y: auto;
+  font-size: 13.5px; }
+nav.toc .brand { font-family: var(--display); font-size: 19px; font-weight: 600; line-height: 1.25; margin: 0 0 2px; }
+nav.toc .brand-sub { color: var(--ink-soft); font-size: 12px; margin-bottom: 18px; }
+nav.toc a { display: block; color: var(--ink-soft); text-decoration: none;
+  padding: 3.5px 8px; border-radius: 4px; }
+nav.toc a:hover { background: var(--panel); color: var(--ink); }
+nav.toc a .n { display: inline-block; width: 1.9em; color: var(--accent);
+  font-family: var(--mono); font-size: 11.5px; }
+nav.toc .group { margin: 14px 0 4px; font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+details.mtoc { display: none; }
+
+main { flex: 1 1 auto; min-width: 0;
+  padding: 34px max(16px, env(safe-area-inset-right, 0px)) 80px max(16px, env(safe-area-inset-left, 0px)); }
+main > * { max-width: 76ch; margin-left: auto; margin-right: auto; }
+
+h1 { font-family: var(--display); font-weight: 600; font-size: 40px; line-height: 1.12;
+  margin: 10px auto 6px; text-wrap: balance; }
+.kicker { color: var(--accent); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  font-weight: 700; margin-top: 4px; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 27px; line-height: 1.2;
+  margin: 60px auto 14px; padding-top: 18px; border-top: 1px solid var(--line); text-wrap: balance; }
+h2 .cn { color: var(--accent); font-family: var(--mono); font-size: 15px; font-weight: 500;
+  display: block; margin-bottom: 6px; }
+h3 { font-size: 16.5px; font-weight: 700; margin: 26px auto 8px; }
+p, ul, ol { margin: 10px auto; }
+li { margin: 4px 0; }
+a { color: var(--accent); }
+strong { font-weight: 700; }
+
+.stamp { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 6px; padding: 14px 18px; font-size: 14px; margin: 22px auto; }
+.stamp b { font-weight: 700; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px auto; }
+.badge { font-size: 12px; font-weight: 600; border: 1px solid var(--line); border-radius: 999px;
+  padding: 3px 11px; color: var(--ink-soft); background: var(--panel); }
+.badge.live { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+.pending { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 6px;
+  padding: 14px 18px; margin: 18px auto; font-size: 14.5px; }
+.pending h3 { margin-top: 2px; }
+
+.ko { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 20px 24px; margin: 26px auto; }
+.ko h2 { border: none; margin: 0 0 10px; padding: 0; font-size: 22px; }
+.ko p, .ko li { font-size: 15px; }
+
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; margin: 14px 0; }
+.tblwrap { overflow-x: auto; max-width: 76ch; margin: 14px auto; }
+th { text-align: left; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-soft); border-bottom: 2px solid var(--line); padding: 6px 10px 6px 0; }
+td { border-bottom: 1px solid var(--line); padding: 7px 10px 7px 0; vertical-align: top; }
+td.id, td.num { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; color: var(--accent); font-weight: 500; }
+td.num { color: var(--ink-soft); }
+
+code, .m { font-family: var(--mono); font-size: 13px; background: var(--mono-bg);
+  border-radius: 4px; padding: 1px 5px; }
+pre { background: var(--mono-bg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 14px 16px; overflow-x: auto; font-family: var(--mono); font-size: 12.5px;
+  line-height: 1.55; max-width: 76ch; margin: 14px auto; }
+pre code { background: none; padding: 0; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 14px auto; font-size: 13px; max-width: 76ch; }
+.legend .sw { display: inline-block; width: 30px; height: 14px; border-radius: 3px;
+  vertical-align: -2px; margin-right: 6px; border: 1.5px solid var(--accent); }
+.sw.observed { background: var(--accent); }
+.sw.pledged { background: transparent; border-style: dashed; }
+.sw.unknown { background: repeating-linear-gradient(45deg, transparent 0 3px, var(--accent) 3px 5px); border-style: solid; border-color: var(--line); }
+.sw.absent { background: transparent; border-style: dotted; border-color: var(--ink-soft); }
+
+.demo-path { counter-reset: step; list-style: none; padding-left: 0; }
+.demo-path li { counter-increment: step; padding-left: 38px; position: relative; margin: 9px 0; }
+.demo-path li::before { content: counter(step); position: absolute; left: 0; top: 1px;
+  width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+  font-family: var(--mono); font-size: 12.5px; font-weight: 600; display: flex;
+  align-items: center; justify-content: center; }
+
+.foot { margin-top: 70px; border-top: 1px solid var(--line); padding-top: 16px;
+  color: var(--ink-soft); font-size: 13px; }
+
+@media (max-width: 860px) {
+  .wrap { display: block; }
+  nav.toc { display: none; }
+  details.mtoc { display: block; border-bottom: 1px solid var(--line); background: var(--panel);
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px));
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; font-size: 14px; }
+  details.mtoc summary { font-weight: 700; cursor: pointer; }
+  details.mtoc a { display: block; padding: 5px 0; color: var(--ink-soft); text-decoration: none; }
+  h1 { font-size: 30px; }
+}
+@media print {
+  nav.toc, details.mtoc { display: none; }
+  body { background: #fff; color: #1C3D5A; font-size: 11pt; }
+  main { padding: 0; }
+  h2 { break-before: page; border-top: none; }
+  h2#ko-h, h2.nobreak { break-before: auto; }
+  pre, table, .stamp, .pending, .ko { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+</style>
+
+<details class="mtoc"><summary>Contents · 목차</summary>
+  <a href="#ko">국문 요약 (Korean summary)</a>
+  <a href="#ch1">1 · Product definition</a><a href="#ch2">2 · Pilot scope &amp; users</a>
+  <a href="#ch3">3 · Four-layer architecture</a><a href="#ch4">4 · Canonical records &amp; anchors</a>
+  <a href="#ch5">5 · Vocabulary &amp; seeds</a><a href="#ch6">6 · Sources &amp; ingestion</a>
+  <a href="#ch7">7 · Build, derivation &amp; gates</a><a href="#ch8">8 · Authoring verification</a>
+  <a href="#ch9">9 · The living record</a><a href="#ch10">10 · Publication &amp; operations</a>
+  <a href="#ch11">11 · API &amp; frontend</a><a href="#ch12">12 · Repository structure</a>
+  <a href="#ch13">13 · Delivery plan</a><a href="#ch14">14 · Risks, decisions, governance</a>
+  <a href="#axA">Annex A · Iron rules R1–R16</a><a href="#axB">Annex B · Decisions AD-1–13</a>
+  <a href="#axC">Annex C · Review ledger F1–F30</a><a href="#axD">Annex D · KHM document ledger</a>
+</details>
+
+<div class="wrap">
+<nav class="toc">
+  <div class="brand">Record Runtime</div>
+  <div class="brand-sub">Design blueprint · wiki canonical</div>
+  <a href="#ko"><span class="n">요약</span> 국문 요약</a>
+  <div class="group">Chapters</div>
+  <a href="#ch1"><span class="n">1</span> Product definition</a>
+  <a href="#ch2"><span class="n">2</span> Pilot scope &amp; users</a>
+  <a href="#ch3"><span class="n">3</span> Four-layer architecture</a>
+  <a href="#ch4"><span class="n">4</span> Canonical records &amp; anchors</a>
+  <a href="#ch5"><span class="n">5</span> Vocabulary &amp; seeds</a>
+  <a href="#ch6"><span class="n">6</span> Sources &amp; ingestion</a>
+  <a href="#ch7"><span class="n">7</span> Build, derivation &amp; gates</a>
+  <a href="#ch8"><span class="n">8</span> Authoring verification</a>
+  <a href="#ch9"><span class="n">9</span> The living record</a>
+  <a href="#ch10"><span class="n">10</span> Publication &amp; operations</a>
+  <a href="#ch11"><span class="n">11</span> API &amp; frontend</a>
+  <a href="#ch12"><span class="n">12</span> Repository structure</a>
+  <a href="#ch13"><span class="n">13</span> Delivery plan</a>
+  <a href="#ch14"><span class="n">14</span> Risks &amp; governance</a>
+  <div class="group">Annexes</div>
+  <a href="#axA"><span class="n">A</span> Iron rules R1–R16</a>
+  <a href="#axB"><span class="n">B</span> Decisions AD-1–13</a>
+  <a href="#axC"><span class="n">C</span> Review ledger F1–F30</a>
+  <a href="#axD"><span class="n">D</span> KHM document ledger</a>
+</nav>
+
+<main>
+<div class="kicker">National Climate Record Runtime · Design Blueprint</div>
+<h1>A country's climate record, with receipts</h1>
+
+<div class="badges">
+  <span class="badge live">Status: design in progress</span>
+  <span class="badge">Runtime maturity: S0 — nothing running yet</span>
+  <span class="badge">Pilot: Cambodia (KHM)</span>
+  <span class="badge">Repo: <a href="https://github.com/HarimJung/Gaia-Visual-Climate-Ontology">github.com/HarimJung/Gaia-Visual-Climate-Ontology</a> (pending decision #3 — decided 2026-10-15)</span>
+</div>
+
+<div class="stamp">
+  <b>Adversarial review stamp.</b> 2026-10-15 · three lenses (product &amp; design / architecture &amp;
+  implementation / operations &amp; maintenance), run as parallel agents including a live operational
+  measurement of the predecessor system (Visual Climate Watch) · <b>30 findings</b> (10 critical ·
+  15 medium · 5 minor) → <b>28 incorporated</b> into this blueprint · 2 awaiting an owner decision.
+  Full ledger in <a href="#axC">Annex C</a>. This page is the canonical blueprint (D-3: wiki
+  artifact + PDF snapshot via print). Where it conflicts with earlier
+  planning notes, this page wins; for the exact text of the iron rules and architecture decisions,
+  the development spec remains the source of record.
+</div>
+
+<section class="ko" id="ko">
+<h2 id="ko-h">국문 요약</h2>
+<p><strong>제품 한 문장.</strong> 당사국 한 나라의 기후 기록(조약 지위 · 법령 · 기관 · NDC · BTR ·
+규제 파라미터)을 문장 · 셀 · 해시 영수증과 함께 정본화하고, <strong>쓰는 순간 근거가 붙고, 근거
+없으면 막히고</strong>, 개정이 오면 무엇이 흔들리는지 알리는 런타임입니다. 판정은 언제나 사람이
+합니다. 등급 · 순위 · 추정 · 자동 판정은 만들지 않습니다.</p>
+<ul>
+  <li><strong>구조:</strong> 4층 — L0 정본 그래프, L1 살아있는 기록(스냅샷 diff), L2 저작 검증(핵심 제품),
+  L3 연합(2국째부터, 레포 밖).</li>
+  <li><strong>파일럿:</strong> 캄보디아 KHM, 화면 2+1장(원장 · 근거 서랍 · Word 왕복 저작). 격차표는 비목표,
+  모니터링은 내부 뷰로 강등.</li>
+  <li><strong>규율:</strong> 철칙 R1~R16과 아키텍처 결정 AD-1~13 — 전부 문서 규칙이 아니라 <strong>CI가
+  기계로 막습니다</strong>. 인스턴스 하드코딩 0, 어휘는 시드 CSV 단일 정본, 발행 경로에 사람 머지 없음,
+  알림은 메일이 아니라 운영자가 실제로 여는 곳(<span class="m">broken.md</span>)으로.</li>
+  <li><strong>근거:</strong> 적대 검토 3렌즈 F 30건 중 28건 반영. 운영 렌즈는 Watch 라이브 실측 —
+  같은 자동 갱신 사슬이 "완료 · 녹색" 선언 4주 만에 전 구간 붕괴(머지율 1/5, 수동 배포 우회,
+  실패 메일 3주 무반응)한 것을 확인하고 설계에 반영했습니다.</li>
+  <li><strong>개발:</strong> 병렬 WP-01~10. 의존 없는 WP-01(부트스트랩 · 철칙 린트) · WP-02(플랫폼 시드) ·
+  WP-04(KHM 정본화)는 동시 시작. 수요 인터뷰 5건은 개발과 병행.</li>
+  <li><strong>대기:</strong> 하림님 결정 2건 — ① www 등급 사이트 정리/리브랜드(KHM 데모 전제)
+  ② Watch <span class="m">evidence-graph</span> 브랜치 처리.</li>
+  <li><strong>확정:</strong> 새 레포 URL (2026-10-15) —
+  <span class="m">github.com/HarimJung/Gaia-Visual-Climate-Ontology</span>.</li>
+</ul>
+</section>
+
+<h2 id="ch1"><span class="cn">Chapter 1</span>Product definition</h2>
+<p><strong>In one sentence.</strong> A runtime that canonicalizes one Party's climate record —
+treaty status, legislation, institutions, NDC, BTR, regulatory parameters — with sentence-level,
+cell-level and hash-level receipts, so that <strong>evidence attaches at the moment of writing,
+writing without evidence is blocked</strong>, and when an amendment arrives the runtime reports
+exactly which claims it shakes. Judgment is always human.</p>
+<p><strong>What this product is not.</strong> It produces no ratings, no rankings, no estimates and
+no automated judgments. It makes no "first in the world" claims; where differentiation matters, it
+is phrased as a question for the counterpart to answer, never as an assertion. Cross-country
+transition features (A→B gap tables) are an emergent capability from the second country onward and
+are an explicit <em>non-goal</em> of the pilot.</p>
+<p><strong>Honest maturity.</strong> As of 2026-10-15 this is a design in progress; runtime
+maturity is S0 — nothing is running. This label is updated at every stage and never overstated.</p>
+
+<h2 id="ch2"><span class="cn">Chapter 2</span>Pilot scope &amp; users</h2>
+<p><strong>Pilot country: Cambodia (KHM)</strong> — the predecessor system's deepest coverage, a
+submitted BTR1, and existing teaching material. The official <strong>English editions</strong> of
+Cambodian documents are the canonical inputs; Khmer editions are retained by file hash only
+(<a href="#axB">AD-3</a>).</p>
+<p><strong>Users.</strong> Party climate teams and the institutions that support them. The core
+user task is authoring: writing a report sentence and learning, before submission, whether it is
+anchored, outdated, or unsupported.</p>
+<p><strong>Pilot surface: 2+1 screens</strong> (<a href="#axB">AD-9</a>): the <em>ledger</em>, the
+<em>evidence drawer</em>, and the <em>authoring path</em> (.docx round-trip, Chapter 8).
+Monitoring is demoted to an internal operations view; the practitioner-facing channel is an email
+digest generated from build diffs, with deep links. The gap table is recorded here, canonically, as
+a pilot non-goal. <strong>Any screen beyond these requires a passed KHM practitioner task test</strong>
+— that gate clause is part of this canon.</p>
+<p><strong>Demand evidence.</strong> Five P0 demand interviews run in parallel with development;
+the questionnaire centers on the authoring tool. Testimonials follow the evidence rule: real ones
+only — currently zero, so testimonial space stays empty.</p>
+
+<h2 id="ch3"><span class="cn">Chapter 3</span>Four-layer architecture</h2>
+<div class="tblwrap"><table>
+<tr><th>Layer</th><th>What it is</th><th>Pilot status</th></tr>
+<tr><td class="id">L0</td><td><strong>Canonical graph.</strong> Everything on record for the country:
+anchors of four kinds (sentence · cell · dataset snapshot · file), four evidence states, and
+refusals as first-class records.</td><td>Built in pilot</td></tr>
+<tr><td class="id">L1</td><td><strong>Living record.</strong> Amendments and new submissions
+trigger a full rebuild; staleness is the structural diff between two snapshot builds; <em>asOf</em>
+is snapshot selection.</td><td>Built in pilot</td></tr>
+<tr><td class="id">L2</td><td><strong>Authoring verification</strong> ★ the core product. Per-sentence
+verdicts on drafts: anchored / outdated by amendment / unsupported (a blocking candidate).</td>
+<td>Built in pilot</td></tr>
+<tr><td class="id">L3</td><td><strong>Federation.</strong> Cross-jurisdiction crosswalk — instance
+correspondences, values whose conversion is impossible with the reason attached, rules that fit no
+table.</td><td><strong>Out of the repository</strong> (AD-7). Designed against real data from
+country #2. Two rules adopted now: country seeds reference the platform seed by ID only, and the
+platform seed is semver-versioned.</td></tr>
+</table></div>
+
+<h2 id="ch4"><span class="cn">Chapter 4</span>Canonical records &amp; anchors</h2>
+<p><strong>The anchor's canonical unit</strong> (AD-3) is: source-file SHA-256 + page + a
+human-confirmed quotation + the version of the normalization rules. It is <em>not</em> a hash of an
+extracted sentence — extraction from scans and Khmer text is non-deterministic, so the canonical
+unit must not depend on it.</p>
+<p><strong>Receipt formats.</strong> The first-class receipt formats include <strong>page image +
+coordinate box</strong> (AD-4), so receipts survive scanned and Khmer documents. If this proves
+infeasible during the pilot, legislation leaves pilot scope and that fact is written into this
+canon — scope honesty over silent degradation.</p>
+<p><strong>Four evidence states, and refusal.</strong> Every published value is either anchored or
+carries one of four states with a reason; refusal (a source declined, a value withheld) is
+first-class content, not an error state.</p>
+<div class="legend">
+  <span><span class="sw observed"></span>observed — filled</span>
+  <span><span class="sw pledged"></span>pledged — dashed</span>
+  <span><span class="sw unknown"></span>unknown — hatched, reason attached</span>
+  <span><span class="sw absent"></span>absent — explicit absence</span>
+</div>
+<p><strong>Numbers only via census keys</strong> (R6). Every figure in any document or screen must
+carry a machine link to a census key. The check runs in reverse: the scanner sweeps <em>all</em>
+numbers and fails CI on any number without a link — the predecessor only cross-checked numbers that
+were already linked, and three kinds of figures rotted unnoticed.</p>
+<p><strong>Anchor bytes are preserved</strong> (R12). The original bytes an anchor points at live
+in durable storage (e.g. release assets) under a retention policy with a per-country cap and a stated retention period. A CI
+cache with a 7-day TTL and someone's laptop are not preservation.</p>
+
+<h2 id="ch5"><span class="cn">Chapter 5</span>Vocabulary &amp; seeds</h2>
+<p><strong>Single canonical source: seed CSVs</strong> (R2). All vocabulary — zod enums, TypeScript
+types, API vocabulary — is code-generated from the seed (<span class="m">seed →
+generated/vocab.ts</span>). Hand-written vocabulary enums are banned and caught by grep; the
+codegen output directory is never hand-edited.</p>
+<p><strong>Zero instance hardcoding</strong> (R1). Engine code contains no ISO3 codes, no country
+names, no document-ID literals. All country-specific logic is supplied by seeds and data. The lint
+greps <span class="m">engine/</span> and fails CI on sight. The precedent this rule exists to
+prevent: the predecessor shipped <span class="m">iso3 === 'KHM'</span> in its compose step, and the
+pilot country survived on frozen hardcode.</p>
+<p><strong>Seed layering</strong> follows the SSRND ontology method: L2 taxonomy (is-a, natural
+kinds only), L3 terms (source definitions verbatim), L4 attributes bound to classes, L5 units,
+L6 relations, L7 facets with per-value evidence. The platform seed is semver-versioned; country
+seeds live under <span class="m">countries/&lt;ISO3&gt;/</span> and reference platform IDs only —
+never commit hashes or line numbers, which rot silently.</p>
+<p><strong>Seed checking</strong> runs the SSRND checkers in place
+(<span class="m">check_ontology_seed.py</span>, <span class="m">cq_check.py</span> with competency
+questions); acceptance for the platform seed is zero errors and all competency questions passing.</p>
+
+<h2 id="ch6"><span class="cn">Chapter 6</span>Sources &amp; ingestion</h2>
+<p><strong>Adapters</strong> (pilot): UNFCCC registry, BTR submission list, UNTC treaty status.
+Every fetch lands as a snapshot with a SHA-256 manifest; on failure the previous snapshot stays
+current. Adapters are country-agnostic — the per-country document list is supplied by the seed (R1).
+NDC document bytes keep the predecessor's mirror discipline — a mirrored copy counts only when its
+hash is cross-checked against an independent archive capture — and that verification carries into
+WP-03.</p>
+<p><strong>Success is judged by bytes, not status codes</strong> (R14): hash, a size floor, and a
+format check. The measured failure mode this guards: unfccc.int returns HTTP 200 with a 212-byte
+bot-check page — a "successful" fetch that is actually an outage.</p>
+<p><strong>Staleness budget in the contract</strong> (R14). Every source contract declares its
+maximum tolerated age. A source over budget surfaces as first-class status on affected records and
+public screens ("this source unresponsive for N weeks") — staleness is shown, never hidden.</p>
+<p><strong>Legislation is a separate promise</strong> (AD-13). Until a named source, a named
+cadence and a Khmer-capable pipeline exist, legislation nodes are declared
+<span class="m">manual · as-of dated · quarterly review</span>, and screens show that tier as-is.
+No automated-freshness promise is made that no adapter can keep.</p>
+<p><strong>Licensing.</strong> No external asset is used before it is entered in the license
+register (OECD and Climate Policy Radar terms verified against the actual documents first).
+Summaries only; clause text is never stored verbatim.</p>
+
+<h2 id="ch7"><span class="cn">Chapter 7</span>Build, derivation &amp; gates</h2>
+<p><strong>Publish-blocking gates.</strong> A build either satisfies every gate or writes no output
+file at all (R5): every published value anchored or reasoned (four states), derived values stored
+apart from base (R3), machine processes never emit <span class="m">judged</span> values (R4), graph
+vocabulary ⊆ seed, numbers reconciled against census keys (R6).</p>
+<p><strong>Mutation doctrine.</strong> Every iron rule is paired with a mutation test that
+deliberately violates it. If the violation goes undetected, <strong>the test is fixed — the rule is
+never lowered</strong>. A gate that cannot catch its own violation is treated as broken.</p>
+<p><strong>Golden files</strong> (R7). Golden updates go through a dedicated script that prints a
+diff summary and requires an approval reason string. Error messages never print the copy command —
+a test whose failure message teaches you how to overwrite it is a rubber stamp.</p>
+
+<h2 id="ch8"><span class="cn">Chapter 8</span>Authoring verification (L2)</h2>
+<p><strong>Deterministic citation grammar, not NLP</strong> (AD-1). The only sentences that receive
+verdicts are those that explicitly cite an anchor:</p>
+<pre><code>The revised NDC commits to a 41.7% reduction by 2030 ⟦khm-ndc-2020-p12-s3⟧.</code></pre>
+<p>Parsing is deterministic; the same input always yields the same verdict (R10, enforced by a
+reproducibility test). Sentences without a citation are all flagged <em>unanchored</em> — that
+flag is itself a useful output, not a failure of the tool. There is no free-text claim extraction.
+An LLM may run <em>beside</em> the judgment path, producing a "this sentence could cite this
+anchor" suggestion report; it never enters the verdict.</p>
+<p><strong>Word round-trip</strong> (AD-2). Practitioners upload a .docx; the runtime extracts
+sentences and anchor tokens deterministically and returns verdicts as a Word comment layer. The
+practitioner never leaves Word. The web paste-in panel is a demo and short-text aid only.</p>
+<p><strong>Hard edges.</strong> A sentence containing a figure with no anchor cannot pass
+author-check. And when stale claims exceed 10% of the graph, author-check switches itself to
+<em>verification unavailable</em> (AD-12) — it refuses to approve drafts against a graph it knows
+is outdated.</p>
+
+<h2 id="ch9"><span class="cn">Chapter 9</span>The living record: snapshots &amp; diffs</h2>
+<p><strong>asOf = snapshot selection</strong> (AD-5). Every build is an immutable, hash-stamped
+snapshot; reconstructing the record "as of" a date means selecting a snapshot. Node-level
+bi-temporality is abandoned as unmaintainable by one person; effectivity attributes exist only for
+two or three classes (treaty status, legal instruments).</p>
+<p><strong>No stored re-evaluation queue</strong> (R9). A stored queue is a merge backlog under
+another name — the predecessor's queue proved it. Staleness is computed: full rebuild, then a
+structural diff against the previous snapshot. The diff <em>is</em> the work list.</p>
+<p><strong>Diff reports.</strong> When an amendment is injected, the runtime reproduces the list of
+shaken claims (WP-09 acceptance). Practitioners receive it as an email digest with deep links.</p>
+<p><strong>Backlog has an automatic ending</strong> (AD-12). Pending diff verdicts carry a 14-day
+SLA. Beyond it, the public screen automatically shows "this record is N days behind" at the top.
+Queue depth and oldest-item age are internal monitoring metric #1. Flags that can be ignored
+forever train people to ignore them — so these cannot be.</p>
+
+<h2 id="ch10"><span class="cn">Chapter 10</span>Publication &amp; operations</h2>
+<p><strong>Why this chapter is strict.</strong> The operations lens of the adversarial review
+measured the predecessor live: the same chain — scheduled ingest → human merge → CI deploy → daily
+monitor — collapsed across its entire length within four weeks of being declared done and green.
+Refresh failed three consecutive weeks; the one successful PR sat unmerged for 31 days (merge rate
+1 of 5); operators bypassed the CI gate with manual deploys; failure emails went unanswered for
+three weeks; the monitoring issue was permanently red, so the signal was dead. Every rule below
+exists because of a measured failure, not a hypothetical one.</p>
+<p><strong>Humans are removed from the publish path</strong> (AD-11). A rebuild that passes all
+gates (R1–R16) merges and deploys automatically. Human review is invoked only for changes the gates
+<em>blocked</em>. Deploy credentials exist only as CI secrets, so manual deploys are physically
+impossible, not merely discouraged (R8 — one deploy path; no manual deploy command is documented
+anywhere). The public footer prints its build commit hash, and a daily watchdog compares that hash
+with <span class="m">main</span> HEAD — mismatch is an incident.</p>
+<p><strong>Alerts land where the operator actually looks</strong> (R13). Failures are written
+automatically into the operations ledger (<span class="m">99-ops/broken.md</span>, one daily
+digest). Email does not count as a destination. A check red for more than 7 days is demoted from
+"alert" to "accepted defect" and moved to the ledger — only new failures make noise.</p>
+<p><strong>Dead-man switch and as-of</strong> (R16). Every scheduled job carries an external
+heartbeat ping that alarms through a non-operator channel when it stops. Every public screen shows
+its record date (as-of) permanently — a stall is visible to readers before operators. The design
+assumes the host platform disables schedules after 60 days of repository inactivity.</p>
+<p><strong>Dependency hygiene</strong> (R15). No beta or RC dependencies. Lockfile-exact
+installation (<span class="m">npm ci</span>-equivalent) passing in CI is a merge condition; an
+install that does not reproduce across machines is itself a registered defect.</p>
+
+<h2 id="ch11"><span class="cn">Chapter 11</span>API &amp; frontend</h2>
+<p><strong>API = static JSON generated at build time</strong> (<span class="m">/api/v1/*.json</span>,
+AD-6). No server runtime. The frontend reads only the view JSON produced by the graph reader —
+never record files, never seeds (R11, enforced by an import-path lint). Framework: a stable-release
+static generator (Vite or Astro); introducing a server runtime would be a separate decision.</p>
+<p><strong>The one visitor action</strong>: click a number, and its receipt opens — document page,
+sentence, hash. Everything on the page exists to make that action happen.</p>
+<p><strong>The first three seconds, zero clicks</strong> (AD-10): country name, treaty status in
+one line, countdown to the next deadline. Completeness is shown as a segmented strip by state —
+evidenced <em>n</em> · unknown <em>n</em> · absent <em>n</em> — never an aggregate percentage, and
+never a gauge; a gauge is a score grammar wearing a different name. The strip's heading is
+"<em>what this runtime has read so far</em>": absence is attributed to the runtime, not to the
+country.</p>
+<p><strong>Receipts are addressable.</strong> Every receipt panel has a unique URL from day one.</p>
+<p><strong>The three-minute demo path</strong> is a fixed design deliverable, deep-linked at every
+step:</p>
+<ol class="demo-path">
+  <li>Open the ledger.</li>
+  <li>Click a number.</li>
+  <li>See the receipt: document page, sentence, hash.</li>
+  <li>The reviewer pastes <em>their own</em> sentence into the authoring check.</li>
+  <li>The verdict comes back: anchored, outdated, or unsupported.</li>
+</ol>
+<p><strong>Performance floor</strong> (P-F10): server-rendered static HTML baseline, no WebGL, and
+a 3G throttle test in CI — the audience includes low-bandwidth, older devices.</p>
+<p><strong>Visual vocabulary.</strong> UN blue, no black — the predecessor's final art direction.
+The token canon is the VC house kit: its neutrals, three typefaces, motion eases, light-only mode
+and line-over-box discipline, with the kit's own rule that each product swaps only the accent
+family. A read of the kit (2026-10-15) confirms it defines <em>no</em> UN-blue accent and no visual
+grammar for the four states or for refusal — those are new token specifications this product adds
+on top of the kit, with the four-state semantics sourced from the predecessor's production schema.
+The states render as in Chapter 4's legend; refusal is first-class content. Motion follows the
+evidence chain (value → document → hash) and no count-up animation ever plays on a figure without a
+receipt. Hero copy obeys the same evidence discipline: every number in it carries a census key.</p>
+<p><strong>Build order</strong>: the eight frontend roles (strategist → reference hunter → design
+system → hero → sections → motion → performance → launch checklist) run in order; the launch role
+produces a checklist only — deployment is done by the owner (Chapter 14).</p>
+
+<h2 id="ch12"><span class="cn">Chapter 12</span>Repository structure</h2>
+<pre><code>Gaia-Visual-Climate-Ontology/   ← github.com/HarimJung/Gaia-Visual-Climate-Ontology
+                               independent repo. No code copied from Watch (patterns only)
+  engine/sources/            snapshot + SHA-256 adapters (country-agnostic; lists come from seeds)
+  engine/canon/              the one home of L1 canonical key functions
+  engine/seed/               platform seed (semver) + countries/&lt;ISO3&gt;/ country seeds
+  engine/generated/          ★ codegen output (vocab.ts …) — never hand-edited
+  engine/build/              assembly, anchor attachment (R1: zero country literals)
+  engine/rules/              derivation (general rules only)
+  engine/gates/              R1–R16 machine checks + publish blocking
+  engine/reader/             the one graph reader (AD-8)
+  engine/views/              view JSON generator (= the static API)
+  engine/author/             docx in → deterministic verdicts → docx comments out (AD-1·2)
+  engine/diff/               structural diff between snapshots + digest generation (R9)
+  data/                      cache uncommitted — SHA-256 manifests only (R12)
+  ontology/  tests/  app/    seeds &amp; CQ · contracts, goldens, census, mutations · static frontend</code></pre>
+<p><strong>Graph storage</strong> stays CSV for the pilot, isolated behind the single reader module
+(AD-8) — gates and view generators consume the same reader. The migration line is written down now:
+at 2 countries or 100k rows, move to a single-file SQLite.</p>
+
+<h2 id="ch13"><span class="cn">Chapter 13</span>Delivery plan</h2>
+<p>Work packages run in parallel where dependencies allow. <strong>WP-01, WP-02 and WP-04 have no
+dependencies and start simultaneously.</strong></p>
+<div class="tblwrap"><table>
+<tr><th>WP</th><th>Scope</th><th>Depends on</th><th>Acceptance</th></tr>
+<tr><td class="id">WP-01</td><td>Repo bootstrap: codegen pipeline (seed→vocab), gates scaffold
+(R1 · R2 · R7 · R8 · R12 lints + R13–R16 harness), CI</td><td>—</td>
+<td>The lints catch deliberately planted violations (mutation)</td></tr>
+<tr><td class="id">WP-02</td><td>Platform seed L2–L7 CSVs + competency questions</td><td>—</td>
+<td>SSRND checker: 0 errors · all CQs pass</td></tr>
+<tr><td class="id">WP-03</td><td>Source adapters: UNFCCC registry · BTR list · UNTC; contracts
+carry a staleness-budget field</td><td>WP-01</td><td>Snapshot + manifest; failure keeps previous</td></tr>
+<tr><td class="id">WP-04</td><td>KHM canonicalization: official-English document ledger, L1 keys,
+legislation-access gap resolved</td><td>—</td><td>Key uniqueness verified by counting</td></tr>
+<tr><td class="id">WP-05</td><td>Graph builder + publish blocking + mutation tests (R3–R6)</td>
+<td>WP-01 · 02</td><td>All mutations detected</td></tr>
+<tr><td class="id">WP-06</td><td>Reader + view JSON generator</td><td>WP-05</td>
+<td>Views alone complete every screen's data</td></tr>
+<tr><td class="id">WP-07</td><td>Frontend: ledger + evidence drawer (roles 01→03 first, AD-10)</td>
+<td>WP-06 (fixtures allow earlier start)</td><td>Every figure census-keyed · demo path fully deep-linked</td></tr>
+<tr><td class="id">WP-08</td><td>Author: docx in/out deterministic parser (AD-1 · 2)</td><td>WP-05</td>
+<td>Same input → same verdict; LLM path quarantined</td></tr>
+<tr><td class="id">WP-09</td><td>Diff report + email digest + SLA banner + dead-man ping (R9, R16)</td>
+<td>WP-05</td><td>Injected amendment reproduces the shaken-claims list</td></tr>
+<tr><td class="id">WP-10</td><td>Launch review (role 08): domain · 404 · 3G · as-of display ·
+footer-hash check</td><td>WP-07</td><td>Checklist only — <strong>deployment is the owner's act</strong></td></tr>
+</table></div>
+<div class="tblwrap"><table>
+<tr><th>Week</th><th>Work</th><th>Pass bar</th></tr>
+<tr><td class="num">1</td><td>This blueprint + license register + KHM legislation-access gap</td><td>Adversarial review stamp</td></tr>
+<tr><td class="num">2–3</td><td>Engine: seeds → adapters → canonicalization → graph + gates &amp; mutations</td><td>All mutations detected — S3</td></tr>
+<tr><td class="num">3–4</td><td>Author-check + diff/re-evaluation</td><td>Real-document verification, question-form claims only — S5 mini</td></tr>
+<tr><td class="num">4–5</td><td>Frontend (2+1 screens)</td><td>Screen figures census-keyed, 100% — S4</td></tr>
+<tr><td class="num">∥</td><td>P0 demand interviews × 5</td><td>Questionnaire centers on the authoring tool</td></tr>
+</table></div>
+
+<h2 id="ch14"><span class="cn">Chapter 14</span>Risks, open decisions &amp; governance</h2>
+<div class="pending">
+<h3>Awaiting an owner decision (blocking where noted)</h3>
+<ol>
+  <li><strong>The www-grade site</strong>: clean up / rebrand. Precondition for the first KHM demo —
+  the same brand currently serves a product with the opposite philosophy.</li>
+  <li><strong>The predecessor's <span class="m">evidence-graph</span> branch</strong>: it grows
+  inside a frozen repository and shares the product's name-space; the climate ontology canon points
+  at it, so a migration path must be decided together with its deletion.</li>
+  <li><strong>Repository name &amp; URL — decided 2026-10-15</strong>: the repository lives at
+  <a href="https://github.com/HarimJung/Gaia-Visual-Climate-Ontology">github.com/HarimJung/Gaia-Visual-Climate-Ontology</a>
+  (public), and that URL is stamped on page 1 of this blueprint. The name is separate from Watch.
+  <span class="m">Record Runtime</span> remains the product's working display name.</li>
+</ol>
+</div>
+<p><strong>Governance.</strong> Publishing, sending, deploying and submitting are done by the owner
+personally; this system produces drafts and queues, nothing further. The predecessor repository is
+frozen: read-only, no branches, no code copied — patterns only. The UN track and the investment
+track never share material (brand wall).</p>
+<p><strong>Language discipline.</strong> No ratings, rankings, estimates or automated judgments.
+No "world first" phrasing; differentiation claims appear only in question form. Maturity labels are
+honest and updated per stage. Every number in every published surface carries a census key (R6).</p>
+<p><strong>Risk register (summary).</strong> The full adversarial ledger is <a href="#axC">Annex C</a>.
+The three structural risks this design hedges: (1) <em>operational decay</em> — hedged by removing
+humans from the publish path, dead-man switches, and alerts that land where the operator looks;
+(2) <em>evidence rot</em> — hedged by reverse number-checking, durable anchor-byte storage, and
+staleness budgets; (3) <em>scope creep</em> — hedged by canonical non-goals, the screen-gate
+clause, and the L3 exclusion.</p>
+
+<h2 id="axA"><span class="cn">Annex A</span>Iron rules R1–R16</h2>
+<p>Every rule is machine-enforced in CI — none is a documentation rule or a soft gate. Each is
+paired with a mutation test; an undetected mutation fixes the test, never lowers the rule.</p>
+<div class="tblwrap"><table>
+<tr><th>#</th><th>Rule</th><th>Enforcement (CI fails on violation)</th></tr>
+<tr><td class="id">R1</td><td>Zero instance hardcoding: no ISO3, country-name or document-ID
+literals in engine code; country logic comes from seeds/data</td><td>Lint greps
+<span class="m">engine/</span> for ISO3 patterns and country names (precedent:
+<span class="m">iso3 === 'KHM'</span> in the predecessor's compose step)</td></tr>
+<tr><td class="id">R2</td><td>One vocabulary canon = seed CSV; enums/types/API vocab are codegen
+output; hand-written vocab enums banned</td><td>Grep for enum declarations outside codegen output +
+seed↔graph contrast (checks C1–C5)</td></tr>
+<tr><td class="id">R3</td><td>Derived values stored apart from base</td><td>Mutation: writing a
+derived value into base fails</td></tr>
+<tr><td class="id">R4</td><td>Machines never produce <span class="m">judged</span></td>
+<td>Mutation: a rule emitting judged fails</td></tr>
+<tr><td class="id">R5</td><td>Every published value anchored or carries a four-state reason;
+unresolved → no file is written, build fails</td><td>Mutation: deleting an anchor must fail the build</td></tr>
+<tr><td class="id">R6</td><td>Numbers via census keys only; checking runs in reverse — any number
+without a machine link fails</td><td>Full-document number sweep + census contrast</td></tr>
+<tr><td class="id">R7</td><td>Golden updates via dedicated script only: diff summary + approval
+reason required; no <span class="m">cp</span> path</td><td>Error messages never print the copy command</td></tr>
+<tr><td class="id">R8</td><td>One deploy path: CI. No manual deploy command documented anywhere</td>
+<td>Credentials exist only as CI secrets</td></tr>
+<tr><td class="id">R9</td><td>No stored state queue; stale = structural diff between two builds</td>
+<td>Re-evaluation = full rebuild + diff report against previous snapshot</td></tr>
+<tr><td class="id">R10</td><td>Authoring verdicts are deterministic parsing only; LLM output never
+enters the judgment path</td><td>Same-input→same-verdict reproducibility test</td></tr>
+<tr><td class="id">R11</td><td>Frontend reads only reader-produced view JSON — no record files, no
+seeds</td><td>Frontend import-path lint</td></tr>
+<tr><td class="id">R12</td><td><span class="m">data/cache</span> uncommitted; commits carry SHA-256
+manifests only; anchor source bytes preserved in durable storage with a retention policy
+(per-country cap · retention period)</td>
+<td>.gitignore + manifest↔durable-store contrast</td></tr>
+<tr><td class="id">R13</td><td>Alerts reach where the operator actually looks: auto-entry to the
+operations ledger (daily digest); email is not a destination; 7-days-red demotes to accepted defect</td>
+<td>Per-check alert identity + known-failure suppression list</td></tr>
+<tr><td class="id">R14</td><td>Per-source staleness budget in the contract; fetch success judged by
+bytes (hash · size floor · format), not status codes</td><td>Contract schema + ingest tests</td></tr>
+<tr><td class="id">R15</td><td>No beta/RC dependencies; lockfile-exact install passing in CI is a
+merge condition</td><td>CI install job</td></tr>
+<tr><td class="id">R16</td><td>External dead-man switch on every scheduled job; permanent as-of on
+every public screen; design assumes 60-day schedule auto-disable</td><td>External ping service +
+screen tests</td></tr>
+</table></div>
+
+<h2 id="axB"><span class="cn">Annex B</span>Architecture decisions AD-1–13</h2>
+<div class="tblwrap"><table>
+<tr><th>AD</th><th>Decision</th><th>Grounds</th></tr>
+<tr><td class="id">AD-1</td><td>Authoring grammar: verdicts only for sentences explicitly citing
+<span class="m">⟦anchor-id⟧</span>; uncited sentences flagged unanchored; no free-text claim
+extraction; LLM limited to suggestion reports</td><td>A-F1 (free-text extraction is
+non-deterministic and conflicts with CI gating)</td></tr>
+<tr><td class="id">AD-2</td><td>Authoring I/O is .docx: upload → deterministic sentence/anchor
+extraction → verdicts as a Word comment layer; web paste panel is demo-grade</td><td>P-F1 + A-F1
+(same citation grammar inside docx)</td></tr>
+<tr><td class="id">AD-3</td><td>Anchor canonical unit = file SHA-256 + page + human-confirmed
+quotation + normalization-rule version; KHM official English edition is canonical input, Khmer
+editions kept by file hash</td><td>A-F3 (Khmer segmentation non-determinism)</td></tr>
+<tr><td class="id">AD-4</td><td>Receipt first-class formats include page image + coordinate box;
+if infeasible in pilot, legislation leaves pilot scope and the canon records it</td><td>P-F3</td></tr>
+<tr><td class="id">AD-5</td><td>asOf = snapshot selection; builds are hash-stamped immutable
+snapshots; node bi-temporality abandoned; effectivity only for treaty-status / legal-instrument
+classes</td><td>A-F5</td></tr>
+<tr><td class="id">AD-6</td><td>API = build-time static JSON; stable static framework (Vite/Astro);
+no server runtime without a separate decision; no WebGL; static-HTML baseline; 3G test</td>
+<td>A-F6 · P-F10</td></tr>
+<tr><td class="id">AD-7</td><td>L3 crosswalk schema excluded from the repo; adopted now: country
+seeds reference platform seed by ID only, platform seed is semver</td><td>A-F8 · P-F8</td></tr>
+<tr><td class="id">AD-8</td><td>Graph storage stays pilot CSV behind one isolated reader module;
+switch line: 2 countries or 100k rows → single-file SQLite</td><td>A-F10</td></tr>
+<tr><td class="id">AD-9</td><td>Pilot screens = 2+1 (ledger · evidence drawer · docx authoring);
+monitoring demoted to internal view; practitioner channel = build-diff email digest with deep
+links; gap table recorded as non-goal; new screens gated on a passed KHM practitioner task test</td>
+<td>P-F2 · F7 · F8 (the predecessor's screen sprawl)</td></tr>
+<tr><td class="id">AD-10</td><td>First 3 seconds = zero clicks (country + treaty line + deadline
+countdown); completeness = segmented state strip, no aggregate %; absence attributed to the
+runtime; unique URL per receipt panel from day one; 3-minute demo path fixed, fully deep-linked</td>
+<td>P-F4 · F5 · F6</td></tr>
+<tr><td class="id">AD-11</td><td>No human merge in the publish path: gate-passing rebuilds
+auto-merge and auto-deploy; humans review only gate-blocked changes; deploy credentials only in CI;
+public footer prints build hash; daily hash-vs-HEAD watchdog</td><td>O-F1 (measured merge rate 1/5)</td></tr>
+<tr><td class="id">AD-12</td><td>Backlog gets an automatic ending: 14-day SLA then automatic public
+"N days behind" banner; queue depth and oldest-item age = monitoring metric #1; stale &gt; 10%
+switches author-check to
+verification-unavailable</td><td>O-F3</td></tr>
+<tr><td class="id">AD-13</td><td>Legislation layer separated from the auto-refresh promise:
+<span class="m">manual · as-of · quarterly review</span> tier, shown as-is on screens, until a
+source, cadence and language pipeline can be named</td><td>O-F5 (no national-legislation adapter
+precedent; no Khmer extractor) — paired with AD-4</td></tr>
+</table></div>
+
+<h2 id="axC"><span class="cn">Annex C</span>Adversarial review ledger F1–F30</h2>
+<p>2026-10-15. Three lenses: product &amp; design (P), architecture &amp; implementation (A),
+operations &amp; maintenance (O) — parallel agents; the O lens is a live measurement of the
+predecessor in production. 30 findings: 10 critical · 15 medium · 5 minor. 28 incorporated,
+2 awaiting owner decisions (P-F9, O-F9 → Chapter 14).</p>
+<div class="tblwrap"><table>
+<tr><th>F#</th><th>Sev.</th><th>Finding</th><th>Disposition</th></tr>
+<tr><td class="id">P-F1</td><td>critical</td><td>Authoring screen sits outside the practitioner's
+Word workflow (no round trip)</td><td>AD-2: .docx upload → Word comments back</td></tr>
+<tr><td class="id">P-F2</td><td>critical</td><td>Five screens at zero users replays the
+predecessor's defect</td><td>AD-9: 2+1 screens; additions gated on task test</td></tr>
+<tr><td class="id">P-F3</td><td>critical</td><td>Sentence-highlight receipts break on Khmer and
+scanned PDFs</td><td>AD-4: page image + coordinate box as first-class format</td></tr>
+<tr><td class="id">P-F4</td><td>medium</td><td>A completeness gauge is score grammar under any name</td>
+<td>AD-10: segmented strip; absence attributed to the runtime</td></tr>
+<tr><td class="id">P-F5</td><td>medium</td><td>First 3 seconds undefined; receipt panels had no URLs</td>
+<td>AD-10: zero-click trio; unique URL per panel</td></tr>
+<tr><td class="id">P-F6</td><td>medium</td><td>No 15-minute-meeting demo path</td>
+<td>AD-10: 3-minute path fixed, deep-linked</td></tr>
+<tr><td class="id">P-F7</td><td>medium</td><td>The monitoring screen serves the operator, not the
+user</td><td>AD-9: internal view + email digest</td></tr>
+<tr><td class="id">P-F8</td><td>medium</td><td>A gap table lines two countries up on one row — a
+comparison narrative</td><td>AD-7 · 9: pilot non-goal, absorbed into off-table rules</td></tr>
+<tr><td class="id">P-F9</td><td>medium</td><td>An opposite product lives under the same brand
+(www-grade app)</td><td>Name/domain separation reflected; site cleanup = <strong>owner decision</strong></td></tr>
+<tr><td class="id">P-F10</td><td>minor</td><td>No low-bandwidth/old-device assumption</td>
+<td>AD-6: static HTML baseline, no WebGL, 3G test</td></tr>
+<tr><td class="id">A-F1</td><td>critical</td><td>Free-text claim extraction is non-deterministic —
+collides with CI gating</td><td>AD-1: citation grammar, deterministic parsing only</td></tr>
+<tr><td class="id">A-F2</td><td>critical</td><td>Triple vocabulary definitions + commit-hash/line
+pins rot silently</td><td>R2: seed as sole canon + codegen; symbol pins</td></tr>
+<tr><td class="id">A-F3</td><td>critical</td><td>KHM survived on frozen hardcode in the predecessor
+(<span class="m">iso3==='KHM'</span>)</td><td>R1 zero hardcoding + AD-3 anchor = file hash + page +
+confirmed quote; English canon</td></tr>
+<tr><td class="id">A-F4</td><td>critical</td><td>A stored queue is a renamed merge backlog; manual
+deploys bypass gates</td><td>R8 one deploy path + R9 no stored queue (stale = build diff)</td></tr>
+<tr><td class="id">A-F5</td><td>medium</td><td>Node bi-temporality is unmaintainable by one person</td>
+<td>AD-5: asOf = snapshot selection</td></tr>
+<tr><td class="id">A-F6</td><td>medium</td><td>Beta-framework and server-runtime traps</td>
+<td>AD-6: static JSON API, stable frameworks</td></tr>
+<tr><td class="id">A-F7</td><td>medium</td><td>Golden-update copy hints turn the gate into a rubber
+stamp</td><td>R7: dedicated script + approval reason</td></tr>
+<tr><td class="id">A-F8</td><td>medium</td><td>Designing the crosswalk schema first maximizes the
+cost of tearing it up at country #2</td><td>AD-7: out of repo; ID references + semver only</td></tr>
+<tr><td class="id">A-F9</td><td>minor</td><td>Precedent: 544 MB cache + 141 MB non-product files
+committed</td><td>R12: cache uncommitted, manifests only</td></tr>
+<tr><td class="id">A-F10</td><td>minor</td><td>Whole-CSV in-memory parsing has a ceiling</td>
+<td>AD-8: reader isolation + written SQLite switch line</td></tr>
+<tr><td class="id">O-F1</td><td>critical</td><td>The auto-refresh chain collapsed end-to-end within
+4 weeks (live measurement: merges 1/5, PR unmerged 31 days)</td><td>AD-11: humans out of the publish
+path; footer-hash watchdog</td></tr>
+<tr><td class="id">O-F2</td><td>critical</td><td>Alert destinations did not exist; permanent red
+killed the signal</td><td>R13: ledger auto-entry, suppression list, 7-day demotion</td></tr>
+<tr><td class="id">O-F3</td><td>critical</td><td>No ending clause for backlog → people learn to
+ignore flags</td><td>AD-12: 14-day SLA + public banner; stale &gt;10% halts author-check</td></tr>
+<tr><td class="id">O-F4</td><td>medium</td><td>Success-shaped failure (HTTP 200 + bot HTML); silent
+mirror death</td><td>R14: staleness budgets; byte-judged success</td></tr>
+<tr><td class="id">O-F5</td><td>medium</td><td>No named steward or means for KHM legislation
+monitoring</td><td>AD-13: legislation declared manual tier</td></tr>
+<tr><td class="id">O-F6</td><td>medium</td><td>Anchor source bytes lived only in a 7-day-TTL cache</td>
+<td>R12 reinforced: durable storage + retention policy</td></tr>
+<tr><td class="id">O-F7</td><td>medium</td><td>Beta dependency + non-reproducible installs under an
+unattended job</td><td>R15: no betas; lockfile-exact install as merge condition</td></tr>
+<tr><td class="id">O-F8</td><td>medium</td><td>Schedules auto-disable after 60 idle days; zero
+self-healing</td><td>R16: dead-man switch + permanent as-of display</td></tr>
+<tr><td class="id">O-F9</td><td>minor</td><td>A branch sharing the product's name grows inside the
+frozen repo</td><td>New repo URL on blueprint page 1 · branch disposition = <strong>owner decision</strong></td></tr>
+<tr><td class="id">O-F10</td><td>minor</td><td>Document figures rot when only linked numbers are
+cross-checked</td><td>R6 reinforced: unlinked numbers fail CI</td></tr>
+</table></div>
+
+<h2 id="axD"><span class="cn">Annex D</span>KHM document ledger (draft)</h2>
+<p>Built from what the predecessor's records actually hold (read-only recon of the frozen Watch
+repository, 2026-10-15). Only documents the predecessor references appear here; nothing is
+invented. The canonical machine form is
+<span class="m">engine/seed/countries/KHM/documents.csv</span> in the product repository (WP-04),
+where every row carries a state and, where evidence is missing, a reason.</p>
+<div class="tblwrap"><table>
+<tr><th>Doc id</th><th>Document</th><th>Type</th><th>Key dates</th><th>Bytes held</th><th>Official English?</th></tr>
+<tr><td class="id">khm-untc-unfccc</td><td>UN Treaty Collection status list, Ch. XXVII-7 (UNFCCC) —
+Cambodia accession 1995-12-18</td><td>treaty status list</td><td>doc 2026-07-27 · retrieved
+2026-10-10</td><td>SHA-256 <span class="m">92a525f4…</span></td><td>yes (depositary's own
+<span class="m">.en.pdf</span>)</td></tr>
+<tr><td class="id">khm-untc-paris</td><td>UN Treaty Collection status list, Ch. XXVII-7-d (Paris
+Agreement) — signature 2016-04-22, ratification 2017-02-06</td><td>treaty status list</td>
+<td>doc 2026-07-27 · retrieved 2026-10-10</td><td>SHA-256 <span class="m">cb2aec82…</span></td>
+<td>yes</td></tr>
+<tr><td class="id">khm-ndc-2020</td><td>Cambodia Updated NDC — mirror-verified against an Internet
+Archive capture. One label discrepancy on record: the mirror names the same bytes "First NDC", the
+record "Updated NDC" — one document, two labels</td><td>NDC</td><td>submitted 2020-12-31</td>
+<td>SHA-256 <span class="m">da6d3824…</span> · 4,306,857 B · 158 pp</td><td>yes</td></tr>
+<tr><td class="id">khm-ndc-3.0</td><td>Cambodia's NDC 3.0 — bytes held, figure extraction
+<strong>refused</strong>: the document states four different percentages on the same basis (16%,
+24%, 30%, 55%) without labelling which is the pledge → state <em>unknown</em>, reason on record</td>
+<td>NDC</td><td>submitted 2025-08-08 · checked 2026-10-10/11</td>
+<td>SHA-256 <span class="m">246c838f…</span> · 3,003,382 B · 158 pp</td><td>yes</td></tr>
+<tr><td class="id">khm-btr1</td><td>Cambodia BTR1 — located and dated by hand; attachments never
+read; <strong>no bytes held</strong> — the one KHM document with nothing behind it</td><td>BTR</td>
+<td>submitted 2024-12-31 · published 2025-02-06</td><td>none → state <em>unknown</em> with reason</td>
+<td>unknown</td></tr>
+<tr><td class="id">khm-ndgain</td><td>ND-GAIN country index dataset (vulnerability)</td>
+<td>dataset</td><td>retrieved 2026-10-10</td><td>zip SHA-256 <span class="m">e854c7fe…</span></td>
+<td>n/a</td></tr>
+<tr><td class="id">khm-cait-2016</td><td>WRI CAIT assessment of the first (I)NDC — explicitly
+flagged "not the latest submission"</td><td>assessment</td><td>2016 vintage</td><td>CSV row only,
+no per-document hash → state <em>unknown</em> with reason</td><td>n/a</td></tr>
+</table></div>
+<h3>L1 canonical keys — counted, not asserted</h3>
+<p>Measured on the predecessor's data (2026-10-15): <strong>country = ISO3</strong> — 218 of 218
+country files unique, filename equals iso3. <strong>Document = registry URL</strong> — 146 of 146
+rows distinct; one EU joint-NDC row covers 27 member states, so country↔document is many-to-one and
+documents are keyed by URL plus content SHA-256, never by country. <strong>Bytes = SHA-256. Build =
+run id + timestamp.</strong> Production spellings confirmed: the four states are exactly
+<span class="m">observed · pledged · unknown · absent</span>; census keys are live (e.g.
+<span class="m">paris_parties = 193</span>).</p>
+<h3>What the recon proves about scope</h3>
+<p>Legislation and institutions are entirely absent from the predecessor's KHM record — no schema
+block, no data. That confirms AD-13's manual tier and makes the WP-04 legislation-access memo the
+first genuinely new ground this runtime breaks. Refusals in production are already the
+predecessor's richest honesty dataset: 370 refusal entries across 131 distinct sentences in 15
+families — refusal as first-class content is proven practice, not a design wish.</p>
+
+<div class="foot">
+  <p>Canonical blueprint of the National Climate Record Runtime (working name) · UN track ·
+  blueprint dated 2026-10-15 · adversarial review stamp at head · maturity: design in progress,
+  runtime S0. The PDF snapshot for submission is produced by printing this page. Sources of record:
+  <span class="m">record-runtime-plan</span> · <span class="m">record-runtime-spec</span> ·
+  <span class="m">frontend-prompts</span> (Gaia, 20-studio/un). Publishing, sending and deployment
+  are the owner's acts.</p>
+</div>
+</main>
+</div>
