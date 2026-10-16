@@ -1,0 +1,282 @@
+---
+// The record stage: one country's documents, morphed stage by stage. The
+// choreography is the frozen predecessor's country story (components/story/
+// stage.tsx + stage.css, owner decision 2026-10-16) — keyed pools, one layout
+// per step, a staggered wave through --d, the marks keeping their identity
+// while the browser interpolates. The honest re-anchoring (percentages and USD
+// are not held by this runtime; documents, states, hashes, sizes and reasons
+// are) is documented in lib/scene/record-stage.mjs.
+//
+// Everything on this stage is server-rendered: with JavaScript off the stage
+// rests on its last step — the engraved dial, seated inside the ring of its
+// documents — and the step cards below read as plain prose. Nothing here
+// prints a bare figure: in-stage text is words only, and the two figures in
+// the readout sit inside their census links (R6). No country identity in this
+// file (R1): titles, types, dates and states all arrive in `view`.
+import StaticDial from './StaticDial.astro';
+import { RECORD_STEPS, SOCKETS } from '../lib/story-content.mjs';
+import { recordLayout, typesGeom, tilesGeom, stampBox } from '../lib/scene/record-stage.mjs';
+
+const { view, counts, iso3 } = Astro.props;
+const W = 1000, H = 640;
+
+// ── The data island: only what the stage needs to place a mark ──────────
+// Unknown-reason families: the distinct verbatim reasons on this record, in
+// row order. The hatch pattern is the family; the key below names each one.
+const fams = [];
+for (const r of view.rows) {
+  if (r.state === 'unknown' && r.state_reason && !fams.some((f) => f.reason === r.state_reason)) {
+    fams.push({ reason: r.state_reason, doc_id: r.doc_id });
+  }
+}
+const typeOrder = [...new Set(view.rows.map((r) => r.doc_type))];
+const yearOf = (r) => (r.date ? r.date.slice(0, 4) : '');
+const years = [...new Set(view.rows.map(yearOf))].sort();
+const docs = view.rows.map((r) => ({
+  i: r.doc_id,
+  t: r.doc_type,
+  s: r.state,
+  h: r.sha256 ? 1 : 0,
+  b: r.size_bytes,
+  y: yearOf(r),
+  f: r.state === 'unknown' ? fams.findIndex((f) => f.reason === r.state_reason) : -1,
+}));
+const data = { w: W, h: H, docs, types: typeOrder, years, socks: SOCKETS.length };
+
+// Resting layout = the last step, so the server-rendered stage is the finished
+// instrument rather than a half-built chart.
+const rest = recordLayout('dial', data);
+const restCell = recordLayout('states', data); // where a cell parks before its first step
+const restStamp = recordLayout('filings', data); // the stamp grid the filings step uses
+const spare = Math.max(0, SOCKETS.length - docs.length);
+const TG = typesGeom(data), KG = tilesGeom(data);
+const stateWord = { observed: 'read', pledged: 'pledged', unknown: 'on record, not read', absent: 'confirmed absent' };
+// The stamps are drawn at their real slot size (see stampBox): no scale, so
+// the type is never squashed, and the wrap widths below are derived from that
+// box rather than guessed — a stamp whose words do not fit is unreadable.
+const SB = stampBox(data);
+const SW = SB.sw, SH = SB.sh;
+const TITLE_FS = Math.max(15, Math.min(21, SW / 8));
+const fits = (fs, k) => Math.max(6, Math.floor((SW - 28) / (fs * k)));
+// A file name is one unbroken token: wrapping on spaces alone leaves it
+// hanging off the card, so every line is cut to the measured width too.
+const cut = (s, n) => (String(s).length > n ? String(s).slice(0, Math.max(1, n - 1)) + '…' : String(s));
+const wrap = (s, n, lines = 3) => {
+  const out = [];
+  let line = '';
+  for (const word of String(s).split(/\s+/)) {
+    if (!line) line = word;
+    else if ((line + ' ' + word).length <= n) line += ' ' + word;
+    else { out.push(line); line = word; }
+    if (out.length === lines) break;
+  }
+  if (out.length < lines && line) out.push(line);
+  const kept = out.slice(0, lines).map((l) => cut(l, n));
+  const more = out.length > lines || (out.length === lines && line && out[lines - 1] !== line);
+  // cut() already marks the cut with an ellipsis; test the cut line, not the
+  // line before it, or a truncated last line ends "li……"
+  if (more && kept.length) {
+    const last = cut(kept[kept.length - 1], n - 1);
+    kept[kept.length - 1] = last.endsWith('…') ? last : last + '…';
+  }
+  return kept;
+};
+---
+
+<section class="scroll-chapter rchapter" data-record style={`height:${RECORD_STEPS.length * 100}svh`} aria-label="This record, stage by stage">
+  {/* One viewport-tall track per step; the stepper watches the track crossing
+      the viewport's middle line, so there is never a screen with no step. */}
+  <div class="rtracks" aria-hidden="true">
+    {RECORD_STEPS.map((s, k) => (
+      <div class="rtrack" data-rstep={s.step} style={`top:${(k * 100 / RECORD_STEPS.length).toFixed(4)}%;height:${(100 / RECORD_STEPS.length).toFixed(4)}%`} />
+    ))}
+  </div>
+  <div class="scroll-pin">
+    <div class="stage-heading"><span>the record — stage by stage</span></div>
+    <div class="rstage is-dial" data-rstage aria-hidden="true">
+      {/* the frame keeps the stage in the band above the step card, and the
+          seated instrument shares its centre with the ring of marks */}
+      <div class="r-frame">
+      <svg viewBox={`0 0 ${W} ${H}`}>
+        <defs>
+          {/* One hatch angle per recorded reason for an unknown: four
+              distinguishable textures turn "unknown" from a shrug into a
+              taxonomy the key below can name (predecessor world-stage HATCH).
+              Both pattern units are objectBoundingBox because the cells are
+              placed and sized by TRANSFORM (WebKit safety) — a user-space
+              tile would be multiplied by the cell's scale and render as one
+              enormous diagonal instead of a hatch. */}
+          {[
+            'M0,.25 L.25,0 M0,.5 L.5,0',
+            'M0,0 L.25,.25 M0,-.25 L.5,.25',
+            'M.125,0 L.125,.25',
+            'M0,.125 L.25,.125',
+          ].map((d, k) => (
+            <pattern id={`r-hatch-${k}`} width=".25" height=".25" patternUnits="objectBoundingBox" patternContentUnits="objectBoundingBox">
+              <rect width=".25" height=".25" fill="var(--wash)"></rect>
+              <path d={d} stroke="var(--ink-3)" stroke-width=".07" fill="none"></path>
+            </pattern>
+          ))}
+        </defs>
+
+        {/* the plate the instrument is seated on: drawn first, under the
+            marks, because a plate is a surface and not an annotation */}
+        <g class="r-ann g-dial">
+          <circle cx={W / 2} cy={H / 2} r={Math.min(W, H) / 2 - 52} class="r-seat"></circle>
+        </g>
+
+        {/* ── the cell pool: one unit rect per document, plus spares for the
+               eight-component step ── */}
+        <g class="r-cells">
+          {docs.map((d) => {
+            const p = restCell.cell(d);
+            return (
+              <rect
+                data-rcell={d.i}
+                x="-0.5" y="-0.5" width="1" height="1"
+                class="r-cell off"
+                style={`transform:translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px) scale(${p.sx.toFixed(1)},${p.sy.toFixed(1)})`}
+              />
+            );
+          })}
+          {Array.from({ length: spare }, () => (
+            <rect data-rspare x="-0.5" y="-0.5" width="1" height="1" class="r-cell off" style={`transform:translate(${W / 2}px,${H / 2}px) scale(1,1)`} />
+          ))}
+        </g>
+
+        {/* ── the stamp pool: the filings step, each stamp a receipt link ── */}
+        <g class="r-stamps">
+          {view.rows.map((r, i) => {
+            const p = restStamp.stamp(docs[i], i);
+            const lines = wrap(r.title, fits(TITLE_FS, .56), 3);
+            const kind = cut(r.doc_type, fits(12, .74));
+            const word = cut(stateWord[r.state], fits(13, .5));
+            return (
+              <a href={`/receipt/${iso3}/${r.doc_id}/`} data-receipt={r.doc_id}>
+                <g data-stamp={r.doc_id} class="r-stamp off" style={`transform:translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px)`}>
+                  <rect x="0" y="0" width={SW} height={SH} class={`r-card ${r.state}`} rx="4"></rect>
+                  <text x="14" y="26" class="r-kind" style="font-size:12px">{kind}</text>
+                  {lines.map((l, j) => (
+                    <text x="14" y={56 + j * (TITLE_FS + 5)} class="r-title" style={`font-size:${TITLE_FS}px`}>{l}</text>
+                  ))}
+                  <text x="14" y={SH - 16} class="r-state" style="font-size:13px">{word}</text>
+                  {r.state === 'absent' && (
+                    <g class="r-cross">
+                      <line x1="14" y1="14" x2={SW - 14} y2={SH - 14}></line>
+                      <line x1={SW - 14} y1="14" x2="14" y2={SH - 14}></line>
+                    </g>
+                  )}
+                </g>
+              </a>
+            );
+          })}
+        </g>
+
+        {/* ── the bead pool: one per document, resting in the ring ── */}
+        <g class="r-beads">
+          {docs.map((d, i) => {
+            const b = rest.bead(d, i);
+            return (
+              <circle
+                data-rbead={d.i}
+                r="4.4"
+                class={`r-bead ${b.cls}`}
+                style={`transform:translate(${b.x.toFixed(1)}px,${b.y.toFixed(1)}px) scale(${b.s})`}
+              />
+            );
+          })}
+        </g>
+        {/* ── per-step annotation, each group shown only on its own step ── */}
+        <g class="r-ann g-split">
+          <line x1={W / 2} y1="86" x2={W / 2} y2={H - 60}></line>
+          <text x={W / 4} y="112" text-anchor="middle" class="r-grp">bytes held and hashed</text>
+          <text x={(W * 3) / 4} y="112" text-anchor="middle" class="r-grp">on record, bytes not held</text>
+        </g>
+        <g class="r-ann g-types">
+          {typeOrder.map((t, r) => (
+            <text x={TG.x0 - 16} y={TG.top + r * TG.rowH + TG.rowH / 2 + 6} text-anchor="end" class="r-row">{t}</text>
+          ))}
+          <line x1={TG.x0} y1={TG.top + typeOrder.length * TG.rowH + 10} x2={TG.x0 + years.length * TG.colW} y2={TG.top + typeOrder.length * TG.rowH + 10}></line>
+          {years.map((y, c) => (
+            <a href="#ledger-h">
+              <text x={TG.x0 + c * TG.colW + TG.colW / 2} y={TG.top + typeOrder.length * TG.rowH + 34} text-anchor="middle" class="r-lbl">
+                {y || 'no date'}
+              </text>
+            </a>
+          ))}
+        </g>
+        <g class="r-ann g-tiles">
+          {SOCKETS.map((s, i) => {
+            const cx = KG.gx + (i % KG.cols) * (KG.side + 18) + KG.side / 2;
+            const cy = KG.gy + Math.floor(i / KG.cols) * (KG.side + 18) + KG.side / 2;
+            const lines = wrap(s.label, 13, 3);
+            return (
+              <g>
+                {lines.map((l, j) => (
+                  <text x={cx} y={cy + (j - (lines.length - 1) / 2) * 24 + 8} text-anchor="middle" class="r-tile">{l}</text>
+                ))}
+                <text x={cx} y={cy + KG.side / 2 - 18} text-anchor="middle" class="r-lbl">not read yet</text>
+              </g>
+            );
+          })}
+        </g>
+        <g class="r-ann g-sizes">
+          <line x1="40" y1={H - 182} x2={W - 40} y2={H - 182}></line>
+          <text x="40" y={H - 156} class="r-lbl">area to scale · recorded size in bytes</text>
+          <text x={W - 40} y={H - 156} text-anchor="end" class="r-lbl">hairline square · no size on record</text>
+        </g>
+      </svg>
+
+      {/* the instrument, seated inside the ring: an HTML layer over the SVG,
+          exactly as the predecessor seated its hero (stage.css .stage-hero) */}
+      <div class="r-hero">
+        <StaticDial
+          counts={counts}
+          rows={view.rows}
+          sockets={[]}
+          href="#census-documents_with_bytes"
+          onRecordHref="#census-documents_on_record"
+        />
+      </div>
+      </div>
+    </div>
+    <script type="application/json" set:html={JSON.stringify(data)} />
+
+    {/* the step cards cross-fade in one place at the bottom of the pin: no
+        card ever travels across the instrument, and there is no screen of
+        scroll with nothing on it */}
+    <div class="rsteps">
+    {
+      RECORD_STEPS.map((s, k) => (
+        <div
+          class={`scene-card${k === RECORD_STEPS.length - 1 ? ' is-on' : ''}`}
+          data-rcard={s.step}
+        >
+          <span class="eyebrow">{s.eyebrow}</span>
+          <h3>{s.title}</h3>
+          <p>{s.body}</p>
+          <p class="cardfigs">
+            {s.figs.map((key, j) => (
+              <>
+                {j > 0 && <span class="sep" aria-hidden="true"> · </span>}
+                <a class="fig" data-census={key} href={`#census-${key}`}>{counts[key]}</a>{' '}
+                <span class="figlbl">{key.replace(/_/g, ' ')}</span>
+              </>
+            ))}
+          </p>
+          {s.step === 'states' && fams.length > 0 && (
+            <ul class="famkey">
+              {fams.map((f, j) => (
+                <li>
+                  <span class={`hsw h${j % 4}`} aria-hidden="true" />
+                  <a class="reason" href={`/receipt/${iso3}/${f.doc_id}/#state`} data-receipt={f.doc_id}>“{f.reason}”</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))
+    }
+    </div>
+  </div>
+</section>

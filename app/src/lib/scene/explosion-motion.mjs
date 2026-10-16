@@ -15,6 +15,22 @@ export function reveal(amount, start, end) {
 export const LAYER_WINDOWS = [[.08, .19], [.21, .34], [.36, .49], [.51, .60], [.91, 1]];
 export const LAYER_LIFTS = [.42, 1.50, 3.15, 4.60, 6.80];
 
+/** Chapter time is NOT scroll time. Mapping them linearly left 1.9 viewports
+ *  of travel where no card was on screen and only one socket of the report
+ *  moved; this maps even track position to uneven chapter time, so every
+ *  chapter gets the same share of scroll and the model is never frozen.
+ *  `t` is 0..1 of the scrub; the knots are the chapter starts. */
+export function trackToProgress(t, chapters) {
+  const n = chapters.length;
+  const x = Math.max(0, Math.min(1, t));
+  const slot = 1 / n; // each chapter owns an equal slice of the track
+  const k = Math.min(n - 1, Math.floor(x / slot));
+  const into = (x - k * slot) / slot;
+  const a = chapters[k];
+  const b = k + 1 < n ? chapters[k + 1] : 1;
+  return a + (b - a) * into;
+}
+
 export const btrReveal = (amount, index) => reveal(amount, .615 + index * .034, .641 + index * .034);
 export const btrStepAt = (amount) =>
   amount < .615 || amount >= .91 ? -1 : Math.min(7, Math.floor((amount - .615) / .034));
@@ -26,7 +42,11 @@ export function storyPhase(amount) {
 /** The original model's Z axis is the common spindle. No inventory / XY packing.
  *  `lift` compresses that spindle for a stage too short to frame it. */
 export function verticalOffset(amount, layer, shell = null, lift = 1) {
-  if (shell === 'upper') return reveal(amount, 0, .11) * 12 * lift;
+  // The predecessor hid a 12-unit lid travel behind a per-chapter camera; with
+  // a fixed frame the geometry has to be the thing that fits, so the lid stops
+  // one unit above the tallest layer instead of leaving a 5-unit void that
+  // broke the machine into two disconnected objects.
+  if (shell === 'upper') return reveal(amount, 0, .11) * (LAYER_LIFTS[4] + .8) * lift;
   if (shell === 'lower') return -reveal(amount, 0, .11) * .22 * lift;
   const [start, end] = LAYER_WINDOWS[Math.min(4, layer)];
   return LAYER_LIFTS[Math.min(4, layer)] * reveal(amount, start, end) * lift;

@@ -82,13 +82,86 @@ export const WORLD_STEPS = [
   },
   {
     step: 'voids',
-    title: 'The margin it refuses to fill',
+    title: 'Every blank, filed under its own reason',
     body:
-      'The same lanes, remeasured by what is missing: registry rows with no bytes behind them. A record with unknown states turns to an outline. The voids are not failure — they are the product: a blank stated is a blank you can check.',
+      'The marks re-sort into blocks — one block per reason this runtime recorded for an unknown, in the order the rows carry them, each reason kept verbatim and linked to the receipt it was read on. Unknown is not one shrug; it is a taxonomy you can audit.',
     figs: [
       { label: 'documents without bytes', key: 'documents_without_bytes' },
       { label: 'states unknown', key: 'states_unknown' },
     ],
+    families: true,
+  },
+  {
+    step: 'scatter',
+    title: 'What is on record against what is proven',
+    body:
+      'Each record takes a place: how many documents are on record for it, against how many of those this runtime fetched and hashed. The records holding no bytes at all are counted in their own lane under the break rule — a labelled place, not a collapse onto the axis.',
+    figs: [
+      { label: 'documents on record', key: 'documents_on_record' },
+      { label: 'documents with bytes', key: 'documents_with_bytes' },
+    ],
+  },
+];
+
+// The record stage (one country, stage by stage) — the predecessor's country
+// morph, re-anchored on what this runtime holds. figs name census keys the
+// country page resolves against its own index entry and links (R6).
+export const RECORD_STEPS = [
+  {
+    step: 'filings',
+    eyebrow: 'the filings',
+    title: 'Every document on record, as a stamp',
+    body:
+      'One card per document this runtime has on record for this country: its type, its title, and the word for the state it is in. A document confirmed absent is struck through — a void drawn, not a row left out.',
+    figs: ['documents_on_record'],
+  },
+  {
+    step: 'states',
+    eyebrow: 're-sorted',
+    title: 'The same documents, sorted by what is proven',
+    body:
+      'The cards drop their titles and re-sort into the four states. Each hatch pattern is one recorded reason for an unknown — the reasons are listed under this stage, verbatim, each linked to its receipt.',
+    figs: ['states_observed', 'states_unknown'],
+  },
+  {
+    step: 'split',
+    eyebrow: 'bytes held',
+    title: 'Hashed on the left, on record only on the right',
+    body:
+      'The single hardest line in the product: documents whose bytes were fetched and hashed, against documents this runtime has only seen listed. The right-hand block is not a failure; it is the part of the record still unproven.',
+    figs: ['documents_with_bytes', 'documents_without_bytes'],
+  },
+  {
+    step: 'types',
+    eyebrow: 'date by type',
+    title: 'When each kind of document lands',
+    body:
+      'The same marks become a strip: one row per document type, one column per year read from the document itself. Documents with no date on record sit in their own column — never slid into a year to tidy the picture.',
+    figs: ['documents_on_record'],
+  },
+  {
+    step: 'tiles',
+    eyebrow: 'the report',
+    title: 'Eight components, eight empty bores',
+    body:
+      'The transparency report has eight parts. This runtime has read none of them for any country, so every seat renders as a machined empty bore rather than a blank. The bore is the most precisely cut thing on the stage.',
+    figs: ['states_unknown'],
+  },
+  {
+    step: 'sizes',
+    eyebrow: 'to scale',
+    title: 'Area is the size on record, in bytes',
+    body:
+      'Each square’s area is the recorded size of the file this runtime holds. A document with no size on record is a hairline square at a fixed size that says so — an absence kept the same size as every other absence.',
+    figs: ['documents_with_bytes'],
+  },
+  {
+    step: 'dial',
+    eyebrow: 'assembled',
+    title: 'The marks gather and the instrument is seated',
+    body:
+      'Every document takes a place on the ring, and the dial seats in the middle: one countable segment per document, machined where the bytes are held, hatched where the state is unknown. No sweep, no gauge — segments you can count.',
+    figs: ['documents_with_bytes', 'documents_on_record'],
   },
 ];
 

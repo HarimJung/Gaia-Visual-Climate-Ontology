@@ -78,6 +78,95 @@ test('story page: bead and cell counts equal the view count — derived, not har
   assert.ok(cells >= 100, 'the keyed cell pool holds at least 100 rects');
 });
 
+// ── The record stage: one country's documents, morphed stage by stage ──────
+// The country is discovered from the views, never named here (R1).
+const anyCountry = viewFiles.length > 0
+  ? JSON.parse(readFileSync(join(viewsDir, viewFiles[0]), 'utf8'))
+  : null;
+const countryPage = anyCountry && join(dist, 'country', anyCountry.country.iso3.toLowerCase(), 'index.html');
+const countrySkip = skip || (!countryPage || !existsSync(countryPage)) ? 'no built country page' : false;
+
+test('record stage: one keyed mark per document, and every stamp is a receipt link', { skip: countrySkip }, () => {
+  const html = readFileSync(countryPage, 'utf8');
+  const n = anyCountry.rows.length;
+  for (const pool of ['data-stamp', 'data-rcell', 'data-rbead']) {
+    assert.equal([...html.matchAll(new RegExp(`${pool}="`, 'g'))].length, n, `one ${pool} per document row`);
+  }
+  // every stamp sits inside a link to that row's receipt — the marks ARE the
+  // evidence chain, not a decoration of it
+  for (const row of anyCountry.rows) {
+    const re = new RegExp(`href="/receipt/[a-z]{3}/${row.doc_id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/"[^>]*>\\s*<g data-stamp="`);
+    assert.match(html, re, `the stamp for ${row.doc_id} links its receipt`);
+  }
+});
+
+test('record stage: the stage rests on a complete step with JavaScript off', { skip: countrySkip }, () => {
+  const html = readFileSync(countryPage, 'utf8');
+  // the server-rendered resting class is a real step, not "nothing yet"
+  assert.match(html, /class="rstage is-dial"/, 'the stage rests on its last step');
+  // one viewport-tall track per step card, so no screen of scroll has no step
+  const tracks = [...html.matchAll(/data-rstep="/g)].length;
+  const cards = [...html.matchAll(/data-rcard="/g)].length;
+  assert.equal(tracks, cards, 'one track per step card');
+  assert.ok(tracks >= 6, `the record morph carries its stages (found ${tracks})`);
+});
+
+test('the dial draws one countable segment per document on record — no sweep, no gauge', { skip: countrySkip }, () => {
+  const html = readFileSync(countryPage, 'utf8');
+  const dial = html.slice(html.indexOf('class="d-seg"'));
+  const segs = [...dial.slice(0, dial.indexOf('</g>')).matchAll(/<path /g)].length;
+  const onRecord = anyCountry.rows.length;
+  assert.equal(segs, onRecord, 'one arc segment per document on record');
+  // the centre readout is two census figures, each inside its link (R6)
+  assert.match(html, /<a href="#census-documents_with_bytes">\s*<text[^>]*class="d-read"[^>]*>\s*\d+\s*<\/text>\s*<\/a>/);
+  assert.doesNotMatch(html, /class="static-dial"[\s\S]{0,4000}%/, 'no percentage anywhere on the dial');
+});
+
+test('the tray gives every record the same case and counts the inside', { skip }, () => {
+  const ledgerPath = join(dist, 'ledger', 'index.html');
+  if (!existsSync(ledgerPath)) return;
+  const html = readFileSync(ledgerPath, 'utf8');
+  const indexPath = join(repo, 'data', 'views', 'index.json');
+  const entries = existsSync(indexPath)
+    ? JSON.parse(readFileSync(indexPath, 'utf8')).countries
+    : viewFiles.map((f) => JSON.parse(readFileSync(join(viewsDir, f), 'utf8'))).map((v) => ({
+        iso3: v.country.iso3,
+        counts: { documents_on_record: v.rows.length, documents_with_bytes: v.rows.filter((r) => r.sha256).length },
+      }));
+  const cases = [...html.matchAll(/class="t-case"/g)].length;
+  const held = [...html.matchAll(/class="t-pip t-held"/g)].length;
+  const listed = [...html.matchAll(/class="t-pip t-listed"/g)].length;
+  assert.equal(cases, entries.length, 'one identical case per record');
+  const total = entries.reduce((n, e) => n + e.counts.documents_on_record, 0);
+  const bytes = entries.reduce((n, e) => n + e.counts.documents_with_bytes, 0);
+  assert.equal(held + listed, total, 'one pip per document on record');
+  assert.equal(held, bytes, 'a filled pip is a document whose bytes are held — the census count, exactly');
+});
+
+test('the case-back carries source, run time and checksum, and is complete without JavaScript', { skip }, () => {
+  const html = readFileSync(story, 'utf8');
+  assert.match(html, /class="caseback" data-caseback/, 'the story page has a case-back plate');
+  const back = html.slice(html.indexOf('cb-back'), html.indexOf('cb-back') + 1400);
+  for (const label of ['source', 'run time', 'checksum']) {
+    assert.match(back, new RegExp(`<dt[^>]*>${label}</dt>`), `the case-back is engraved with ${label}`);
+  }
+  assert.match(back, /[0-9a-f]{64}/, 'the checksum on the back is the full hash');
+  // no data-flip-ready in the built HTML: both faces are plain blocks until
+  // the enhancement script runs, so JS off loses no fact
+  assert.doesNotMatch(html, /data-flip-ready/, 'the flip is added at runtime, never baked in');
+});
+
+test('reduced motion kills the delays, not only the durations', () => {
+  const css = readFileSync(join(repo, 'app', 'src', 'styles', 'site.css'), 'utf8');
+  const block = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.match(block, /transition-delay:\s*0s\s*!important/, 'transition delays are zeroed');
+  assert.match(block, /animation-delay:\s*0s\s*!important/, 'animation delays are zeroed');
+  // the stages' whole choreography lives in a delay, so a duration-only rule
+  // suppresses nothing on them
+  const stage = readFileSync(join(repo, 'app', 'src', 'styles', 'stage.css'), 'utf8');
+  assert.match(stage, /transition-delay: var\(--d, 0ms\)/, 'the stages stagger through --d');
+});
+
 test('scene modules: zero country literals (codes or display names)', () => {
   const sceneDir = join(repo, 'app', 'src', 'lib', 'scene');
   const names = new Set();

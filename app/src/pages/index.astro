@@ -14,6 +14,7 @@ import { views, census, countryEntry, fmt, richestView, REPO_BLOB } from '../lib
 import { sceneDataFor } from '../lib/scene-data.mjs';
 import { STORY, WORLD_STEPS, MACHINE_CARDS } from '../lib/story-content.mjs';
 import { chapterStart } from '../lib/scene/explosion-motion.mjs';
+import { binGeom, blockGeom, plotGeom } from '../lib/scene/world-stage.mjs';
 import basemap from '../../public/data/basemap.json';
 import '../styles/scene.css';
 import '../styles/stage.css';
@@ -47,9 +48,42 @@ function boxOf(d) {
   }
   return best;
 }
-const W = 1000, H = 640, MAP_TY = Math.round((H - basemap.height) / 2), BASE = 560;
+// A frame shaped for the column it sits in: the stage is sticky beside a text
+// column, so a 1.56:1 viewBox rendered a 339px band of marks adrift in a 900px
+// viewport. At 1.19:1 the stage fills the screen it is pinned to.
+const W = 1000, H = 840, MAP_TY = Math.round((H - basemap.height) / 2), BASE = 560;
+// The reason families: every distinct verbatim reason this runtime recorded
+// for an unknown, in the order the rows carry them. They become the blocks of
+// the voids step and its key — "unknown" as a taxonomy with named families
+// rather than one shrug (predecessor world-stage HATCH families).
+// A reason's leading clause is the family: the rest of the sentence names the
+// one document it was recorded on (a file name, a capture id), so grouping on
+// the whole string would give one family per row. The clause is the runtime's
+// own words, cut at its own punctuation — never a name invented for it.
+// A record is filed under the family of its FIRST recorded unknown, which is
+// exactly the mark the stage draws for it, so the key's count and the block's
+// marks are the same thing counted once.
+const famKey = (s) => s.split(/[:;]/)[0].trim();
+const fams = [];
+for (const v of views) {
+  const r = v.rows.find((row) => row.state === 'unknown' && row.state_reason);
+  if (!r) continue;
+  const key = famKey(r.state_reason);
+  let f = fams.find((e) => e.key === key);
+  if (!f) {
+    f = { key, reason: r.state_reason, iso3: v.country.iso3.toLowerCase(), doc_id: r.doc_id, n: 0 };
+    fams.push(f);
+  }
+  f.n += 1;
+}
+// biggest families first: the blocks read as a distribution, not as log order
+fams.sort((a, b) => b.n - a.n);
+const famOf = (v) => {
+  const r = v.rows.find((row) => row.state === 'unknown' && row.state_reason);
+  return r ? fams.findIndex((f) => f.key === famKey(r.state_reason)) : -1;
+};
 const worldData = {
-  w: W, h: H, mapTY: MAP_TY, base: BASE,
+  w: W, h: H, mapTY: MAP_TY, base: BASE, fams: fams.length,
   countries: views.map((v) => {
     const shape = basemap.shapes[v.country.iso3];
     const b = shape ? boxOf(shape) : null;
@@ -62,21 +96,45 @@ const worldData = {
       b: c.documents_with_bytes,
       o: c.documents_without_bytes,
       u: c.states_unknown,
+      f: famOf(v),
     };
   }),
 };
-// Server-rendered resting state = the 'map' layout; lanes for the column pool
-// use the same ordering the client module derives (by bytes, ties by index).
+// Server-rendered resting state = the 'map' layout; the cell pool parks at its
+// bin place (the geometry the client module derives from the same island).
 const mapPos = (c, i) => (c.x == null
   ? { x: 40 + (i % 60) * 6, y: H - 14 }
   : { x: c.x, y: MAP_TY + c.y });
-const lanes = new Map(
-  worldData.countries
-    .map((c, i) => ({ c, i }))
-    .sort((a, b) => b.c.b - a.c.b || a.i - b.i)
-    .map((e, k) => [e.c.i, k]),
-);
-const laneX = (iso) => 60 + lanes.get(iso) * ((W - 120) / worldData.countries.length) + ((W - 120) / worldData.countries.length) / 2;
+const BG = binGeom(worldData), BLK = blockGeom(worldData), PLT = plotGeom(worldData);
+// Block labels wrap to the block's own width. The face is mono at 26 user
+// units, so one character advances ~15.6 units; measuring with anything
+// narrower runs a label across its neighbour's block, which is what a
+// 12-character word did here. Lines that still do not fit are cut, and the
+// reason stays verbatim in the step card's key beside the stage.
+const FAM_CH = 15.6;
+const famLines = (s) => {
+  const per = Math.max(5, Math.floor((BLK.colW - 18) / FAM_CH));
+  const out = [];
+  let line = '';
+  for (const word of String(s).split(/\s+/)) {
+    if (!line) line = word;
+    else if ((line + ' ' + word).length <= per) line += ' ' + word;
+    else { out.push(line); line = word; }
+    if (out.length === 3) break;
+  }
+  if (out.length < 3 && line) out.push(line);
+  return out.map((l) => (l.length > per ? l.slice(0, Math.max(1, per - 1)) + '…' : l));
+};
+const binStack = new Map();
+const binAt = (c) => {
+  const k = binStack.get(c.b) ?? 0;
+  binStack.set(c.b, k + 1);
+  return {
+    x: BG.x0 + c.b * BG.pitch + ((k % BG.cols) - (BG.cols - 1) / 2) * BG.step,
+    y: BG.base - Math.floor(k / BG.cols) * BG.step,
+  };
+};
+const binHome = new Map(worldData.countries.map((c) => [c.i, binAt(c)]));
 
 // Step figures resolve against the census through the door; graph-level
 // counters link to the ledger file they are recomputed from (R6). A key the
@@ -92,10 +150,13 @@ const walked = richestView();
 const iso3 = walked.country.iso3.toLowerCase();
 const entry = countryEntry(walked.country.iso3);
 const scene = { ...sceneDataFor(walked, entry), selectHref: `/country/${iso3}/` };
-// Predecessor pacing: ten screens of track, cover on the first, scrub over
-// the middle eight, the closed machine holds the last.
+// Predecessor pacing: a screen of lead, a screen of hold, and the scrub over
+// the middle. Each chapter owns an equal slice of the scrub (trackToProgress
+// maps even track position to uneven chapter time), so a card sits at the
+// centre of its own slice and no stretch of scroll buys nothing.
 const SCREENS = 10;
-const cardTop = (k) => (1 + chapterStart(k) * (SCREENS - 2)) / SCREENS;
+const CHAPTERS = MACHINE_CARDS.length;
+const cardTop = (k) => (1 + ((k + 0.5) / CHAPTERS) * (SCREENS - 2)) / SCREENS;
 const cardFig = (key) => ({ value: entry.counts[key], href: `/country/${iso3}/#census-${key}` });
 
 // ── One document opens: the walked record's quoted, hashed row ────────────
@@ -119,11 +180,16 @@ for (const v of views) {
     </p>
     <h1>{STORY.title}</h1>
     <p class="treaty">{STORY.lede}</p>
+    {/* all four states show, including the zeros: zero is a reading, and the
+        key below names four materials — the object it describes has four */}
     <div class="worldband" aria-hidden="true">
       {
-        band
-          .filter((s) => census.counts[s.key] > 0)
-          .map((s) => <div class={`seg seg-${s.state}`} style={`flex-grow:${census.counts[s.key]}`} />)
+        band.map((s) => (
+          <div
+            class={`seg seg-${s.state}${census.counts[s.key] > 0 ? '' : ' seg-zero'}`}
+            style={`flex-grow:${census.counts[s.key]}`}
+          />
+        ))
       }
     </div>
     <ul class="bandkey">
@@ -170,13 +236,40 @@ for (const v of views) {
                   </span>
                 ))}
             </div>
+            {/* the family key: one row per recorded reason, the reason
+                verbatim and linked to a receipt it was read on, its count
+                linked to the ledger file it is recomputable from (R6) */}
+            {s.families && (
+              <ul class="famrow">
+                {fams.map((f) => (
+                  <li>
+                    <span>
+                      <a class="fig" href={ledgerUrl}>{fmt(f.n)}</a> records ·{' '}
+                      <a class="reason" href={`/receipt/${f.iso3}/${f.doc_id}/#state`} data-receipt={f.doc_id}>
+                        “{f.reason}”
+                      </a>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))
       }
     </div>
-    <div class="wstage">
+    <div class="wstage" data-wstage>
       <div class="stage" aria-hidden="true">
         <svg viewBox={`0 0 ${W} ${H}`}>
+          <defs>
+            {/* absence is a material, not a lighter grey: the bins holding no
+                hashed bytes are hatched, like every other void in the kit */}
+            {/* objectBoundingBox on both axes: the cells are sized by
+                transform, so a user-space tile would scale with them */}
+            <pattern id="w-gap" width=".34" height=".34" patternUnits="objectBoundingBox" patternContentUnits="objectBoundingBox">
+              <rect width=".34" height=".34" fill="var(--wash)"></rect>
+              <path d="M0,0 L.34,.34 M-.17,.17 L.17,.51" stroke="var(--ink-3)" stroke-width=".1" fill="none"></path>
+            </pattern>
+          </defs>
           <g class="stage-map" style={`transform:translate(0px,${MAP_TY}px)`}>
             {
               Object.entries(basemap.shapes).map(([iso, d]) => (
@@ -188,26 +281,75 @@ for (const v of views) {
             <text x="40" y={H - 26 - MAP_TY}>records with no base-map shape ↓</text>
           </g>
           {/* the parties step's apart group: records with no treaty event on
-              the depositary's list stand apart at 840+ (world-stage layout);
-              this quiet caption says why, so standing apart reads intentional.
-              Shown by world-stage only on that step, and only if any exist. */}
+              the depositary's list stand in a labelled satellite one pitch off
+              the roster block, so standing apart reads intentional. Placed by
+              world-stage on that step, and only if any exist. */}
           <g class="stage-apart" aria-hidden="true">
-            <text x="858" y="140" text-anchor="middle">no treaty event on record</text>
-            <line x1="858" y1="148" x2="858" y2="160" />
+            <text x="858" y="68" text-anchor="middle">no treaty</text>
+            <text x="858" y="96" text-anchor="middle">event on</text>
+            <text x="858" y="124" text-anchor="middle">record</text>
+            <line x1="858" y1="136" x2="858" y2="156" />
           </g>
+
+          {/* ── per-step annotation: word labels only, so no figure is ever
+                 drawn here outside its link (R6). The figures live in the
+                 step cards and the family key, each census- or receipt-linked. */}
+          <g class="stage-ann g-bytes">
+            <line class="w-axis" x1={BG.x0 - BG.pitch / 2} y1={BG.base + BG.step} x2={BG.x0 + (BG.bins - 0.5) * BG.pitch} y2={BG.base + BG.step} />
+            {BG.sizes.map((_, b) => (
+              <a href="/ledger/#census-documents_with_bytes">
+                <text x={BG.x0 + b * BG.pitch} y={BG.base + BG.step + 34} text-anchor="middle">{b}</text>
+              </a>
+            ))}
+            <text x={BG.x0 - BG.pitch / 2} y={BG.top - 26} class="w-blk">documents hashed, per record →</text>
+          </g>
+          <g class="stage-ann g-voids">
+            {/* one block label per family, on its own tick line: the label is
+                the recorded reason's leading clause, wrapped, and it links to
+                a receipt the reason was read on */}
+            {fams.concat([{ key: 'nothing unknown on record', iso3: null, doc_id: null }]).map((f, b) => {
+              const x = BLK.x0 + b * BLK.colW - 8;
+              const lines = famLines(f.key);
+              const label = lines.map((l, j) => (
+                <text x={x} y={BLK.top - 42 - (lines.length - 1 - j) * 28}>{l}</text>
+              ));
+              return (
+                <g>
+                  <line class="w-axis" x1={x} y1={BLK.top - 30} x2={x} y2={BLK.top - 10} />
+                  {f.doc_id ? (
+                    <a href={`/receipt/${f.iso3}/${f.doc_id}/#state`} data-receipt={f.doc_id}>{label}</a>
+                  ) : label}
+                </g>
+              );
+            })}
+          </g>
+          <g class="stage-ann g-scatter">
+            <line class="w-axis" x1={PLT.l - 16} y1={PLT.b + 18} x2={PLT.r} y2={PLT.b + 18} />
+            <line class="w-axis" x1={PLT.l - 16} y1={PLT.t - 14} x2={PLT.l - 16} y2={PLT.b + 18} />
+            <text x={PLT.l - 16} y={PLT.t - 40} class="w-blk">↑ documents hashed</text>
+            <text x={PLT.r} y={PLT.b + 48} text-anchor="end" class="w-blk">documents on record →</text>
+            {/* the break rule and the lane: a record with no bytes held at all
+                is counted in its own place, never collapsed onto the axis */}
+            <line class="w-axis" x1={PLT.l - 16} y1={PLT.lane - 34} x2={PLT.r} y2={PLT.lane - 34} stroke-dasharray="6 5" />
+            <text x={PLT.l - 16} y={PLT.lane - 12} class="w-blk">no bytes held at all</text>
+          </g>
+
           <g>
             {
-              worldData.countries.map((c) => (
-                <rect
-                  data-cell={c.i}
-                  x="-1.6"
-                  y="-1"
-                  width="3.2"
-                  height="1"
-                  class="stage-cell off"
-                  style={`transform:translate(${laneX(c.i)}px,${BASE}px) scale(1,0.001)`}
-                />
-              ))
+              worldData.countries.map((c) => {
+                const p = binHome.get(c.i);
+                return (
+                  <rect
+                    data-cell={c.i}
+                    x="-0.5"
+                    y="-0.5"
+                    width="1"
+                    height="1"
+                    class="stage-cell off"
+                    style={`transform:translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px) scale(.001,.001)`}
+                  />
+                );
+              })
             }
           </g>
           <g>
@@ -223,8 +365,15 @@ for (const v of views) {
         </svg>
       </div>
       <p class="stage-caption">
-        One mark per country on record. Base map: Natural Earth (public domain), Equal Earth
-        projection — a base map, not a measurement. Counts from{' '}
+        One mark per country on record.{' '}
+        {/* the base-map credit belongs to the step that draws the base map;
+            with JavaScript off no step class is set and the map is what the
+            page rests on, so the credit shows */}
+        <span class="cap-map">
+          Base map: Natural Earth (public domain), Equal Earth projection — a base map, not a
+          measurement.{' '}
+        </span>
+        Counts from{' '}
         <a href={ledgerUrl} class="mono" style="font-size:12.5px">{census.ledger}</a>, as of{' '}
         <span class="mono" data-meta="as_of">{census.as_of}</span>.
       </p>
@@ -242,9 +391,23 @@ for (const v of views) {
     <div class="scroll-pin">
       <div class="stage-heading">
         <span>{STORY.machineHeading} — <a href={`/country/${iso3}/`} style="pointer-events:auto">{walked.country.name_en}</a></span>
-        <span>drag to turn · tap a part</span>
       </div>
-      <SceneStage scene={scene} counts={entry.counts} dialHref={`/country/${iso3}/#census-documents_with_bytes`} start={0} />
+      {/* the chapter row: which chapter of the assembly is on screen, and the
+          way back to the first (predecessor instrument-hero's dot row and its
+          replay, kept while the autoplay stays replaced by the scrub) */}
+      <div class="chapterrow" data-chapters>
+        {MACHINE_CARDS.map((card) => <span class="dot" data-dot={card.phase} />)}
+        <button type="button" class="replay" data-replay>run the assembly again</button>
+      </div>
+      <span class="stage-afford">drag to turn · tap a part</span>
+      <SceneStage
+        scene={scene}
+        counts={entry.counts}
+        rows={walked.rows}
+        dialHref={`/country/${iso3}/#census-documents_with_bytes`}
+        onRecordHref={`/country/${iso3}/#census-documents_on_record`}
+        start={0}
+      />
     </div>
     <div class="scene-cards">
       {
@@ -276,8 +439,10 @@ for (const v of views) {
     <h2>{STORY.docTitle}</h2>
     <p class="docbody">{STORY.docBody}</p>
     <div class="docchain">
+      {/* these three are labels on one section, not three headings of their
+          own: h3 under the section's h2, which is what they read as */}
       <div class="rblock">
-        <h2>Document</h2>
+        <h3>Document</h3>
         <p class="doc-title">
           <a href={`/receipt/${iso3}/${doc.doc_id}/`} data-receipt={doc.doc_id}>{doc.title}</a>
         </p>
@@ -293,12 +458,37 @@ for (const v of views) {
         }
       </div>
       <div class="rblock">
-        <h2>Verbatim quote</h2>
+        <h3>Verbatim quote</h3>
         <p class="quote"><span class="qtext">{doc.quote.text}</span></p>
       </div>
+      {/* the case-back, turned over: the three things provenance is made of,
+          on one plate (predecessor Motion.dc.html 05). Both faces are plain
+          stacked blocks until the script marks the block ready. */}
       <div class="rblock" id="story-sha256">
-        <h2>SHA-256 — the case-back</h2>
-        <p class="hash"><a data-receipt={doc.doc_id} href={`/receipt/${iso3}/${doc.doc_id}/#sha256`}>{doc.sha256}</a></p>
+        <h3>SHA-256 — the case-back</h3>
+        <div class="caseback" data-caseback>
+          <div class="cb-plate">
+            <div class="cb-face cb-front">
+              <p class="hash"><a data-receipt={doc.doc_id} href={`/receipt/${iso3}/${doc.doc_id}/#sha256`}>{doc.sha256}</a></p>
+            </div>
+            <div class="cb-face cb-back">
+              <dl>
+                <dt>source</dt>
+                <dd>
+                  {doc.source_url
+                    ? <a href={doc.source_url}>{doc.source_url}</a>
+                    : <span class="chip chip-absent">none recorded</span>}
+                </dd>
+                <dt>run time</dt>
+                <dd><span data-meta="as_of">{census.as_of}</span></dd>
+                <dt>checksum</dt>
+                <dd class="hash">
+                  <a data-receipt={doc.doc_id} href={`/receipt/${iso3}/${doc.doc_id}/#sha256`}>{doc.sha256}</a>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
         <p class="muted">The identity this record rests on: the hash of the fetched file itself.</p>
       </div>
     </div>
@@ -348,11 +538,12 @@ for (const v of views) {
 </Base>
 
 <style>
-  /* The cover composes its band: no dead band under the bar (the .head top
-     padding is dropped and the centring is biased up, so the H1 sits at the
-     optical centre of the first screen), and the closing action strip runs
-     the full line — hairline across, sentence left, the one action right. */
-  .cover { min-height: calc(92svh - 60px); display: flex; flex-direction: column; justify-content: center; padding-top: 0; padding-bottom: clamp(16px, 4svh, 40px); }
+  /* The cover composes its band: the kicker starts a measured distance under
+     the bar instead of floating in a 127px dead band, and the closing action
+     strip runs the full line — hairline across, sentence left, action right.
+     (The old rule centred the block and then padded the bottom, which biased
+     the content DOWN by the padding and inverted the rhythm on a phone.) */
+  .cover { min-height: calc(74svh - 60px); display: flex; flex-direction: column; justify-content: flex-start; padding-top: clamp(28px, 7svh, 72px); padding-bottom: clamp(16px, 4svh, 40px); }
   .cover .action { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px 40px; }
   .cover .action .action-txt { max-width: 40rem; }
   .cover .action .action-cta { white-space: nowrap; font-weight: 600; }
@@ -362,7 +553,7 @@ for (const v of views) {
   .docopen, .voids, .closer { padding: clamp(64px, 12svh, 140px) 0 0; max-width: 54rem; }
   .docopen h2, .voids h2, .closer h2 { font: 760 clamp(1.8rem, 3.4vw, 2.6rem)/1.05 var(--f-d); letter-spacing: -.028em; margin: 0 0 12px; }
   .docbody { font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.6; color: var(--ink-2); margin: 0 0 28px; max-width: 44rem; }
-  .docchain .rblock h2 { font: 600 12px/1 var(--f-m); letter-spacing: .16em; color: var(--ink-2); margin: 0 0 12px; text-transform: uppercase; }
+  .docchain .rblock h3 { font: 600 12px/1 var(--f-m); letter-spacing: .16em; color: var(--ink-2); margin: 0 0 12px; text-transform: uppercase; }
   .docline { margin: 6px 0 0; color: var(--ink-2); font-size: 15.5px; }
   .voids .figrow { display: flex; flex-wrap: wrap; gap: 10px 40px; margin: 26px 0 10px; padding-top: 14px; border-top: 1px solid var(--line-2); }
   .voids .figrow > span { display: flex; flex-direction: column; gap: 2px; font-size: 14.5px; color: var(--ink-2); max-width: 24rem; }
@@ -372,14 +563,17 @@ for (const v of views) {
   .way { display: inline-block; font: 600 15.5px/1 var(--f-t); color: var(--acc-ink); border: 1px solid var(--line-2); border-radius: 8px; padding: 13px 18px; text-decoration: none; transition: border-color .15s var(--ease), background .15s var(--ease); }
   .way:hover { border-color: var(--acc-ink); background: var(--acc-soft); }
   .cardfigs { margin-top: 10px !important; padding-top: 10px; border-top: 1px solid var(--line-2); }
-  /* the hash settles into place once — the same global keyframes the receipt
-     pages use (site.css), dead under prefers-reduced-motion there too */
-  #story-sha256 .hash { animation: settle .45s var(--ease); }
+  /* no entrance animation here: this block sits 13,000px down the page, so a
+     CSS animation with no trigger played and finished at parse time and no
+     reader ever saw it. The gesture that belongs here is the flip. */
 </style>
 
 <script>
   import { mountWorldStage } from '../lib/scene/world-stage.mjs';
-  import { chapterStart } from '../lib/scene/explosion-motion.mjs';
+  import { chapterStart, cyclePhase, trackToProgress } from '../lib/scene/explosion-motion.mjs';
+
+  // the chapter knots, derived from the same timing module the cards used
+  const KNOTS = [...document.querySelectorAll('[data-dot]')].map((d) => chapterStart(Number(d.dataset.dot)));
 
   // The world stage: middle-band stepper over one mounted SVG.
   const world = document.querySelector('[data-world]');
@@ -392,10 +586,11 @@ for (const v of views) {
   const chapter = document.querySelector('[data-machine]');
   const stage = chapter && chapter.querySelector('.scene-stage');
   const phone = matchMedia('(max-width: 699px)');
-  const inset = () =>
+  const full = () =>
     phone.matches ? 0 : Math.min(480, innerWidth * 0.40) + Math.max(16, Math.min(48, innerWidth * 0.04));
   let frame = 0;
   const cards = chapter ? [...chapter.querySelectorAll('.scene-card')] : [];
+  const dots = chapter ? [...chapter.querySelectorAll('[data-dot]')] : [];
   const onScroll = () => {
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(() => {
@@ -404,13 +599,20 @@ for (const v of views) {
         for (const card of cards) card.style.opacity = '';
         return;
       }
-      // An exiting card fades out before its top edge reaches the pinned
-      // stage heading (top bar 60px + heading row): the card column and the
-      // fixed header never cross.
+      // A card fades in as it arrives and out before its top edge reaches the
+      // pinned stage heading, so the card column and the header never cross.
+      // The strongest card opacity on screen also drives the camera's inset:
+      // with no card beside it the machine re-centres into the whole frame
+      // instead of sitting shoved against the right edge of a half-empty one.
       const headClear = 104;
+      let near = 0;
       for (const card of cards) {
-        const top = card.getBoundingClientRect().top;
-        card.style.opacity = String(Math.max(0, Math.min(1, (top - headClear) / 90)));
+        const r = card.getBoundingClientRect();
+        const out = Math.max(0, Math.min(1, (r.top - headClear) / 90));
+        const into = Math.max(0, Math.min(1, (innerHeight - r.top) / 140));
+        const o = Math.min(out, into);
+        card.style.opacity = String(o);
+        if (o > near) near = o;
       }
       const controls = stage && stage.sceneControls;
       if (!controls) return;
@@ -422,14 +624,58 @@ for (const v of views) {
       const lead = innerHeight / 2;
       const distance = chapter.offsetHeight - 2 * innerHeight;
       if (distance > 100 && r.top <= 0 && r.bottom >= 0) {
-        controls.progress = Math.max(0, Math.min(100, ((-r.top - lead) / distance) * 100));
-        controls.inset = inset();
+        // Progress reaches a chapter's start exactly when that chapter's card
+        // crosses the viewport centre: cardTop places card k at the centre of
+        // the k-th equal slice of the track, and trackToProgress maps that
+        // same slice onto the chapter's own span.
+        const p = trackToProgress((-r.top - lead) / distance, KNOTS) * 100;
+        controls.progress = p;
+        controls.inset = full() * near;
+        const chap = cyclePhase(p / 100);
+        for (const dot of dots) {
+          const k = Number(dot.dataset.dot);
+          dot.classList.toggle('is-on', k === chap);
+          dot.classList.toggle('is-done', k < chap);
+        }
       }
     });
   };
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll, { passive: true });
   onScroll();
+
+  // FLIP: the case-back plate turns over to source · run time · checksum.
+  // Progressive enhancement only — until this runs, both faces are ordinary
+  // stacked blocks and nothing is hidden behind a transform.
+  const box = document.querySelector('[data-caseback]');
+  if (box) {
+    box.setAttribute('data-flip-ready', '');
+    const flip = document.createElement('button');
+    flip.className = 'cb-btn';
+    flip.type = 'button';
+    flip.setAttribute('aria-expanded', 'false');
+    flip.textContent = 'turn it over';
+    flip.addEventListener('click', () => {
+      const on = box.hasAttribute('data-flipped');
+      box.toggleAttribute('data-flipped', !on);
+      flip.setAttribute('aria-expanded', String(!on));
+      flip.textContent = on ? 'turn it over' : 'turn it back';
+    });
+    const row = document.createElement('p');
+    row.style.margin = '0';
+    row.appendChild(flip);
+    box.insertAdjacentElement('afterend', row);
+  }
+
+  // "run the assembly again": the scrub's replay — scroll back to the top of
+  // the chapter and let the reader drive it a second time.
+  const replay = chapter && chapter.querySelector('[data-replay]');
+  if (replay && chapter) {
+    replay.addEventListener('click', () => {
+      const top = chapter.getBoundingClientRect().top + scrollY;
+      scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  }
   if (chapter) {
     const io = new IntersectionObserver(
       (entries) => {

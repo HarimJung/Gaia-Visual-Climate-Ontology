@@ -19,6 +19,35 @@ const band = [
   { state: 'unknown', material: 'unverified', key: 'states_unknown' },
   { state: 'absent', material: 'void', key: 'states_absent' },
 ];
+
+// ── The tray: one identical case per country, filled a pip per document ──
+// Pips are laid out on the smallest square grid that holds the widest record
+// in the data, so every case is drawn on the same scale — derived, never a
+// constant (R1), and no figure is drawn here: a pip is a mark, and the row it
+// belongs to carries the count inside its link.
+const entries = views.map((v) => ({ v, e: countryEntry(v.country.iso3) }));
+const maxDocs = Math.max(1, ...entries.map(({ e }) => e.counts.documents_on_record));
+const side = Math.ceil(Math.sqrt(maxDocs)); // pips per row inside a case
+const TRAY = { cols: 20, pip: 4, gap: 1.6, pad: 3, unit: 0, gutter: 8, w: 0, h: 0 };
+TRAY.unit = TRAY.pad * 2 + side * TRAY.pip + (side - 1) * TRAY.gap;
+const rows = Math.ceil(entries.length / TRAY.cols);
+TRAY.w = TRAY.cols * TRAY.unit + (TRAY.cols - 1) * TRAY.gutter;
+TRAY.h = rows * TRAY.unit + (rows - 1) * TRAY.gutter;
+const trayUnits = entries.map(({ v, e }, i) => {
+  const c = e.counts;
+  const iso3 = v.country.iso3.toLowerCase();
+  return {
+    iso3,
+    x: (i % TRAY.cols) * (TRAY.unit + TRAY.gutter),
+    y: Math.floor(i / TRAY.cols) * (TRAY.unit + TRAY.gutter),
+    aria: `${v.country.name_en}: ${c.documents_with_bytes} of ${c.documents_on_record} documents with bytes held`,
+    pips: Array.from({ length: c.documents_on_record }, (_, k) => ({
+      x: TRAY.pad + (k % side) * (TRAY.pip + TRAY.gap),
+      y: TRAY.pad + Math.floor(k / side) * (TRAY.pip + TRAY.gap),
+      cls: k < c.documents_with_bytes ? 't-held' : 't-listed',
+    })),
+  };
+});
 ---
 
 <Base title="World ledger">
@@ -31,11 +60,15 @@ const band = [
       One row per country on record. Every figure on these pages links to the receipt it rests on;
       unknown and absent describe this runtime's reading, not the country.
     </p>
+    {/* all four states show, including the zeros: zero is a reading */}
     <div class="worldband" aria-hidden="true">
       {
-        band
-          .filter((s) => census.counts[s.key] > 0)
-          .map((s) => <div class={`seg seg-${s.state}`} style={`flex-grow:${census.counts[s.key]}`} />)
+        band.map((s) => (
+          <div
+            class={`seg seg-${s.state}${census.counts[s.key] > 0 ? '' : ' seg-zero'}`}
+            style={`flex-grow:${census.counts[s.key]}`}
+          />
+        ))
       }
     </div>
     <ul class="bandkey">
@@ -57,6 +90,50 @@ const band = [
       One action everywhere: <b>click a figure, get the receipt it rests on</b> — document, verbatim
       quote, <span class="nb">SHA-256</span>.
     </p>
+  </section>
+
+  {/* ── THE TRAY ──────────────────────────────────────────────────────────
+      The predecessor's declared signature move (work/references/Tray:
+      "a watchmaker's tray, not a map — the case is identical; the grade is
+      how full the inside is"), re-driven by counts this runtime holds and
+      with its one dishonest part removed. The comp filled each unit with a
+      conic sweep, which is a gauge; ours fills a cell per document, so every
+      unit is COUNTABLE: one pip per document on record, a machined pip where
+      the bytes are held and hashed, a hatched pip where they are not. Every
+      case links to the country's own ledger row. Server-rendered: the tray is
+      as complete with JavaScript off as with it. */}
+  <section aria-labelledby="tray-h" id="tray">
+    <h2 class="sec" id="tray-h">Every record at once</h2>
+    <p class="treaty">
+      One case per country on record. The case is the same size for all of them; what differs is how
+      much of the inside this runtime can prove. A filled pip is a document whose bytes were fetched
+      and hashed; an outlined pip is a document on record with no bytes held.
+    </p>
+    <div class="tray">
+      <svg viewBox={`0 0 ${TRAY.w} ${TRAY.h}`} role="img" aria-labelledby="tray-aria">
+        <title id="tray-aria">
+          One case per country; within a case, one pip per document on record, filled where this
+          runtime holds and has hashed the bytes.
+        </title>
+        {
+          trayUnits.map((u) => (
+            <a href={`/ledger/#c-${u.iso3}`} aria-label={u.aria}>
+              <g transform={`translate(${u.x},${u.y})`}>
+                <rect x="0" y="0" width={TRAY.unit} height={TRAY.unit} class="t-case" rx="1"></rect>
+                {u.pips.map((p) => (
+                  <rect x={p.x} y={p.y} width={TRAY.pip} height={TRAY.pip} class={`t-pip ${p.cls}`}></rect>
+                ))}
+              </g>
+            </a>
+          ))
+        }
+      </svg>
+    </div>
+    <ul class="traykey">
+      <li><span class="tsw t-held" aria-hidden="true" /> bytes held and hashed</li>
+      <li><span class="tsw t-listed" aria-hidden="true" /> on record, bytes not held</li>
+      <li><span class="tsw t-case" aria-hidden="true" /> the case: the same for every record</li>
+    </ul>
   </section>
 
   <section aria-labelledby="countries-h">
@@ -88,10 +165,13 @@ const band = [
                       {v.country.name_en}
                     </a>
                   </td>
-                  <td class="mono" style="font-size:13px">
+                  {/* data-l carries each cell's own label: below 768px the row
+                      becomes a card and the column headers are out of view,
+                      so every figure keeps a visible name beside it */}
+                  <td class="mono" style="font-size:13px" data-l="code">
                     {v.country.iso3}
                   </td>
-                  <td class="num">
+                  <td class="num" data-l="documents">
                     <a
                       class="fig"
                       data-census="documents_on_record"
@@ -100,7 +180,7 @@ const band = [
                       {e.counts.documents_on_record}
                     </a>
                   </td>
-                  <td class="num">
+                  <td class="num" data-l="with bytes">
                     <a
                       class="fig"
                       data-census="documents_with_bytes"
@@ -109,7 +189,7 @@ const band = [
                       {e.counts.documents_with_bytes}
                     </a>
                   </td>
-                  <td class="statecell">
+                  <td class="statecell" data-l="what's been read">
                     {e.counts.documents_on_record > 0 && (
                       <div class="ministrip" aria-hidden="true">
                         {v.strip.segments
@@ -123,7 +203,7 @@ const band = [
                       {v.strip.segments.map((s) => (
                         <span class="mk">
                           <span class={`sw sw-${s.state}`} aria-hidden="true" />
-                          <span class="sr-only">{s.label} </span>
+                          <span class="sr-only">{s.state} </span>
                           <a class="fig" data-census={s.census_key} href={`/country/${iso3}/#census-${s.census_key}`}>
                             {e.counts[s.census_key]}
                           </a>

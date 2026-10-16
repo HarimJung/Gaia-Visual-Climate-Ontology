@@ -6,8 +6,14 @@
 import '../styles/site.css';
 import { census, engineViews } from '../lib/data.mjs';
 
-const { title } = Astro.props;
-const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(0, 7) || 'no-commit-env';
+const PRODUCT = 'National Climate Record Runtime';
+const { title, description } = Astro.props;
+// A placeholder is not provenance: the commit row renders only when a build
+// actually supplied one, on a product whose whole pitch is provenance.
+const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(0, 7);
+const desc = description
+  || 'A runtime that reads national climate records and refuses to say more than it can prove: every figure links to the receipt it rests on — document, verbatim quote, SHA-256.';
+const canonical = new URL(Astro.url.pathname, 'https://harimjung.github.io/Gaia-Visual-Climate-Ontology/');
 ---
 
 <!doctype html>
@@ -15,8 +21,20 @@ const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f7f5" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    {/* the two faces above the fold: without a preload the display H1 paints
+        in system-ui and reflows on every first visit */}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/bricolage-grotesque-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/hanken-grotesk-400.woff2" crossorigin />
+    <title>{title === PRODUCT ? title : `${title} — ${PRODUCT}`}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical.href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={PRODUCT} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical.href} />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -38,8 +56,12 @@ const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(
       <div class="wrap">
         <p>
           <span class="mono" data-meta="as_of">as of {census.as_of}</span>
-          <span aria-hidden="true"> · </span>
-          <span class="mono" data-meta="build_commit">build {commit}</span>
+          {commit && (
+            <>
+              <span aria-hidden="true"> · </span>
+              <span class="mono" data-meta="build_commit">build {commit}</span>
+            </>
+          )}
         </p>
         <p>Independent runtime; not an official UNFCCC publication. Every figure links to its receipt.</p>
         <p class="muted">

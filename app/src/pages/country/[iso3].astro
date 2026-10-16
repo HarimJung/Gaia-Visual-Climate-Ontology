@@ -7,9 +7,11 @@
 import Base from '../../layouts/Base.astro';
 import StateLegend from '../../components/StateLegend.astro';
 import SceneStage from '../../components/SceneStage.astro';
+import RecordStage from '../../components/RecordStage.astro';
 import { views, census, countryEntry, REPO_BLOB } from '../../lib/data.mjs';
 import { sceneDataFor } from '../../lib/scene-data.mjs';
 import '../../styles/scene.css';
+import '../../styles/stage.css';
 
 export function getStaticPaths() {
   return views.map((view) => ({
@@ -46,10 +48,11 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
               </span>
             )}
             <b>{t.treaty_label}</b>{' '}
-            {/* one line per event: newline whitespace around the anchor pads its
-                underline and opens a gap before the comma separator */}
+            {/* the explicit {' '} is the only space the compiler keeps: source
+                newlines around the anchor are stripped, which ran the event
+                word straight into its date on every country page */}
             {t.events.map((ev, j) => (
-              <>{j > 0 && ', '}{ev.label} <a class="fig" data-receipt={t.receipt} href={`/receipt/${iso3}/${t.receipt}/`}>{ev.display}</a></>
+              <>{j > 0 && ', '}{ev.label}{' '}<a class="fig" data-receipt={t.receipt} href={`/receipt/${iso3}/${t.receipt}/`}>{ev.display}</a></>
             ))}
           </>
         ))
@@ -79,22 +82,29 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
         c.documents_on_record > 0 && (
           <div class="strip">
             {
-              /* a zero count gets zero visual weight — the legend below still says 0 */
-              view.strip.segments
-                .filter((s) => c[s.census_key] > 0)
-                .map((s) => (
-                  <div class={`seg seg-${s.state}`} style={`flex-grow:${c[s.census_key]}`} title={`${s.label} ${c[s.census_key]}`} />
-                ))
+              /* all four states show, zeros included at a minimum width: zero
+                 is a reading, and the key below names four materials, so the
+                 object it describes has four */
+              view.strip.segments.map((s) => (
+                <div
+                  class={`seg seg-${s.state}${c[s.census_key] > 0 ? '' : ' seg-zero'}`}
+                  style={`flex-grow:${c[s.census_key]}`}
+                  title={`${s.state} ${c[s.census_key]}`}
+                />
+              ))
             }
           </div>
         )
       }
       <ul class="strip-key">
         {
+          /* the state's own name is the one vocabulary: the view also carries
+             a display label that renamed "observed" to "evidenced", which put
+             two names for one state 200px apart on this page */
           view.strip.segments.map((s) => (
             <li>
               <span class={`sw sw-${s.state}`} aria-hidden="true" />
-              {s.label}{' '}
+              {s.state}{' '}
               <a class="fig" data-census={s.census_key} href={`#census-${s.census_key}`}>
                 {c[s.census_key]}
               </a>
@@ -109,8 +119,19 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
   {/* The instrument sits under the zero-click trio (AD-10 stays first in the
       DOM and complete without JS) and above the rows it is built from. */}
   <section class="dial-stage" aria-label="The record as an instrument">
-    <SceneStage scene={scene} counts={c} dialHref="#census-documents_with_bytes" start={100} />
+    <SceneStage
+      scene={scene}
+      counts={c}
+      rows={view.rows}
+      dialHref="#census-documents_with_bytes"
+      onRecordHref="#census-documents_on_record"
+      start={100}
+    />
   </section>
+
+  {/* The record stage: the same documents, morphed stage by stage — the
+      predecessor's country choreography, re-anchored on what is held. */}
+  <RecordStage view={view} counts={c} iso3={iso3} />
 
   <section aria-labelledby="ledger-h">
     <h2 class="sec" id="ledger-h">
@@ -225,3 +246,12 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
     <StateLegend counts={c} />
   </section>
 </Base>
+
+<script>
+  // The record stage's stepper: one IntersectionObserver over viewport-tall
+  // tracks. With JavaScript off the stage rests on its last step — the
+  // engraved dial inside its ring — and every card reads as plain prose.
+  import { mountRecordStage } from '../../lib/scene/record-stage.mjs';
+  const section = document.querySelector('[data-record]');
+  if (section) mountRecordStage(section);
+</script>

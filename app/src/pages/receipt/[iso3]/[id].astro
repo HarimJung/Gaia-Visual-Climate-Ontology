@@ -4,7 +4,7 @@
 // Routes are enumerated from the views (R1: no instance ids in code); the page
 // reads only view JSON (R11).
 import Base from '../../../layouts/Base.astro';
-import { views, fmt } from '../../../lib/data.mjs';
+import { views, census, fmt } from '../../../lib/data.mjs';
 
 export function getStaticPaths() {
   return views.flatMap((view) => {
@@ -63,15 +63,37 @@ const figHref = row.sha256 ? '#sha256' : '#state';
       )
     }
 
+    {/* the case-back: the plate turns over to the three things provenance is
+        made of — source, run time, checksum (predecessor Motion.dc.html 05).
+        Both faces are plain stacked blocks until the script marks the block
+        ready, so JavaScript off loses no fact. */}
     <section class="rblock" id="sha256" aria-labelledby={`hash-h-${row.doc_id}`}>
-      <h2 id={`hash-h-${row.doc_id}`}>SHA-256</h2>
+      <h2 id={`hash-h-${row.doc_id}`}>SHA-256 — the case-back</h2>
       {
         row.sha256 ? (
-          <p class="hash">
-            <code id="hashval" data-receipt={row.doc_id}>
-              {row.sha256}
-            </code>
-          </p>
+          <div class="caseback" data-caseback>
+            <div class="cb-plate">
+              <div class="cb-face cb-front">
+                <p class="hash">
+                  <code id="hashval" data-receipt={row.doc_id}>
+                    {row.sha256}
+                  </code>
+                </p>
+              </div>
+              <div class="cb-face cb-back">
+                <dl>
+                  <dt>source</dt>
+                  <dd>
+                    {row.source_url ? <a href={row.source_url}>{row.source_url}</a> : <span class="chip chip-absent">none recorded</span>}
+                  </dd>
+                  <dt>run time</dt>
+                  <dd><span data-meta="as_of">{census.as_of}</span></dd>
+                  <dt>checksum</dt>
+                  <dd class="hash" data-receipt={row.doc_id}>{row.sha256}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
         ) : (
           <div class="void">
             <span class="chip chip-absent">no bytes held</span>
@@ -88,7 +110,12 @@ const figHref = row.sha256 ? '#sha256' : '#state';
         <dd class="mono" style="font-size:14px">{row.doc_type}</dd>
         <dt>date</dt>
         <dd>
-          <a class="fig" data-receipt={row.doc_id} href={figHref}>{row.date}</a>
+          {/* a date this runtime does not hold is an explicit void with its
+              reason, never an empty link — the same treatment the source URL
+              two rows down already gets */}
+          {row.date
+            ? <a class="fig" data-receipt={row.doc_id} href={figHref}>{row.date}</a>
+            : <span class="chip chip-absent">no date on record</span>}
         </dd>
         {
           row.size_bytes !== null && (
@@ -139,21 +166,44 @@ const figHref = row.sha256 ? '#sha256' : '#state';
   </article>
 
   <script is:inline>
-    // Progressive enhancement only: with JS off the full hash is plain, selectable text.
+    // Progressive enhancement only: with JS off the full hash is plain,
+    // selectable text and both faces of the case-back are stacked blocks.
     (function () {
+      var box = document.querySelector('[data-caseback]');
       var el = document.getElementById('hashval');
+      var row = document.createElement('p');
+      row.style.margin = '0';
+      if (box) {
+        box.setAttribute('data-flip-ready', '');
+        var flip = document.createElement('button');
+        flip.className = 'cb-btn';
+        flip.type = 'button';
+        flip.setAttribute('aria-expanded', 'false');
+        flip.textContent = 'turn it over';
+        flip.addEventListener('click', function () {
+          var on = box.hasAttribute('data-flipped');
+          if (on) box.removeAttribute('data-flipped');
+          else box.setAttribute('data-flipped', '');
+          flip.setAttribute('aria-expanded', String(!on));
+          flip.textContent = on ? 'turn it over' : 'turn it back';
+        });
+        row.appendChild(flip);
+        box.insertAdjacentElement('afterend', row);
+      }
       if (!el || !navigator.clipboard) return;
       var btn = document.createElement('button');
       btn.className = 'copy';
       btn.type = 'button';
       btn.textContent = 'copy hash';
+      btn.style.marginLeft = '8px';
       btn.addEventListener('click', function () {
         navigator.clipboard.writeText(el.textContent.trim()).then(function () {
           btn.textContent = 'copied';
           setTimeout(function () { btn.textContent = 'copy hash'; }, 1200);
         });
       });
-      el.parentNode.insertAdjacentElement('afterend', btn);
+      if (row.parentNode) row.appendChild(btn);
+      else el.parentNode.insertAdjacentElement('afterend', btn);
     })();
   </script>
 </Base>

@@ -7,12 +7,12 @@
 import StaticDial from './StaticDial.astro';
 import { SCENE_COPY } from '../lib/story-content.mjs';
 
-const { scene, counts, dialHref, start = 0 } = Astro.props;
+const { scene, counts, dialHref, onRecordHref, rows = [], start = 0 } = Astro.props;
 ---
 
 <div class="scene-stage" data-scene data-start={start}>
   <div class="dial-fallback">
-    <StaticDial counts={counts} href={dialHref} sockets={scene.sockets} />
+    <StaticDial counts={counts} href={dialHref} onRecordHref={onRecordHref ?? dialHref} rows={rows} sockets={scene.sockets} />
     <p>{SCENE_COPY.fallbackNote}</p>
   </div>
   <div class="scene-host"></div>

@@ -1,50 +1,114 @@
 ---
 // The dial as flat SVG: no three.js, no client boundary. Ported from the
-// frozen predecessor's static-dial.tsx (owner decision 2026-10-16) and remapped
-// onto this runtime's honest data: the pledge arc is drawn only from a pledge
-// figure actually read (none is, so the ring renders as a ghost outline), the
-// eight report sockets render their recorded state (unknown = dashed bore),
-// and the centre reading is the hashed-document count, linked to its census
-// row (R6). Server-rendered everywhere the 3D movement mounts, so the
-// instrument is recognisable on every screen, not only the ones with WebGL.
-import { SCENE_COPY } from '../lib/story-content.mjs';
+// frozen predecessor (static-dial.tsx for the frame, Dial.dc.html for the
+// surfaces — owner decision 2026-10-16) and remapped onto this runtime's
+// honest data. Four devices come across from the comp, each carrying a count
+// this runtime actually holds; nothing here is a ratio, a gauge or a guess:
+//
+//   · the engraved TICK BEZEL — a fine decorative ring plus one bold tick per
+//     document on record, the bold tick inked by that document's state
+//   · the DOCUMENT SEGMENT RING — one countable arc segment per document, at a
+//     fixed angular pitch, machined solid where the bytes are held and hashed,
+//     hairline where the document is on record only, hatched where the state
+//     is unknown. Segments, not a sweep: the reading is "how many", not "how
+//     full", so there is no gauge and no percentage anywhere on the dial.
+//   · the PLEDGE GHOST RING — dashed, with its reason etched on, because no
+//     pledge figure was read from any filing
+//   · the EIGHT COMPONENT BORES — the report's eight parts; a part this
+//     runtime has read would seat a jewel, and today every one is an empty
+//     machined bore, which is the thesis rather than a blank
+//
+// The centre readout is two census figures inside their links (R6). Server
+// -rendered everywhere the 3D movement mounts, so the instrument is itself on
+// every screen — JavaScript off, WebGL lost, reduced data — not only the ones
+// with a canvas.
+import { SOCKETS, SCENE_COPY } from '../lib/story-content.mjs';
 
-const { counts, href, sockets = [] } = Astro.props;
-const ring = Array.from({ length: 8 }, (_, i) => {
-  const a = (i / 8) * Math.PI * 2;
-  const state = sockets[i]?.state ?? 'unknown';
-  return { cx: 210 + 100 * Math.cos(a), cy: 210 + 100 * Math.sin(a), state };
+const { counts, href, onRecordHref = href, sockets = [], rows = [] } = Astro.props;
+const C = 210;
+const pol = (r, deg) => [C + r * Math.cos((deg - 90) * Math.PI / 180), C + r * Math.sin((deg - 90) * Math.PI / 180)];
+// One arc segment per document on record, at a fixed pitch — countable marks,
+// never a swept fraction. State decides the material, exactly as the band and
+// the chips do elsewhere in the kit.
+const seg = rows.length > 0
+  ? rows.map((r) => ({ state: r.state, held: Boolean(r.sha256) }))
+  : Array.from({ length: Math.max(1, counts.documents_on_record) }, () => ({ state: 'unknown', held: false }));
+const pitch = 360 / seg.length;
+const gap = Math.min(3.2, pitch * 0.22);
+const RING = 176;
+const arcs = seg.map((s, i) => {
+  const a0 = i * pitch + gap / 2, a1 = (i + 1) * pitch - gap / 2;
+  const [x0, y0] = pol(RING, a0);
+  const [x1, y1] = pol(RING, a1);
+  return {
+    d: `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${RING} ${RING} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`,
+    cls: s.held ? 'metal' : s.state === 'unknown' ? 'unv' : 'hair',
+    mid: a0 + (a1 - a0) / 2,
+  };
+});
+// the bezel: a fine engraved ring, and one bold tick per document on record
+const fine = Array.from({ length: 72 }, (_, i) => i * 5);
+const bores = SOCKETS.map((s, i) => {
+  const [x, y] = pol(99, (i / SOCKETS.length) * 360 + 22.5);
+  return { x, y, label: s.label, state: sockets[i]?.state ?? 'unknown' };
 });
 ---
 
-<svg viewBox="0 0 420 420" class="static-dial" aria-hidden="true">
-  <circle cx="210" cy="210" r="185" fill="var(--paper)" stroke="var(--line-2)"></circle>
-  <circle cx="210" cy="210" r="163" fill="none" stroke="var(--wash)" stroke-width="20"></circle>
-  {/* no pledge figure read: the target ring is a ghost outline, never a
-      guessed arc — dashed in ink with its reason etched on, so ghost reads
-      as ghost at a glance (same treatment as the 3D ring) */}
-  <circle cx="210" cy="210" r="163" fill="none" stroke="var(--ink-3)" stroke-width="5" stroke-dasharray="4 10"></circle>
-  <text x="210" y="347" text-anchor="middle" fill="var(--ink-3)" font-size="11.5" letter-spacing="1.5" font-family="var(--f-m)">
-    {SCENE_COPY.pledgeEtch.toUpperCase()}
-  </text>
-  {
-    ring.map((s) => (
-      <circle
-        cx={s.cx}
-        cy={s.cy}
-        r="9"
-        fill={s.state === 'observed' ? 'var(--acc)' : s.state === 'absent' ? 'var(--ink-3)' : 'none'}
-        stroke="var(--ink-3)"
-        stroke-dasharray={s.state === 'unknown' ? '2 3' : undefined}
-      />
-    ))
-  }
+{/* 420 wide, 452 tall: the ghost ring's reason is etched UNDER the bezel, not
+    across its ticks */}
+<svg viewBox="0 0 420 452" class="static-dial" aria-hidden="true">
+  <defs>
+    {/* côtes de Genève: the comp's 112° hairline pitch, re-tokened. The
+        mainplate is a surface, not a colour fill — it is what separates a
+        machined part from an extruded shape. */}
+    <pattern id="dial-cotes" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(112)">
+      <rect width="9" height="9" fill="var(--paper)"></rect>
+      <line x1="0" y1="0" x2="9" y2="0" stroke="var(--line)" stroke-width="1.2"></line>
+    </pattern>
+  </defs>
+
+  {/* bezel */}
+  <circle cx={C} cy={C} r="202" class="d-case"></circle>
+  <g class="d-fine">{fine.map((a) => {
+    const [x0, y0] = pol(196, a);
+    const [x1, y1] = pol(202, a);
+    return <line x1={x0} y1={y0} x2={x1} y2={y1}></line>;
+  })}</g>
+  <g class="d-bold">{arcs.map((a) => {
+    const [x0, y0] = pol(190, a.mid);
+    const [x1, y1] = pol(203, a.mid);
+    return <line x1={x0} y1={y0} x2={x1} y2={y1} class={a.cls}></line>;
+  })}</g>
+
+  {/* the document segment ring: one countable segment per document */}
+  <circle cx={C} cy={C} r={RING} class="d-track"></circle>
+  <g class="d-seg">{arcs.map((a) => <path d={a.d} class={a.cls}></path>)}</g>
+
+  {/* the pledge path: no figure read, so the ring is a ghost with its reason
+      etched on — dashed in ink, never a guessed arc (same as the 3D ring) */}
+  <circle cx={C} cy={C} r="148" class="d-ghost"></circle>
+  <text x={C} y="440" text-anchor="middle" class="d-etch">{SCENE_COPY.pledgeEtch.toUpperCase()}</text>
+
+  {/* mainplate */}
+  <circle cx={C} cy={C} r="126" class="d-plate"></circle>
+  <circle cx={C} cy={C} r="126" class="d-plate-edge"></circle>
+
+  {/* the eight component bores */}
+  {bores.map((b) => (
+    <circle
+      cx={b.x}
+      cy={b.y}
+      r="13"
+      class={`d-bore ${b.state === 'observed' ? 'jewel' : b.state === 'absent' ? 'plug' : 'bore'}`}
+    ></circle>
+  ))}
+
+  {/* centre readout: two census figures, each inside its link (R6) */}
+  <text x={C} y="182" text-anchor="middle" class="d-cap">DOCUMENTS HASHED</text>
   <a href={href}>
-    <text x="210" y="200" text-anchor="middle" fill="var(--acc-ink)" font-size="46" font-family="var(--f-m)" font-weight="500">
-      {counts.documents_with_bytes}
-    </text>
+    <text x={C} y="230" text-anchor="middle" class="d-read">{counts.documents_with_bytes}</text>
   </a>
-  <text x="210" y="232" text-anchor="middle" fill="var(--ink-3)" font-size="17" letter-spacing="1" font-family="var(--f-t)">
-    documents hashed
+  <text x={C} y="256" text-anchor="middle" class="d-of">
+    of <a href={onRecordHref}><tspan class="d-of-n">{counts.documents_on_record}</tspan></a> on record
   </text>
 </svg>

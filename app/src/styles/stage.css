@@ -1,13 +1,16 @@
-/* The morphing world stage on the story page. Ported pattern from the frozen
-   predecessor's stage.css (owner decision 2026-10-16), re-tokened onto the
-   house kit and switched to TRANSFORM-based motion (WebKit before 16.4 does
-   not animate SVG geometry attributes as CSS; translate/scale animate
-   everywhere). One SVG stays mounted; marks keep their identity and the
-   browser interpolates transforms between steps: marks move 600–800 ms on
-   --out with a wave through --d; labels fade in after them. */
-.wstage { position: sticky; top: calc(var(--top-h) + 24px); min-width: 0; }
+/* The morphing stages. Ported pattern from the frozen predecessor's stage.css
+   (owner decision 2026-10-16), re-tokened onto the house kit and switched to
+   TRANSFORM-based motion (WebKit before 16.4 does not animate SVG geometry
+   attributes as CSS; translate/scale animate everywhere). One SVG stays
+   mounted; marks keep their identity and the browser interpolates transforms
+   between steps: marks move 600–800 ms on --out with a wave through --d;
+   labels fade in after them. Under prefers-reduced-motion site.css zeroes the
+   durations AND the delays, so every mark is simply in place. */
+.wstage { position: sticky; top: calc(var(--top-h) + 24px); min-width: 0; display: flex; flex-direction: column; justify-content: center; min-height: calc(100svh - var(--top-h) - 48px); }
 .wstage svg { display: block; width: 100%; height: auto; overflow: hidden; }
-.stage-caption { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-3); }
+.stage-caption { margin: 10px 0 0; font-size: var(--t-xs); color: var(--ink-3); }
+/* the base-map credit is the map step's; the other steps draw no map */
+.stage:not(.is-map) ~ .stage-caption .cap-map { display: none; }
 
 /* map */
 .stage-map { transition: opacity .5s var(--out); }
@@ -18,37 +21,165 @@
 /* beads: one keyed circle per country; place = translate, size = scale */
 .stage-bead { fill: var(--ink-2); fill-opacity: .72; transition: transform .75s var(--out), fill .4s var(--ease), fill-opacity .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .stage-bead.on { fill: var(--acc); fill-opacity: 1; }
-.stage-bead.ctx { fill: var(--ink-3); fill-opacity: .5; }
-.stage-bead.ghost { fill: none; stroke: var(--ink-3); stroke-width: 1; fill-opacity: 0; }
+/* the marks the copy points at are never the faintest marks on the page */
+.stage-bead.ctx { fill: var(--ink-3); fill-opacity: .85; }
+.stage-bead.ghost { fill: none; stroke: var(--ink-2); stroke-width: 1.25; vector-effect: non-scaling-stroke; fill-opacity: 0; }
 .stage-bead.off { opacity: 0; }
 
-/* cells: one keyed unit-rect column per country, grown by scale(1,h) */
+/* cells: one keyed unit-rect per country, placed and sized by transform */
 .stage-cell { fill: var(--acc); transition: transform .7s var(--out), fill .45s var(--ease), opacity .35s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .stage-cell.metal { fill: var(--acc); }
-.stage-cell.gap { fill: var(--line-2); }
+/* absence is a material, not a lighter grey */
+.stage-cell.gap { fill: url(#w-gap); }
 .stage-cell.off { opacity: 0; }
 
-/* in-SVG word labels only (figures live in the cards, census-linked) */
-.wstage text { font-family: var(--f-m); font-size: 15px; fill: var(--ink-3); }
+/* in-SVG word labels only (figures live in the cards, census-linked). The
+   viewBox renders at roughly half scale, so 26 user units ≈ 14 CSS px — the
+   page's smallest intentional size, not grey noise. */
+.wstage text { font-family: var(--f-m); font-size: 26px; fill: var(--ink-3); }
+.wstage .w-blk { font-size: 24px; fill: var(--ink-2); }
+.wstage .w-axis { stroke: var(--line-2); stroke-width: 1.5; }
 
-/* the parties step's apart-group caption: fades in after the beads settle */
+/* annotation groups: each shown only on its own step (the step class lands
+   on .stage, the element the module holds) */
+.stage-ann { opacity: 0; transition: opacity .4s var(--ease) .3s; }
+.stage.is-bytes .g-bytes, .stage.is-voids .g-voids, .stage.is-scatter .g-scatter { opacity: 1; }
+
+/* the parties step's satellite caption: fades in after the beads settle */
 .stage-apart { opacity: 0; transition: opacity .45s var(--ease) .35s; }
 .stage-apart.show { opacity: 1; }
-.stage-apart line { stroke: var(--line-2); stroke-width: 1; }
+.stage-apart line { stroke: var(--line-2); stroke-width: 1.5; }
 
 /* the scrolly layout: steps on the left, the stage sticky on the right */
-.scrolly { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 4vw, 60px); align-items: start; }
+.scrolly { display: grid; grid-template-columns: 6fr 7fr; gap: clamp(28px, 4vw, 60px); align-items: start; }
 .wsteps { min-width: 0; padding-bottom: 20vh; }
-.wstep { max-width: 46ch; min-height: 86svh; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 24px 0; }
-.wstep h2 { font: 700 clamp(1.5rem, 2.4vw, 2.1rem)/1.1 var(--f-d); letter-spacing: -.025em; margin: 0; text-wrap: balance; }
-.wstep p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.wstep { max-width: 34em; min-height: 120svh; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 24px 0; }
+.wstep h2 { font: 600 clamp(1.5rem, 2.4vw, 2.1rem)/1.1 var(--f-d); letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+.wstep p { margin: 0; font-size: var(--t-md); line-height: 1.6; color: var(--ink-2); }
 .wstep .figrow { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--line-2); }
-.wstep .figrow > span { display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; color: var(--ink-3); }
-.wstep .figrow a.fig { font-size: clamp(1.4rem, 2.2vw, 1.8rem); line-height: 1.1; letter-spacing: -.02em; text-decoration-thickness: 1px; }
+.wstep .figrow > span { display: flex; flex-direction: column; gap: 2px; font-size: var(--t-xs); color: var(--ink-3); }
+/* the family key: a count linked to the ledger it is recomputable from, then
+   the recorded reason itself, verbatim, linked to a receipt it was read on */
+.wstep .famrow { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: var(--t-xs); color: var(--ink-2); max-height: 34vh; overflow: auto; }
+.wstep .famrow li { padding-left: 12px; border-left: 2px solid var(--line-2); line-height: 1.45; }
+
+/* ───────────────────────────────────────────────────────────────────────
+   The record stage: one country's documents, morphed stage by stage.
+   Devices ported from the predecessor's country story — filing stamps with
+   the state word and the X cross, the re-sorted cell field, the date×type
+   strip, the eight component tiles, area-to-scale squares, and the ring of
+   marks closing around the seated instrument.
+   ─────────────────────────────────────────────────────────────────────── */
+.rchapter { margin: 0 0 40px; }
+.rtracks { position: absolute; inset: 0; pointer-events: none; }
+.rtrack { position: absolute; left: 0; right: 0; }
+/* The stage is given the frame: it takes the whole pin above the step band,
+   the way the predecessor's plate filled three quarters of its comp rather
+   than floating small in a page of blank paper. */
+.rstage { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: center; }
+.r-frame { position: relative; width: 100%; aspect-ratio: 1000 / 640; max-height: calc(100% - 206px); }
+.rstage svg { display: block; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* the instrument seated inside the ring (predecessor stage.css .stage-hero):
+   75% of the frame's height is the plate's diameter, as in the comp */
+.r-hero { position: absolute; left: 50%; top: 50%; height: 78%; aspect-ratio: 1; transform: translate(-50%, -50%); opacity: 0; transition: opacity .45s var(--out) .25s; }
+.r-hero svg { width: 100%; height: 100%; }
+.rstage.is-dial .r-hero { opacity: 1; }
+
+/* annotation per step */
+.r-ann { opacity: 0; transition: opacity .35s var(--ease) .25s; }
+.rstage.is-split .g-split, .rstage.is-types .g-types, .rstage.is-tiles .g-tiles,
+.rstage.is-sizes .g-sizes, .rstage.is-dial .g-dial { opacity: 1; }
+.r-ann line { stroke: var(--line-2); stroke-width: 1; }
+.r-seat { fill: var(--paper); stroke: var(--line-2); }
+.rstage text { font-family: var(--f-m); fill: var(--ink-3); }
+.r-grp { font: 600 17px/1 var(--f-t); fill: var(--ink-2); letter-spacing: .02em; }
+.r-row { font-size: 15px; fill: var(--ink-2); }
+.r-lbl { font-size: 14px; fill: var(--ink-3); }
+.r-tile { font: 600 20px/1 var(--f-t); fill: var(--ink); }
+
+/* the stamp pool: one receipt-linked card per document */
+.r-stamp { transition: transform .75s var(--out), opacity .4s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.r-stamp.off { opacity: 0; pointer-events: none; }
+.r-card { fill: var(--paper); stroke: var(--line-2); }
+.r-card.observed { fill: var(--acc-soft); stroke: var(--acc); }
+.r-card.unknown { fill: var(--wash); stroke: var(--ink-3); stroke-dasharray: 5 4; }
+.r-card.absent { fill: var(--wash); stroke: var(--line-2); }
+.r-kind { font: 500 15px/1 var(--f-m); letter-spacing: .14em; fill: var(--ink-3); text-transform: uppercase; }
+.r-title { font: 600 21px/1 var(--f-d); fill: var(--ink); letter-spacing: -.01em; }
+.r-state { font: 400 16px/1 var(--f-t); fill: var(--ink-2); }
+.r-cross line { stroke: var(--ink-3); stroke-width: 2; }
+.r-stamps a:focus-visible .r-card { stroke: var(--ink); stroke-width: 2; }
+
+/* the cell pool: unit rects placed and sized by transform */
+.r-cell { transition: transform .7s var(--out), fill .45s var(--ease), opacity .35s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.r-cell.off { opacity: 0; }
+.r-cell.observed, .r-cell.metal { fill: var(--acc); }
+.r-cell.pledged { fill: var(--gls-fill); stroke: var(--st-pledged); stroke-width: 1.5; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+.r-cell.hair { fill: var(--wash); stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
+.r-cell.absent { fill: var(--void-face-flat); stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.r-cell.bore { fill: var(--wash); stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
+.r-cell.unv.u0 { fill: url(#r-hatch-0); }
+.r-cell.unv.u1 { fill: url(#r-hatch-1); }
+.r-cell.unv.u2 { fill: url(#r-hatch-2); }
+.r-cell.unv.u3 { fill: url(#r-hatch-3); }
+
+/* the bead pool: one per document, closing into the ring */
+.r-bead { fill: var(--ink-2); fill-opacity: .8; transition: transform .75s var(--out), fill .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.r-bead.on { fill: var(--acc); fill-opacity: 1; }
+.r-bead.ctx { fill: var(--ink-3); fill-opacity: .85; }
+.r-bead.ghost { fill: none; stroke: var(--ink-2); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.r-bead.off { opacity: 0; }
+
+/* The step cards cross-fade in one place — a full-width band under the
+   stage, two columns, so the card never travels across the instrument and
+   never steals the middle of the frame. Only the active step is shown. */
+.rsteps { position: absolute; left: var(--gut); right: var(--gut); bottom: 16px; z-index: 3; min-height: 178px; }
+.rsteps .scene-card {
+  position: absolute; left: 0; right: 0; bottom: 0; width: auto; margin-left: 0;
+  display: grid; grid-template-columns: 1fr 1.35fr; gap: 6px 38px; align-items: start;
+  padding: 16px 0 0; background: none;
+  opacity: 0; pointer-events: none; transition: opacity .3s var(--ease);
+}
+.rsteps .scene-card.is-on { opacity: 1; pointer-events: auto; }
+.rsteps .scene-card .eyebrow { grid-column: 1; margin: 0 0 8px; }
+.rsteps .scene-card h3 { grid-column: 1; grid-row: 2; margin: 0; }
+.rsteps .scene-card p { grid-column: 2; grid-row: 1 / span 2; max-width: 46em; }
+.rsteps .scene-card .cardfigs { grid-column: 2; grid-row: 3; }
+.rsteps .famkey { grid-column: 1 / -1; grid-row: 4; }
+.famkey { margin: 10px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 6px 26px; }
+.famkey li { display: grid; grid-template-columns: 12px 1fr; gap: 8px; align-items: start; font-size: var(--t-xs); line-height: 1.45; }
+.famkey .hsw { width: 12px; height: 12px; margin-top: 3px; box-shadow: var(--unv-hairline); }
+.famkey .h0 { background-image: var(--hatch-0); }
+.famkey .h1 { background-image: var(--hatch-1); }
+.famkey .h2 { background-image: var(--hatch-2); }
+.famkey .h3 { background-image: var(--hatch-3); }
+.cardfigs .figlbl { color: var(--ink-3); font-size: var(--t-xs); }
+.cardfigs .sep { color: var(--line-2); }
 
 @media (max-width: 767px) {
-  .scrolly { grid-template-columns: 1fr; }
-  .wstage { top: var(--top-h); z-index: 2; background: var(--bg); padding: 6px 0; }
-  .wstage svg { max-height: calc(44svh - 60px); }
-  .wstep { min-height: 52svh; }
+  /* sticky cannot pull an element above its own flow position: on a phone the
+     stage must come FIRST in the column, or the reader scrolls every caption
+     with no graphic and meets the graphic alone at the end. */
+  .scrolly { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+  .wstage { order: -1; top: 0; z-index: 2; background: var(--bg); padding: 6px 0; min-height: 0; }
+  .wstage svg { max-height: calc(46svh - 60px); }
+  .wstep { min-height: 72svh; max-width: none; }
+  .wstage text { font-size: 34px; }
+  /* the record chapter keeps a tall pin on a phone: the stage on top, the
+     whole step card under it — nothing of the step is dropped */
+  .rchapter .scroll-pin { height: 94svh; }
+  .rsteps { min-height: 0; bottom: 12px; }
+  .rsteps .scene-card { grid-template-columns: 1fr; gap: 4px; padding: 12px 0 0; }
+  .rsteps .scene-card p, .rsteps .scene-card .cardfigs, .rsteps .famkey,
+  .rsteps .scene-card h3, .rsteps .scene-card .eyebrow { grid-column: 1; grid-row: auto; }
+  .rsteps .scene-card p { font-size: var(--t-sm); }
+  .rsteps .scene-card h3 { font-size: 1.15rem; }
+  /* the stage centres in the band above the card instead of hugging the
+     heading, and the heading gets its own strip */
+  .rstage { align-items: center; padding: 34px 0 420px; }
+  .r-frame { max-height: none; }
+  /* the family key is the longest card on the smallest screen: it keeps every
+     reason, verbatim, inside its own scroll rather than losing any of them */
+  .rsteps .famkey { max-height: 30svh; overflow: auto; }
 }

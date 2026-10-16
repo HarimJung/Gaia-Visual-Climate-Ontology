@@ -52,8 +52,12 @@ export async function mountScene(el, data, controls, opts = {}) {
     renderer.setClearColor(0xfbfbfa, 0);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = T.PCFSoftShadowMap;
-    renderer.toneMapping = T.NeutralToneMapping;
-    renderer.toneMappingExposure = 1;
+    // Filmic tone mapping under a slight exposure cut: this is how a product
+    // photograph is made, and it is what the predecessor's own first pass
+    // used (work/scene-first-pass.tsx: ACESFilmic at .85). Neutral at 1.0
+    // flattened every specular highlight the machining depends on.
+    renderer.toneMapping = T.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.12;
     el.appendChild(renderer.domElement);
     renderer.outputColorSpace = T.SRGBColorSpace;
     renderer.domElement.setAttribute('role', 'img');
@@ -63,32 +67,39 @@ export async function mountScene(el, data, controls, opts = {}) {
     const room = new RoomEnvironment();
     const env = pm.fromScene(room, .04);
     scene.environment = env.texture;
-    scene.environmentIntensity = .5;
+    scene.environmentIntensity = .85;
     room.dispose(); pm.dispose();
 
-    // A paper studio: the key sits nearly overhead so a lifted part shadows
-    // the part under it, not a patch of floor away from it.
-    const keyLight = new T.DirectionalLight(0xffffff, 1.3);
-    keyLight.position.set(-2.4, -1.8, 12);
+    // A paper studio with a RAKING key: the key sits nearly overhead and well
+    // off-axis so a lifted part shadows the part under it and the metal
+    // catches an edge. The fills were cancelling every shadow edge in the
+    // scene — one strong key plus a soft bounce is how hardware is lit.
+    const keyLight = new T.DirectionalLight(0xffffff, 2.1);
+    keyLight.position.set(-5.2, -3.4, 10);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(2048, 2048);
     keyLight.shadow.camera.left = -7; keyLight.shadow.camera.right = 7;
     keyLight.shadow.camera.top = 7; keyLight.shadow.camera.bottom = -7;
-    keyLight.shadow.bias = -.001; keyLight.shadow.normalBias = .025; keyLight.shadow.radius = 7;
+    keyLight.shadow.bias = -.001; keyLight.shadow.normalBias = .025; keyLight.shadow.radius = 5;
     scene.add(keyLight);
-    scene.add(new T.AmbientLight(0xffffff, .3));
-    const rimL = new T.DirectionalLight(0xffffff, .55); rimL.position.set(4, 9, 6); scene.add(rimL);
-    const fillLeft = new T.DirectionalLight(0xffffff, .5); fillLeft.position.set(-9, 3, 4); scene.add(fillLeft);
-    const fillTop = new T.DirectionalLight(0xffffff, .3); fillTop.position.set(2, -6, 10); scene.add(fillTop);
+    scene.add(new T.AmbientLight(0xffffff, .16));
+    const rimL = new T.DirectionalLight(0xffffff, .62); rimL.position.set(5, 9, 5); scene.add(rimL);
+    const fillLeft = new T.DirectionalLight(0xffffff, .2); fillLeft.position.set(-9, 3, 4); scene.add(fillLeft);
 
     const camera = new T.PerspectiveCamera(34, 1, .1, 100);
     const world = new T.Group(); world.rotation.z = -.13; scene.add(world);
 
     // Hardware finishes on white paper; colour only on the evidence parts.
-    const silver = new T.MeshStandardMaterial({ color: 0xc6c8c4, metalness: .35, roughness: .5 });
-    const edge = new T.MeshStandardMaterial({ color: 0x8d918f, metalness: .55, roughness: .38 });
-    const steel = new T.MeshStandardMaterial({ color: 0x4d6477, metalness: 0, roughness: .5 });
-    const porcelain = new T.MeshPhysicalMaterial({ color: 0xe9e7e2, metalness: 0, roughness: .58, clearcoat: .15, clearcoatRoughness: .5 });
+    // The kit's own material language (site.css) says observed = METAL,
+    // machined, light catches an edge — so the scene's parts are metal, not
+    // matte plastic. metalness + a low roughness under one strong key is
+    // literally how a product photograph of hardware is made; metalness 0 at
+    // roughness .58 is how a CAD viewport looks (predecessor's own first pass:
+    // silver .95/.3, chrome 1/.17).
+    const silver = new T.MeshStandardMaterial({ color: 0xd2d5d1, metalness: .88, roughness: .34 });
+    const edge = new T.MeshStandardMaterial({ color: 0x9a9f9c, metalness: .95, roughness: .22 });
+    const steel = new T.MeshStandardMaterial({ color: 0x55697b, metalness: .7, roughness: .3 });
+    const porcelain = new T.MeshPhysicalMaterial({ color: 0xe4e2dd, metalness: .62, roughness: .36, clearcoat: .3, clearcoatRoughness: .3 });
     const white = new T.MeshStandardMaterial({ color: 0xf5f4f0, metalness: 0, roughness: .52 });
     const shadowM = new T.MeshStandardMaterial({ color: 0x23272b, metalness: 0, roughness: .7 });
     const blue = new T.MeshPhysicalMaterial({ color: 0x009edb, metalness: 0, roughness: .45, clearcoat: .25, clearcoatRoughness: .4, emissive: 0x009edb, emissiveIntensity: 0 });
@@ -97,9 +108,9 @@ export async function mountScene(el, data, controls, opts = {}) {
     const gold = new T.MeshPhysicalMaterial({ color: 0xd9a13a, metalness: .15, roughness: .42, clearcoat: .2, clearcoatRoughness: .4 });
     const glass = new T.MeshPhysicalMaterial({ color: 0xe3e9f4, transparent: true, opacity: .7, metalness: 0, roughness: .04, clearcoat: 1, ior: 1.77, side: T.DoubleSide, depthWrite: false });
     const clear = new T.MeshPhysicalMaterial({ color: 0xe6ebf5, transparent: true, opacity: .2, metalness: 0, roughness: .05, clearcoat: 1, side: T.DoubleSide, depthWrite: false });
-    const ghost = new T.MeshStandardMaterial({ color: 0xb9bfc6, metalness: .4, roughness: .4, transparent: true, opacity: .5 });
-    const plateM = new T.MeshStandardMaterial({ color: 0xd3d4cf, metalness: .25, roughness: .6 });
-    const cotes = new T.MeshStandardMaterial({ color: 0xc9cac5, metalness: .25, roughness: .55 });
+    const ghost = new T.MeshStandardMaterial({ color: 0xb9bfc6, metalness: .25, roughness: .55, transparent: true, opacity: .45 });
+    const plateM = new T.MeshStandardMaterial({ color: 0xcfd1cc, metalness: .8, roughness: .4 });
+    const cotes = new T.MeshStandardMaterial({ color: 0xc6c7c2, metalness: .9, roughness: .26 });
 
     const parts = []; const gears = []; const hits = []; const textures = []; const labels = [];
     const topLabels = document.createElement('div');
@@ -362,6 +373,21 @@ export async function mountScene(el, data, controls, opts = {}) {
       }
       sockets.push(g);
       g.userData.key = spec.key;
+      // VOID, the predecessor's fourth motion: a part that was read seats and
+      // locks; a part never read rises, FAILS TO SEAT, and leaves. The
+      // machined bore stays. Carrying the state here is the whole point — the
+      // old branchless lift gave an empty bore the same triumphant rise as a
+      // seated jewel, which flattered the absence it exists to show.
+      g.userData.seats = spec.state === 'observed' || spec.state === 'pledged' || spec.state === 'absent';
+      // the bore that remains when the part leaves: drawn once, never moved
+      if (!g.userData.seats) {
+        const bore = new T.Group();
+        bore.position.copy(g.position);
+        evidence.add(bore);
+        annulus(bore, .124, .082, .055, -.075, edge);
+        cylinder(bore, .082, .012, -.105, shadowM);
+        g.userData.bore = bore;
+      }
     });
     // Nothing read at all: the bridge never seats — held off its posts.
     const btrUnread = socketSpecs.length > 0 && socketSpecs.every((c) => c.state === 'unknown');
@@ -615,6 +641,10 @@ export async function mountScene(el, data, controls, opts = {}) {
     orbit.update();
 
     // startAt lets a resting page (the country dial) open already assembled.
+    // TICK: one discrete beat, the only permanent loop in the scene. `tick`
+    // counts beats; TICK_STEP is how far the train advances on each one.
+    const TICK_SEC = 1.2, TICK_STEP = .055;
+    let tick = 0;
     let disposed = false, raf = 0, last = performance.now(), amount = Math.max(0, Math.min(1, opts.startAt ?? 0)), gearTime = 0, lastPhase = -1, lastPercent = -1;
     let liftScale = 1;
     let dirty = true, fitDirty = true, manualCamera = false, lastInset = controls.inset;
@@ -764,40 +794,67 @@ export async function mountScene(el, data, controls, opts = {}) {
 
     function placeParts() {
       const story = narrativeAmount(amount);
-      const internal = (layer) => story * (1 - returnAmount(amount, layer));
+      // Each assembly CLOSES before it lays flat: without this the screws,
+      // sockets and data pins stay at their lifted offsets while their parent
+      // travels to its cell, and the flat lay strews small parts across the
+      // frame. The predecessor's own rule is re-seat, then spread.
+      const internal = (layer) => story * (1 - returnAmount(amount, layer)) * (1 - deskAmount(amount));
       assemblies.forEach((p) => {
         const cell = layout.cells.get(p.id);
         const offset = cycleOffset(amount, p.layer, p.center, { x: cell.x, y: cell.y, z: 0 }, p.shell, liftScale);
-        const float = p.shell ? 0 : Math.sin(gearTime * .8 + p.layer * .9) * .025 * (p.layer === 0 ? .25 : 1);
+        const float = 0;
         p.shift.set(offset.x, offset.y, offset.z);
         p.g.position.copy(p.home).add(pos.set(offset.x, offset.y, offset.z + float));
       });
       segments.forEach((m, i) => {
         const t = reveal(internal(1), .235 + i * .0014, .26 + i * .0014);
-        m.position.z = .17 + t * (.12 + .012 * Math.sin(gearTime + i * .16));
+        m.position.z = .17 + t * .12;
       });
       dataMarks.forEach((m, i) => {
         const start = .375 + i / Math.max(1, dataMarks.length) * .065;
         m.position.z = .25 + .16 * reveal(internal(2), start, start + .025);
       });
       gears.forEach(({ g, speed, phase }, i) => {
-        g.rotation.z = gearTime * speed;
+        // TICK — the one permanent loop the predecessor allows, and the only
+        // motion left when nothing is scrolling: the train advances in
+        // discrete beats of the read cycle instead of spinning continuously.
+        // Six smooth sinusoids used to run at once here, which is the loudest
+        // "ambient 3D hero" tell there is; they are deleted, not retimed.
+        g.rotation.z = tick * speed * TICK_STEP;
         g.position.z = gearHomes[i] + .18 * reveal(internal(phase === 4 ? 4 : 2), phase === 4 ? .94 : .395 + i * .018, phase === 4 ? .99 : .43 + i * .018);
       });
       sockets.forEach((g, i) => {
         const t = btrReveal(internal(3), i);
         g.position.copy(socketHomes[i]);
-        g.position.z += t * (.82 + i * .035 + .03 * Math.sin(gearTime * 1.05 + i * .65));
-        g.scale.setScalar(1 + t * .65);
+        // One lift height for every seat (the old `.82 + i * .035` made the
+        // height mean array order, which in a product that forbids a figure
+        // without a receipt is the same sin in another medium).
+        if (g.userData.seats) {
+          // ASSEMBLE: the part rises and seats, with the one-frame overshoot
+          // the predecessor's motion sheet asks for, so it reads as a click
+          // and not a slide.
+          const over = t < 1 ? Math.sin(t * Math.PI) * .055 : 0;
+          g.position.z += t * .9 + over;
+          g.scale.setScalar(1 + t * .65);
+          g.visible = true;
+        } else {
+          // VOID: it rises, fails to seat, and goes. The bore stays behind.
+          const leave = Math.max(0, (t - .62) / .38);
+          g.position.z += t * .9 + leave * .5;
+          g.scale.setScalar((1 + t * .65) * (1 - leave));
+          g.visible = leave < .999;
+        }
         threadPositions.set([socketHomes[i].x, socketHomes[i].y, socketHomes[i].z, g.position.x, g.position.y, g.position.z], i * 6);
       });
       threadGeometry.attributes.position.needsUpdate = true;
       threads.visible = internal(3) > .615;
-      north.rotation.z = south.rotation.z = gearTime * .05;
+      north.rotation.z = south.rotation.z = tick * .02;
       if (beacon) {
-        const t = (gearTime * .55) % 1;
+        // the beacon marks the walked record on the same beat as the train,
+        // and lands on it instead of restarting from a sawtooth's pop
+        const t = Math.min(1, (gearTime - tick * TICK_SEC) / .42);
         beacon.scale.setScalar(1 + t * 2.4);
-        beacon.material.opacity = 1 - t;
+        beacon.material.opacity = (1 - t) * (1 - t);
       }
       world.rotation.z = -.13 * (1 - deskAmount(amount) * (1 - returnAmount(amount, 0)));
       floor.visible = amount < .7 || amount > .99;
@@ -970,7 +1027,14 @@ export async function mountScene(el, data, controls, opts = {}) {
       const moving = previous !== amount;
       if (moving) { dirty = true; if (!manualCamera) fitDirty = true; }
       const animate = !still && !controls.paused;
-      if (animate) { gearTime += dt; dirty = true; blue.emissiveIntensity = .045 + .045 * Math.sin(gearTime * .8); }
+      if (animate) {
+        gearTime += dt;
+        const beat = Math.floor(gearTime / TICK_SEC);
+        if (beat !== tick) { tick = beat; dirty = true; }
+        // the pledge ring breathes with nothing: it is ghosted, and a ghost
+        // that pulses reads as alive. Only the tick moves.
+        if (gearTime - tick * TICK_SEC < .5) dirty = true;
+      }
       if (moving || animate) placeParts();
       if (fitDirty) {
         fit();
