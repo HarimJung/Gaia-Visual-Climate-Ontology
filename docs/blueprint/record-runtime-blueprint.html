@@ -441,8 +441,13 @@ step:</p>
   <li>The reviewer pastes <em>their own</em> sentence into the authoring check.</li>
   <li>The verdict comes back: anchored, outdated, or unsupported.</li>
 </ol>
-<p><strong>Performance floor</strong> (P-F10): server-rendered static HTML baseline, no WebGL, and
-a 3G throttle test in CI — the audience includes low-bandwidth, older devices.</p>
+<p><strong>Performance floor and the rich layer</strong> (P-F10, amended by the owner 2026-10-16 —
+AD-6R): the server-rendered static HTML baseline remains complete without JavaScript and fast on
+3G. On top of it, a <strong>progressively loaded rich layer is now in scope: 3D (WebGL),
+scrollytelling and motion graphics</strong> — this is Visual Climate, and the record deserves the
+most visually compelling storytelling we can build. The evidence discipline does not move: every
+figure stays receipt-linked, nothing animates a number that has no receipt, and
+<span class="m">prefers-reduced-motion</span> switches the rich layer off.</p>
 <p><strong>Visual vocabulary.</strong> UN blue, no black — the predecessor's final art direction.
 The token canon is the VC house kit: its neutrals, three typefaces, motion eases, light-only mode
 and line-over-box discipline, with the kit's own rule that each product swaps only the accent
@@ -606,8 +611,11 @@ if infeasible in pilot, legislation leaves pilot scope and the canon records it<
 snapshots; node bi-temporality abandoned; effectivity only for treaty-status / legal-instrument
 classes</td><td>A-F5</td></tr>
 <tr><td class="id">AD-6</td><td>API = build-time static JSON; stable static framework (Vite/Astro);
-no server runtime without a separate decision; no WebGL; static-HTML baseline; 3G test</td>
-<td>A-F6 · P-F10</td></tr>
+no server runtime without a separate decision; static-HTML baseline; 3G test. <strong>AD-6R
+(owner amendment, 2026-10-16):</strong> the original "no WebGL" clause is lifted — 3D,
+scrollytelling and motion graphics are in scope as a progressively loaded layer; the no-JS
+baseline, receipt-linked figures, stable-deps rule and reduced-motion respect stand unchanged</td>
+<td>A-F6 · P-F10 → owner amendment</td></tr>
 <tr><td class="id">AD-7</td><td>L3 crosswalk schema excluded from the repo; adopted now: country
 seeds reference platform seed by ID only, platform seed is semver</td><td>A-F8 · P-F8</td></tr>
 <tr><td class="id">AD-8</td><td>Graph storage stays pilot CSV behind one isolated reader module;
