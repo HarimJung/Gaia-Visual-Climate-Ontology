@@ -76,6 +76,20 @@ export function countryEntry(iso3) {
   return e;
 }
 
+// The richest record in the data: most rows with bytes held, among countries
+// whose view carries a page quote. The story and the demo path walk the same
+// country because they call this same derivation; nothing is named (R1).
+export function richestView() {
+  const withQuote = views.filter((v) => v.rows.some((r) => r.quote && r.sha256));
+  if (withQuote.length === 0) {
+    // R5: a walked step without its receipt would have to invent one — refuse.
+    throw new Error('no view carries a quoted, hashed row — the walked path cannot be built honestly');
+  }
+  const bytes = (v) => v.rows.filter((r) => r.sha256).length;
+  // views arrive name-sorted, so ties resolve to the first by name: deterministic.
+  return withQuote.reduce((a, b) => (bytes(b) > bytes(a) ? b : a));
+}
+
 // Public source of the ledgers the census is counted from (repo is public).
 export const REPO_BLOB = 'https://github.com/HarimJung/Gaia-Visual-Climate-Ontology/blob/main/';
 

@@ -1,0 +1,54 @@
+/* The morphing world stage on the story page. Ported pattern from the frozen
+   predecessor's stage.css (owner decision 2026-10-16), re-tokened onto the
+   house kit and switched to TRANSFORM-based motion (WebKit before 16.4 does
+   not animate SVG geometry attributes as CSS; translate/scale animate
+   everywhere). One SVG stays mounted; marks keep their identity and the
+   browser interpolates transforms between steps: marks move 600–800 ms on
+   --out with a wave through --d; labels fade in after them. */
+.wstage { position: sticky; top: calc(var(--top-h) + 24px); min-width: 0; }
+.wstage svg { display: block; width: 100%; height: auto; overflow: hidden; }
+.stage-caption { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-3); }
+
+/* map */
+.stage-map { transition: opacity .5s var(--out); }
+.stage-map.hide { opacity: 0; }
+.stage-map path { fill: none; stroke: var(--line-2); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.stage-map path.c { stroke: var(--ink-3); }
+
+/* beads: one keyed circle per country; place = translate, size = scale */
+.stage-bead { fill: var(--ink-2); fill-opacity: .72; transition: transform .75s var(--out), fill .4s var(--ease), fill-opacity .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.stage-bead.on { fill: var(--acc); fill-opacity: 1; }
+.stage-bead.ctx { fill: var(--ink-3); fill-opacity: .5; }
+.stage-bead.ghost { fill: none; stroke: var(--ink-3); stroke-width: 1; fill-opacity: 0; }
+.stage-bead.off { opacity: 0; }
+
+/* cells: one keyed unit-rect column per country, grown by scale(1,h) */
+.stage-cell { fill: var(--acc); transition: transform .7s var(--out), fill .45s var(--ease), opacity .35s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.stage-cell.metal { fill: var(--acc); }
+.stage-cell.gap { fill: var(--line-2); }
+.stage-cell.off { opacity: 0; }
+
+/* in-SVG word labels only (figures live in the cards, census-linked) */
+.wstage text { font-family: var(--f-m); font-size: 15px; fill: var(--ink-3); }
+
+/* the parties step's apart-group caption: fades in after the beads settle */
+.stage-apart { opacity: 0; transition: opacity .45s var(--ease) .35s; }
+.stage-apart.show { opacity: 1; }
+.stage-apart line { stroke: var(--line-2); stroke-width: 1; }
+
+/* the scrolly layout: steps on the left, the stage sticky on the right */
+.scrolly { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 4vw, 60px); align-items: start; }
+.wsteps { min-width: 0; padding-bottom: 20vh; }
+.wstep { max-width: 46ch; min-height: 86svh; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 24px 0; }
+.wstep h2 { font: 700 clamp(1.5rem, 2.4vw, 2.1rem)/1.1 var(--f-d); letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+.wstep p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.wstep .figrow { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--line-2); }
+.wstep .figrow > span { display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; color: var(--ink-3); }
+.wstep .figrow a.fig { font-size: clamp(1.4rem, 2.2vw, 1.8rem); line-height: 1.1; letter-spacing: -.02em; text-decoration-thickness: 1px; }
+
+@media (max-width: 767px) {
+  .scrolly { grid-template-columns: 1fr; }
+  .wstage { top: var(--top-h); z-index: 2; background: var(--bg); padding: 6px 0; }
+  .wstage svg { max-height: calc(44svh - 60px); }
+  .wstep { min-height: 52svh; }
+}

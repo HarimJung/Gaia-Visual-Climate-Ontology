@@ -6,7 +6,10 @@
 // lives in this file (R1).
 import Base from '../../layouts/Base.astro';
 import StateLegend from '../../components/StateLegend.astro';
+import SceneStage from '../../components/SceneStage.astro';
 import { views, census, countryEntry, REPO_BLOB } from '../../lib/data.mjs';
+import { sceneDataFor } from '../../lib/scene-data.mjs';
+import '../../styles/scene.css';
 
 export function getStaticPaths() {
   return views.map((view) => ({
@@ -20,11 +23,14 @@ const iso3 = view.country.iso3.toLowerCase();
 const entry = countryEntry(view.country.iso3);
 const c = entry.counts;
 const ledgerUrl = REPO_BLOB + entry.ledger;
+// The resting instrument (AD-6R): mounts only when scrolled near; the
+// server-rendered dial is the baseline. A tap on any part jumps to the rows.
+const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
 ---
 
 <Base title={`${view.country.name_en} — ledger`}>
   <section class="head">
-    <p class="crumb"><a href={`/#c-${iso3}`}>← world ledger</a></p>
+    <p class="crumb"><a href={`/ledger/#c-${iso3}`}>← world ledger</a></p>
     <h1>{view.country.name_en}</h1>
 
     <p class="treaty" id="treaty">
@@ -98,6 +104,12 @@ const ledgerUrl = REPO_BLOB + entry.ledger;
       </ul>
       <p class="muted">{view.strip.note}</p>
     </section>
+  </section>
+
+  {/* The instrument sits under the zero-click trio (AD-10 stays first in the
+      DOM and complete without JS) and above the rows it is built from. */}
+  <section class="dial-stage" aria-label="The record as an instrument">
+    <SceneStage scene={scene} counts={c} dialHref="#census-documents_with_bytes" start={100} />
   </section>
 
   <section aria-labelledby="ledger-h">

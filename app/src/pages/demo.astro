@@ -6,16 +6,10 @@
 // carries a page quote); the walked figure comes from its view. Neither is
 // ever named in code (R1).
 import Base from '../layouts/Base.astro';
-import { views } from '../lib/data.mjs';
+import { richestView } from '../lib/data.mjs';
 
-const withQuote = views.filter((v) => v.rows.some((r) => r.quote && r.sha256));
-if (withQuote.length === 0) {
-  // R5: a demo step without its receipt would have to invent one — refuse.
-  throw new Error('no view carries a quoted, hashed row — the demo path cannot be built honestly');
-}
-const bytes = (v) => v.rows.filter((r) => r.sha256).length;
-// views arrive name-sorted, so ties resolve to the first by name: deterministic.
-const view = withQuote.reduce((a, b) => (bytes(b) > bytes(a) ? b : a));
+// The same derivation the story page uses, so both walk the same country.
+const view = richestView();
 const iso3 = view.country.iso3.toLowerCase();
 const doc = view.rows.find((r) => r.quote && r.sha256);
 const treaty = view.treaty_status.find((t) => t.receipt === doc.doc_id);
@@ -30,7 +24,7 @@ const ev = treaty.events[0];
 
   <ol class="steps-list">
     <li>
-      <h2><a href="/">The world ledger</a></h2>
+      <h2><a href="/ledger/">The world ledger</a></h2>
       <p>
         One row per country on record: its counts, and the strip of what this runtime has read so
         far. Every number is a link.

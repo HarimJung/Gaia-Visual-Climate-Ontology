@@ -143,3 +143,22 @@ texts (`app/public/fonts/OFL*.txt`, one per foundry). OFL 1.1 permits
 bundling and redistribution as long as the fonts are not sold on their own
 and the license text travels with them; it does, in the same directory the
 pages load them from.
+
+## Natural Earth 1:110m base map — `yes`
+
+Verified 2026-10-16: Natural Earth's terms-of-use page dedicates all versions
+of its vector and raster map data to the **public domain** — no permission
+needed for any use, commercial or otherwise.
+
+Our use: the admin-0 country shapes, projected to Equal Earth at the frozen
+predecessor's build time and ported here as `app/public/data/basemap.json`
+(the attribution string is embedded in the file itself). It is a base map,
+not a measurement: no figure on any screen is derived from it.
+
+## ashemag/human-atlas — `yes` (MIT)
+
+Verified 2026-10-16: MIT license. The desk-spread packing layout is adapted
+into `app/src/lib/scene/explosion-layout.mjs` for the instrument's laid-flat
+chapter, and the MIT license text ships verbatim beside the adapted module as
+`app/src/lib/scene/HUMAN-ATLAS-LICENSE`, satisfying the notice-preservation
+condition.

@@ -1,0 +1,57 @@
+---
+// The instrument's mount point. Server-renders the M4 StaticDial fallback in
+// place (the page is complete without the rich layer: JS off, WebGL lost and
+// reduced-data browsers all land here), and progressively mounts the ported
+// three.js scene only when the stage scrolls near — the base page never pays
+// for the 3D until it is about to be seen (AD-6R).
+import StaticDial from './StaticDial.astro';
+import { SCENE_COPY } from '../lib/story-content.mjs';
+
+const { scene, counts, dialHref, start = 0 } = Astro.props;
+---
+
+<div class="scene-stage" data-scene data-start={start}>
+  <div class="dial-fallback">
+    <StaticDial counts={counts} href={dialHref} sockets={scene.sockets} />
+    <p>{SCENE_COPY.fallbackNote}</p>
+  </div>
+  <div class="scene-host"></div>
+  <script type="application/json" data-scene-data set:html={JSON.stringify(scene)} />
+</div>
+
+<script>
+  // Mount each stage when it approaches the viewport. The three.js chunk is
+  // behind this dynamic import, so pages stay light until the stage is near.
+  const stages = document.querySelectorAll('.scene-stage[data-scene]');
+  for (const el of stages) {
+    const island = el.querySelector('script[data-scene-data]');
+    if (!island || !('IntersectionObserver' in window)) continue;
+    const data = JSON.parse(island.textContent || '{}');
+    const start = Number(el.dataset.start || 0);
+    const controls = { progress: start, paused: false, inset: 0 };
+    el.sceneControls = controls;
+    const io = new IntersectionObserver(
+      async ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        try {
+          const { mountScene } = await import('../lib/scene/mount-scene.mjs');
+          const host = el.querySelector('.scene-host');
+          const dispose = await mountScene(host, data, controls, {
+            startAt: start / 100,
+            onFail: () => el.classList.remove('is-live'),
+            onSelect: () => {
+              if (data.selectHref) location.assign(data.selectHref);
+            },
+          });
+          if (host.querySelector('canvas')) el.classList.add('is-live');
+          addEventListener('pagehide', () => dispose(), { once: true });
+        } catch (error) {
+          console.error('rich layer unavailable', error);
+        }
+      },
+      { rootMargin: '600px 0px 600px 0px' },
+    );
+    io.observe(el);
+  }
+</script>

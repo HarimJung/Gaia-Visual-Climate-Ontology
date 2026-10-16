@@ -186,7 +186,8 @@ test('no percentage anywhere: strip copy, derivations, and the built world ledge
   for (const d of Object.values(activeCensus.derivations)) {
     assert.ok(!d.includes('%'), `census derivation carries a percentage: "${d}"`);
   }
-  const built = join(repo, 'app', 'dist', 'index.html');
+  // The world ledger moved from / to /ledger/ when the story became the front door.
+  const built = join(repo, 'app', 'dist', 'ledger', 'index.html');
   if (!existsSync(built)) return; // CI builds before tests run, so this arm is armed there
   const text = readFileSync(built, 'utf8')
     .replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')
@@ -195,7 +196,7 @@ test('no percentage anywhere: strip copy, derivations, and the built world ledge
 });
 
 test('built world ledger: one row per active view, every count linked to that country census row', () => {
-  const built = join(repo, 'app', 'dist', 'index.html');
+  const built = join(repo, 'app', 'dist', 'ledger', 'index.html');
   if (!existsSync(built)) return; // CI builds before tests run, so this arm is armed there
   const html = readFileSync(built, 'utf8');
   for (const v of activeViews) {

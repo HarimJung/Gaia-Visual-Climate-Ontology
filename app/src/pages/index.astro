@@ -1,35 +1,124 @@
 ---
-// World ledger: every country on record, one row each — name, code, its
-// per-country counts as census-linked figures, and a mini four-state strip.
-// The one action everywhere stays the same: click a number, get its receipt.
-// Everything comes through the door (R11); no country identity lives in this
-// file (R1), and the row set is whatever views the reader produced.
+// The front door is now the story: cover → the world materializes (beads fly
+// from map centroids into formations) → zoom to one record (the 3D instrument
+// assembles under a pinned scrub) → one document opens to its hash → the
+// machine's voids → the single action, into /ledger/ and the walked country.
+// The world-ledger table lives at /ledger/. Everything here comes through the
+// view door (R11); no country identity lives in this file (R1); every figure
+// rendered is a census value inside a link (R6). The rich layers load
+// progressively: with JavaScript off the page is complete — server-rendered
+// map, dial and full text (AD-6R baseline).
 import Base from '../layouts/Base.astro';
-import StateLegend from '../components/StateLegend.astro';
-import { views, census, countryEntry, fmt, REPO_BLOB } from '../lib/data.mjs';
+import SceneStage from '../components/SceneStage.astro';
+import { views, census, countryEntry, fmt, richestView, REPO_BLOB } from '../lib/data.mjs';
+import { sceneDataFor } from '../lib/scene-data.mjs';
+import { STORY, WORLD_STEPS, MACHINE_CARDS } from '../lib/story-content.mjs';
+import { chapterStart } from '../lib/scene/explosion-motion.mjs';
+import basemap from '../../public/data/basemap.json';
+import '../styles/scene.css';
+import '../styles/stage.css';
 
 const ledgerUrl = REPO_BLOB + census.ledger;
 
-// Hero band (role 04): the world's four-state totals as materials — the same
-// vocabulary StateLegend spells out, keyed to the census rows on this page.
+// Cover band: the world's four-state totals as materials (moved from the old
+// front page; /ledger/ keeps its own copy).
 const band = [
   { state: 'observed', material: 'metal', key: 'states_observed' },
   { state: 'pledged', material: 'glass', key: 'states_pledged' },
   { state: 'unknown', material: 'unverified', key: 'states_unknown' },
   { state: 'absent', material: 'void', key: 'states_absent' },
 ];
+
+// ── World stage data: one bead and one column per country ────────────────
+// Centroid of the largest subpath of a country's base-map shape (predecessor
+// boxOf: Fiji wraps the dateline, large unions centre on their main body).
+function boxOf(d) {
+  let best = { x: 0, y: 0, w: 0, h: 0 };
+  for (const sub of d.split('M')) {
+    const n = sub.match(/-?\d+(?:\.\d+)?/g);
+    if (!n || n.length < 4) continue;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (let i = 0; i + 1 < n.length; i += 2) {
+      const x = +n[i], y = +n[i + 1];
+      if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+    }
+    const b = { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+    if (b.w * b.h > best.w * best.h) best = b;
+  }
+  return best;
+}
+const W = 1000, H = 640, MAP_TY = Math.round((H - basemap.height) / 2), BASE = 560;
+const worldData = {
+  w: W, h: H, mapTY: MAP_TY, base: BASE,
+  countries: views.map((v) => {
+    const shape = basemap.shapes[v.country.iso3];
+    const b = shape ? boxOf(shape) : null;
+    const c = countryEntry(v.country.iso3).counts;
+    return {
+      i: v.country.iso3,
+      x: b ? Math.round((b.x + b.w / 2) * 10) / 10 : null,
+      y: b ? Math.round((b.y + b.h / 2) * 10) / 10 : null,
+      p: v.treaty_status.length > 0 ? 1 : 0,
+      b: c.documents_with_bytes,
+      o: c.documents_without_bytes,
+      u: c.states_unknown,
+    };
+  }),
+};
+// Server-rendered resting state = the 'map' layout; lanes for the column pool
+// use the same ordering the client module derives (by bytes, ties by index).
+const mapPos = (c, i) => (c.x == null
+  ? { x: 40 + (i % 60) * 6, y: H - 14 }
+  : { x: c.x, y: MAP_TY + c.y });
+const lanes = new Map(
+  worldData.countries
+    .map((c, i) => ({ c, i }))
+    .sort((a, b) => b.c.b - a.c.b || a.i - b.i)
+    .map((e, k) => [e.c.i, k]),
+);
+const laneX = (iso) => 60 + lanes.get(iso) * ((W - 120) / worldData.countries.length) + ((W - 120) / worldData.countries.length) / 2;
+
+// Step figures resolve against the census through the door; graph-level
+// counters link to the ledger file they are recomputed from (R6). A key the
+// active census does not carry (the fixture build has no graph counters)
+// renders nothing — a figure is never invented to fill a slot (R5).
+const figOf = (f) =>
+  f.scope === 'graph'
+    ? { value: census.graph?.[f.key], href: ledgerUrl }
+    : { value: census.counts[f.key], href: `/ledger/#census-${f.key}` };
+
+// ── The walked record: the richest in the data (same derivation as /demo/) ──
+const walked = richestView();
+const iso3 = walked.country.iso3.toLowerCase();
+const entry = countryEntry(walked.country.iso3);
+const scene = { ...sceneDataFor(walked, entry), selectHref: `/country/${iso3}/` };
+// Predecessor pacing: ten screens of track, cover on the first, scrub over
+// the middle eight, the closed machine holds the last.
+const SCREENS = 10;
+const cardTop = (k) => (1 + chapterStart(k) * (SCREENS - 2)) / SCREENS;
+const cardFig = (key) => ({ value: entry.counts[key], href: `/country/${iso3}/#census-${key}` });
+
+// ── One document opens: the walked record's quoted, hashed row ────────────
+const doc = walked.rows.find((r) => r.quote && r.sha256);
+const treaty = walked.treaty_status.find((t) => t.receipt === doc.doc_id);
+const ev = treaty?.events[0];
+
+// ── The voids: the one refusal on record, verbatim, from whichever view
+// holds it (derived, never named) ──────────────────────────────────────────
+let refusal = null;
+for (const v of views) {
+  const r = v.rows.find((row) => row.refusal);
+  if (r) { refusal = { row: r, view: v, iso3: v.country.iso3.toLowerCase() }; break; }
+}
 ---
 
-<Base title="World ledger">
-  <section class="head hero">
+<Base title="National Climate Record Runtime">
+  <section class="head hero cover">
     <p class="eyebrow">
-      <span>National climate record · as of <span data-meta="as_of">{census.as_of}</span></span>
+      <span>{STORY.eyebrow} · as of <span data-meta="as_of">{census.as_of}</span></span>
     </p>
-    <h1>World ledger</h1>
-    <p class="treaty">
-      One row per country on record. Every figure on these pages links to the receipt it rests on;
-      unknown and absent describe this runtime's reading, not the country.
-    </p>
+    <h1>{STORY.title}</h1>
+    <p class="treaty">{STORY.lede}</p>
     <div class="worldband" aria-hidden="true">
       {
         band
@@ -45,7 +134,7 @@ const band = [
               <span class={`sw sw-${s.state}`} aria-hidden="true" />
               {s.state} · {s.material}
             </span>
-            <a class="fig cnt" data-census={s.key} href={`#census-${s.key}`}>
+            <a class="fig cnt" data-census={s.key} href={`/ledger/#census-${s.key}`}>
               {fmt(census.counts[s.key])}
             </a>
           </li>
@@ -53,125 +142,307 @@ const band = [
       }
     </ul>
     <p class="action">
-      One action everywhere: <b>click a figure, get the receipt it rests on</b> — document, verbatim
-      quote, <span class="nb">SHA-256</span>.
+      <span class="action-txt">
+        These four states are the whole vocabulary. Unknown and absent describe this runtime's
+        reading, not the country — and they are stated, never hidden.
+      </span>
+      <a class="action-cta" href="/ledger/">The world ledger holds every row →</a>
     </p>
   </section>
 
-  <section aria-labelledby="countries-h">
-    <h2 class="sec" id="countries-h">Countries on record</h2>
-    <div class="tablewrap">
-      <table class="table countries">
-        <caption class="sr-only">
-          Countries on record, with per-country document counts and the state of what this runtime
-          has read; each count links to that country's census row.
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Country</th>
-            <th scope="col">Code</th>
-            <th scope="col" class="num">Documents</th>
-            <th scope="col" class="num">With bytes</th>
-            <th scope="col">What's been read</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            views.map((v) => {
-              const e = countryEntry(v.country.iso3);
-              const iso3 = v.country.iso3.toLowerCase();
-              return (
-                <tr id={`c-${iso3}`}>
-                  <td>
-                    <a class="cname" href={`/country/${iso3}/`}>
-                      {v.country.name_en}
+  <section class="scrolly" id="world" data-world aria-label="The world's records, step by step">
+    <div class="wsteps">
+      {
+        WORLD_STEPS.map((s) => (
+          <div class="wstep" data-step={s.step}>
+            <h2>{s.title}</h2>
+            <p>{s.body}</p>
+            <div class="figrow">
+              {s.figs
+                .map((f) => ({ f, r: figOf(f) }))
+                .filter(({ r }) => r.value != null)
+                .map(({ f, r }) => (
+                  <span>
+                    <a class="fig" data-census={f.key} href={r.href}>
+                      {fmt(r.value)}
                     </a>
-                  </td>
-                  <td class="mono" style="font-size:13px">
-                    {v.country.iso3}
-                  </td>
-                  <td class="num">
-                    <a
-                      class="fig"
-                      data-census="documents_on_record"
-                      href={`/country/${iso3}/#census-documents_on_record`}
-                    >
-                      {e.counts.documents_on_record}
-                    </a>
-                  </td>
-                  <td class="num">
-                    <a
-                      class="fig"
-                      data-census="documents_with_bytes"
-                      href={`/country/${iso3}/#census-documents_with_bytes`}
-                    >
-                      {e.counts.documents_with_bytes}
-                    </a>
-                  </td>
-                  <td class="statecell">
-                    {e.counts.documents_on_record > 0 && (
-                      <div class="ministrip" aria-hidden="true">
-                        {v.strip.segments
-                          .filter((s) => e.counts[s.census_key] > 0)
-                          .map((s) => (
-                            <div class={`seg seg-${s.state}`} style={`flex-grow:${e.counts[s.census_key]}`} />
-                          ))}
-                      </div>
-                    )}
-                    <span class="strip-key ministrip-key">
-                      {v.strip.segments.map((s) => (
-                        <span class="mk">
-                          <span class={`sw sw-${s.state}`} aria-hidden="true" />
-                          <span class="sr-only">{s.label} </span>
-                          <a class="fig" data-census={s.census_key} href={`/country/${iso3}/#census-${s.census_key}`}>
-                            {e.counts[s.census_key]}
-                          </a>
-                        </span>
-                      ))}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })
-          }
-        </tbody>
-      </table>
+                    {f.label}
+                  </span>
+                ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="wstage">
+      <div class="stage" aria-hidden="true">
+        <svg viewBox={`0 0 ${W} ${H}`}>
+          <g class="stage-map" style={`transform:translate(0px,${MAP_TY}px)`}>
+            {
+              Object.entries(basemap.shapes).map(([iso, d]) => (
+                <path d={d} class={worldData.countries.some((c) => c.i === iso) ? 'c' : ''} />
+              ))
+            }
+            {/* records the base map holds no shape for rest in a row below
+                the stage; the label travels with the map and fades with it */}
+            <text x="40" y={H - 26 - MAP_TY}>records with no base-map shape ↓</text>
+          </g>
+          {/* the parties step's apart group: records with no treaty event on
+              the depositary's list stand apart at 840+ (world-stage layout);
+              this quiet caption says why, so standing apart reads intentional.
+              Shown by world-stage only on that step, and only if any exist. */}
+          <g class="stage-apart" aria-hidden="true">
+            <text x="858" y="140" text-anchor="middle">no treaty event on record</text>
+            <line x1="858" y1="148" x2="858" y2="160" />
+          </g>
+          <g>
+            {
+              worldData.countries.map((c) => (
+                <rect
+                  data-cell={c.i}
+                  x="-1.6"
+                  y="-1"
+                  width="3.2"
+                  height="1"
+                  class="stage-cell off"
+                  style={`transform:translate(${laneX(c.i)}px,${BASE}px) scale(1,0.001)`}
+                />
+              ))
+            }
+          </g>
+          <g>
+            {
+              worldData.countries.map((c, i) => {
+                const p = mapPos(c, i);
+                return (
+                  <circle data-bead={c.i} r="2.6" class="stage-bead" style={`transform:translate(${p.x}px,${p.y}px)`} />
+                );
+              })
+            }
+          </g>
+        </svg>
+      </div>
+      <p class="stage-caption">
+        One mark per country on record. Base map: Natural Earth (public domain), Equal Earth
+        projection — a base map, not a measurement. Counts from{' '}
+        <a href={ledgerUrl} class="mono" style="font-size:12.5px">{census.ledger}</a>, as of{' '}
+        <span class="mono" data-meta="as_of">{census.as_of}</span>.
+      </p>
+      <script type="application/json" data-world-data set:html={JSON.stringify(worldData)} />
     </div>
   </section>
 
-  <section aria-labelledby="census-h" id="census-sec">
-    <h2 class="sec" id="census-h">Census — all countries</h2>
-    <p class="census-src">
-      Every count below is recomputable from the ledgers:{' '}
-      <a href={ledgerUrl} class="mono" style="font-size:13px">{census.ledger}</a> (as of{' '}
-      <span class="mono" data-meta="as_of">{census.as_of}</span>).
-    </p>
-    <div class="tablewrap">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Key</th>
-            <th scope="col" class="num">Count</th>
-            <th scope="col">Derivation</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            Object.entries(census.counts).map(([k, v]) => (
-              <tr id={`census-${k}`}>
-                <td class="ckey">{k}</td>
-                <td class="num">
-                  <a class="fig" data-census={k} href={ledgerUrl}>
-                    {v}
-                  </a>
-                </td>
-                <td class="muted">{census.derivations[k]}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+  <section
+    class="scroll-chapter"
+    id="machine"
+    data-machine
+    style={`height:${SCREENS * 100}svh`}
+    aria-label="One record, assembled chapter by chapter"
+  >
+    <div class="scroll-pin">
+      <div class="stage-heading">
+        <span>{STORY.machineHeading} — <a href={`/country/${iso3}/`} style="pointer-events:auto">{walked.country.name_en}</a></span>
+        <span>drag to turn · tap a part</span>
+      </div>
+      <SceneStage scene={scene} counts={entry.counts} dialHref={`/country/${iso3}/#census-documents_with_bytes`} start={0} />
     </div>
-    <StateLegend counts={census.counts} />
+    <div class="scene-cards">
+      {
+        MACHINE_CARDS.map((card) => (
+          <div class="scene-card" data-phase={card.phase} style={`top:${(cardTop(card.phase) * 100).toFixed(2)}%`}>
+            <span class="eyebrow">{card.eyebrow}</span>
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+            {card.phase === 3 && (
+              <p class="cardfigs">
+                <a class="fig" data-census="documents_with_bytes" href={`/country/${iso3}/#census-documents_with_bytes`}>
+                  {cardFig('documents_with_bytes').value}
+                </a>{' '}
+                hashed of{' '}
+                <a class="fig" data-census="documents_on_record" href={`/country/${iso3}/#census-documents_on_record`}>
+                  {cardFig('documents_on_record').value}
+                </a>{' '}
+                on record for this country.
+              </p>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="docopen" id="document">
+    <p class="eyebrow doc-eyebrow">{STORY.docEyebrow}</p>
+    <h2>{STORY.docTitle}</h2>
+    <p class="docbody">{STORY.docBody}</p>
+    <div class="docchain">
+      <div class="rblock">
+        <h2>Document</h2>
+        <p class="doc-title">
+          <a href={`/receipt/${iso3}/${doc.doc_id}/`} data-receipt={doc.doc_id}>{doc.title}</a>
+        </p>
+        {
+          ev && treaty && (
+            <p class="docline">
+              {treaty.treaty_label} {ev.label}{' '}
+              <a class="fig" data-receipt={doc.doc_id} href={`/country/${iso3}/#treaty`}>
+                {ev.display}
+              </a>
+            </p>
+          )
+        }
+      </div>
+      <div class="rblock">
+        <h2>Verbatim quote</h2>
+        <p class="quote"><span class="qtext">{doc.quote.text}</span></p>
+      </div>
+      <div class="rblock" id="story-sha256">
+        <h2>SHA-256 — the case-back</h2>
+        <p class="hash"><a data-receipt={doc.doc_id} href={`/receipt/${iso3}/${doc.doc_id}/#sha256`}>{doc.sha256}</a></p>
+        <p class="muted">The identity this record rests on: the hash of the fetched file itself.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="voids" id="voids">
+    <p class="eyebrow doc-eyebrow">{STORY.voidsEyebrow}</p>
+    <h2>{STORY.voidsTitle}</h2>
+    <p class="docbody">{STORY.voidsBody}</p>
+    {
+      refusal && (
+        <div class="refusal">
+          <span class="tag">REFUSED — figure extraction · {refusal.view.country.name_en}</span>“
+          <a href={`/receipt/${refusal.iso3}/${refusal.row.doc_id}/#state`} data-receipt={refusal.row.doc_id}>
+            {refusal.row.refusal}
+          </a>
+          ”
+        </div>
+      )
+    }
+    <div class="figrow">
+      <span>
+        <a class="fig" data-census="states_pledged" href="/ledger/#census-states_pledged">
+          {fmt(census.counts.states_pledged)}
+        </a>
+        pledge figures read — every target ring stands ghosted
+      </span>
+      <span>
+        <a class="fig" data-census="states_unknown" href="/ledger/#census-states_unknown">
+          {fmt(census.counts.states_unknown)}
+        </a>
+        states unknown — each an empty bore, each with its reason
+      </span>
+    </div>
+    <p class="muted">{STORY.voidsNote}</p>
+  </section>
+
+  <section class="closer" id="close">
+    <p class="eyebrow doc-eyebrow">{STORY.closeEyebrow}</p>
+    <h2>{STORY.closeTitle}</h2>
+    <p class="docbody">{STORY.closeBody}</p>
+    <p class="ways">
+      <a class="way" href="/ledger/">{STORY.ctaLedger} →</a>
+      <a class="way" href={`/country/${iso3}/`}>{STORY.ctaCountry}: {walked.country.name_en} →</a>
+    </p>
   </section>
 </Base>
+
+<style>
+  /* The cover composes its band: no dead band under the bar (the .head top
+     padding is dropped and the centring is biased up, so the H1 sits at the
+     optical centre of the first screen), and the closing action strip runs
+     the full line — hairline across, sentence left, the one action right. */
+  .cover { min-height: calc(92svh - 60px); display: flex; flex-direction: column; justify-content: center; padding-top: 0; padding-bottom: clamp(16px, 4svh, 40px); }
+  .cover .action { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px 40px; }
+  .cover .action .action-txt { max-width: 40rem; }
+  .cover .action .action-cta { white-space: nowrap; font-weight: 600; }
+  .scrolly { margin-top: 10svh; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font: 500 11.5px/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); }
+  .doc-eyebrow::before { content: ''; flex: 0 0 26px; height: 1px; background: var(--acc); }
+  .docopen, .voids, .closer { padding: clamp(64px, 12svh, 140px) 0 0; max-width: 54rem; }
+  .docopen h2, .voids h2, .closer h2 { font: 760 clamp(1.8rem, 3.4vw, 2.6rem)/1.05 var(--f-d); letter-spacing: -.028em; margin: 0 0 12px; }
+  .docbody { font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.6; color: var(--ink-2); margin: 0 0 28px; max-width: 44rem; }
+  .docchain .rblock h2 { font: 600 12px/1 var(--f-m); letter-spacing: .16em; color: var(--ink-2); margin: 0 0 12px; text-transform: uppercase; }
+  .docline { margin: 6px 0 0; color: var(--ink-2); font-size: 15.5px; }
+  .voids .figrow { display: flex; flex-wrap: wrap; gap: 10px 40px; margin: 26px 0 10px; padding-top: 14px; border-top: 1px solid var(--line-2); }
+  .voids .figrow > span { display: flex; flex-direction: column; gap: 2px; font-size: 14.5px; color: var(--ink-2); max-width: 24rem; }
+  .voids .figrow a.fig { font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.1; align-self: flex-start; }
+  .closer { padding-bottom: 10svh; }
+  .ways { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0 0; }
+  .way { display: inline-block; font: 600 15.5px/1 var(--f-t); color: var(--acc-ink); border: 1px solid var(--line-2); border-radius: 8px; padding: 13px 18px; text-decoration: none; transition: border-color .15s var(--ease), background .15s var(--ease); }
+  .way:hover { border-color: var(--acc-ink); background: var(--acc-soft); }
+  .cardfigs { margin-top: 10px !important; padding-top: 10px; border-top: 1px solid var(--line-2); }
+  /* the hash settles into place once — the same global keyframes the receipt
+     pages use (site.css), dead under prefers-reduced-motion there too */
+  #story-sha256 .hash { animation: settle .45s var(--ease); }
+</style>
+
+<script>
+  import { mountWorldStage } from '../lib/scene/world-stage.mjs';
+  import { chapterStart } from '../lib/scene/explosion-motion.mjs';
+
+  // The world stage: middle-band stepper over one mounted SVG.
+  const world = document.querySelector('[data-world]');
+  if (world) mountWorldStage(world);
+
+  // The pinned scrub (predecessor pattern): N×100svh chapter with a sticky
+  // stage; a rAF-throttled scroll listener maps chapter travel to the
+  // instrument's progress. Phones (<700px) pin a short stage instead and the
+  // card passing under it seeks its chapter's end.
+  const chapter = document.querySelector('[data-machine]');
+  const stage = chapter && chapter.querySelector('.scene-stage');
+  const phone = matchMedia('(max-width: 699px)');
+  const inset = () =>
+    phone.matches ? 0 : Math.min(480, innerWidth * 0.40) + Math.max(16, Math.min(48, innerWidth * 0.04));
+  let frame = 0;
+  const cards = chapter ? [...chapter.querySelectorAll('.scene-card')] : [];
+  const onScroll = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      if (!chapter) return;
+      if (phone.matches) {
+        for (const card of cards) card.style.opacity = '';
+        return;
+      }
+      // An exiting card fades out before its top edge reaches the pinned
+      // stage heading (top bar 60px + heading row): the card column and the
+      // fixed header never cross.
+      const headClear = 104;
+      for (const card of cards) {
+        const top = card.getBoundingClientRect().top;
+        card.style.opacity = String(Math.max(0, Math.min(1, (top - headClear) / 90)));
+      }
+      const controls = stage && stage.sceneControls;
+      if (!controls) return;
+      const r = chapter.getBoundingClientRect();
+      // Half-screen lead over an 8-screen scrub: progress reaches a chapter's
+      // start exactly when that chapter's card crosses the viewport centre
+      // (cardTop above places card k at (1 + 8·chapterStart(k))/10 of the
+      // track), so a centred card and the scene always name the same chapter.
+      const lead = innerHeight / 2;
+      const distance = chapter.offsetHeight - 2 * innerHeight;
+      if (distance > 100 && r.top <= 0 && r.bottom >= 0) {
+        controls.progress = Math.max(0, Math.min(100, ((-r.top - lead) / distance) * 100));
+        controls.inset = inset();
+      }
+    });
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+  if (chapter) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!phone.matches) return;
+        for (const e of entries) {
+          const controls = stage && stage.sceneControls;
+          if (!e.isIntersecting || !controls) continue;
+          const p = Number(e.target.dataset.phase);
+          controls.progress = p === 0 ? 0 : p >= 7 ? 100 : (chapterStart(p + 1) - 0.006) * 100;
+        }
+      },
+      { rootMargin: '-55% 0px -35% 0px' },
+    );
+    chapter.querySelectorAll('.scene-card').forEach((el) => io.observe(el));
+  }
+</script>

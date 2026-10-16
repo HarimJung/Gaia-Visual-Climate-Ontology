@@ -218,6 +218,10 @@ footer p { margin: 0 0 6px; }
   .facts { grid-template-columns: 1fr; gap: 2px 0; }
   .facts dd { margin-bottom: 10px; }
   .bar nav a { padding: 8px 6px; font-size: 14px; }
+  /* four nav items no longer fit beside the full mark on a phone: let the
+     bar wrap to its content instead of clipping at a fixed height */
+  .bar .wrap { height: auto; flex-wrap: wrap; row-gap: 0; padding-top: 10px; padding-bottom: 6px; }
+  .bar nav { margin-left: 0; flex-wrap: wrap; }
 }
 
 /* motion (frontend-prompts role 06, adapted): five motions on the whole

@@ -17,6 +17,10 @@
     "test": "node --test"
   },
   "devDependencies": {
+    "@types/three": "0.180.0",
     "astro": "5.18.2"
+  },
+  "dependencies": {
+    "three": "0.180.0"
   }
 }

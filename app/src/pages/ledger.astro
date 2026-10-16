@@ -1,0 +1,178 @@
+---
+// World ledger (moved here from / when the scroll story became the front
+// door): every country on record, one row each — name, code, its per-country
+// counts as census-linked figures, and a mini four-state strip. The one
+// action everywhere stays the same: click a number, get its receipt.
+// Everything comes through the door (R11); no country identity lives in this
+// file (R1), and the row set is whatever views the reader produced.
+import Base from '../layouts/Base.astro';
+import StateLegend from '../components/StateLegend.astro';
+import { views, census, countryEntry, fmt, REPO_BLOB } from '../lib/data.mjs';
+
+const ledgerUrl = REPO_BLOB + census.ledger;
+
+// The four-state material band: the same vocabulary StateLegend spells out,
+// keyed to the census rows on this page. The story cover carries it too.
+const band = [
+  { state: 'observed', material: 'metal', key: 'states_observed' },
+  { state: 'pledged', material: 'glass', key: 'states_pledged' },
+  { state: 'unknown', material: 'unverified', key: 'states_unknown' },
+  { state: 'absent', material: 'void', key: 'states_absent' },
+];
+---
+
+<Base title="World ledger">
+  <section class="head hero">
+    <p class="eyebrow">
+      <span>National climate record · as of <span data-meta="as_of">{census.as_of}</span></span>
+    </p>
+    <h1>World ledger</h1>
+    <p class="treaty">
+      One row per country on record. Every figure on these pages links to the receipt it rests on;
+      unknown and absent describe this runtime's reading, not the country.
+    </p>
+    <div class="worldband" aria-hidden="true">
+      {
+        band
+          .filter((s) => census.counts[s.key] > 0)
+          .map((s) => <div class={`seg seg-${s.state}`} style={`flex-grow:${census.counts[s.key]}`} />)
+      }
+    </div>
+    <ul class="bandkey">
+      {
+        band.map((s) => (
+          <li>
+            <span class="lbl">
+              <span class={`sw sw-${s.state}`} aria-hidden="true" />
+              {s.state} · {s.material}
+            </span>
+            <a class="fig cnt" data-census={s.key} href={`#census-${s.key}`}>
+              {fmt(census.counts[s.key])}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="action">
+      One action everywhere: <b>click a figure, get the receipt it rests on</b> — document, verbatim
+      quote, <span class="nb">SHA-256</span>.
+    </p>
+  </section>
+
+  <section aria-labelledby="countries-h">
+    <h2 class="sec" id="countries-h">Countries on record</h2>
+    <div class="tablewrap">
+      <table class="table countries">
+        <caption class="sr-only">
+          Countries on record, with per-country document counts and the state of what this runtime
+          has read; each count links to that country's census row.
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Code</th>
+            <th scope="col" class="num">Documents</th>
+            <th scope="col" class="num">With bytes</th>
+            <th scope="col">What's been read</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            views.map((v) => {
+              const e = countryEntry(v.country.iso3);
+              const iso3 = v.country.iso3.toLowerCase();
+              return (
+                <tr id={`c-${iso3}`}>
+                  <td>
+                    <a class="cname" href={`/country/${iso3}/`}>
+                      {v.country.name_en}
+                    </a>
+                  </td>
+                  <td class="mono" style="font-size:13px">
+                    {v.country.iso3}
+                  </td>
+                  <td class="num">
+                    <a
+                      class="fig"
+                      data-census="documents_on_record"
+                      href={`/country/${iso3}/#census-documents_on_record`}
+                    >
+                      {e.counts.documents_on_record}
+                    </a>
+                  </td>
+                  <td class="num">
+                    <a
+                      class="fig"
+                      data-census="documents_with_bytes"
+                      href={`/country/${iso3}/#census-documents_with_bytes`}
+                    >
+                      {e.counts.documents_with_bytes}
+                    </a>
+                  </td>
+                  <td class="statecell">
+                    {e.counts.documents_on_record > 0 && (
+                      <div class="ministrip" aria-hidden="true">
+                        {v.strip.segments
+                          .filter((s) => e.counts[s.census_key] > 0)
+                          .map((s) => (
+                            <div class={`seg seg-${s.state}`} style={`flex-grow:${e.counts[s.census_key]}`} />
+                          ))}
+                      </div>
+                    )}
+                    <span class="strip-key ministrip-key">
+                      {v.strip.segments.map((s) => (
+                        <span class="mk">
+                          <span class={`sw sw-${s.state}`} aria-hidden="true" />
+                          <span class="sr-only">{s.label} </span>
+                          <a class="fig" data-census={s.census_key} href={`/country/${iso3}/#census-${s.census_key}`}>
+                            {e.counts[s.census_key]}
+                          </a>
+                        </span>
+                      ))}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="census-h" id="census-sec">
+    <h2 class="sec" id="census-h">Census — all countries</h2>
+    <p class="census-src">
+      Every count below is recomputable from the ledgers:{' '}
+      <a href={ledgerUrl} class="mono" style="font-size:13px">{census.ledger}</a> (as of{' '}
+      <span class="mono" data-meta="as_of">{census.as_of}</span>).
+    </p>
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Key</th>
+            <th scope="col" class="num">Count</th>
+            <th scope="col">Derivation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            Object.entries(census.counts).map(([k, v]) => (
+              <tr id={`census-${k}`}>
+                <td class="ckey">{k}</td>
+                <td class="num">
+                  <a class="fig" data-census={k} href={ledgerUrl}>
+                    {v}
+                  </a>
+                </td>
+                <td class="muted">{census.derivations[k]}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <StateLegend counts={census.counts} />
+  </section>
+</Base>

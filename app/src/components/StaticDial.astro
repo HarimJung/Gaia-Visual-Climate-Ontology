@@ -1,0 +1,50 @@
+---
+// The dial as flat SVG: no three.js, no client boundary. Ported from the
+// frozen predecessor's static-dial.tsx (owner decision 2026-10-16) and remapped
+// onto this runtime's honest data: the pledge arc is drawn only from a pledge
+// figure actually read (none is, so the ring renders as a ghost outline), the
+// eight report sockets render their recorded state (unknown = dashed bore),
+// and the centre reading is the hashed-document count, linked to its census
+// row (R6). Server-rendered everywhere the 3D movement mounts, so the
+// instrument is recognisable on every screen, not only the ones with WebGL.
+import { SCENE_COPY } from '../lib/story-content.mjs';
+
+const { counts, href, sockets = [] } = Astro.props;
+const ring = Array.from({ length: 8 }, (_, i) => {
+  const a = (i / 8) * Math.PI * 2;
+  const state = sockets[i]?.state ?? 'unknown';
+  return { cx: 210 + 100 * Math.cos(a), cy: 210 + 100 * Math.sin(a), state };
+});
+---
+
+<svg viewBox="0 0 420 420" class="static-dial" aria-hidden="true">
+  <circle cx="210" cy="210" r="185" fill="var(--paper)" stroke="var(--line-2)"></circle>
+  <circle cx="210" cy="210" r="163" fill="none" stroke="var(--wash)" stroke-width="20"></circle>
+  {/* no pledge figure read: the target ring is a ghost outline, never a
+      guessed arc — dashed in ink with its reason etched on, so ghost reads
+      as ghost at a glance (same treatment as the 3D ring) */}
+  <circle cx="210" cy="210" r="163" fill="none" stroke="var(--ink-3)" stroke-width="5" stroke-dasharray="4 10"></circle>
+  <text x="210" y="347" text-anchor="middle" fill="var(--ink-3)" font-size="11.5" letter-spacing="1.5" font-family="var(--f-m)">
+    {SCENE_COPY.pledgeEtch.toUpperCase()}
+  </text>
+  {
+    ring.map((s) => (
+      <circle
+        cx={s.cx}
+        cy={s.cy}
+        r="9"
+        fill={s.state === 'observed' ? 'var(--acc)' : s.state === 'absent' ? 'var(--ink-3)' : 'none'}
+        stroke="var(--ink-3)"
+        stroke-dasharray={s.state === 'unknown' ? '2 3' : undefined}
+      />
+    ))
+  }
+  <a href={href}>
+    <text x="210" y="200" text-anchor="middle" fill="var(--acc-ink)" font-size="46" font-family="var(--f-m)" font-weight="500">
+      {counts.documents_with_bytes}
+    </text>
+  </a>
+  <text x="210" y="232" text-anchor="middle" fill="var(--ink-3)" font-size="17" letter-spacing="1" font-family="var(--f-t)">
+    documents hashed
+  </text>
+</svg>
