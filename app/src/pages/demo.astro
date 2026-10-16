@@ -1,12 +1,22 @@
 ---
-// The demo path (AD-10): ledger → a figure → its receipt → the hash, every
-// step deep-linked. The authoring step is a labeled placeholder (WP-08) —
-// nothing is mocked. The walked figure is chosen from the fixture data, never
-// named in code (R1).
+// The demo path (AD-10): world ledger → one country → a figure → its receipt →
+// the hash, every step deep-linked. The authoring step is a labeled
+// placeholder (WP-08) — nothing is mocked. The walked country is the richest
+// one in the data (most rows with bytes held, among countries whose view
+// carries a page quote); the walked figure comes from its view. Neither is
+// ever named in code (R1).
 import Base from '../layouts/Base.astro';
 import { views } from '../lib/data.mjs';
 
-const view = views[0];
+const withQuote = views.filter((v) => v.rows.some((r) => r.quote && r.sha256));
+if (withQuote.length === 0) {
+  // R5: a demo step without its receipt would have to invent one — refuse.
+  throw new Error('no view carries a quoted, hashed row — the demo path cannot be built honestly');
+}
+const bytes = (v) => v.rows.filter((r) => r.sha256).length;
+// views arrive name-sorted, so ties resolve to the first by name: deterministic.
+const view = withQuote.reduce((a, b) => (bytes(b) > bytes(a) ? b : a));
+const iso3 = view.country.iso3.toLowerCase();
 const doc = view.rows.find((r) => r.quote && r.sha256);
 const treaty = view.treaty_status.find((t) => t.receipt === doc.doc_id);
 const ev = treaty.events[0];
@@ -15,34 +25,42 @@ const ev = treaty.events[0];
 <Base title="Demo path">
   <section class="head">
     <h1>Demo path</h1>
-    <p class="treaty">From the ledger to the bytes behind one figure. Every step below is a link.</p>
+    <p class="treaty">From the world ledger to the bytes behind one figure. Every step below is a link.</p>
   </section>
 
   <ol class="steps-list">
     <li>
-      <h2><a href="/">The ledger</a></h2>
+      <h2><a href="/">The world ledger</a></h2>
       <p>
-        Zero clicks: country name, treaty status in one line, the next relevant date, and the strip of
-        what this runtime has read so far.
+        One row per country on record: its counts, and the strip of what this runtime has read so
+        far. Every number is a link.
       </p>
     </li>
     <li>
-      <h2><a href="/#treaty">One figure</a></h2>
+      <h2><a href={`/country/${iso3}/`}>One country: {view.country.name_en}</a></h2>
+      <p>
+        Zero clicks past the row: country name, treaty status in one line, the next relevant date,
+        and the completeness strip.
+      </p>
+    </li>
+    <li>
+      <h2><a href={`/country/${iso3}/#treaty`}>One figure</a></h2>
       <p>
         The {treaty.treaty_label} {ev.label} date,{' '}
-        <a class="fig" data-receipt={doc.doc_id} href="/#treaty">{ev.display}</a>, in the treaty line.
+        <a class="fig" data-receipt={doc.doc_id} href={`/country/${iso3}/#treaty`}>{ev.display}</a>, in the
+        treaty line.
       </p>
     </li>
     <li>
-      <h2><a href={`/receipt/${doc.doc_id}/`}>Its receipt</a></h2>
+      <h2><a href={`/receipt/${iso3}/${doc.doc_id}/`}>Its receipt</a></h2>
       <p>
         {doc.title} — source URL, the{' '}
-        <a href={`/receipt/${doc.doc_id}/#quote`}>page-one quote</a>, and the recorded state, at one
-        URL of its own.
+        <a href={`/receipt/${iso3}/${doc.doc_id}/#quote`}>page-one quote</a>, and the recorded state, at
+        one URL of its own.
       </p>
     </li>
     <li>
-      <h2><a href={`/receipt/${doc.doc_id}/#sha256`}>The hash</a></h2>
+      <h2><a href={`/receipt/${iso3}/${doc.doc_id}/#sha256`}>The hash</a></h2>
       <p>The SHA-256 of the fetched file: the identity this record rests on.</p>
     </li>
     <li>

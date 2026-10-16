@@ -1,0 +1,39 @@
+{
+  "build_id": "dbc6eb0ea04aee74dc18459192441f9f5df154edf0b71a7ac4400dd914f90e4b",
+  "built_at": "2026-10-16T04:13:13.123Z",
+  "inputs": {
+    "country_seeds": {
+      "KHM": "7da646d355852e2d4c6626e0fdb2b8f03dcf947686bfd2f0ee519cef99f3301d"
+    },
+    "platform_seed_version": "0.2.0",
+    "sources": {
+      "btr-listing": {
+        "retrieved_at": "2026-10-15T21:56:26.772Z",
+        "snapshot_sha256": "0dfd707d6bf7e524a57cc4c497c424e01dd1b5e84f69775b019359a1324ef651"
+      },
+      "ndc-docs": {
+        "index_retrieved_at": "2026-10-15T21:56:49.763Z",
+        "index_sha256": "721aa825e2bf979b6b864620182bd48337d37db719795eebfd676e39681b74cd"
+      },
+      "registry": {
+        "retrieved_at": "2026-10-15T21:56:22.425Z",
+        "snapshot_sha256": "8958a3b12e9f770d45327c639ae173b4a063c6cc1dc4bf5b5e2196d3d76a51d9"
+      },
+      "untc": {
+        "xxvii-7": {
+          "retrieved_at": "2026-10-15T21:56:30.503Z",
+          "snapshot_sha256": "92a525f426a968a80e0b422f3f0a2f730b6ff1e5a70aa6f0eac80d13d060e897"
+        },
+        "xxvii-7-d": {
+          "retrieved_at": "2026-10-15T21:56:31.343Z",
+          "snapshot_sha256": "cb2aec820cb4fa2691ca28ef4ef8a0f3f33aeac9f309ce4e55fb8f607b0deeee"
+        }
+      }
+    },
+    "vocab_sha256": "f9790c2856aced0890fc480084a524e7eadae298720a6ad7e117d04605ebad6d"
+  },
+  "counts": {
+    "base_rows": 3043,
+    "derived_rows": 395
+  }
+}

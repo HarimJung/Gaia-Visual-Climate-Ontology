@@ -313,6 +313,27 @@ test('r8 passes a README without deploy commands', () => {
   clean(gate('r8-one-deploy-path.mjs', dir));
 });
 
+// ---------------------------------------------------------------- r9
+
+test('r9 passes a data tree without stored queues (diff reports are fine)', () => {
+  const dir = fixture({
+    'data/graph/base.csv': 'iso3\n',
+    'data/diff/ab12__cd34.json': '{}\n',
+    'data/diff/ab12__cd34.md': '# diff\n',
+  });
+  clean(gate('r9-no-stored-queue.mjs', dir));
+});
+
+test('r9 detects a stored queue file appearing under data/', () => {
+  const dir = fixture({ 'data/review-queue.json': '[]\n' });
+  detected(gate('r9-no-stored-queue.mjs', dir));
+});
+
+test('r9 detects a stored stale-flag file under data/', () => {
+  const dir = fixture({ 'data/graph/stale-flags.csv': 'iso3,record_key\n' });
+  detected(gate('r9-no-stored-queue.mjs', dir));
+});
+
 // ---------------------------------------------------------------- r12
 
 const CLEAN_GITIGNORE = 'node_modules/\ndata/cache/\nengine/cache/\n';

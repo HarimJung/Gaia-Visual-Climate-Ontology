@@ -1,0 +1,25 @@
+---
+// The four-state visual vocabulary spelled out with its counts. Counts arrive
+// as data; each figure links to the census row with the same key on the
+// rendering page, so the number stays machine-linked (R6).
+const { counts } = Astro.props;
+---
+
+<ul class="strip-key" style="margin-top:18px">
+  <li>
+    <span class="sw sw-observed" aria-hidden="true"></span>observed — solid fill:{' '}
+    <a class="fig" data-census="states_observed" href="#census-states_observed">{counts.states_observed}</a>
+  </li>
+  <li>
+    <span class="sw sw-pledged" aria-hidden="true"></span>pledged — dashed outline:{' '}
+    <a class="fig" data-census="states_pledged" href="#census-states_pledged">{counts.states_pledged}</a>
+  </li>
+  <li>
+    <span class="sw sw-unknown" aria-hidden="true"></span>unknown — hatched, reason stays visible:{' '}
+    <a class="fig" data-census="states_unknown" href="#census-states_unknown">{counts.states_unknown}</a>
+  </li>
+  <li>
+    <span class="sw sw-absent" aria-hidden="true"></span>absent — explicit void:{' '}
+    <a class="fig" data-census="states_absent" href="#census-states_absent">{counts.states_absent}</a>
+  </li>
+</ul>

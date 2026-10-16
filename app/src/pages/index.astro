@@ -1,154 +1,100 @@
 ---
-// Ledger (AD-10). First three seconds, zero clicks: country name, treaty
-// status in one line, next relevant date, and the completeness strip.
-// Everything on this screen comes from the view JSON + census fixture (R11);
-// no country identity lives in this file (R1).
+// World ledger: every country on record, one row each — name, code, its
+// per-country counts as census-linked figures, and a mini four-state strip.
+// The one action everywhere stays the same: click a number, get its receipt.
+// Everything comes through the door (R11); no country identity lives in this
+// file (R1), and the row set is whatever views the reader produced.
 import Base from '../layouts/Base.astro';
-import { views, census, REPO_BLOB } from '../lib/data.mjs';
+import StateLegend from '../components/StateLegend.astro';
+import { views, census, countryEntry, REPO_BLOB } from '../lib/data.mjs';
 
-const view = views[0];
-const c = census.counts;
 const ledgerUrl = REPO_BLOB + census.ledger;
 ---
 
-<Base title={`${view.country.name_en} — ledger`}>
+<Base title="World ledger">
   <section class="head">
-    <h1>{view.country.name_en}</h1>
-
-    <p class="treaty" id="treaty">
-      {
-        view.treaty_status.map((t, i) => (
-          <>
-            {i > 0 && (
-              <span class="sep" aria-hidden="true">
-                ·
-              </span>
-            )}
-            <b>{t.treaty_label}</b>{' '}
-            {t.events.map((ev, j) => (
-              <>
-                {j > 0 && ', '}
-                {ev.label}{' '}
-                <a class="fig" data-receipt={t.receipt} href={`/receipt/${t.receipt}/`}>
-                  {ev.display}
-                </a>
-              </>
-            ))}
-          </>
-        ))
-      }
+    <h1>World ledger</h1>
+    <p class="treaty">
+      One row per country on record. Every figure on these pages links to the receipt it rests on;
+      unknown and absent describe this runtime's reading, not the country.
     </p>
-
-    <p class="nextdate" id="next-date">
-      <span class="lbl">Next relevant date</span>
-      {
-        view.next_date.date ? (
-          <>
-            <a class="fig" data-receipt={view.next_date.receipt} href={`/receipt/${view.next_date.receipt}/`}>
-              <time datetime={view.next_date.date}>{view.next_date.date}</time>
-            </a>
-            {view.next_date.label && <span class="reason">{view.next_date.label}</span>}
-          </>
-        ) : (
-          <>
-            <span class={`chip chip-${view.next_date.state}`}>{view.next_date.state}</span>
-            <span class="reason">{view.next_date.reason}</span>
-          </>
-        )
-      }
-    </p>
-
-    <section class="stripsec" id="strip" aria-labelledby="strip-h">
-      <h2 id="strip-h">{view.strip.heading}</h2>
-      <div class="strip">
-        {
-          /* a zero count gets zero visual weight — the legend below still says 0 */
-          view.strip.segments
-            .filter((s) => c[s.census_key] > 0)
-            .map((s) => (
-              <div class={`seg seg-${s.state}`} style={`flex-grow:${c[s.census_key]}`} title={`${s.label} ${c[s.census_key]}`} />
-            ))
-        }
-      </div>
-      <ul class="strip-key">
-        {
-          view.strip.segments.map((s) => (
-            <li>
-              <span class={`sw sw-${s.state}`} aria-hidden="true" />
-              {s.label}{' '}
-              <a class="fig" data-census={s.census_key} href={`#census-${s.census_key}`}>
-                {c[s.census_key]}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="muted">{view.strip.note}</p>
-    </section>
   </section>
 
-  <section aria-labelledby="ledger-h">
-    <h2 class="sec" id="ledger-h">
-      Documents on record:{' '}
-      <a class="fig" data-census="documents_on_record" href="#census-documents_on_record">{c.documents_on_record}</a>
-    </h2>
+  <section aria-labelledby="countries-h">
+    <h2 class="sec" id="countries-h">Countries on record</h2>
     <div class="tablewrap">
-      <table class="table">
+      <table class="table countries">
+        <caption class="sr-only">
+          Countries on record, with per-country document counts and the state of what this runtime
+          has read; each count links to that country's census row.
+        </caption>
         <thead>
           <tr>
-            <th>Document</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>State</th>
-            <th>Bytes</th>
+            <th scope="col">Country</th>
+            <th scope="col">Code</th>
+            <th scope="col" class="num">Documents</th>
+            <th scope="col" class="num">With bytes</th>
+            <th scope="col">What's been read</th>
           </tr>
         </thead>
         <tbody>
           {
-            view.rows.map((r) => (
-              <tr id={`row-${r.doc_id}`}>
-                <td>
-                  <span class="doc-title">
-                    <a href={`/receipt/${r.doc_id}/`} data-receipt={r.doc_id}>
-                      {r.title}
+            views.map((v) => {
+              const e = countryEntry(v.country.iso3);
+              const iso3 = v.country.iso3.toLowerCase();
+              return (
+                <tr id={`c-${iso3}`}>
+                  <td>
+                    <a class="cname" href={`/country/${iso3}/`}>
+                      {v.country.name_en}
                     </a>
-                  </span>
-                  {r.state === 'unknown' && !r.refusal && <p class="rowmeta">{r.state_reason}</p>}
-                  {r.refusal && (
-                    <div class="refusal">
-                      <span class="tag">REFUSED — figure extraction</span>“
-                      <a href={`/receipt/${r.doc_id}/#state`} data-receipt={r.doc_id}>
-                        {r.refusal}
-                      </a>
-                      ”
-                    </div>
-                  )}
-                  {r.receipt_scope && <p class="rowmeta">{r.receipt_scope}</p>}
-                </td>
-                <td class="mono" style="font-size:13px">
-                  {r.doc_type}
-                </td>
-                <td>
-                  <a class="fig" data-receipt={r.doc_id} href={`/receipt/${r.doc_id}/`}>
-                    {r.date}
-                  </a>
-                </td>
-                <td>
-                  <span class={`chip chip-${r.state}`}>{r.state}</span>
-                </td>
-                <td>
-                  {r.sha256 ? (
-                    <a class="fig" data-receipt={r.doc_id} href={`/receipt/${r.doc_id}/#sha256`}>
-                      {r.sha256.slice(0, 8)}…
+                  </td>
+                  <td class="mono" style="font-size:13px">
+                    {v.country.iso3}
+                  </td>
+                  <td class="num">
+                    <a
+                      class="fig"
+                      data-census="documents_on_record"
+                      href={`/country/${iso3}/#census-documents_on_record`}
+                    >
+                      {e.counts.documents_on_record}
                     </a>
-                  ) : (
-                    <a class="chip chip-absent" data-receipt={r.doc_id} href={`/receipt/${r.doc_id}/#sha256`}>
-                      no bytes held
+                  </td>
+                  <td class="num">
+                    <a
+                      class="fig"
+                      data-census="documents_with_bytes"
+                      href={`/country/${iso3}/#census-documents_with_bytes`}
+                    >
+                      {e.counts.documents_with_bytes}
                     </a>
-                  )}
-                </td>
-              </tr>
-            ))
+                  </td>
+                  <td class="statecell">
+                    {e.counts.documents_on_record > 0 && (
+                      <div class="ministrip" aria-hidden="true">
+                        {v.strip.segments
+                          .filter((s) => e.counts[s.census_key] > 0)
+                          .map((s) => (
+                            <div class={`seg seg-${s.state}`} style={`flex-grow:${e.counts[s.census_key]}`} />
+                          ))}
+                      </div>
+                    )}
+                    <span class="strip-key ministrip-key">
+                      {v.strip.segments.map((s) => (
+                        <span class="mk">
+                          <span class={`sw sw-${s.state}`} aria-hidden="true" />
+                          <span class="sr-only">{s.label} </span>
+                          <a class="fig" data-census={s.census_key} href={`/country/${iso3}/#census-${s.census_key}`}>
+                            {e.counts[s.census_key]}
+                          </a>
+                        </span>
+                      ))}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })
           }
         </tbody>
       </table>
@@ -156,9 +102,9 @@ const ledgerUrl = REPO_BLOB + census.ledger;
   </section>
 
   <section aria-labelledby="census-h" id="census-sec">
-    <h2 class="sec" id="census-h">Census</h2>
+    <h2 class="sec" id="census-h">Census — all countries</h2>
     <p class="census-src">
-      Every count below is recomputable from the ledger:{' '}
+      Every count below is recomputable from the ledgers:{' '}
       <a href={ledgerUrl} class="mono" style="font-size:13px">{census.ledger}</a> (as of{' '}
       <span class="mono" data-meta="as_of">{census.as_of}</span>).
     </p>
@@ -166,9 +112,9 @@ const ledgerUrl = REPO_BLOB + census.ledger;
       <table class="table">
         <thead>
           <tr>
-            <th>Key</th>
-            <th class="num">Count</th>
-            <th>Derivation</th>
+            <th scope="col">Key</th>
+            <th scope="col" class="num">Count</th>
+            <th scope="col">Derivation</th>
           </tr>
         </thead>
         <tbody>
@@ -188,23 +134,6 @@ const ledgerUrl = REPO_BLOB + census.ledger;
         </tbody>
       </table>
     </div>
-    <ul class="strip-key" style="margin-top:18px">
-      <li>
-        <span class="sw sw-observed" aria-hidden="true"></span>observed — solid fill:{' '}
-        <a class="fig" data-census="states_observed" href="#census-states_observed">{c.states_observed}</a>
-      </li>
-      <li>
-        <span class="sw sw-pledged" aria-hidden="true"></span>pledged — dashed outline:{' '}
-        <a class="fig" data-census="states_pledged" href="#census-states_pledged">{c.states_pledged}</a>
-      </li>
-      <li>
-        <span class="sw sw-unknown" aria-hidden="true"></span>unknown — hatched, reason stays visible:{' '}
-        <a class="fig" data-census="states_unknown" href="#census-states_unknown">{c.states_unknown}</a>
-      </li>
-      <li>
-        <span class="sw sw-absent" aria-hidden="true"></span>absent — explicit void:{' '}
-        <a class="fig" data-census="states_absent" href="#census-states_absent">{c.states_absent}</a>
-      </li>
-    </ul>
+    <StateLegend counts={census.counts} />
   </section>
 </Base>

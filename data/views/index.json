@@ -1,0 +1,3006 @@
+{
+  "as_of": "2026-10-16",
+  "build_id": "dbc6eb0ea04aee74dc18459192441f9f5df154edf0b71a7ac4400dd914f90e4b",
+  "countries": [
+    {
+      "iso3": "AFG",
+      "name_en": "Afghanistan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 5,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "AGO",
+      "name_en": "Angola",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ALB",
+      "name_en": "Albania",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "AND",
+      "name_en": "Andorra",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ARE",
+      "name_en": "United Arab Emirates",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 9,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 7,
+        "states_observed": 11,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ARG",
+      "name_en": "Argentina",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ARM",
+      "name_en": "Armenia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ATG",
+      "name_en": "Antigua and Barbuda",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "AUS",
+      "name_en": "Australia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "AUT",
+      "name_en": "Austria",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "AZE",
+      "name_en": "Azerbaijan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BDI",
+      "name_en": "Burundi",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BEL",
+      "name_en": "Belgium",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BEN",
+      "name_en": "Benin",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BFA",
+      "name_en": "Burkina Faso",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BGD",
+      "name_en": "Bangladesh",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BGR",
+      "name_en": "Bulgaria",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BHR",
+      "name_en": "Bahrain",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BHS",
+      "name_en": "Bahamas",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BIH",
+      "name_en": "Bosnia and Herzegovina",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BLR",
+      "name_en": "Belarus",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 4,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BLZ",
+      "name_en": "Belize",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BOL",
+      "name_en": "Bolivia (Plurinational State of)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BRA",
+      "name_en": "Brazil",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BRB",
+      "name_en": "Barbados",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BRN",
+      "name_en": "Brunei Darussalam",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BTN",
+      "name_en": "Bhutan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "BWA",
+      "name_en": "Botswana",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CAF",
+      "name_en": "Central African Republic",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CAN",
+      "name_en": "Canada",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 12,
+        "documents_with_bytes": 9,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 7,
+        "states_observed": 11,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CHE",
+      "name_en": "Switzerland",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 12,
+        "documents_with_bytes": 9,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 7,
+        "states_observed": 11,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CHL",
+      "name_en": "Chile",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CHN",
+      "name_en": "China",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 9,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 7,
+        "states_observed": 11,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CIV",
+      "name_en": "Côte d'Ivoire",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CMR",
+      "name_en": "Cameroon",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "COD",
+      "name_en": "Democratic Republic of the Congo",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "COG",
+      "name_en": "Congo",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "COK",
+      "name_en": "Cook Islands",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 5,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "COL",
+      "name_en": "Colombia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 12,
+        "documents_with_bytes": 10,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 8,
+        "states_observed": 12,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "COM",
+      "name_en": "Comoros",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CPV",
+      "name_en": "Cabo Verde",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CRI",
+      "name_en": "Costa Rica",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CUB",
+      "name_en": "Cuba",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CYP",
+      "name_en": "Cyprus",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "CZE",
+      "name_en": "Czechia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "DEU",
+      "name_en": "Germany",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "DJI",
+      "name_en": "Djibouti",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "DMA",
+      "name_en": "Dominica",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "DNK",
+      "name_en": "Denmark",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "DOM",
+      "name_en": "Dominican Republic",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "DZA",
+      "name_en": "Algeria",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ECU",
+      "name_en": "Ecuador",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "EGY",
+      "name_en": "Egypt",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ERI",
+      "name_en": "Eritrea",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ESP",
+      "name_en": "Spain",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "EST",
+      "name_en": "Estonia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ETH",
+      "name_en": "Ethiopia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 4,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 3,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "EUU",
+      "name_en": "European Union (EU)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "FIN",
+      "name_en": "Finland",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "FJI",
+      "name_en": "Fiji",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "FRA",
+      "name_en": "France",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "FSM",
+      "name_en": "Micronesia (Federated States of)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GAB",
+      "name_en": "Gabon",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GBR",
+      "name_en": "United Kingdom of Great Britain and Northern Ireland",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GEO",
+      "name_en": "Georgia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GHA",
+      "name_en": "Ghana",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GIN",
+      "name_en": "Guinea",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GMB",
+      "name_en": "Gambia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GNB",
+      "name_en": "Guinea-Bissau",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GNQ",
+      "name_en": "Equatorial Guinea",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GRC",
+      "name_en": "Greece",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GRD",
+      "name_en": "Grenada",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GTM",
+      "name_en": "Guatemala",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "GUY",
+      "name_en": "Guyana",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 1,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "HKG",
+      "name_en": "Hong_Kong",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 1,
+        "documents_with_bytes": 0,
+        "documents_without_bytes": 1,
+        "source_urls_recorded": 0,
+        "states_observed": 1,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "HND",
+      "name_en": "Honduras",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "HRV",
+      "name_en": "Croatia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "HTI",
+      "name_en": "Haiti",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "HUN",
+      "name_en": "Hungary",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "IDN",
+      "name_en": "Indonesia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "IND",
+      "name_en": "India",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "IRL",
+      "name_en": "Ireland",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "IRN",
+      "name_en": "Iran (Islamic Republic of)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 3,
+        "documents_with_bytes": 2,
+        "documents_without_bytes": 1,
+        "source_urls_recorded": 0,
+        "states_observed": 2,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "IRQ",
+      "name_en": "Iraq",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ISL",
+      "name_en": "Iceland",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ISR",
+      "name_en": "Israel",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ITA",
+      "name_en": "Italy",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "JAM",
+      "name_en": "Jamaica",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "JOR",
+      "name_en": "Jordan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "JPN",
+      "name_en": "Japan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KAZ",
+      "name_en": "Kazakhstan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KEN",
+      "name_en": "Kenya",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KGZ",
+      "name_en": "Kyrgyzstan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 5,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 3,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KHM",
+      "name_en": "Cambodia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 14,
+        "documents_with_bytes": 10,
+        "documents_without_bytes": 4,
+        "source_urls_recorded": 9,
+        "states_observed": 11,
+        "states_pledged": 0,
+        "states_unknown": 3,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KIR",
+      "name_en": "Kiribati",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KNA",
+      "name_en": "Saint Kitts and Nevis",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KOR",
+      "name_en": "Republic of Korea",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "KWT",
+      "name_en": "Kuwait",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LAO",
+      "name_en": "Lao People's Democratic Republic",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LBN",
+      "name_en": "Lebanon",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LBR",
+      "name_en": "Liberia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LBY",
+      "name_en": "Libya",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 2,
+        "documents_with_bytes": 2,
+        "documents_without_bytes": 0,
+        "source_urls_recorded": 0,
+        "states_observed": 2,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LCA",
+      "name_en": "Saint Lucia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LIE",
+      "name_en": "Liechtenstein",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LKA",
+      "name_en": "Sri Lanka",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LSO",
+      "name_en": "Lesotho",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LTU",
+      "name_en": "Lithuania",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LUX",
+      "name_en": "Luxembourg",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "LVA",
+      "name_en": "Latvia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MAC",
+      "name_en": "Macao",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 1,
+        "documents_with_bytes": 0,
+        "documents_without_bytes": 1,
+        "source_urls_recorded": 0,
+        "states_observed": 1,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MAR",
+      "name_en": "Morocco",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MCO",
+      "name_en": "Monaco",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MDA",
+      "name_en": "Republic of Moldova",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MDG",
+      "name_en": "Madagascar",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MDV",
+      "name_en": "Maldives",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MEX",
+      "name_en": "Mexico",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MHL",
+      "name_en": "Marshall Islands",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 6,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MKD",
+      "name_en": "North Macedonia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MLI",
+      "name_en": "Mali",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MLT",
+      "name_en": "Malta",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MMR",
+      "name_en": "Myanmar",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MNE",
+      "name_en": "Montenegro",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MNG",
+      "name_en": "Mongolia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MOZ",
+      "name_en": "Mozambique",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MRT",
+      "name_en": "Mauritania",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MUS",
+      "name_en": "Mauritius",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MWI",
+      "name_en": "Malawi",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "MYS",
+      "name_en": "Malaysia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NAM",
+      "name_en": "Namibia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NER",
+      "name_en": "Niger",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NGA",
+      "name_en": "Nigeria",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NIC",
+      "name_en": "Nicaragua",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NIU",
+      "name_en": "Niue",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NLD",
+      "name_en": "Netherlands",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NOR",
+      "name_en": "Norway",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NPL",
+      "name_en": "Nepal",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NRU",
+      "name_en": "Naoero",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "NZL",
+      "name_en": "New Zealand",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "OMN",
+      "name_en": "Oman",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PAK",
+      "name_en": "Pakistan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PAN",
+      "name_en": "Panama",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PER",
+      "name_en": "Peru",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PHL",
+      "name_en": "Philippines",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 4,
+        "source_urls_recorded": 1,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PLW",
+      "name_en": "Palau",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PNG",
+      "name_en": "Papua New Guinea",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 6,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 4,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "POL",
+      "name_en": "Poland",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PRK",
+      "name_en": "Democratic People's Republic of Korea",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PRT",
+      "name_en": "Portugal",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PRY",
+      "name_en": "Paraguay",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "PSE",
+      "name_en": "State of Palestine",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 13,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 7,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 6,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "QAT",
+      "name_en": "Qatar",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ROU",
+      "name_en": "Romania",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "RUS",
+      "name_en": "Russian Federation",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "RWA",
+      "name_en": "Rwanda",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SAU",
+      "name_en": "Saudi Arabia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SDN",
+      "name_en": "Sudan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SEN",
+      "name_en": "Senegal",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SGP",
+      "name_en": "Singapore",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SLB",
+      "name_en": "Solomon Islands",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SLE",
+      "name_en": "Sierra Leone",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SLV",
+      "name_en": "El Salvador",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SMR",
+      "name_en": "San Marino",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 5,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SOM",
+      "name_en": "Somalia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SRB",
+      "name_en": "Serbia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SSD",
+      "name_en": "South Sudan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "STP",
+      "name_en": "Sao Tome and Principe",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SUR",
+      "name_en": "Suriname",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SVK",
+      "name_en": "Slovakia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SVN",
+      "name_en": "Slovenia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SWE",
+      "name_en": "Sweden",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SWZ",
+      "name_en": "Eswatini",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SYC",
+      "name_en": "Seychelles",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "SYR",
+      "name_en": "Syrian Arab Republic",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TCD",
+      "name_en": "Chad",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TGO",
+      "name_en": "Togo",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 2,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "THA",
+      "name_en": "Thailand",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TJK",
+      "name_en": "Tajikistan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TKM",
+      "name_en": "Turkmenistan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TLS",
+      "name_en": "Timor-Leste",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TON",
+      "name_en": "Tonga",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TTO",
+      "name_en": "Trinidad and Tobago",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TUN",
+      "name_en": "Tunisia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 9,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 7,
+        "states_observed": 11,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TUR",
+      "name_en": "Türkiye",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TUV",
+      "name_en": "Tuvalu",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "TZA",
+      "name_en": "United Republic of Tanzania",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "UGA",
+      "name_en": "Uganda",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "UKR",
+      "name_en": "Ukraine",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "URY",
+      "name_en": "Uruguay",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "USA",
+      "name_en": "United States of America (*)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "UZB",
+      "name_en": "Uzbekistan",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 9,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "VAT",
+      "name_en": "Holy See",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "VCT",
+      "name_en": "Saint Vincent and the Grenadines",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 6,
+        "documents_with_bytes": 4,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 2,
+        "states_observed": 5,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "VEN",
+      "name_en": "Venezuela (Bolivarian Republic of)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 10,
+        "documents_with_bytes": 7,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 5,
+        "states_observed": 9,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "VNM",
+      "name_en": "Viet Nam",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 6,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "VUT",
+      "name_en": "Vanuatu",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 8,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "WSM",
+      "name_en": "Samoa",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 8,
+        "documents_with_bytes": 6,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 4,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "YEM",
+      "name_en": "Yemen (*)",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 5,
+        "documents_with_bytes": 3,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 1,
+        "states_observed": 4,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ZAF",
+      "name_en": "South Africa",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ZMB",
+      "name_en": "Zambia",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 11,
+        "documents_with_bytes": 8,
+        "documents_without_bytes": 3,
+        "source_urls_recorded": 6,
+        "states_observed": 10,
+        "states_pledged": 0,
+        "states_unknown": 1,
+        "states_absent": 0
+      }
+    },
+    {
+      "iso3": "ZWE",
+      "name_en": "Zimbabwe",
+      "ledger": "data/graph/base.csv",
+      "counts": {
+        "documents_on_record": 7,
+        "documents_with_bytes": 5,
+        "documents_without_bytes": 2,
+        "source_urls_recorded": 3,
+        "states_observed": 7,
+        "states_pledged": 0,
+        "states_unknown": 0,
+        "states_absent": 0
+      }
+    }
+  ]
+}

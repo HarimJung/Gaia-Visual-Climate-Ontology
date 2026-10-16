@@ -1,0 +1,13 @@
+alias,iso3,reason
+Czech Republic,CZE,"ISO 3166-1 alpha-3; the registry snapshot spells this party ""Czechia"""
+European Union,EUU,"the registry snapshot spells this party ""European Union (EU)"" and assigns it this code"
+Iran (Islamic Republic of),IRN,ISO 3166-1 alpha-3; this party appears in the UNTC status lists but not in the NDC registry snapshot
+Libya,LBY,ISO 3166-1 alpha-3; this party appears in the UNTC status lists but not in the NDC registry snapshot
+Nauru,NRU,ISO 3166-1 alpha-3; this party appears in the UNTC status lists but not in the NDC registry snapshot
+Turkey,TUR,"ISO 3166-1 alpha-3; the registry snapshot spells this party ""Türkiye"""
+Netherlands (Kingdom of the),NLD,"the registry snapshot spells this party ""Netherlands"""
+Micronesia (Federated State of),FSM,"listing folder with singular ""State""; the registry spells it ""Micronesia (Federated States of)"""
+The Republic of North Macedonia,MKD,"the registry snapshot spells this party ""North Macedonia"""
+Venezeula (Bolivarian Republic of),VEN,"misspelled listing folder; the registry spells it ""Venezuela (Bolivarian Republic of)"""
+Hong Kong,HKG,ISO 3166-1 alpha-3; a folder in the BTR tree that is not a party in the registry snapshot
+Macao,MAC,ISO 3166-1 alpha-3; a folder in the BTR tree that is not a party in the registry snapshot

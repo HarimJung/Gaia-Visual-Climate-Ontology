@@ -1,9 +1,10 @@
 ---
-// Shell + footer. The footer shows the as-of date (fixture build metadata),
-// the build commit (injected at build time; env fallback placeholder) and the
-// honest maturity line — on every page (R16, AD-11).
+// Shell + footer. The footer shows the as-of date (view build metadata), the
+// build commit (injected at build time; env fallback placeholder), the
+// standing independence line, and the honest maturity line — on every page
+// (R16, AD-11).
 import '../styles/site.css';
-import { census } from '../lib/data.mjs';
+import { census, engineViews } from '../lib/data.mjs';
 
 const { title } = Astro.props;
 const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(0, 7) || 'no-commit-env';
@@ -14,19 +15,21 @@ const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
   <body>
+    <a class="skip" href="#main">Skip to content</a>
     <header class="bar">
       <div class="wrap">
         <a class="mark" href="/">National Climate Record Runtime</a>
-        <nav>
-          <a href="/">Ledger</a>
+        <nav aria-label="Primary">
+          <a href="/">World ledger</a>
           <a href="/demo/">Demo path</a>
         </nav>
       </div>
     </header>
-    <main class="wrap">
+    <main class="wrap" id="main">
       <slot />
     </main>
     <footer>
@@ -36,7 +39,14 @@ const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(
           <span aria-hidden="true"> · </span>
           <span class="mono" data-meta="build_commit">build {commit}</span>
         </p>
-        <p class="muted">fixture build — engine views arrive with WP-06; runtime S0</p>
+        <p>Independent runtime; not an official UNFCCC publication. Every figure links to its receipt.</p>
+        <p class="muted">
+          {
+            engineViews
+              ? 'engine views (reader output) — runtime S0'
+              : 'fixture build — engine views arrive with WP-06; runtime S0'
+          }
+        </p>
       </div>
     </footer>
   </body>

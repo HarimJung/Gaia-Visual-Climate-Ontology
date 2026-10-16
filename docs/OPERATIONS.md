@@ -4,7 +4,7 @@ Requirements, not claims: nothing here is running yet (S0). Each item names the
 work package that implements it. What is already enforceable is enforced by
 `engine/gates/`.
 
-## R13 — failure digest (requirement — implemented by WP-09)
+## R13 — failure digest (digest generators live — delivery routed by WP-10)
 
 Every failed check emits exactly one line:
 
@@ -12,7 +12,11 @@ Every failed check emits exactly one line:
 YYYY-MM-DD | <check> | <message>
 ```
 
-`engine/gates/run.mjs` already prints this shape. Destination: the operator's
+`engine/gates/run.mjs` already prints this shape, and the living-record diff
+(`engine/diff/diff.mjs`) emits the same shape for record changes — one line per
+change, dated by the to-build, written to `data/diff/<from>__<to>.md` with deep
+links into the site's receipt URLs. Nothing is delivered anywhere yet; routing
+these lines to the ops digest is WP-10's. Destination: the operator's
 daily ops digest file — the file opened first in every working session. Email
 does not count as a destination. A check that stays red for more than 7 days is
 demoted from "alert" to "accepted defect" and moved to the known-failure list
@@ -41,7 +45,7 @@ credentials exist only as CI secrets, so a manual publish is physically
 impossible. The public footer prints the build commit hash, and a daily check
 compares that hash with main HEAD — a mismatch is an incident.
 
-## AD-12 — queue SLA with automatic consequences (requirement — implemented by WP-09)
+## AD-12 — queue SLA with automatic consequences (numbers live — banner by WP-10)
 
 Items awaiting diff judgement carry a 14-day SLA. Past SLA, a public banner —
 "this record is N days behind" — is posted automatically at the top of the
@@ -49,3 +53,11 @@ public screen. Queue depth and longest wait are the first two internal
 monitoring numbers. If stale claims exceed 10% of the graph, author-check
 switches to "cannot verify": drafts are never approved against an outdated
 graph.
+
+The numbers exist now and are never stored (R9): `engine/diff/diff.mjs`
+recomputes queue depth, longest wait and per-claim past-budget flags (against
+`engine/sources/contracts` budgets, aged by the to-build timestamp, never the
+wall clock) from the two snapshots on every run, and the
+`r9-no-stored-queue` gate fails the build if a stored queue or stale-flag file
+ever appears under `data/`. The public banner and the 10% author-check cutoff
+are wired by WP-10 and the authoring path.

@@ -54,6 +54,10 @@ h1, h2, h3 { font-family: var(--f-d); color: var(--ink); text-wrap: balance; ove
 .muted { color: var(--ink-3); font-size: 14.5px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+/* skip link: hidden until focused (a11y) */
+.skip { position: absolute; left: -9999px; top: 10px; z-index: 20; background: var(--paper); color: var(--acc-ink); border: 1px solid var(--acc-ink); border-radius: 6px; padding: 10px 16px; font-weight: 600; text-decoration: none; }
+.skip:focus { left: var(--gut); }
+
 /* top bar */
 .bar { border-bottom: 1px solid var(--line); }
 .bar .wrap { display: flex; align-items: center; gap: 18px; height: 60px; }
@@ -87,10 +91,11 @@ a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-d
 .stripsec h2 { font-size: 1.05rem; font-family: var(--f-t); font-weight: 600; color: var(--ink-2); margin: 0 0 10px; }
 .strip { display: flex; gap: 3px; height: 26px; }
 .strip .seg { min-width: 0; }
-.strip .seg-observed { background: var(--st-observed); }
-.strip .seg-pledged { background: var(--paper); border: 1.5px dashed var(--st-pledged); }
-.strip .seg-unknown { background: var(--st-unknown-hatch); }
-.strip .seg-absent { flex: 0 0 26px; background: transparent; border: 1px dotted var(--st-absent-line); }
+/* segment paint is shared by the big strip and the world-ledger ministrip */
+.seg-observed { background: var(--st-observed); }
+.seg-pledged { background: var(--paper); border: 1.5px dashed var(--st-pledged); }
+.seg-unknown { background: var(--st-unknown-hatch); }
+.seg-absent { flex: 0 0 26px; background: transparent; border: 1px dotted var(--st-absent-line); }
 .strip-key { display: flex; flex-wrap: wrap; gap: 6px 22px; list-style: none; margin: 10px 0 6px; padding: 0; font-size: 14.5px; color: var(--ink-2); }
 .strip-key .sw { width: 12px; height: 12px; display: inline-block; margin-right: 7px; vertical-align: -1px; }
 .strip-key .sw-observed { background: var(--st-observed); }
@@ -101,7 +106,10 @@ a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-d
 /* ledger table: hairlines, no cards */
 section + section { margin-top: 56px; }
 h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-weight: 760; margin: 0 0 14px; }
-.tablewrap { overflow-x: auto; }
+/* relative: absolutely-positioned sr-only text inside a scrolled table must
+   resolve against the scroller, or it escapes the clip and the page itself
+   gains a horizontal scroll at phone widths */
+.tablewrap { overflow-x: auto; position: relative; }
 .table { width: 100%; border-collapse: collapse; font-size: 15px; }
 .table th { text-align: left; font-size: 13px; font-weight: 600; color: var(--ink-2); border-bottom: 1px solid var(--ink); padding: 8px 12px 8px 0; white-space: nowrap; }
 .table td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
@@ -112,6 +120,17 @@ h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-we
 /* refusal is first-class content, not an error style */
 .refusal { margin: 8px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink); background: var(--wash); font-size: 14.5px; color: var(--ink); max-width: 44rem; }
 .refusal .tag { font: 500 11.5px/1 var(--f-m); color: var(--ink-2); display: block; margin-bottom: 4px; letter-spacing: .04em; }
+
+/* world ledger: one row per country, a mini strip per row. Listing-only
+   countries (unknown hatch, explicit zeros) are the norm, not an error. */
+.cname { font-weight: 600; color: var(--ink); }
+.countries td { vertical-align: middle; }
+.statecell { min-width: 220px; }
+.ministrip { display: flex; gap: 2px; height: 12px; max-width: 240px; margin: 0 0 6px; }
+.ministrip .seg { min-width: 0; }
+.ministrip .seg-absent { flex: 0 0 12px; }
+.ministrip-key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; font-size: 13.5px; }
+.ministrip-key .sw { width: 9px; height: 9px; margin-right: 5px; }
 
 /* census */
 .census-src { font-size: 14px; color: var(--ink-3); margin: 0 0 12px; }

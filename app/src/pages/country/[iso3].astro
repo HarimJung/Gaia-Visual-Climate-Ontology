@@ -1,0 +1,221 @@
+---
+// Country ledger (AD-10). First three seconds, zero clicks: country name,
+// treaty status in one line, next relevant date, and the completeness strip.
+// One static route per country view; everything on this screen comes from the
+// view JSON plus the index/census the door serves (R11); no country identity
+// lives in this file (R1).
+import Base from '../../layouts/Base.astro';
+import StateLegend from '../../components/StateLegend.astro';
+import { views, census, countryEntry, REPO_BLOB } from '../../lib/data.mjs';
+
+export function getStaticPaths() {
+  return views.map((view) => ({
+    params: { iso3: view.country.iso3.toLowerCase() },
+    props: { view },
+  }));
+}
+
+const { view } = Astro.props;
+const iso3 = view.country.iso3.toLowerCase();
+const entry = countryEntry(view.country.iso3);
+const c = entry.counts;
+const ledgerUrl = REPO_BLOB + entry.ledger;
+---
+
+<Base title={`${view.country.name_en} — ledger`}>
+  <section class="head">
+    <p class="crumb"><a href={`/#c-${iso3}`}>← world ledger</a></p>
+    <h1>{view.country.name_en}</h1>
+
+    <p class="treaty" id="treaty">
+      {view.treaty_status.length === 0 && (
+        <span class="muted">No treaty events on record in this runtime for this country.</span>
+      )}
+      {
+        view.treaty_status.map((t, i) => (
+          <>
+            {i > 0 && (
+              <span class="sep" aria-hidden="true">
+                ·
+              </span>
+            )}
+            <b>{t.treaty_label}</b>{' '}
+            {t.events.map((ev, j) => (
+              <>
+                {j > 0 && ', '}
+                {ev.label}{' '}
+                <a class="fig" data-receipt={t.receipt} href={`/receipt/${iso3}/${t.receipt}/`}>
+                  {ev.display}
+                </a>
+              </>
+            ))}
+          </>
+        ))
+      }
+    </p>
+
+    <p class="nextdate" id="next-date">
+      <span class="lbl">Next relevant date</span>
+      {
+        view.next_date.date ? (
+          <>
+            <a class="fig" data-receipt={view.next_date.receipt} href={`/receipt/${iso3}/${view.next_date.receipt}/`}>
+              <time datetime={view.next_date.date}>{view.next_date.date}</time>
+            </a>
+            {view.next_date.label && <span class="reason">{view.next_date.label}</span>}
+          </>
+        ) : (
+          <>
+            <span class={`chip chip-${view.next_date.state}`}>{view.next_date.state}</span>
+            <span class="reason">{view.next_date.reason}</span>
+          </>
+        )
+      }
+    </p>
+
+    <section class="stripsec" id="strip" aria-labelledby="strip-h">
+      <h2 id="strip-h">{view.strip.heading}</h2>
+      {
+        c.documents_on_record > 0 && (
+          <div class="strip">
+            {
+              /* a zero count gets zero visual weight — the legend below still says 0 */
+              view.strip.segments
+                .filter((s) => c[s.census_key] > 0)
+                .map((s) => (
+                  <div class={`seg seg-${s.state}`} style={`flex-grow:${c[s.census_key]}`} title={`${s.label} ${c[s.census_key]}`} />
+                ))
+            }
+          </div>
+        )
+      }
+      <ul class="strip-key">
+        {
+          view.strip.segments.map((s) => (
+            <li>
+              <span class={`sw sw-${s.state}`} aria-hidden="true" />
+              {s.label}{' '}
+              <a class="fig" data-census={s.census_key} href={`#census-${s.census_key}`}>
+                {c[s.census_key]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="muted">{view.strip.note}</p>
+    </section>
+  </section>
+
+  <section aria-labelledby="ledger-h">
+    <h2 class="sec" id="ledger-h">
+      Documents on record:{' '}
+      <a class="fig" data-census="documents_on_record" href="#census-documents_on_record">{c.documents_on_record}</a>
+    </h2>
+    {
+      view.rows.length === 0 ? (
+        <div class="void">
+          <span class="chip chip-absent">no documents held</span>
+          <span class="reason"> This runtime holds no document rows for this country; the void is stated, not hidden.</span>
+        </div>
+      ) : (
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Document</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+                <th scope="col">State</th>
+                <th scope="col">Bytes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                view.rows.map((r) => (
+                  <tr id={`row-${r.doc_id}`}>
+                    <td>
+                      <span class="doc-title">
+                        <a href={`/receipt/${iso3}/${r.doc_id}/`} data-receipt={r.doc_id}>
+                          {r.title}
+                        </a>
+                      </span>
+                      {r.state === 'unknown' && !r.refusal && <p class="rowmeta">{r.state_reason}</p>}
+                      {r.refusal && (
+                        <div class="refusal">
+                          <span class="tag">REFUSED — figure extraction</span>“
+                          <a href={`/receipt/${iso3}/${r.doc_id}/#state`} data-receipt={r.doc_id}>
+                            {r.refusal}
+                          </a>
+                          ”
+                        </div>
+                      )}
+                      {r.receipt_scope && <p class="rowmeta">{r.receipt_scope}</p>}
+                    </td>
+                    <td class="mono" style="font-size:13px">
+                      {r.doc_type}
+                    </td>
+                    <td>
+                      <a class="fig" data-receipt={r.doc_id} href={`/receipt/${iso3}/${r.doc_id}/`}>
+                        {r.date}
+                      </a>
+                    </td>
+                    <td>
+                      <span class={`chip chip-${r.state}`}>{r.state}</span>
+                    </td>
+                    <td>
+                      {r.sha256 ? (
+                        <a class="fig" data-receipt={r.doc_id} href={`/receipt/${iso3}/${r.doc_id}/#sha256`}>
+                          {r.sha256.slice(0, 8)}…
+                        </a>
+                      ) : (
+                        <a class="chip chip-absent" data-receipt={r.doc_id} href={`/receipt/${iso3}/${r.doc_id}/#sha256`}>
+                          no bytes held
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+
+  <section aria-labelledby="census-h" id="census-sec">
+    <h2 class="sec" id="census-h">Census</h2>
+    <p class="census-src">
+      Every count below is recomputable from this country's ledger:{' '}
+      <a href={ledgerUrl} class="mono" style="font-size:13px">{entry.ledger}</a> (as of{' '}
+      <span class="mono" data-meta="as_of">{view.as_of}</span>).
+    </p>
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Key</th>
+            <th scope="col" class="num">Count</th>
+            <th scope="col">Derivation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            Object.entries(c).map(([k, v]) => (
+              <tr id={`census-${k}`}>
+                <td class="ckey">{k}</td>
+                <td class="num">
+                  <a class="fig" data-census={k} href={ledgerUrl}>
+                    {v}
+                  </a>
+                </td>
+                <td class="muted">{census.derivations[k]}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <StateLegend counts={c} />
+  </section>
+</Base>

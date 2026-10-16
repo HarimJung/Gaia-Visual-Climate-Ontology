@@ -14,11 +14,18 @@ jobs:
           node-version: 22
       # R15: lockfile-exact install only
       - run: npm ci
-      - run: node --test
+      # Pipeline order: codegen → graph build → anchor verify → views → app
+      # build → tests → gates. The engine steps regenerate what is committed,
+      # so drift between sources, graph, census and views fails here; the app
+      # build runs before the tests and gates so the dist-reading honesty
+      # tests and the r6 unlinked-figure scan cover the freshly built pages.
+      - run: npm run codegen
+      - run: npm run graph
+      - run: npm run verify
+      - run: npm run build:views
       # App build only — static output to app/dist, never published from here (R8).
-      # It runs before the gates so the r6 unlinked-figure scan covers the
-      # freshly built pages.
       - run: npm run build
+      - run: node --test
       - run: node engine/gates/run.mjs
 
 # No deploy job yet. Publishing will be a CI-only path (R8 / AD-11), added with

@@ -10,6 +10,9 @@
   "scripts": {
     "codegen": "node engine/tools/codegen.mjs",
     "gates": "node engine/gates/run.mjs",
+    "graph": "node engine/build/build.mjs",
+    "verify": "node engine/build/verify.mjs",
+    "build:views": "node engine/views/generate.mjs",
     "build": "astro build --root app",
     "test": "node --test"
   },

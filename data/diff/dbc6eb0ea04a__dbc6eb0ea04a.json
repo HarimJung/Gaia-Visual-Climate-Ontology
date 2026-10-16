@@ -1,0 +1,47 @@
+{
+  "report": "graph-diff",
+  "r9": "recomputed from two snapshots on every run; this file stores no state and no queue",
+  "from": {
+    "build_id": "dbc6eb0ea04aee74dc18459192441f9f5df154edf0b71a7ac4400dd914f90e4b",
+    "built_at": "2026-10-16T04:13:13.123Z"
+  },
+  "to": {
+    "build_id": "dbc6eb0ea04aee74dc18459192441f9f5df154edf0b71a7ac4400dd914f90e4b",
+    "built_at": "2026-10-16T04:13:13.123Z"
+  },
+  "base": {
+    "counts": {
+      "from": 3043,
+      "to": 3043
+    },
+    "added": [],
+    "removed": [],
+    "changed": [],
+    "refetched_only": 0
+  },
+  "derived": {
+    "counts": {
+      "from": 395,
+      "to": 395
+    },
+    "added": [],
+    "removed": [],
+    "changed": [],
+    "refetched_only": 0
+  },
+  "inputs_changed": [],
+  "changed_anchors": [],
+  "shaken_claims": [],
+  "views": {
+    "available": true,
+    "scanned": 200,
+    "shaken_fields": []
+  },
+  "sla": {
+    "as_of": "2026-10-16T04:13:13.123Z",
+    "note": "ages measured against the to-build timestamp, never the wall clock; budgets from engine/sources/contracts (AD-12)",
+    "queue_depth": 0,
+    "over_sla": 0,
+    "longest_wait_days": null
+  }
+}

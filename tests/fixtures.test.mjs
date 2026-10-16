@@ -9,6 +9,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseCSVWithHeader } from '../engine/lib/csv.mjs';
+import { countsFromRows } from '../app/src/lib/derive.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -108,6 +109,104 @@ test('views speak only the four-state vocabulary, with reasons where state is un
     }
     for (const s of v.strip.segments) {
       assert.ok(s.census_key in census.counts, `strip segment "${s.label}" counts via a census key`);
+    }
+  }
+});
+
+// ---------------------------------------------------------------------------
+// World surface (WP-07): the checks below run against whichever views
+// directory is active — the reader's data/views when it holds country views,
+// else the fixtures — exactly the door's own order (app/src/lib/data.mjs).
+const readerDir = join(repo, 'data', 'views');
+const readerCountries = join(readerDir, 'countries');
+const readerActive =
+  existsSync(readerCountries) && readdirSync(readerCountries).some((f) => f.endsWith('.json'));
+const activeViews = readerActive
+  ? readdirSync(readerCountries)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+      .map((f) => JSON.parse(readFileSync(join(readerCountries, f), 'utf8')))
+  : views;
+const activeCensus = readerActive
+  ? JSON.parse(readFileSync(join(readerDir, 'census.json'), 'utf8'))
+  : census;
+
+test('world index: per-country counts recompute from the active views', () => {
+  assert.ok(activeViews.length > 0, 'at least one country view is active');
+  const seen = new Set();
+  for (const v of activeViews) {
+    assert.ok(!seen.has(v.country.iso3), `${v.country.iso3} appears in exactly one view`);
+    seen.add(v.country.iso3);
+    const c = countsFromRows(v.rows, Object.keys(activeCensus.counts));
+    assert.equal(c.documents_on_record, v.rows.length, `${v.country.iso3} documents_on_record`);
+    assert.equal(
+      c.documents_with_bytes + c.documents_without_bytes,
+      v.rows.length,
+      `${v.country.iso3} bytes/no-bytes partition the rows`,
+    );
+    const stateSum = Object.entries(c)
+      .filter(([k]) => k.startsWith('states_'))
+      .reduce((n, [, x]) => n + x, 0);
+    assert.equal(stateSum, v.rows.length, `${v.country.iso3} states partition the rows`);
+    for (const [k, n] of Object.entries(c)) {
+      assert.ok(Number.isInteger(n) && n >= 0, `${v.country.iso3} ${k} is a non-negative integer`);
+      assert.ok(k in activeCensus.derivations, `${v.country.iso3} count key "${k}" has a derivation sentence`);
+    }
+  }
+});
+
+test(
+  'reader index.json matches the active views one-to-one, counts recomputed',
+  { skip: !readerActive && 'fixture fallback active — no reader index yet' },
+  () => {
+    const idx = JSON.parse(readFileSync(join(readerDir, 'index.json'), 'utf8'));
+    assert.ok(typeof idx.as_of === 'string' && idx.as_of.length > 0, 'index carries as_of');
+    assert.equal(idx.countries.length, activeViews.length, 'one index row per country view');
+    const byIso = new Map(idx.countries.map((c) => [c.iso3, c]));
+    for (const v of activeViews) {
+      const e = byIso.get(v.country.iso3);
+      assert.ok(e, `${v.country.iso3} present in index.json`);
+      assert.equal(e.name_en, v.country.name_en, `${v.country.iso3} name_en matches its view`);
+      assert.ok(typeof e.ledger === 'string' && e.ledger.length > 0, `${v.country.iso3} entry names its ledger`);
+      assert.deepEqual(
+        e.counts,
+        countsFromRows(v.rows, Object.keys(activeCensus.counts)),
+        `${v.country.iso3} index counts recompute from its view rows`,
+      );
+    }
+  },
+);
+
+test('no percentage anywhere: strip copy, derivations, and the built world ledger', () => {
+  for (const v of activeViews) {
+    for (const s of [v.strip.heading, v.strip.note, ...v.strip.segments.map((x) => x.label)]) {
+      assert.ok(!s.includes('%'), `strip text carries a percentage: "${s}"`);
+    }
+  }
+  for (const d of Object.values(activeCensus.derivations)) {
+    assert.ok(!d.includes('%'), `census derivation carries a percentage: "${d}"`);
+  }
+  const built = join(repo, 'app', 'dist', 'index.html');
+  if (!existsSync(built)) return; // CI builds before tests run, so this arm is armed there
+  const text = readFileSync(built, 'utf8')
+    .replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')
+    .replace(/<[^>]*>/g, ' '); // attributes (URL-encoded hrefs) drop with the tags
+  assert.ok(!text.includes('%'), 'the built world ledger renders a percentage');
+});
+
+test('built world ledger: one row per active view, every count linked to that country census row', () => {
+  const built = join(repo, 'app', 'dist', 'index.html');
+  if (!existsSync(built)) return; // CI builds before tests run, so this arm is armed there
+  const html = readFileSync(built, 'utf8');
+  for (const v of activeViews) {
+    const iso3 = v.country.iso3.toLowerCase();
+    assert.ok(html.includes(`href="/country/${iso3}/"`), `${v.country.iso3} row links to its country page`);
+    const keys = ['documents_on_record', 'documents_with_bytes', ...v.strip.segments.map((s) => s.census_key)];
+    for (const key of keys) {
+      assert.ok(
+        html.includes(`href="/country/${iso3}/#census-${key}"`),
+        `${v.country.iso3} ${key} figure links to that country's census row`,
+      );
     }
   }
 });

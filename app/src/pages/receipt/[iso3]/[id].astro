@@ -1,17 +1,22 @@
 ---
-// Evidence drawer: one unique URL per receipt (AD-10), one static route per
-// ledger row. Routes are enumerated from the fixture views (R1: no instance
-// ids in code); the page reads only view JSON (R11).
-import Base from '../../layouts/Base.astro';
-import { views, fmt } from '../../lib/data.mjs';
+// Evidence drawer: one unique, stable URL per receipt, namespaced per country
+// (AD-10) — /receipt/<iso3>/<doc_id>/ — one static route per ledger row.
+// Routes are enumerated from the views (R1: no instance ids in code); the page
+// reads only view JSON (R11).
+import Base from '../../../layouts/Base.astro';
+import { views, fmt } from '../../../lib/data.mjs';
 
 export function getStaticPaths() {
-  return views.flatMap((view) =>
-    view.rows.map((row) => ({ params: { id: row.doc_id }, props: { row } })),
-  );
+  return views.flatMap((view) => {
+    const iso3 = view.country.iso3.toLowerCase();
+    return view.rows.map((row) => ({
+      params: { iso3, id: row.doc_id },
+      props: { row, iso3 },
+    }));
+  });
 }
 
-const { row } = Astro.props;
+const { row, iso3 } = Astro.props;
 // Receipt-page figures point at the evidence they rest on: the hash when bytes
 // are held, otherwise the recorded state and its reason.
 const figHref = row.sha256 ? '#sha256' : '#state';
@@ -19,9 +24,9 @@ const figHref = row.sha256 ? '#sha256' : '#state';
 
 <Base title={`Receipt — ${row.title}`}>
   <article class="receipt">
-    <p class="crumb"><a href={`/#row-${row.doc_id}`}>← ledger row</a></p>
+    <p class="crumb"><a href={`/country/${iso3}/#row-${row.doc_id}`}>← ledger row</a></p>
     <h1>{row.title}</h1>
-    <p class="muted" style="margin:0 0 26px">receipt <span class="mono">{row.doc_id}</span></p>
+    <p class="muted" style="margin:0 0 26px">receipt <span class="mono">{iso3}/{row.doc_id}</span></p>
 
     <section class="rblock" id="state" aria-labelledby={`state-h-${row.doc_id}`}>
       <h2 id={`state-h-${row.doc_id}`}>State</h2>
