@@ -1,0 +1,43 @@
+---
+// Shell + footer. The footer shows the as-of date (fixture build metadata),
+// the build commit (injected at build time; env fallback placeholder) and the
+// honest maturity line — on every page (R16, AD-11).
+import '../styles/site.css';
+import { census } from '../lib/data.mjs';
+
+const { title } = Astro.props;
+const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(0, 7) || 'no-commit-env';
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="bar">
+      <div class="wrap">
+        <a class="mark" href="/">National Climate Record Runtime</a>
+        <nav>
+          <a href="/">Ledger</a>
+          <a href="/demo/">Demo path</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer>
+      <div class="wrap">
+        <p>
+          <span class="mono" data-meta="as_of">as of {census.as_of}</span>
+          <span aria-hidden="true"> · </span>
+          <span class="mono" data-meta="build_commit">build {commit}</span>
+        </p>
+        <p class="muted">fixture build — engine views arrive with WP-06; runtime S0</p>
+      </div>
+    </footer>
+  </body>
+</html>

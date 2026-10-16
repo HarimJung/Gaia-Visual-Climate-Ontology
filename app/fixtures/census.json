@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-10-15",
+  "ledger": "engine/seed/countries/KHM/documents.csv",
+  "counts": {
+    "documents_on_record": 7,
+    "documents_with_bytes": 5,
+    "documents_without_bytes": 2,
+    "source_urls_recorded": 6,
+    "states_observed": 4,
+    "states_pledged": 0,
+    "states_unknown": 3,
+    "states_absent": 0
+  },
+  "derivations": {
+    "documents_on_record": "rows in the ledger",
+    "documents_with_bytes": "rows with a non-empty sha256",
+    "documents_without_bytes": "rows with an empty sha256",
+    "source_urls_recorded": "rows with a non-empty source_url",
+    "states_observed": "rows with state = observed",
+    "states_pledged": "rows with state = pledged",
+    "states_unknown": "rows with state = unknown",
+    "states_absent": "rows with state = absent"
+  }
+}

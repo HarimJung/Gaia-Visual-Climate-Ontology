@@ -1,0 +1,182 @@
+{
+  "view": "country-ledger",
+  "contract": "R11: screens read this view JSON and census.json only — never seeds or engine internals. This file is a hand-built fixture whose shape is the WP-06 reader's output contract; every value is traceable to engine/seed/countries/KHM/documents.csv (quotes verbatim from its note column).",
+  "as_of": "2026-10-15",
+  "country": { "iso3": "KHM", "name_en": "Cambodia" },
+  "treaty_status": [
+    {
+      "treaty_label": "UNFCCC",
+      "events": [{ "label": "accession", "date": "1995-12-18", "display": "18 Dec 1995" }],
+      "receipt": "khm-untc-unfccc"
+    },
+    {
+      "treaty_label": "Paris Agreement",
+      "events": [
+        { "label": "signed", "date": "2016-04-22", "display": "22 Apr 2016" },
+        { "label": "ratified", "date": "2017-02-06", "display": "6 Feb 2017" }
+      ],
+      "receipt": "khm-untc-paris"
+    }
+  ],
+  "next_date": {
+    "date": null,
+    "label": null,
+    "receipt": null,
+    "state": "unknown",
+    "reason": "No deadline source is on record in this runtime yet; a date shown here would be invented."
+  },
+  "strip": {
+    "heading": "What this runtime has read so far",
+    "note": "Unknown and absent describe this runtime's reading, not the country.",
+    "segments": [
+      { "label": "evidenced", "state": "observed", "census_key": "states_observed" },
+      { "label": "unknown", "state": "unknown", "census_key": "states_unknown" },
+      { "label": "absent", "state": "absent", "census_key": "states_absent" }
+    ]
+  },
+  "rows": [
+    {
+      "doc_id": "khm-untc-unfccc",
+      "title": "UN Treaty Collection status list, Chapter XXVII-7 (UNFCCC)",
+      "doc_type": "treaty-status-list",
+      "date": "2026-07-27",
+      "source_url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7.en.pdf",
+      "sha256": "92a525f426a968a80e0b422f3f0a2f730b6ff1e5a70aa6f0eac80d13d060e897",
+      "size_bytes": null,
+      "pages": null,
+      "official_english": "yes",
+      "state": "observed",
+      "state_reason": "",
+      "quote": { "page": 1, "text": "Cambodia 18 Dec 1995 a", "reading": "accession 1995-12-18" },
+      "refusal": null,
+      "receipt_scope": null,
+      "provenance": [
+        "Retrieved 2026-10-10. Depositary's own English status list (.en.pdf).",
+        "Hash recorded in the predecessor's parties table; PDF bytes not committed (cache gitignored)."
+      ]
+    },
+    {
+      "doc_id": "khm-untc-paris",
+      "title": "UN Treaty Collection status list, Chapter XXVII-7-d (Paris Agreement)",
+      "doc_type": "treaty-status-list",
+      "date": "2026-07-27",
+      "source_url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7-d.en.pdf",
+      "sha256": "cb2aec820cb4fa2691ca28ef4ef8a0f3f33aeac9f309ce4e55fb8f607b0deeee",
+      "size_bytes": null,
+      "pages": null,
+      "official_english": "yes",
+      "state": "observed",
+      "state_reason": "",
+      "quote": { "page": 1, "text": "Cambodia 22 Apr 2016 6 Feb 2017", "reading": "signature 2016-04-22, ratification 2017-02-06" },
+      "refusal": null,
+      "receipt_scope": null,
+      "provenance": [
+        "Retrieved 2026-10-10. Depositary's own English status list (.en.pdf); PDF bytes not committed."
+      ]
+    },
+    {
+      "doc_id": "khm-ndc-2020",
+      "title": "Cambodia Updated NDC (2020)",
+      "doc_type": "ndc",
+      "date": "2020-12-31",
+      "source_url": "https://unfccc.int/sites/default/files/NDC/2022-06/20201231_NDC_Update_Cambodia.pdf",
+      "sha256": "da6d38247f614f7cbfeaf9162ad0cd4bde101e0287ff32e913b261c1e746e216",
+      "size_bytes": 4306857,
+      "pages": 158,
+      "official_english": "yes",
+      "state": "observed",
+      "state_reason": "",
+      "quote": null,
+      "refusal": null,
+      "receipt_scope": "File-level receipt only: the bytes are hashed and mirror-verified, but no page or sentence anchors are held, so none of this document's internal figures appear anywhere on these screens.",
+      "provenance": [
+        "Label discrepancy: the mirror filename says \"First NDC\" (KHM_Cambodia_First_NDC_English.pdf) while the hand-read record calls the same bytes \"Updated NDC\" — one document, two labels, tied by the sha256.",
+        "mirror_check verified against Internet Archive capture 20220430032128.",
+        "Registry-era URL: https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Cambodia%20First/20201231_NDC_Update_Cambodia.pdf · retrieval mirror: https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KHM_Cambodia_First_NDC_English.pdf.",
+        "Hand-read 2026-09-07; mirror bytes 2026-09-10. language: English."
+      ]
+    },
+    {
+      "doc_id": "khm-ndc-3.0",
+      "title": "Cambodia's NDC 3.0",
+      "doc_type": "ndc",
+      "date": "2025-08-08",
+      "source_url": "https://unfccc.int/sites/default/files/2025-08/Cambodia-NDC%203.0_0.pdf",
+      "sha256": "246c838fe60b582f7aaccea8966af70e20483ae0c5efe018c421325ca29155c4",
+      "size_bytes": 3003382,
+      "pages": 158,
+      "official_english": "yes",
+      "state": "unknown",
+      "state_reason": "Figure extraction refused: \"the document states 4 different percentages on the same basis (16%, 24%, 30%, 55%) and does not label which is the pledge.\" State unknown, headline false.",
+      "quote": null,
+      "refusal": "the document states 4 different percentages on the same basis (16%, 24%, 30%, 55%) and does not label which is the pledge.",
+      "receipt_scope": null,
+      "provenance": [
+        "Bytes held via Wayback capture 20260921203338 (https://web.archive.org/web/20260921203338id_/ + registry URL), sha1 TLEXHIR7HDWLUYEO2XDQIU5TYHPU3IQ2.",
+        "Checked 2026-10-10/11. language: English."
+      ]
+    },
+    {
+      "doc_id": "khm-btr1",
+      "title": "Cambodia BTR1 (First Biennial Transparency Report)",
+      "doc_type": "btr",
+      "date": "2024-12-31",
+      "source_url": "https://unfccc.int/documents/645175",
+      "sha256": "",
+      "size_bytes": null,
+      "pages": null,
+      "official_english": "unknown",
+      "state": "unknown",
+      "state_reason": "Listing-only: located and dated by hand; attachments never read; no bytes held, no hash.",
+      "quote": null,
+      "refusal": null,
+      "receipt_scope": null,
+      "provenance": [
+        "Published 2025-02-06. Listing page: https://unfccc.int/first-biennial-transparency-reports.",
+        "Predecessor retrieved_at recorded as 2026-09-07.",
+        "All 8 BTR components recorded unknown, never absent."
+      ]
+    },
+    {
+      "doc_id": "khm-ndgain",
+      "title": "ND-GAIN Country Index 2026 dataset (Cambodia vulnerability)",
+      "doc_type": "dataset",
+      "date": "2026-10-10",
+      "source_url": "https://gain.nd.edu/assets/647440/ndgain_countryindex_2026.zip",
+      "sha256": "e854c7fe6ccef8c5d24a5ef7f370b7f61d1b8c6816da19fda4cd892ca6cdf0de",
+      "size_bytes": null,
+      "pages": null,
+      "official_english": "n/a",
+      "state": "observed",
+      "state_reason": "",
+      "quote": null,
+      "refusal": null,
+      "receipt_scope": null,
+      "provenance": [
+        "Dataset zip hash from the predecessor's provenance inputs; date is the zip retrieval date.",
+        "Country page https://gain-new.crc.nd.edu/country/cambodia retrieved 2026-09-07.",
+        "official_english n/a: a dataset, not a government text."
+      ]
+    },
+    {
+      "doc_id": "khm-cait-2016",
+      "title": "WRI CAIT assessment of Cambodia's First (I)NDC",
+      "doc_type": "assessment",
+      "date": "2016",
+      "source_url": "",
+      "sha256": "",
+      "size_bytes": null,
+      "pages": null,
+      "official_english": "n/a",
+      "state": "unknown",
+      "state_reason": "No per-document hash and no recorded URL: identified only by a CSV row in the predecessor's DS-06 cache (ndc-content-cait.csv).",
+      "quote": null,
+      "refusal": null,
+      "receipt_scope": null,
+      "provenance": [
+        "Explicitly flagged \"Not the latest submission\".",
+        "official_english n/a: a third-party assessment, not a government text."
+      ]
+    }
+  ]
+}

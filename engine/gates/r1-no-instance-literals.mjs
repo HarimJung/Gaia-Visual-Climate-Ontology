@@ -7,7 +7,7 @@ import { rootArg, walk, violation, lineOf } from './_lib.mjs';
 import { parseCSVWithHeader } from '../lib/csv.mjs';
 
 const root = rootArg();
-const CODE_EXT = /\.(ts|js|mjs)$/;
+const CODE_EXT = /\.(ts|js|mjs|astro)$/;
 const STR_RE = /"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`/g;
 const TLA_RE = /^[A-Z]{3}$/;
 
@@ -60,16 +60,57 @@ if (existsSync(countriesDir)) {
   }
 }
 
+// In this repo the seed directory carries only the ISO3 code; the display name
+// lives in the front fixtures' view JSON (country block). Derive needles from
+// there too, or a planted display name in app code would pass undetected.
+const viewsDir = join(root, 'app', 'fixtures', 'views');
+if (existsSync(viewsDir)) {
+  for (const f of readdirSync(viewsDir)) {
+    if (!f.endsWith('.json')) continue;
+    try {
+      const view = JSON.parse(readFileSync(join(viewsDir, f), 'utf8'));
+      const country = view && typeof view.country === 'object' && view.country !== null ? view.country : {};
+      for (const k of ['iso3', 'name', 'name_en', 'name_ko']) {
+        if (typeof country[k] === 'string' && country[k].length >= 3) needles.add(country[k].toLowerCase());
+      }
+    } catch {
+      // fixture validity is the fixture tests' job
+    }
+  }
+}
+
 const files = [...walk(join(root, 'engine')), ...walk(join(root, 'app'))]
   .filter((p) => CODE_EXT.test(p))
   .filter((p) => {
     const rel = relative(root, p).split(sep).join('/');
-    return !rel.startsWith('engine/generated/') && !rel.startsWith('engine/seed/');
+    // app/dist is build output generated from scanned sources plus fixture
+    // data (which legitimately carries country identity) — excluded like
+    // engine/generated. Sources under app/ are scanned in full.
+    return (
+      !rel.startsWith('engine/generated/') &&
+      !rel.startsWith('engine/seed/') &&
+      !rel.startsWith('app/dist/') &&
+      !rel.startsWith('app/.astro/')
+    );
   });
 
 for (const file of files) {
   const text = readFileSync(file, 'utf8');
   const rel = relative(root, file);
+  // .astro files carry display text outside string literals, so the country
+  // needle scan runs over the whole file, not only quoted strings.
+  if (file.endsWith('.astro')) {
+    const low = text.toLowerCase();
+    for (const n of needles) {
+      const idx = low.indexOf(n);
+      if (idx !== -1) {
+        violation(
+          `R1: ${rel}:${lineOf(text, idx)} file contains country seed name "${n}" — ` +
+            'display names come from seed/fixture data, not code',
+        );
+      }
+    }
+  }
   for (const m of text.matchAll(STR_RE)) {
     const inner = m[0].slice(1, -1);
     if (TLA_RE.test(inner) && !allow.has(inner)) {

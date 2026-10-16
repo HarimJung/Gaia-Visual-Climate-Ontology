@@ -91,6 +91,99 @@ test('r1 ignores engine/generated and engine/seed', () => {
   clean(gate('r1-no-instance-literals.mjs', dir));
 });
 
+test('r1 detects a 3-letter instance literal in an .astro frontmatter string', () => {
+  const dir = fixture({
+    'app/src/pages/index.astro': "---\nconst code = 'KHM';\n---\n<p>{code}</p>\n",
+  });
+  const r = gate('r1-no-instance-literals.mjs', dir);
+  detected(r);
+  assert.match(r.stderr, /KHM/);
+});
+
+// These two mirror the real repo's shape: the seed directory carries only the
+// ISO3 code and the display name lives only in the view fixture's country
+// block — the gate must derive its needle from the view data.
+test('r1 detects a view-data country name in .astro markup text, outside any string literal', () => {
+  const dir = fixture({
+    'engine/seed/countries/ZZZ/documents.csv': 'doc_id,title\n',
+    'app/fixtures/views/zzz.json': JSON.stringify({ country: { iso3: 'ZZZ', name_en: 'Zephyria' } }),
+    'app/src/pages/index.astro': '<h1>Zephyria national ledger</h1>\n',
+  });
+  detected(gate('r1-no-instance-literals.mjs', dir));
+});
+
+test('r1 detects a view-data country name in a code string', () => {
+  const dir = fixture({
+    'engine/seed/countries/ZZZ/documents.csv': 'doc_id,title\n',
+    'app/fixtures/views/zzz.json': JSON.stringify({ country: { iso3: 'ZZZ', name_en: 'Zephyria' } }),
+    'app/src/lib/data.mjs': "export const planted = 'Zephyria ledger';\n",
+  });
+  detected(gate('r1-no-instance-literals.mjs', dir));
+});
+
+test('r1 ignores app/dist build output but still scans app sources', () => {
+  const dir = fixture({
+    'app/dist/receipt/x/bundle.js': "export const c = 'KHM';\n",
+    'app/src/lib/ok.mjs': 'export const ok = 1;\n',
+  });
+  clean(gate('r1-no-instance-literals.mjs', dir));
+});
+
+// ---------------------------------------------------------------- r11
+
+test('r11 detects an app source importing engine internals', () => {
+  const dir = fixture({
+    'app/src/lib/bad.mjs': "import vocab from '../../../engine/generated/vocab.json';\n",
+  });
+  const r = gate('r11-front-imports.mjs', dir);
+  detected(r);
+  assert.match(r.stderr, /engine\/generated/);
+});
+
+test('r11 detects an engine-reaching import.meta.glob in app code', () => {
+  const dir = fixture({
+    'app/src/lib/bad.mjs': "const seeds = import.meta.glob('../../../engine/seed/**/*.csv');\n",
+  });
+  detected(gate('r11-front-imports.mjs', dir));
+});
+
+test('r11 passes the fixtures-only door', () => {
+  const dir = fixture({
+    'app/src/lib/data.mjs':
+      "const views = import.meta.glob('../../fixtures/views/*.json');\nexport default views;\n",
+  });
+  clean(gate('r11-front-imports.mjs', dir));
+});
+
+// ------------------------------------------- r6 (reversed: unlinked figures)
+
+test('r6 detects a bare numeral rendered outside a link in built HTML', () => {
+  const dir = fixture({
+    'app/dist/index.html': '<html><body><main><p>7 documents</p></main></body></html>\n',
+  });
+  const r = gate('r6-figures-linked.mjs', dir);
+  detected(r);
+  assert.match(r.stderr, /"7"/);
+});
+
+test('r6 passes figures inside links, verbatim-record blocks and marked metadata', () => {
+  const dir = fixture({
+    'app/dist/index.html':
+      '<html><body><main><p><a href="/receipt/x/">7</a> documents</p>' +
+      '<div class="refusal">states 16%, 24%</div>' +
+      '<p class="reason">dated 2020-12-31 by hand</p></main>' +
+      '<footer><span data-meta="as_of">as of 2026-10-15</span></footer></body></html>\n',
+  });
+  clean(gate('r6-figures-linked.mjs', dir));
+});
+
+test('r6 passes with a note when there is no build output', () => {
+  const dir = fixture({});
+  const r = gate('r6-figures-linked.mjs', dir);
+  clean(r);
+  assert.match(r.stdout, /no app\/dist/);
+});
+
 // ---------------------------------------------------------------- r2 vocab canon
 
 test('r2-vocab-canon detects a hand-written TS vocabulary declaration', () => {

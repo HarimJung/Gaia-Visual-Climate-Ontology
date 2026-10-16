@@ -1,3 +1,5 @@
 node_modules/
 data/cache/
 engine/cache/
+app/dist/
+app/.astro/

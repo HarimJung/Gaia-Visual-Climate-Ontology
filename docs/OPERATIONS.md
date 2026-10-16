@@ -15,8 +15,8 @@ YYYY-MM-DD | <check> | <message>
 `engine/gates/run.mjs` already prints this shape. Destination: the operator's
 daily ops digest file — the file opened first in every working session. Email
 does not count as a destination. A check that stays red for more than 7 days is
-demoted from "alert" to "accepted defect" and moved to the known-failure list;
-only new failures make noise.
+demoted from "alert" to "accepted defect" and moved to the known-failure list
+(`docs/KNOWN-FAILURES.md`); only new failures make noise.
 
 ## R14 — staleness budgets (requirement — implemented by WP-03)
 

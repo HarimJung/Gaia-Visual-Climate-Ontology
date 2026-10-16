@@ -1,0 +1,57 @@
+---
+// The demo path (AD-10): ledger → a figure → its receipt → the hash, every
+// step deep-linked. The authoring step is a labeled placeholder (WP-08) —
+// nothing is mocked. The walked figure is chosen from the fixture data, never
+// named in code (R1).
+import Base from '../layouts/Base.astro';
+import { views } from '../lib/data.mjs';
+
+const view = views[0];
+const doc = view.rows.find((r) => r.quote && r.sha256);
+const treaty = view.treaty_status.find((t) => t.receipt === doc.doc_id);
+const ev = treaty.events[0];
+---
+
+<Base title="Demo path">
+  <section class="head">
+    <h1>Demo path</h1>
+    <p class="treaty">From the ledger to the bytes behind one figure. Every step below is a link.</p>
+  </section>
+
+  <ol class="steps-list">
+    <li>
+      <h2><a href="/">The ledger</a></h2>
+      <p>
+        Zero clicks: country name, treaty status in one line, the next relevant date, and the strip of
+        what this runtime has read so far.
+      </p>
+    </li>
+    <li>
+      <h2><a href="/#treaty">One figure</a></h2>
+      <p>
+        The {treaty.treaty_label} {ev.label} date,{' '}
+        <a class="fig" data-receipt={doc.doc_id} href="/#treaty">{ev.display}</a>, in the treaty line.
+      </p>
+    </li>
+    <li>
+      <h2><a href={`/receipt/${doc.doc_id}/`}>Its receipt</a></h2>
+      <p>
+        {doc.title} — source URL, the{' '}
+        <a href={`/receipt/${doc.doc_id}/#quote`}>page-one quote</a>, and the recorded state, at one
+        URL of its own.
+      </p>
+    </li>
+    <li>
+      <h2><a href={`/receipt/${doc.doc_id}/#sha256`}>The hash</a></h2>
+      <p>The SHA-256 of the fetched file: the identity this record rests on.</p>
+    </li>
+    <li>
+      <h2>Your own sentence</h2>
+      <div class="placeholder">
+        <span class="tag">PLACEHOLDER — ARRIVES WITH WP-08</span>
+        Authoring: a drafted sentence is checked against the record and comes back with a verdict and
+        receipts. The docx path lands with WP-08; no interface is mocked here.
+      </div>
+    </li>
+  </ol>
+</Base>

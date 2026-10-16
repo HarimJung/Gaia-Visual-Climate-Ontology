@@ -15,6 +15,10 @@ jobs:
       # R15: lockfile-exact install only
       - run: npm ci
       - run: node --test
+      # App build only — static output to app/dist, never published from here (R8).
+      # It runs before the gates so the r6 unlinked-figure scan covers the
+      # freshly built pages.
+      - run: npm run build
       - run: node engine/gates/run.mjs
 
 # No deploy job yet. Publishing will be a CI-only path (R8 / AD-11), added with

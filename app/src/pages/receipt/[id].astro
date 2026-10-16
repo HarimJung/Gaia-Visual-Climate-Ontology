@@ -1,0 +1,154 @@
+---
+// Evidence drawer: one unique URL per receipt (AD-10), one static route per
+// ledger row. Routes are enumerated from the fixture views (R1: no instance
+// ids in code); the page reads only view JSON (R11).
+import Base from '../../layouts/Base.astro';
+import { views, fmt } from '../../lib/data.mjs';
+
+export function getStaticPaths() {
+  return views.flatMap((view) =>
+    view.rows.map((row) => ({ params: { id: row.doc_id }, props: { row } })),
+  );
+}
+
+const { row } = Astro.props;
+// Receipt-page figures point at the evidence they rest on: the hash when bytes
+// are held, otherwise the recorded state and its reason.
+const figHref = row.sha256 ? '#sha256' : '#state';
+---
+
+<Base title={`Receipt — ${row.title}`}>
+  <article class="receipt">
+    <p class="crumb"><a href={`/#row-${row.doc_id}`}>← ledger row</a></p>
+    <h1>{row.title}</h1>
+    <p class="muted" style="margin:0 0 26px">receipt <span class="mono">{row.doc_id}</span></p>
+
+    <section class="rblock" id="state" aria-labelledby={`state-h-${row.doc_id}`}>
+      <h2 id={`state-h-${row.doc_id}`}>State</h2>
+      <p style="margin:0">
+        <span class={`chip chip-${row.state}`}>{row.state}</span>
+        {row.state_reason && <span class="reason"> {row.state_reason}</span>}
+      </p>
+      {
+        row.refusal && (
+          <div class="refusal" style="margin-top:12px">
+            <span class="tag">REFUSED — figure extraction, verbatim</span>“{row.refusal}”
+          </div>
+        )
+      }
+      {row.receipt_scope && <p class="reason" style="margin:12px 0 0">{row.receipt_scope}</p>}
+    </section>
+
+    {
+      row.quote && (
+        <section class="rblock" id="quote" aria-labelledby={`quote-h-${row.doc_id}`}>
+          <h2 id={`quote-h-${row.doc_id}`}>
+            Quote, page{' '}
+            <a class="fig" data-receipt={row.doc_id} href={row.source_url}>
+              {row.quote.page}
+            </a>
+          </h2>
+          <p class="quote">
+            <span class="qtext">{row.quote.text}</span>
+          </p>
+          <p class="reason" style="margin:10px 0 0">
+            read as: <span class="mono" data-receipt={row.doc_id}>{row.quote.reading}</span>
+          </p>
+        </section>
+      )
+    }
+
+    <section class="rblock" id="sha256" aria-labelledby={`hash-h-${row.doc_id}`}>
+      <h2 id={`hash-h-${row.doc_id}`}>SHA-256</h2>
+      {
+        row.sha256 ? (
+          <p class="hash">
+            <code id="hashval" data-receipt={row.doc_id}>
+              {row.sha256}
+            </code>
+          </p>
+        ) : (
+          <div class="void">
+            <span class="chip chip-absent">no bytes held</span>
+            <span class="reason"> {row.state_reason}</span>
+          </div>
+        )
+      }
+    </section>
+
+    <section class="rblock" aria-labelledby={`facts-h-${row.doc_id}`}>
+      <h2 id={`facts-h-${row.doc_id}`}>On record</h2>
+      <dl class="facts">
+        <dt>type</dt>
+        <dd class="mono" style="font-size:14px">{row.doc_type}</dd>
+        <dt>date</dt>
+        <dd>
+          <a class="fig" data-receipt={row.doc_id} href={figHref}>{row.date}</a>
+        </dd>
+        {
+          row.size_bytes !== null && (
+            <>
+              <dt>size</dt>
+              <dd>
+                <a class="fig" data-receipt={row.doc_id} href={figHref}>
+                  {fmt(row.size_bytes)}
+                </a>{' '}
+                bytes
+              </dd>
+            </>
+          )
+        }
+        {
+          row.pages !== null && (
+            <>
+              <dt>pages</dt>
+              <dd>
+                <a class="fig" data-receipt={row.doc_id} href={figHref}>
+                  {row.pages}
+                </a>
+              </dd>
+            </>
+          )
+        }
+        <dt>official English</dt>
+        <dd>{row.official_english}</dd>
+        <dt>source URL</dt>
+        <dd>
+          {row.source_url ? <a href={row.source_url}>{row.source_url}</a> : <span class="chip chip-absent">none recorded</span>}
+        </dd>
+      </dl>
+    </section>
+
+    {
+      row.provenance.length > 0 && (
+        <section class="rblock" aria-labelledby={`prov-h-${row.doc_id}`}>
+          <h2 id={`prov-h-${row.doc_id}`}>Provenance notes</h2>
+          <ul class="prov" data-receipt={row.doc_id}>
+            {row.provenance.map((p) => (
+              <li>{p}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </article>
+
+  <script is:inline>
+    // Progressive enhancement only: with JS off the full hash is plain, selectable text.
+    (function () {
+      var el = document.getElementById('hashval');
+      if (!el || !navigator.clipboard) return;
+      var btn = document.createElement('button');
+      btn.className = 'copy';
+      btn.type = 'button';
+      btn.textContent = 'copy hash';
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(el.textContent.trim()).then(function () {
+          btn.textContent = 'copied';
+          setTimeout(function () { btn.textContent = 'copy hash'; }, 1200);
+        });
+      });
+      el.parentNode.insertAdjacentElement('afterend', btn);
+    })();
+  </script>
+</Base>
