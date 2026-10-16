@@ -1,0 +1,4 @@
+code,party,title,fileType,language,version,status,submissionDate,encodedAbsUrl,originalFilename
+AAA,Alphaland,Alphaland First NDC,NDC,English,1,Active,2016-11-23,https://example.org/files/AAA_first.pdf,AAA_first.pdf
+AAA,Alphaland,"Alphaland Second NDC, revised",NDC,English,2,Active,2021-05-10,https://example.org/files/AAA%20second.pdf,AAA second.pdf
+BBB,Betaland,Betaland First NDC (French),Translation,French,1,Active,2020-01-02,https://example.org/files/BBB_first_fr.pdf,BBB_first_fr.pdf

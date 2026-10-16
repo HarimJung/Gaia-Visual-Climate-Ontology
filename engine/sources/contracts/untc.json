@@ -1,0 +1,25 @@
+{
+  "source_id": "untc",
+  "license_id": "un-treaty-collection",
+  "name": "UN Treaty Collection depositary status lists (MTDSG Chapter XXVII), English PDFs",
+  "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/",
+  "documents": [
+    {
+      "key": "xxvii-7",
+      "treaty": "unfccc",
+      "filename": "XXVII-7.en.pdf",
+      "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7.en.pdf"
+    },
+    {
+      "key": "xxvii-7-d",
+      "treaty": "paris-agreement",
+      "filename": "XXVII-7-d.en.pdf",
+      "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7-d.en.pdf"
+    }
+  ],
+  "staleness_budget_days": 90,
+  "success_criteria": {
+    "min_bytes": 50000,
+    "format": "pdf"
+  }
+}

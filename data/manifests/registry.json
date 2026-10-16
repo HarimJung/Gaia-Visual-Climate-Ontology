@@ -1,0 +1,12 @@
+{
+  "source_id": "registry",
+  "entries": [
+    {
+      "filename": "ndcs.csv",
+      "url": "https://raw.githubusercontent.com/openclimatedata/ndcs/main/data/ndcs.csv",
+      "sha256": "8958a3b12e9f770d45327c639ae173b4a063c6cc1dc4bf5b5e2196d3d76a51d9",
+      "retrieved_at": "2026-10-15T21:56:22.425Z",
+      "size_bytes": 158117
+    }
+  ]
+}

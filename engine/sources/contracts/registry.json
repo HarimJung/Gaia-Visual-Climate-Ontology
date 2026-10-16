@@ -1,0 +1,14 @@
+{
+  "source_id": "registry",
+  "license_id": "openclimatedata-ndcs",
+  "name": "UNFCCC NDC registry index, via the openclimatedata/ndcs mirror",
+  "url": "https://raw.githubusercontent.com/openclimatedata/ndcs/main/data/ndcs.csv",
+  "upstream": "https://unfccc.int/NDCREG",
+  "upstream_note": "unfccc.int sits behind a WAF and is never fetched directly; the mirror is the proven public path",
+  "staleness_budget_days": 30,
+  "success_criteria": {
+    "min_bytes": 50000,
+    "format": "csv",
+    "csv_header": "code,party,title,fileType,language,version,status,submissionDate,encodedAbsUrl,originalFilename"
+  }
+}

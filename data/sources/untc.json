@@ -1,0 +1,5471 @@
+{
+  "source_id": "untc",
+  "documents": [
+    {
+      "key": "xxvii-7",
+      "treaty": "unfccc",
+      "filename": "XXVII-7.en.pdf",
+      "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7.en.pdf",
+      "snapshot_sha256": "92a525f426a968a80e0b422f3f0a2f730b6ff1e5a70aa6f0eac80d13d060e897",
+      "retrieved_at": "2026-10-15T21:56:30.503Z",
+      "stale": null,
+      "signatories_header": 165,
+      "parties_header": 198,
+      "signature_count": 165,
+      "action_count": 198,
+      "marker_legend": {
+        "AA": "approval",
+        "A": "acceptance",
+        "a": "accession",
+        "d": "succession"
+      },
+      "ignored_off_origin": 2,
+      "refused": [],
+      "participants": [
+        {
+          "participant": "Afghanistan",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2002-09-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Albania",
+          "page": 1,
+          "signature": null,
+          "action": {
+            "date": "1994-10-03",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Algeria",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-06-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Andorra",
+          "page": 1,
+          "signature": null,
+          "action": {
+            "date": "2011-03-02",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Angola",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-14",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2000-05-17",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Antigua and Barbuda",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-02-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Argentina",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-03-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Armenia",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-05-14",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Australia",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-12-30",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Austria",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-02-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Azerbaijan",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-05-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bahamas (The)",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-03-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bahrain",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bangladesh",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-04-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Barbados",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-03-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Belarus",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2000-05-11",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Belgium",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-01-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Belize",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-10-31",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Benin",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-30",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bhutan",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-08-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bolivia (Plurinational State of)",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-10-03",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bosnia and Herzegovina",
+          "page": 1,
+          "signature": null,
+          "action": {
+            "date": "2000-09-07",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Botswana",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-01-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Brazil",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-02-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Brunei Darussalam",
+          "page": 1,
+          "signature": null,
+          "action": {
+            "date": "2007-08-07",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Bulgaria",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-05",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-05-12",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Burkina Faso",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-09-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Burundi",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1997-01-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cabo Verde",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-03-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cambodia",
+          "page": 1,
+          "signature": null,
+          "action": {
+            "date": "1995-12-18",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Cameroon",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-14",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-10-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Canada",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-12-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Central African Republic",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-03-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Chad",
+          "page": 1,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Chile",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "China",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-01-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Colombia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-03-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Comoros",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-10-31",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Congo",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-10-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cook Islands",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-04-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Costa Rica",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-26",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Côte d'Ivoire",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-11-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Croatia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-04-08",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Cuba",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-01-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cyprus",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1997-10-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Czech Republic",
+          "page": 2,
+          "signature": {
+            "date": "1993-06-18",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-10-07",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Democratic People's Republic of Korea",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-05",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Democratic Republic of the Congo",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-01-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Denmark",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Djibouti",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-08-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Dominica",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "1993-06-21",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Dominican Republic",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1998-10-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ecuador",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-02-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Egypt",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "El Salvador",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-12-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Equatorial Guinea",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "2000-08-16",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Eritrea",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "1995-04-24",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Estonia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-07-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Eswatini",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-10-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ethiopia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-04-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "European Union",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-21",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Fiji",
+          "page": 2,
+          "signature": {
+            "date": "1992-10-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-02-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Finland",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-05-03",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "France",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-03-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Gabon",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1998-01-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Gambia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Georgia",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "1994-07-29",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Germany",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ghana",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-09-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Greece",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Grenada",
+          "page": 2,
+          "signature": {
+            "date": "1992-12-03",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guatemala",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-12-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guinea",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-05-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guinea-Bissau",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-10-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guyana",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Haiti",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-09-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Holy See",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "2022-07-06",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Honduras",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-10-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Hungary",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-02-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Iceland",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-06-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "India",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-11-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Indonesia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-05",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Iran (Islamic Republic of)",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-14",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-07-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Iraq",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "2009-07-28",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Ireland",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-04-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Israel",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-06-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Italy",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-05",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-04-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Jamaica",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-01-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Japan",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-05-28",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Jordan",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-11-12",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kazakhstan",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-05-17",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kenya",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-30",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kiribati",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-02-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kuwait",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Kyrgyzstan",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "2000-05-25",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Lao People's Democratic Republic",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "1995-01-04",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Latvia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-03-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lebanon",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lesotho",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-02-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Liberia",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2002-11-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Libya",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-29",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1999-06-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Liechtenstein",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lithuania",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-03-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Luxembourg",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-05-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Madagascar",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1999-06-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Malawi",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-04-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Malaysia",
+          "page": 2,
+          "signature": {
+            "date": "1993-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-07-13",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Maldives",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-11-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mali",
+          "page": 2,
+          "signature": {
+            "date": "1992-09-30",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Malta",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-03-17",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Marshall Islands",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-10-08",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mauritania",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-01-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mauritius",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-09-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mexico",
+          "page": 2,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-03-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Micronesia (Federated States of)",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-11-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Monaco",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-11-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mongolia",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-09-30",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Montenegro",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2006-10-23",
+            "bracketed": false,
+            "marker": "d",
+            "kind": "succession"
+          }
+        },
+        {
+          "participant": "Morocco",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mozambique",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-08-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Myanmar",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-11-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Namibia",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-05-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Naoero",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-11-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Nepal",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-05-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Netherlands (Kingdom of the)",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-20",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "New Zealand",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-09-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Nicaragua",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-10-31",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Niger",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-07-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Nigeria",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Niue",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1996-02-28",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "North Macedonia",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1998-01-28",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Norway",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-07-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Oman",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-02-08",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Pakistan",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Palau",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1999-12-10",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Panama",
+          "page": 3,
+          "signature": {
+            "date": "1993-03-18",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-05-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Papua New Guinea",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-03-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Paraguay",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-02-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Peru",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-06-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Philippines",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Poland",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-05",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-07-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Portugal",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Qatar",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1996-04-18",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Republic of Korea",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Republic of Moldova",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-06-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Romania",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-05",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-08",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Russian Federation",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Rwanda",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1998-08-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Samoa",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-11-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "San Marino",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-10-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sao Tome and Principe",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1999-09-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Saudi Arabia",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Senegal",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-10-17",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Serbia",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2001-03-12",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Seychelles",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-09-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sierra Leone",
+          "page": 3,
+          "signature": {
+            "date": "1993-02-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-06-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Singapore",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1997-05-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Slovakia",
+          "page": 3,
+          "signature": {
+            "date": "1993-05-19",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-25",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Slovenia",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-12-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Solomon Islands",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Somalia",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2009-09-11",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "South Africa",
+          "page": 3,
+          "signature": {
+            "date": "1993-06-15",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1997-08-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "South Sudan",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2014-02-17",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Spain",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sri Lanka",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-10",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-11-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "St. Kitts and Nevis",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-01-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "St. Lucia",
+          "page": 3,
+          "signature": {
+            "date": "1993-06-14",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-06-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "St. Vincent and the Grenadines",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1996-12-02",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "State of Palestine",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2015-12-18",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Sudan",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-11-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Suriname",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1997-10-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sweden",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-06-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Switzerland",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Syrian Arab Republic",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1996-01-04",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Tajikistan",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1998-01-07",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Thailand",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Timor-Leste",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2006-10-10",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Togo",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1995-03-08",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Tonga",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1998-07-20",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Trinidad and Tobago",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-06-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Tunisia",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-07-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Türkiye",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2004-02-24",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Turkmenistan",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1995-06-05",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Tuvalu",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-10-26",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Uganda",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-13",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-09-08",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ukraine",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1997-05-13",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "United Arab Emirates",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1995-12-29",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "United Kingdom of Great Britain and Northern Ireland",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-12-08",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "United Republic of Tanzania",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-04-17",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "United States of America",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-10-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Uruguay",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-04",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-08-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Uzbekistan",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "1993-06-20",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Vanuatu",
+          "page": 3,
+          "signature": {
+            "date": "1992-06-09",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-03-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Venezuela (Bolivarian Republic of)",
+          "page": 4,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Viet Nam",
+          "page": 4,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1994-11-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Yemen",
+          "page": 4,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1996-02-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Zambia",
+          "page": 4,
+          "signature": {
+            "date": "1992-06-11",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1993-05-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Zimbabwe",
+          "page": 4,
+          "signature": {
+            "date": "1992-06-12",
+            "bracketed": false
+          },
+          "action": {
+            "date": "1992-11-03",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        }
+      ]
+    },
+    {
+      "key": "xxvii-7-d",
+      "treaty": "paris-agreement",
+      "filename": "XXVII-7-d.en.pdf",
+      "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7-d.en.pdf",
+      "snapshot_sha256": "cb2aec820cb4fa2691ca28ef4ef8a0f3f33aeac9f309ce4e55fb8f607b0deeee",
+      "retrieved_at": "2026-10-15T21:56:31.343Z",
+      "stale": null,
+      "signatories_header": 194,
+      "parties_header": 194,
+      "signature_count": 194,
+      "action_count": 194,
+      "marker_legend": {
+        "A": "acceptance",
+        "AA": "approval",
+        "a": "accession"
+      },
+      "ignored_off_origin": 0,
+      "refused": [],
+      "participants": [
+        {
+          "participant": "Afghanistan",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-02-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Albania",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Algeria",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Andorra",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Angola",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2020-11-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Antigua and Barbuda",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Argentina",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Armenia",
+          "page": 1,
+          "signature": {
+            "date": "2016-09-20",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Australia",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Austria",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Azerbaijan",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-01-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bahamas (The)",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-08-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bahrain",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-12-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bangladesh",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Barbados",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Belarus",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Belgium",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-04-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Belize",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Benin",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-31",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bhutan",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-09-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bolivia (Plurinational State of)",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bosnia and Herzegovina",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Botswana",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Brazil",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Brunei Darussalam",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Bulgaria",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Burkina Faso",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Burundi",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-01-17",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cabo Verde",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cambodia",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-02-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cameroon",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-07-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Canada",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Central African Republic",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Chad",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-01-12",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Chile",
+          "page": 1,
+          "signature": {
+            "date": "2016-09-20",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-02-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "China",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-03",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Colombia",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-07-12",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Comoros",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Congo",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-04-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cook Islands",
+          "page": 1,
+          "signature": {
+            "date": "2016-06-24",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Costa Rica",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-13",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Côte d'Ivoire",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Croatia",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-05-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cuba",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Cyprus",
+          "page": 1,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-01-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Czech Republic",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Democratic People's Republic of Korea",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-08-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Democratic Republic of the Congo",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-12-13",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Denmark",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-01",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Djibouti",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Dominica",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Dominican Republic",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ecuador",
+          "page": 2,
+          "signature": {
+            "date": "2016-07-26",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-09-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Egypt",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-06-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "El Salvador",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Equatorial Guinea",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-10-30",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Eritrea",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2023-02-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Estonia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Eswatini",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ethiopia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "European Union",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Fiji",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Finland",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "France",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Gabon",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Gambia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-26",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Georgia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-05-08",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Germany",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ghana",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Greece",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Grenada",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guatemala",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-01-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guinea",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guinea-Bissau",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-10-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Guyana",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-05-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Haiti",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-07-31",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Holy See",
+          "page": 2,
+          "signature": null,
+          "action": {
+            "date": "2022-09-04",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Honduras",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Hungary",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Iceland",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "India",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Indonesia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-31",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Iran (Islamic Republic of)",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": null
+        },
+        {
+          "participant": "Iraq",
+          "page": 2,
+          "signature": {
+            "date": "2016-12-08",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2021-11-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ireland",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Israel",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Italy",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Jamaica",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-04-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Japan",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-08",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Jordan",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kazakhstan",
+          "page": 2,
+          "signature": {
+            "date": "2016-08-02",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-12-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kenya",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-12-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kiribati",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kuwait",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-04-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Kyrgyzstan",
+          "page": 2,
+          "signature": {
+            "date": "2016-09-21",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2020-02-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lao People's Democratic Republic",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Latvia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lebanon",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2020-02-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lesotho",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-01-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Liberia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-08-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Libya",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": null
+        },
+        {
+          "participant": "Liechtenstein",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-09-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Lithuania",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-02-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Luxembourg",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Madagascar",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Malawi",
+          "page": 2,
+          "signature": {
+            "date": "2016-09-20",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-06-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Malaysia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Maldives",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mali",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Malta",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Marshall Islands",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mauritania",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-02-27",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mauritius",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mexico",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Micronesia (Federated States of)",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-15",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Monaco",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-24",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mongolia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Montenegro",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-12-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Morocco",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Mozambique",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-06-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Myanmar",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-09-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Namibia",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Naoero",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Nepal",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Netherlands (Kingdom of the)",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-07-28",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "New Zealand",
+          "page": 2,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-04",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Nicaragua",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2017-10-23",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Niger",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Nigeria",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-05-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Niue",
+          "page": 3,
+          "signature": {
+            "date": "2016-10-28",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "North Macedonia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-01-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Norway",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-06-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Oman",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2019-05-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Pakistan",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Palau",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Panama",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Papua New Guinea",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Paraguay",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-14",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Peru",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-07-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Philippines",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Poland",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Portugal",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Qatar",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-06-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Republic of Korea",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-03",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Republic of Moldova",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-21",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-06-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Romania",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-06-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Russian Federation",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2019-10-07",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Rwanda",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Samoa",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "San Marino",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-09-26",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sao Tome and Principe",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Saudi Arabia",
+          "page": 3,
+          "signature": {
+            "date": "2016-11-03",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-03",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Senegal",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Serbia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-07-25",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Seychelles",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-25",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sierra Leone",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Singapore",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Slovakia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-05",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Slovenia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-12-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Solomon Islands",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Somalia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "South Africa",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-01",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "South Sudan",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2021-02-23",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Spain",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-01-12",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sri Lanka",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "St. Kitts and Nevis",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "St. Lucia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "St. Vincent and the Grenadines",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-06-29",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "State of Palestine",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sudan",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-08-02",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Suriname",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2019-02-13",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Sweden",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-13",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Switzerland",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-10-06",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Syrian Arab Republic",
+          "page": 3,
+          "signature": null,
+          "action": {
+            "date": "2017-11-13",
+            "bracketed": false,
+            "marker": "a",
+            "kind": "accession"
+          }
+        },
+        {
+          "participant": "Tajikistan",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-03-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Thailand",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Timor-Leste",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-08-16",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Togo",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-19",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-06-28",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Tonga",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Trinidad and Tobago",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-02-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Tunisia",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-02-10",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Türkiye",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2021-10-11",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Turkmenistan",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-23",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-20",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Tuvalu",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-04-22",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Uganda",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Ukraine",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "United Arab Emirates",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "United Kingdom of Great Britain and Northern Ireland",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "United Republic of Tanzania",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-05-18",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "United States of America",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": true
+          },
+          "action": {
+            "date": "2021-01-20",
+            "bracketed": true,
+            "marker": "A",
+            "kind": "acceptance"
+          }
+        },
+        {
+          "participant": "Uruguay",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-10-19",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Uzbekistan",
+          "page": 3,
+          "signature": {
+            "date": "2017-04-19",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2018-11-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Vanuatu",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-09-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Venezuela (Bolivarian Republic of)",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-07-21",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Viet Nam",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-11-03",
+            "bracketed": false,
+            "marker": "AA",
+            "kind": "approval"
+          }
+        },
+        {
+          "participant": "Yemen",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-23",
+            "bracketed": false
+          },
+          "action": null
+        },
+        {
+          "participant": "Zambia",
+          "page": 3,
+          "signature": {
+            "date": "2016-09-20",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2016-12-09",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        },
+        {
+          "participant": "Zimbabwe",
+          "page": 3,
+          "signature": {
+            "date": "2016-04-22",
+            "bracketed": false
+          },
+          "action": {
+            "date": "2017-08-07",
+            "bracketed": false,
+            "marker": null,
+            "kind": "ratification"
+          }
+        }
+      ]
+    }
+  ]
+}

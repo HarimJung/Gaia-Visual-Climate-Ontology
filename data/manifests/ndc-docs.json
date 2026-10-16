@@ -1,0 +1,1146 @@
+{
+  "source_id": "ndc-docs",
+  "entries": [
+    {
+      "filename": "AFG_Afghanistan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/AFG_Afghanistan_First_NDC_English.pdf",
+      "sha256": "fbeeb331441c86fd3db7f2776da20e7d0075d837952ab3e99b1ba4ab11dba0c9",
+      "retrieved_at": "2026-10-15T21:56:50.761Z",
+      "size_bytes": 352352
+    },
+    {
+      "filename": "AGO_Angola_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/AGO_Angola_First_NDC_English.pdf",
+      "sha256": "d2c3454baff307c99284684a3409102f1038480cc2ba4b683d3225af4c83751e",
+      "retrieved_at": "2026-10-15T21:56:52.151Z",
+      "size_bytes": 3292899
+    },
+    {
+      "filename": "ALB_Albania_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ALB_Albania_First_NDC_English.pdf",
+      "sha256": "359a5fa1fa9db78acc59070af825797ae0929cc3d00d82dee6a031b1ca5c1879",
+      "retrieved_at": "2026-10-15T21:56:52.722Z",
+      "size_bytes": 108766
+    },
+    {
+      "filename": "AND_Andorra_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/AND_Andorra_First_NDC_Spanish.pdf",
+      "sha256": "0aab080c22d7e7ede742d67f84da54a52705ff05a0a548c65c65f427207a30ae",
+      "retrieved_at": "2026-10-15T21:56:53.921Z",
+      "size_bytes": 412918
+    },
+    {
+      "filename": "ARE_United-Arab-Emirates_Second_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ARE_United-Arab-Emirates_Second_NDC_Translation_English.pdf",
+      "sha256": "8abbfa608d0a6f485bc61ffa8e308096bf42d43ec8ba3747dd60975283978950",
+      "retrieved_at": "2026-10-15T21:56:56.149Z",
+      "size_bytes": 358563
+    },
+    {
+      "filename": "ARG_Argentina_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ARG_Argentina_First_NDC_Archived_English.pdf",
+      "sha256": "d4cfeab56806228910bf7bdb4251610b2fea10a7196ac90788be30e4cacc517e",
+      "retrieved_at": "2026-10-15T21:56:57.800Z",
+      "size_bytes": 375199
+    },
+    {
+      "filename": "ARM_Armenia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ARM_Armenia_First_NDC_English.pdf",
+      "sha256": "3894e2035d3d4e8e98dc21438988a82f92b895494a03a1c139377fb459a85c1f",
+      "retrieved_at": "2026-10-15T21:56:58.798Z",
+      "size_bytes": 175103
+    },
+    {
+      "filename": "ATG_Antigua-and-Barbuda_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ATG_Antigua-and-Barbuda_First_NDC_English.pdf",
+      "sha256": "1ea9a623315582e53f9f115a6c18550c9241ad19a86099fccc752b281e6c6360",
+      "retrieved_at": "2026-10-15T21:56:59.617Z",
+      "size_bytes": 242119
+    },
+    {
+      "filename": "AUS_Australia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/AUS_Australia_First_NDC_English.pdf",
+      "sha256": "638e997750efadc4d5af608f1e4d428fe92e465e2ace75c6d39c77dfdae9e7b6",
+      "retrieved_at": "2026-10-15T21:57:00.202Z",
+      "size_bytes": 809352
+    },
+    {
+      "filename": "AZE_Azerbaijan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/AZE_Azerbaijan_First_NDC_English.pdf",
+      "sha256": "5c991c4d8858605c7ba4705b74cc6f217eb0e7c6df565d35ca9eed3cb5335bcb",
+      "retrieved_at": "2026-10-15T21:57:00.962Z",
+      "size_bytes": 171197
+    },
+    {
+      "filename": "BDI_Burundi_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BDI_Burundi_First_NDC_Archived_English.pdf",
+      "sha256": "541fcabdef8d69412ba39409c96440d6baffdc12389fb1450207d25fc656af4a",
+      "retrieved_at": "2026-10-15T21:57:02.108Z",
+      "size_bytes": 345962
+    },
+    {
+      "filename": "BEN_Benin_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BEN_Benin_First_NDC_Archived_English.pdf",
+      "sha256": "f2b7e68025d2e2b436277629de94f881048235ecf27aa5a08aabf60dbd8320ab",
+      "retrieved_at": "2026-10-15T21:57:03.075Z",
+      "size_bytes": 1341437
+    },
+    {
+      "filename": "BFA_Burkina-Faso_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BFA_Burkina-Faso_First_NDC_Archived_English.pdf",
+      "sha256": "83983dfb16f3c86738629deaa9ca5c2055b99f6b335989e6b2bcfa55b03fcc37",
+      "retrieved_at": "2026-10-15T21:57:04.217Z",
+      "size_bytes": 1415159
+    },
+    {
+      "filename": "BGD_Bangladesh_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BGD_Bangladesh_First_NDC_English.pdf",
+      "sha256": "8a3d07a86e46784ff93fc414df275ecf49f9c0ee27dd0913da08a1e07165cf66",
+      "retrieved_at": "2026-10-15T21:57:05.308Z",
+      "size_bytes": 2161085
+    },
+    {
+      "filename": "BHR_Bahrain_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BHR_Bahrain_First_NDC_English.pdf",
+      "sha256": "dd1c459c0260033fc504b908d29e163632bc39ed0a9f610fb2dc17628fa20ca3",
+      "retrieved_at": "2026-10-15T21:57:06.099Z",
+      "size_bytes": 582373
+    },
+    {
+      "filename": "BHS_Bahamas_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BHS_Bahamas_First_NDC_English.pdf",
+      "sha256": "7995a91b84fce1970a67fae6817b52c7f8f71bb1be63ef8eed56940123474ddc",
+      "retrieved_at": "2026-10-15T21:57:07.657Z",
+      "size_bytes": 5008173
+    },
+    {
+      "filename": "BIH_Bosnia-and-Herzegovina_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BIH_Bosnia-and-Herzegovina_First_NDC_English.pdf",
+      "sha256": "42b1f733a2876743d5b633af3a95da5dbfa8332c9542ca7ef7c2f93e17249b53",
+      "retrieved_at": "2026-10-15T21:57:08.048Z",
+      "size_bytes": 250674
+    },
+    {
+      "filename": "BLR_Belarus_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BLR_Belarus_First_NDC_Translation_English.pdf",
+      "sha256": "d8df1884487b964c104f124862cdc326f322e166dedca33a143b9f28208d2c4f",
+      "retrieved_at": "2026-10-15T21:57:09.519Z",
+      "size_bytes": 2326606
+    },
+    {
+      "filename": "BLZ_Belize_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BLZ_Belize_First_NDC_English.pdf",
+      "sha256": "bac465a186404e5666dbbed5b0469de452cbb8a200cc6bdd2b2f14dadfb4ed42",
+      "retrieved_at": "2026-10-15T21:57:10.127Z",
+      "size_bytes": 379291
+    },
+    {
+      "filename": "BOL_Bolivia-Plurinational-State-of_Second_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BOL_Bolivia-Plurinational-State-of_Second_NDC_Translation_English.pdf",
+      "sha256": "de2db537d131f61ef3f5ef87498d8996872352d7f33f6787a7079d15510fa38b",
+      "retrieved_at": "2026-10-15T21:57:13.422Z",
+      "size_bytes": 14332976
+    },
+    {
+      "filename": "BRA_Brazil_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BRA_Brazil_First_NDC_English.pdf",
+      "sha256": "3863a9aa665454cd88bb9082570368f9baad1b2ab7d9953ecf32ef5e58f60225",
+      "retrieved_at": "2026-10-15T21:57:13.620Z",
+      "size_bytes": 119951
+    },
+    {
+      "filename": "BRB_Barbados_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BRB_Barbados_First_NDC_English.pdf",
+      "sha256": "db6092374efc6489bb25520b15ae177f186911853f63b5edfa5d67334f8dc261",
+      "retrieved_at": "2026-10-15T21:57:14.859Z",
+      "size_bytes": 479179
+    },
+    {
+      "filename": "BRN_Brunei-Darussalam_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BRN_Brunei-Darussalam_First_NDC_English.pdf",
+      "sha256": "442aa477a9284e07bcd6100cc578bdec861317d67927c3a523b0eae5101c383c",
+      "retrieved_at": "2026-10-15T21:57:15.640Z",
+      "size_bytes": 186302
+    },
+    {
+      "filename": "BTN_Bhutan_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BTN_Bhutan_Second_NDC_English.pdf",
+      "sha256": "64405a0285cb3cd3f68417df0369b85269e3d49037717b2843f17316ce57c5d4",
+      "retrieved_at": "2026-10-15T21:57:16.700Z",
+      "size_bytes": 593951
+    },
+    {
+      "filename": "BWA_Botswana_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/BWA_Botswana_First_NDC_English.pdf",
+      "sha256": "bb41729bc2fef029dab6b15eb3031d23f7be0ce68c5d1b99209789a9aa75ccb4",
+      "retrieved_at": "2026-10-15T21:57:17.746Z",
+      "size_bytes": 178984
+    },
+    {
+      "filename": "CAF_Central-African-Republic_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CAF_Central-African-Republic_First_NDC_Archived_English.pdf",
+      "sha256": "b9a3b7faec83aee444ae1a9bdc314ab2ed69ba3c19526f3b1db58e74a561f07b",
+      "retrieved_at": "2026-10-15T21:57:18.753Z",
+      "size_bytes": 297074
+    },
+    {
+      "filename": "CAN_Canada_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CAN_Canada_First_NDC_English.pdf",
+      "sha256": "14d3ba7ff323322c4777c37e6b9589a4763a74221a383288a480e03bf2321123",
+      "retrieved_at": "2026-10-15T21:57:19.848Z",
+      "size_bytes": 982088
+    },
+    {
+      "filename": "CHL_Chile_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CHL_Chile_First_NDC_English.pdf",
+      "sha256": "5cab1818871ae352bd1c514bc7f5c7cce247768173a0347ea29fe4ff9ceaf8eb",
+      "retrieved_at": "2026-10-15T21:57:23.163Z",
+      "size_bytes": 18530476
+    },
+    {
+      "filename": "CHN_China_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CHN_China_First_NDC_Translation_English.pdf",
+      "sha256": "d704db12df987062e0796146198daabdc84a692d62cff94c2eddbbb09f234c50",
+      "retrieved_at": "2026-10-15T21:57:23.461Z",
+      "size_bytes": 1183229
+    },
+    {
+      "filename": "CIV_Cote-d-Ivoire_Second_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CIV_Cote-d-Ivoire_Second_NDC_French.pdf",
+      "sha256": "6a52c3af0d38940b109dd8aac8ea746ce31284fffbb99865d5107ccc7d5cd404",
+      "retrieved_at": "2026-10-15T21:57:24.854Z",
+      "size_bytes": 4305477
+    },
+    {
+      "filename": "CMR_Cameroon_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CMR_Cameroon_First_NDC_French.pdf",
+      "sha256": "416dc7788c296006b13ca4ad89ea4ae7092bfdf5cc6aa400a3a9336cecc169e6",
+      "retrieved_at": "2026-10-15T21:57:25.494Z",
+      "size_bytes": 831813
+    },
+    {
+      "filename": "COD_Democratic-Republic-of-the-Congo_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/COD_Democratic-Republic-of-the-Congo_First_NDC_French.pdf",
+      "sha256": "1897fce3a93881199263c7b8b1b632246d59eb727b843ad31ee2c1d14f4f195f",
+      "retrieved_at": "2026-10-15T21:57:26.510Z",
+      "size_bytes": 473828
+    },
+    {
+      "filename": "COG_Congo_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/COG_Congo_First_NDC_French.pdf",
+      "sha256": "616eafd0ba3b5f4f2ae69d0a8f25fcaeab136cfb61c92c56f6681a68ea6303d0",
+      "retrieved_at": "2026-10-15T21:57:27.550Z",
+      "size_bytes": 780905
+    },
+    {
+      "filename": "COK_Cook-Islands_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/COK_Cook-Islands_First_NDC_English.pdf",
+      "sha256": "0a39b5df563ab58366fa3fade4a47c53ab19d8287b0f6d1bba1dd90933b9f123",
+      "retrieved_at": "2026-10-15T21:57:28.368Z",
+      "size_bytes": 470900
+    },
+    {
+      "filename": "COL_Colombia_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/COL_Colombia_First_NDC_Archived_English.pdf",
+      "sha256": "23f1f4e3c16a130069426928d2df767932f000c7e1569dfd854c2964c2b7f459",
+      "retrieved_at": "2026-10-15T21:57:29.651Z",
+      "size_bytes": 1464869
+    },
+    {
+      "filename": "COM_Comoros_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/COM_Comoros_First_NDC_French.pdf",
+      "sha256": "bdcf2a1f0860dc6aa781d2a39aafbaa1f41508410a9fbf3cac120223a5217162",
+      "retrieved_at": "2026-10-15T21:57:30.596Z",
+      "size_bytes": 1372549
+    },
+    {
+      "filename": "CPV_Cabo-Verde_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CPV_Cabo-Verde_First_NDC_English.pdf",
+      "sha256": "a3cb133da4f6f9480f6aa69a54fd6baf20c41b503cc8cd0f9cdf04fbcb929459",
+      "retrieved_at": "2026-10-15T21:57:31.658Z",
+      "size_bytes": 2699528
+    },
+    {
+      "filename": "CRI_Costa-Rica_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CRI_Costa-Rica_First_NDC_Archived_English.pdf",
+      "sha256": "53a09adcabe7c85897d63411872be4d272021e7db776b51f7ca57d123c2afd41",
+      "retrieved_at": "2026-10-15T21:57:32.428Z",
+      "size_bytes": 441650
+    },
+    {
+      "filename": "CUB_Cuba_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/CUB_Cuba_First_NDC_Translation_English.pdf",
+      "sha256": "b0f00199c58782da442cc6727065e5db874dc576b329890e39b72521c446a232",
+      "retrieved_at": "2026-10-15T21:57:33.526Z",
+      "size_bytes": 172702
+    },
+    {
+      "filename": "DJI_Djibouti_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/DJI_Djibouti_First_NDC_Translation_English.pdf",
+      "sha256": "a47b0683d553393409be6ff10f97b2475af3e680403eeb3c08737904f594a7d9",
+      "retrieved_at": "2026-10-15T21:57:34.616Z",
+      "size_bytes": 476779
+    },
+    {
+      "filename": "DMA_Dominica_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/DMA_Dominica_First_NDC_English.pdf",
+      "sha256": "8063e6b8e74a541f67f5d0e3bbb4100763a533c3c6981c732728fc13bcda4cfc",
+      "retrieved_at": "2026-10-15T21:57:35.361Z",
+      "size_bytes": 337277
+    },
+    {
+      "filename": "DOM_Dominican-Republic_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/DOM_Dominican-Republic_First_NDC_Archived_English.pdf",
+      "sha256": "8fa0deec0547936673a17e05ab3617b0847e2a79f0c1773c6530e8ff98b716f7",
+      "retrieved_at": "2026-10-15T21:57:41.889Z",
+      "size_bytes": 362431
+    },
+    {
+      "filename": "DZA_Algeria_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/DZA_Algeria_First_NDC_Translation_English.pdf",
+      "sha256": "00a655d96d2002fc8a4caccc8b0103d1046371793916aa3eddb4d596de2c210d",
+      "retrieved_at": "2026-10-15T21:57:42.832Z",
+      "size_bytes": 290112
+    },
+    {
+      "filename": "ECU_Ecuador_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ECU_Ecuador_First_NDC_Spanish.pdf",
+      "sha256": "5b09921f640cb0d0b17b662768b98e7049f2ac196c44c0d771bccbbf418b8dc6",
+      "retrieved_at": "2026-10-15T21:57:44.023Z",
+      "size_bytes": 1772092
+    },
+    {
+      "filename": "EGY_Egypt_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/EGY_Egypt_First_NDC_English.pdf",
+      "sha256": "1641bf806d503dea601da616bedc3228216064c0cf7c754f6b95cfc690e83b45",
+      "retrieved_at": "2026-10-15T21:57:44.874Z",
+      "size_bytes": 1217857
+    },
+    {
+      "filename": "ERI_Eritrea_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ERI_Eritrea_First_NDC_English.pdf",
+      "sha256": "99e77a19cca67b8a92a49068ba9f2134f87132b772ff7b029413a043317bcaff",
+      "retrieved_at": "2026-10-15T21:57:45.951Z",
+      "size_bytes": 1729815
+    },
+    {
+      "filename": "ETH_Ethiopia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ETH_Ethiopia_First_NDC_English.pdf",
+      "sha256": "6a70cf005c3537e0f43a49fd17687c6e0ac59816fa59c4d4d78af349c3f3f3da",
+      "retrieved_at": "2026-10-15T21:57:47.115Z",
+      "size_bytes": 5812457
+    },
+    {
+      "filename": "EUU_European-Union_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/EUU_European-Union_First_NDC_English.pdf",
+      "sha256": "4528d268ec75c6e394335e7f35453ba6b5eb0c7beb9ebbf0450468096356fc5b",
+      "retrieved_at": "2026-10-15T21:57:47.885Z",
+      "size_bytes": 944293
+    },
+    {
+      "filename": "FJI_Fiji_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/FJI_Fiji_First_NDC_English.pdf",
+      "sha256": "dd2f2f01c0044c5a2cdf8acf23012d626a5cea9a79f24d4e78325d2064f58e8f",
+      "retrieved_at": "2026-10-15T21:57:48.930Z",
+      "size_bytes": 543395
+    },
+    {
+      "filename": "FSM_Micronesia-Federated-State-of_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/FSM_Micronesia-Federated-State-of_First_NDC_English.pdf",
+      "sha256": "84a8d7ed037e3d20ef0702abeca295a0b65c9a5039518a7e3120335da1d0aa95",
+      "retrieved_at": "2026-10-15T21:57:49.837Z",
+      "size_bytes": 244474
+    },
+    {
+      "filename": "GAB_Gabon_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GAB_Gabon_First_NDC_French.pdf",
+      "sha256": "1553e1dd78fec9d74ad984986afba1fc60afe709169cbcbf31f13351624a87aa",
+      "retrieved_at": "2026-10-15T21:57:50.914Z",
+      "size_bytes": 851266
+    },
+    {
+      "filename": "GBR_United-Kingdom-of-Great-Britain-and-Northern-Ireland_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GBR_United-Kingdom-of-Great-Britain-and-Northern-Ireland_First_NDC_English.pdf",
+      "sha256": "e8d0c7ae27774d62557e4080587b6e5d978ff0ad219349377d164a06b8551a59",
+      "retrieved_at": "2026-10-15T21:57:51.957Z",
+      "size_bytes": 347525
+    },
+    {
+      "filename": "GEO_Georgia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GEO_Georgia_First_NDC_English.pdf",
+      "sha256": "0c39fea98d3ad02c7063e22135fa441e2be64388430e480132636a6f8ba50480",
+      "retrieved_at": "2026-10-15T21:57:53.483Z",
+      "size_bytes": 6214614
+    },
+    {
+      "filename": "GHA_Ghana_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GHA_Ghana_First_NDC_English.pdf",
+      "sha256": "b58e080f944bae7e55c0ad0ded240c3aa97e3e7f42bf9384a66f15abdf58ee54",
+      "retrieved_at": "2026-10-15T21:57:53.922Z",
+      "size_bytes": 698183
+    },
+    {
+      "filename": "GIN_Guinea_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GIN_Guinea_First_NDC_Archived_English.pdf",
+      "sha256": "bb2339894491b3b5fe09652cb0ab52affabcce1d70a98e745256bc3c3a2313c4",
+      "retrieved_at": "2026-10-15T21:57:55.405Z",
+      "size_bytes": 485600
+    },
+    {
+      "filename": "GMB_Gambia_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GMB_Gambia_Second_NDC_English.pdf",
+      "sha256": "1b370602ed72ab7c8ab2cc4a5fc45f68ff62ba5f51a0f04cd190102930e43016",
+      "retrieved_at": "2026-10-15T21:57:56.522Z",
+      "size_bytes": 1017023
+    },
+    {
+      "filename": "GNB_Guinea-Bissau_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GNB_Guinea-Bissau_First_NDC_English.pdf",
+      "sha256": "c3489bf8431116b10ef86f2f43e47f6f340fe682dac19de31b0e609597582107",
+      "retrieved_at": "2026-10-15T21:57:57.349Z",
+      "size_bytes": 439227
+    },
+    {
+      "filename": "GNQ_Equatorial-Guinea_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GNQ_Equatorial-Guinea_First_NDC_Spanish.pdf",
+      "sha256": "57ad529c8b0f2ffb72b9ae0958ee599d1eb5dc86bba910aa9d0ace3d34fcb5fe",
+      "retrieved_at": "2026-10-15T21:57:58.457Z",
+      "size_bytes": 1194821
+    },
+    {
+      "filename": "GRD_Grenada_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GRD_Grenada_Second_NDC_English.pdf",
+      "sha256": "3b3df9fd29bc24037cfba8c5240b93e119cfd578a26ca564ad07605e8206a6d9",
+      "retrieved_at": "2026-10-15T21:57:59.367Z",
+      "size_bytes": 387402
+    },
+    {
+      "filename": "GTM_Guatemala_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GTM_Guatemala_First_NDC_Spanish.pdf",
+      "sha256": "ffff866108e64c396fff49050146d9d05705ec234ad7ce21399639c0dc2543a5",
+      "retrieved_at": "2026-10-15T21:58:00.491Z",
+      "size_bytes": 135456
+    },
+    {
+      "filename": "GUY_Guyana_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/GUY_Guyana_First_NDC_English.pdf",
+      "sha256": "a73d50716be529f60878b7f71a58c007510e1c9da3dcb96a4618877cbb5e1ea1",
+      "retrieved_at": "2026-10-15T21:58:01.188Z",
+      "size_bytes": 247649
+    },
+    {
+      "filename": "HND_Honduras_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/HND_Honduras_First_NDC_Spanish.pdf",
+      "sha256": "b85b869f295d83f00a262a2457ca2f976349a8941cf2f553fde8a60c932aa6d7",
+      "retrieved_at": "2026-10-15T21:58:04.893Z",
+      "size_bytes": 26098754
+    },
+    {
+      "filename": "HTI_Haiti_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/HTI_Haiti_First_NDC_French.pdf",
+      "sha256": "e29f5b0cac13dcafc29f71270675a4cd3d0ee47300f5faf37f9467ae34f67a91",
+      "retrieved_at": "2026-10-15T21:58:05.098Z",
+      "size_bytes": 228402
+    },
+    {
+      "filename": "IDN_Indonesia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/IDN_Indonesia_First_NDC_English.pdf",
+      "sha256": "70d380e50f0213d16c4dfab2289d72210660d14a314afd141b3a47373b3f7d32",
+      "retrieved_at": "2026-10-15T21:58:06.408Z",
+      "size_bytes": 2272580
+    },
+    {
+      "filename": "IND_India_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/IND_India_First_NDC_English.pdf",
+      "sha256": "3d0395e955f5e785b93cd3b6d5d8b86725fd55902940b707d65561393d76b38b",
+      "retrieved_at": "2026-10-15T21:58:07.198Z",
+      "size_bytes": 931121
+    },
+    {
+      "filename": "ISL_Iceland_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ISL_Iceland_First_NDC_English.pdf",
+      "sha256": "71a695cbd59f7c80cb90d094ca0840239ec8436f4e8fdcb3838af5623cdaaab4",
+      "retrieved_at": "2026-10-15T21:58:09.236Z",
+      "size_bytes": 1233125
+    },
+    {
+      "filename": "JAM_Jamaica_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/JAM_Jamaica_First_NDC_English.pdf",
+      "sha256": "f9ae2861dbbbef9daf2ad533fb869ec355208b6c1cc6bde301c832a05c080196",
+      "retrieved_at": "2026-10-15T21:58:11.104Z",
+      "size_bytes": 375037
+    },
+    {
+      "filename": "JOR_Jordan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/JOR_Jordan_First_NDC_English.pdf",
+      "sha256": "703373e99faeb016d7592b6e3713348e2fd12862a0dfada42e044c004c4861d7",
+      "retrieved_at": "2026-10-15T21:58:12.368Z",
+      "size_bytes": 1113967
+    },
+    {
+      "filename": "JPN_Japan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/JPN_Japan_First_NDC_English.pdf",
+      "sha256": "75989426a0c7718fa18121d7cbb04f0c97f1fcf3e4b552fa8a7f885ab0ed7172",
+      "retrieved_at": "2026-10-15T21:58:13.114Z",
+      "size_bytes": 366577
+    },
+    {
+      "filename": "KAZ_Kazakhstan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KAZ_Kazakhstan_First_NDC_English.pdf",
+      "sha256": "873c6ce89a039e9de433f337dc735eda6e5cbe1683959c2376d5879de054a953",
+      "retrieved_at": "2026-10-15T21:58:14.119Z",
+      "size_bytes": 31822
+    },
+    {
+      "filename": "KEN_Kenya_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KEN_Kenya_First_NDC_English.pdf",
+      "sha256": "61ddd7c2ac2ed9ddcd832cc43f3d37493a7b8227ee29f87aa8cc57817d7e33db",
+      "retrieved_at": "2026-10-15T21:58:16.209Z",
+      "size_bytes": 9978660
+    },
+    {
+      "filename": "KGZ_Kyrgyzstan_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KGZ_Kyrgyzstan_First_NDC_Translation_English.pdf",
+      "sha256": "4342a125dbd6967b3ddd287d711d7d07656a821237f14c1ba240b20f3394e28c",
+      "retrieved_at": "2026-10-15T21:58:16.433Z",
+      "size_bytes": 456322
+    },
+    {
+      "filename": "KHM_Cambodia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KHM_Cambodia_First_NDC_English.pdf",
+      "sha256": "da6d38247f614f7cbfeaf9162ad0cd4bde101e0287ff32e913b261c1e746e216",
+      "retrieved_at": "2026-10-15T21:58:17.911Z",
+      "size_bytes": 4306857
+    },
+    {
+      "filename": "KIR_Kiribati_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KIR_Kiribati_First_NDC_English.pdf",
+      "sha256": "ce8023383dc6823202b68efe4ea1abbd40958852404f79af71a488fb2823bd45",
+      "retrieved_at": "2026-10-15T21:58:18.479Z",
+      "size_bytes": 1048412
+    },
+    {
+      "filename": "KNA_Saint-Kitts-and-Nevis_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KNA_Saint-Kitts-and-Nevis_First_NDC_English.pdf",
+      "sha256": "4e8163686bf18824aa0e67ac748137d0734790dabf8c1f3f9adc89f7e6f8ebfb",
+      "retrieved_at": "2026-10-15T21:58:19.423Z",
+      "size_bytes": 748395
+    },
+    {
+      "filename": "KOR_Republic-of-Korea_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KOR_Republic-of-Korea_First_NDC_English.pdf",
+      "sha256": "f94f781da2bb5f080237cfd9a0bccafb6b9262aed831a9dd42c908f580d610c0",
+      "retrieved_at": "2026-10-15T21:58:20.380Z",
+      "size_bytes": 308430
+    },
+    {
+      "filename": "KWT_Kuwait_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/KWT_Kuwait_First_NDC_Translation_English.pdf",
+      "sha256": "a108c69819d8e06f95a6a012bf9c25f8325db4bd7747ca9611dfe0410d368c78",
+      "retrieved_at": "2026-10-15T21:58:21.499Z",
+      "size_bytes": 822443
+    },
+    {
+      "filename": "LAO_Lao-People-s-Democratic-Republic_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LAO_Lao-People-s-Democratic-Republic_First_NDC_English.pdf",
+      "sha256": "bca58b75da7adbc72206f0c514b88abfe347ba4939a5fe222dff15c1325ae315",
+      "retrieved_at": "2026-10-15T21:58:22.465Z",
+      "size_bytes": 848253
+    },
+    {
+      "filename": "LBN_Lebanon_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LBN_Lebanon_First_NDC_English.pdf",
+      "sha256": "4f0bac9b24e938dd29f5e2ae6f9d5dee21dbb23f34a21f476395bdc4fc36c2c5",
+      "retrieved_at": "2026-10-15T21:58:23.498Z",
+      "size_bytes": 1083010
+    },
+    {
+      "filename": "LBR_Liberia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LBR_Liberia_First_NDC_English.pdf",
+      "sha256": "9b2d14a1ec409c5eb1db1303aa3ac899f6ca69092b729592e05b0b486d299bc6",
+      "retrieved_at": "2026-10-15T21:58:24.608Z",
+      "size_bytes": 804849
+    },
+    {
+      "filename": "LCA_Saint-Lucia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LCA_Saint-Lucia_First_NDC_English.pdf",
+      "sha256": "d45bdc88d82329655e5419156840add94e2495bcbb0e41de81a817a241ac8a32",
+      "retrieved_at": "2026-10-15T21:58:25.431Z",
+      "size_bytes": 515100
+    },
+    {
+      "filename": "LIE_Liechtenstein_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LIE_Liechtenstein_First_NDC_English.pdf",
+      "sha256": "379b2f7d4188f3d8d5b41d65afbddb9a684335a2f95439509a62fe695d084837",
+      "retrieved_at": "2026-10-15T21:58:26.420Z",
+      "size_bytes": 529448
+    },
+    {
+      "filename": "LKA_Sri-Lanka_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LKA_Sri-Lanka_First_NDC_English.pdf",
+      "sha256": "2b264afa6268857b4526c1a088e5a2eb49c4a5f8787b8d0c9b9fe7440e674274",
+      "retrieved_at": "2026-10-15T21:58:27.438Z",
+      "size_bytes": 598804
+    },
+    {
+      "filename": "LSO_Lesotho_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/LSO_Lesotho_First_NDC_English.pdf",
+      "sha256": "3557a9f2e9cd5c84461a52fb2efa8f0d894faf894b30c108d2662387836d299f",
+      "retrieved_at": "2026-10-15T21:58:28.965Z",
+      "size_bytes": 5528512
+    },
+    {
+      "filename": "MAR_Morocco_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MAR_Morocco_First_NDC_Archived_English.pdf",
+      "sha256": "3e0b52b508f54ad2ee7d44c977d2f3608954cdd9e58cbb1426254488cf36c804",
+      "retrieved_at": "2026-10-15T21:58:32.673Z",
+      "size_bytes": 1209534
+    },
+    {
+      "filename": "MCO_Monaco_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MCO_Monaco_First_NDC_Archived_English.pdf",
+      "sha256": "351c5c2600428fb92508e51a9662efb2d192567359cc1eb3f4842a5540e49a0d",
+      "retrieved_at": "2026-10-15T21:58:33.524Z",
+      "size_bytes": 731641
+    },
+    {
+      "filename": "MDA_Republic-of-Moldova_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MDA_Republic-of-Moldova_First_NDC_English.pdf",
+      "sha256": "896501ba40b4af93f24d5bcce9cc15ec02bb7b7c506526af43a24233c8c9b378",
+      "retrieved_at": "2026-10-15T21:58:34.607Z",
+      "size_bytes": 3003603
+    },
+    {
+      "filename": "MDG_Madagascar_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MDG_Madagascar_First_NDC_Translation_English.pdf",
+      "sha256": "a67935a566b670cf156b05878adaf8a428437b7e9b6fb56b29c77005c85df8ce",
+      "retrieved_at": "2026-10-15T21:58:35.499Z",
+      "size_bytes": 421681
+    },
+    {
+      "filename": "MDV_Maldives_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MDV_Maldives_First_NDC_English.pdf",
+      "sha256": "74d8e9dd7f51049c616528ae80a99ffc9df8ba3400c13913d67c8b3c8dfb41b0",
+      "retrieved_at": "2026-10-15T21:58:36.495Z",
+      "size_bytes": 801075
+    },
+    {
+      "filename": "MEX_Mexico_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MEX_Mexico_First_NDC_Translation_English.pdf",
+      "sha256": "1e049b56abfe528d831deee657a61695a2a87a4888ae8de4e9b0347b9045ca26",
+      "retrieved_at": "2026-10-15T21:58:37.832Z",
+      "size_bytes": 12480556
+    },
+    {
+      "filename": "MHL_Marshall-Islands_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MHL_Marshall-Islands_Second_NDC_English.pdf",
+      "sha256": "d7cf5dfcb737aa7c5862f6342f7adafb3dc7c65487519b2273b6c6ef1f80a27c",
+      "retrieved_at": "2026-10-15T21:58:38.536Z",
+      "size_bytes": 224134
+    },
+    {
+      "filename": "MKD_The-Republic-of-North-Macedonia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MKD_The-Republic-of-North-Macedonia_First_NDC_English.pdf",
+      "sha256": "78ebd6e381ce8d9c636d457895980b4ea6f93ff8fa4d771a2b2a4c4e07ef19db",
+      "retrieved_at": "2026-10-15T21:58:39.711Z",
+      "size_bytes": 3687020
+    },
+    {
+      "filename": "MLI_Mali_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MLI_Mali_First_NDC_French.pdf",
+      "sha256": "88201fbe85d02c164fc79a8cbbd050fd2e6b7f9b74d0d6b242f9f4dc9288be96",
+      "retrieved_at": "2026-10-15T21:58:40.549Z",
+      "size_bytes": 1499706
+    },
+    {
+      "filename": "MMR_Myanmar_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MMR_Myanmar_First_NDC_English.pdf",
+      "sha256": "9e6dc64392c6205e09b75ae1420dea0331f788b275d39a857d9604ccb4a519dc",
+      "retrieved_at": "2026-10-15T21:58:41.417Z",
+      "size_bytes": 416505
+    },
+    {
+      "filename": "MNE_Montenegro_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MNE_Montenegro_First_NDC_English.pdf",
+      "sha256": "c37e9639ceea43dadc1d3a962c9cac0172e4301b13678e9b08c280451be35efe",
+      "retrieved_at": "2026-10-15T21:58:42.455Z",
+      "size_bytes": 684050
+    },
+    {
+      "filename": "MNG_Mongolia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MNG_Mongolia_First_NDC_English.pdf",
+      "sha256": "12c90dd1f93aa967165295d36612dd0e2e68414edd82c7a4412630d7b720ff69",
+      "retrieved_at": "2026-10-15T21:58:43.456Z",
+      "size_bytes": 348164
+    },
+    {
+      "filename": "MOZ_Mozambique_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MOZ_Mozambique_First_NDC_English.pdf",
+      "sha256": "16541e6312f0c550a2669f96e39f462120961dce3f4062ccb3feecba766e2890",
+      "retrieved_at": "2026-10-15T21:58:44.504Z",
+      "size_bytes": 623594
+    },
+    {
+      "filename": "MRT_Mauritania_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MRT_Mauritania_First_NDC_French.pdf",
+      "sha256": "e6e0c3b03825ab2e985f66235bb43fcb3e57f8fd81470ed0740002abb66249db",
+      "retrieved_at": "2026-10-15T21:58:45.545Z",
+      "size_bytes": 1018536
+    },
+    {
+      "filename": "MUS_Mauritius_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MUS_Mauritius_First_NDC_English.pdf",
+      "sha256": "5662e9bca7fce560ae8489ba50fda493d616edcbc50bbfba80f6a617cd9fb219",
+      "retrieved_at": "2026-10-15T21:58:46.428Z",
+      "size_bytes": 197224
+    },
+    {
+      "filename": "MWI_Malawi_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MWI_Malawi_First_NDC_English.pdf",
+      "sha256": "fc45e4c56a1b7981406de995e50e2f0569116a77ee58c2e1eb619c3f3e25b8e3",
+      "retrieved_at": "2026-10-15T21:58:47.448Z",
+      "size_bytes": 215760
+    },
+    {
+      "filename": "MYS_Malaysia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/MYS_Malaysia_First_NDC_English.pdf",
+      "sha256": "1ecbd3295827e37d7bf4f2a6988ddec940d8b24fec9e942e67010c38be0313ed",
+      "retrieved_at": "2026-10-15T21:58:48.469Z",
+      "size_bytes": 201375
+    },
+    {
+      "filename": "NAM_Namibia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NAM_Namibia_First_NDC_English.pdf",
+      "sha256": "3d1e8c662ae16d70acc52ac83383cf80c12743a433d9a7262e5b53581b42dd29",
+      "retrieved_at": "2026-10-15T21:58:49.523Z",
+      "size_bytes": 941420
+    },
+    {
+      "filename": "NER_Niger_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NER_Niger_First_NDC_Translation_English.pdf",
+      "sha256": "94771819a8b01135693b67518ea8814da7ce7e9eb69c26e338010b77d9b996f9",
+      "retrieved_at": "2026-10-15T21:58:50.530Z",
+      "size_bytes": 876704
+    },
+    {
+      "filename": "NGA_Nigeria_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NGA_Nigeria_First_NDC_English.pdf",
+      "sha256": "7f0804c583c4d197b9db5ad90c93bb6b1450afe3deaa13f4fe9316dec3cf4f26",
+      "retrieved_at": "2026-10-15T21:58:51.595Z",
+      "size_bytes": 1021035
+    },
+    {
+      "filename": "NIC_Nicaragua_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NIC_Nicaragua_First_NDC_Spanish.pdf",
+      "sha256": "74250240618dc558639151a26d1dc891f79e7c1b51041cd5db624bc7a3a1b493",
+      "retrieved_at": "2026-10-15T21:58:55.027Z",
+      "size_bytes": 33532332
+    },
+    {
+      "filename": "NIU_Niue_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NIU_Niue_First_NDC_English.pdf",
+      "sha256": "3d7db1bdf3304670f08592a2e839572105dd586a23f197d9f535294f420d3edb",
+      "retrieved_at": "2026-10-15T21:58:55.257Z",
+      "size_bytes": 564719
+    },
+    {
+      "filename": "NOR_Norway_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NOR_Norway_First_NDC_English.pdf",
+      "sha256": "50d3f5e333e8dd2b190b4d9c33cf6160ee3e517c16d31a759a310ce9d3bcd6eb",
+      "retrieved_at": "2026-10-15T21:58:56.472Z",
+      "size_bytes": 1048116
+    },
+    {
+      "filename": "NPL_Nepal_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NPL_Nepal_Second_NDC_English.pdf",
+      "sha256": "8863f4da0ef44a71ad66c1dbf22fa6103459e76eff26e58ee5343bfe24ef785d",
+      "retrieved_at": "2026-10-15T21:58:57.319Z",
+      "size_bytes": 502079
+    },
+    {
+      "filename": "NRU_Nauru_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NRU_Nauru_First_NDC_English.pdf",
+      "sha256": "8d6115e90dec0dda08121532c406beec3e9e6bb83405ea5dd0c1a34078dc96d7",
+      "retrieved_at": "2026-10-15T21:58:58.211Z",
+      "size_bytes": 218474
+    },
+    {
+      "filename": "NZL_New-Zealand_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/NZL_New-Zealand_First_NDC_English.pdf",
+      "sha256": "85e2bf7ca29484277d070d1ddef6d1b0173437b1017853743e3dd53d7178ac35",
+      "retrieved_at": "2026-10-15T21:58:59.223Z",
+      "size_bytes": 225549
+    },
+    {
+      "filename": "OMN_Oman_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/OMN_Oman_Second_NDC_English.pdf",
+      "sha256": "5d16a05e85804d551df9eaafa4d3d5839993b2cb3d1509daf95f7ca897c404cb",
+      "retrieved_at": "2026-10-15T21:59:00.480Z",
+      "size_bytes": 1390864
+    },
+    {
+      "filename": "PAK_Pakistan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PAK_Pakistan_First_NDC_English.pdf",
+      "sha256": "cadeb5017b85c695b1bb9aac0ce1372cf2ff73e82a753582f3ae15e1d13aea11",
+      "retrieved_at": "2026-10-15T21:59:01.324Z",
+      "size_bytes": 779814
+    },
+    {
+      "filename": "PAN_Panama_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PAN_Panama_First_NDC_Spanish.pdf",
+      "sha256": "62d76a5a95f42644de838663040b980659101d1e81ac5c4cea578726b7ba0309",
+      "retrieved_at": "2026-10-15T21:59:06.059Z",
+      "size_bytes": 66116167
+    },
+    {
+      "filename": "PER_Peru_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PER_Peru_First_NDC_Archived_English.pdf",
+      "sha256": "82fec7a2c4136b0c9b539d76dbab3fc437ddb45eccf4c20250e9f794fd128db4",
+      "retrieved_at": "2026-10-15T21:59:06.290Z",
+      "size_bytes": 157784
+    },
+    {
+      "filename": "PHL_Philippines_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PHL_Philippines_First_NDC_English.pdf",
+      "sha256": "ff7382b85c7c722a44def49f8a2851de10f8718f00d5ddb35ef3eaa334fb375b",
+      "retrieved_at": "2026-10-15T21:59:07.199Z",
+      "size_bytes": 121107
+    },
+    {
+      "filename": "PLW_Palau_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PLW_Palau_First_NDC_English.pdf",
+      "sha256": "3d320e409bc526b599f781403a65e13b641da6b63d851791080547316ca5ed6f",
+      "retrieved_at": "2026-10-15T21:59:08.289Z",
+      "size_bytes": 500569
+    },
+    {
+      "filename": "PNG_Papua-New-Guinea_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PNG_Papua-New-Guinea_Second_NDC_English.pdf",
+      "sha256": "9d7b6409b9b0750ca0c7a9b73d9e2fc1988a10978aa544e775cfca409d14509c",
+      "retrieved_at": "2026-10-15T21:59:09.290Z",
+      "size_bytes": 1331832
+    },
+    {
+      "filename": "PRK_Democratic-People-s-Republic-of-Korea_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PRK_Democratic-People-s-Republic-of-Korea_First_NDC_English.pdf",
+      "sha256": "34a6542748c0ffa90ce4b9507a23ce36601a3aa4fe9f6a062afb5cc49fee29a1",
+      "retrieved_at": "2026-10-15T21:59:10.296Z",
+      "size_bytes": 1152595
+    },
+    {
+      "filename": "PSE_State-of-Palestine_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/PSE_State-of-Palestine_First_NDC_English.pdf",
+      "sha256": "d3d26ada06c344c160204632aec22065985a076d3ddded50ced0dc26b21d7bb8",
+      "retrieved_at": "2026-10-15T21:59:11.364Z",
+      "size_bytes": 1040863
+    },
+    {
+      "filename": "QAT_Qatar_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/QAT_Qatar_First_NDC_Translation_English.pdf",
+      "sha256": "f4e64480c176914c19a9ddabe7857034d5b3b47c7c64ec0ba6b7e549aa6bec72",
+      "retrieved_at": "2026-10-15T21:59:12.230Z",
+      "size_bytes": 256807
+    },
+    {
+      "filename": "RUS_Russian-Federation_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/RUS_Russian-Federation_First_NDC_Translation_English.pdf",
+      "sha256": "1ade973928b58627fa4b1d4a5e351c1b5559bd9ba2c6cdf832d1e0275df06446",
+      "retrieved_at": "2026-10-15T21:59:13.236Z",
+      "size_bytes": 293880
+    },
+    {
+      "filename": "RWA_Rwanda_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/RWA_Rwanda_First_NDC_English.pdf",
+      "sha256": "925284b02a8c0edebe0f6ca320c5b0544c2cac8d8e1842c25f6e833d6ec23a78",
+      "retrieved_at": "2026-10-15T21:59:14.348Z",
+      "size_bytes": 1412889
+    },
+    {
+      "filename": "SDN_Sudan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SDN_Sudan_First_NDC_English.pdf",
+      "sha256": "2dccaf5d6f25d7885bcc9d36d6fc9285419a9c5853755ad461b769fc23e581f6",
+      "retrieved_at": "2026-10-15T21:59:15.432Z",
+      "size_bytes": 2097730
+    },
+    {
+      "filename": "SEN_Senegal_First_NDC_French.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SEN_Senegal_First_NDC_French.pdf",
+      "sha256": "754888d13f7c9d6ada7402fb9d6401b87646629fcaa095f1c6896dee6d2883c9",
+      "retrieved_at": "2026-10-15T21:59:16.299Z",
+      "size_bytes": 1253371
+    },
+    {
+      "filename": "SGP_Singapore_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SGP_Singapore_First_NDC_English.pdf",
+      "sha256": "b515d19625cb1a6b92a6a3dc7b52d4bb5ea11b78d2b45605e238cc192c64178d",
+      "retrieved_at": "2026-10-15T21:59:20.142Z",
+      "size_bytes": 654083
+    },
+    {
+      "filename": "SLB_Solomon-Islands_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SLB_Solomon-Islands_First_NDC_English.pdf",
+      "sha256": "dcb0999f67a9162e99b122c7ba1b5317be6d0e81cd4c8295fbf73ad7c3455740",
+      "retrieved_at": "2026-10-15T21:59:21.238Z",
+      "size_bytes": 12279050
+    },
+    {
+      "filename": "SLE_Sierra-Leone_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SLE_Sierra-Leone_First_NDC_English.pdf",
+      "sha256": "f13d4b4af6b779cfe8299ca235ea713c5b4a152cc48ad3c79c6d20dae0999d85",
+      "retrieved_at": "2026-10-15T21:59:22.016Z",
+      "size_bytes": 348664
+    },
+    {
+      "filename": "SLV_El-Salvador_First_Archived_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SLV_El-Salvador_First_Archived_Spanish.pdf",
+      "sha256": "f9ac6518758ea164120d4a5d2434fcbb1dd77bafb6060d26f36efbdaf45f0d0c",
+      "retrieved_at": "2026-10-15T21:59:23.068Z",
+      "size_bytes": 451694
+    },
+    {
+      "filename": "SMR_San-Marino_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SMR_San-Marino_First_NDC_English.pdf",
+      "sha256": "f08448db9ebb4537be81d36bdbcb59d68b595e86e823a4463c4865b1b67b3bc8",
+      "retrieved_at": "2026-10-15T21:59:24.103Z",
+      "size_bytes": 58227
+    },
+    {
+      "filename": "SOM_Somalia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SOM_Somalia_First_NDC_English.pdf",
+      "sha256": "2ed83bae13415a2cbd523b0c04f898d7f996eb84a6237ade14a5748921d71861",
+      "retrieved_at": "2026-10-15T21:59:25.140Z",
+      "size_bytes": 1068275
+    },
+    {
+      "filename": "SRB_Serbia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SRB_Serbia_First_NDC_English.pdf",
+      "sha256": "deac487c6ded13b5535d5b9882826f2fb1053fc8874c4ce622669b60b16831c6",
+      "retrieved_at": "2026-10-15T21:59:26.014Z",
+      "size_bytes": 175012
+    },
+    {
+      "filename": "SSD_South-Sudan_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SSD_South-Sudan_Second_NDC_English.pdf",
+      "sha256": "0870dc557143b754700bec95b355215c994d42f282abdcd98b9be77be18e3946",
+      "retrieved_at": "2026-10-15T21:59:27.280Z",
+      "size_bytes": 13030848
+    },
+    {
+      "filename": "STP_Sao-Tome-and-Principe_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/STP_Sao-Tome-and-Principe_First_NDC_English.pdf",
+      "sha256": "23e3eef904bd1882d69d029ba80abe429a21d6f1eed9cb9c7401b385fc6add90",
+      "retrieved_at": "2026-10-15T21:59:28.039Z",
+      "size_bytes": 251241
+    },
+    {
+      "filename": "SUR_Suriname_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SUR_Suriname_Second_NDC_English.pdf",
+      "sha256": "491f388f703929034085000a0ae9d5f647eee0131d2b8d2a46657699780f180e",
+      "retrieved_at": "2026-10-15T21:59:29.080Z",
+      "size_bytes": 1074889
+    },
+    {
+      "filename": "SWZ_Eswatini_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SWZ_Eswatini_First_NDC_English.pdf",
+      "sha256": "fc653d8e3993775da039fd37944e8640be10a14a769ecc055a5df6d95b5bd89d",
+      "retrieved_at": "2026-10-15T21:59:30.344Z",
+      "size_bytes": 3638280
+    },
+    {
+      "filename": "SYC_Seychelles_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SYC_Seychelles_First_NDC_English.pdf",
+      "sha256": "3c7e41bfcd8669aeaa05c1475f6068e020db0c88bf8edeaa745eeeb9424d69b7",
+      "retrieved_at": "2026-10-15T21:59:31.123Z",
+      "size_bytes": 404604
+    },
+    {
+      "filename": "SYR_Syrian-Arab-Republic_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/SYR_Syrian-Arab-Republic_First_NDC_Translation_English.pdf",
+      "sha256": "9c74c853e3e192f2f6ccd970eef3bd4b341d974b07df0018c3e429544f0cae52",
+      "retrieved_at": "2026-10-15T21:59:32.080Z",
+      "size_bytes": 343674
+    },
+    {
+      "filename": "TCD_Chad_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TCD_Chad_First_NDC_Archived_English.pdf",
+      "sha256": "8e0c51f12e3aa78c513117792126b5ee5dac28f4b4fb39913e8b94d9ec3596b6",
+      "retrieved_at": "2026-10-15T21:59:33.040Z",
+      "size_bytes": 238049
+    },
+    {
+      "filename": "TGO_Togo_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TGO_Togo_First_NDC_Archived_English.pdf",
+      "sha256": "37ec4d0f024996d6631762b7fc27fc647e7d0f1f54e49b670e107a831b89c6b5",
+      "retrieved_at": "2026-10-15T21:59:34.878Z",
+      "size_bytes": 383886
+    },
+    {
+      "filename": "THA_Thailand_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/THA_Thailand_First_NDC_English.pdf",
+      "sha256": "01fe8abe891444ab9012a2d73e89af57586aaf5fd04e5c34975f4ac48461136d",
+      "retrieved_at": "2026-10-15T21:59:36.565Z",
+      "size_bytes": 8739293
+    },
+    {
+      "filename": "TJK_Tajikistan_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TJK_Tajikistan_First_NDC_Translation_English.pdf",
+      "sha256": "c6458e242120521266831f83323ef9b975ed81b302c96b24350cd775236cdf8c",
+      "retrieved_at": "2026-10-15T21:59:36.875Z",
+      "size_bytes": 63471
+    },
+    {
+      "filename": "TKM_Turkmenistan_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TKM_Turkmenistan_First_NDC_English.pdf",
+      "sha256": "4fc462fb7017d152d5b4a93f46a947e15bec8185d1dfc06fdc2600fb358271e2",
+      "retrieved_at": "2026-10-15T21:59:37.826Z",
+      "size_bytes": 214960
+    },
+    {
+      "filename": "TLS_Timor-Leste_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TLS_Timor-Leste_First_NDC_English.pdf",
+      "sha256": "508f43be4a5cc52ff9dcecda4289ab91a076614f284a208238534fd2fe83fce2",
+      "retrieved_at": "2026-10-15T21:59:38.948Z",
+      "size_bytes": 2298858
+    },
+    {
+      "filename": "TON_Tonga_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TON_Tonga_Second_NDC_English.pdf",
+      "sha256": "986b5e5c37b975f82256aa2cb0708b74a0be7933c7b780c374a13862b27b4408",
+      "retrieved_at": "2026-10-15T21:59:39.967Z",
+      "size_bytes": 3052360
+    },
+    {
+      "filename": "TTO_Trinidad-and-Tobago_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TTO_Trinidad-and-Tobago_First_NDC_English.pdf",
+      "sha256": "704c50769507b7fa6f95c08b9b0f32ea9d41fe1501027617565eb82ac6e130c7",
+      "retrieved_at": "2026-10-15T21:59:42.779Z",
+      "size_bytes": 653658
+    },
+    {
+      "filename": "TUN_Tunisia_First_NDC_Archived_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TUN_Tunisia_First_NDC_Archived_English.pdf",
+      "sha256": "d13e66736c33a4ddc3cae7a7abf799aefb295213315f8aaf08bf9ff94b81d95a",
+      "retrieved_at": "2026-10-15T21:59:45.888Z",
+      "size_bytes": 966965
+    },
+    {
+      "filename": "TUR_Turkey_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TUR_Turkey_First_NDC_English.pdf",
+      "sha256": "4073f2657ae4140f444e8ee96749fd3fee0acc59aafaa8ad16e684f17fe633e1",
+      "retrieved_at": "2026-10-15T21:59:47.453Z",
+      "size_bytes": 224704
+    },
+    {
+      "filename": "TUV_Tuvalu_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TUV_Tuvalu_First_NDC_English.pdf",
+      "sha256": "07e7b7cbbefa909e515b6c473127843623755bc096e3c3bf020383993baa3d1d",
+      "retrieved_at": "2026-10-15T21:59:48.783Z",
+      "size_bytes": 439056
+    },
+    {
+      "filename": "TZA_United-Republic-of-Tanzania_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/TZA_United-Republic-of-Tanzania_First_NDC_English.pdf",
+      "sha256": "c4232e71bd6025a93a54f922cecde83d0146788319b04d580b7b41c4357816cf",
+      "retrieved_at": "2026-10-15T21:59:49.808Z",
+      "size_bytes": 1379252
+    },
+    {
+      "filename": "UGA_Uganda_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/UGA_Uganda_First_NDC_English.pdf",
+      "sha256": "c0924bda4bafbb0655e181f6c9a1991ff0273b639aa28d3cdbbfd47332cd49c1",
+      "retrieved_at": "2026-10-15T21:59:50.339Z",
+      "size_bytes": 720366
+    },
+    {
+      "filename": "UKR_Ukraine_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/UKR_Ukraine_First_NDC_English.pdf",
+      "sha256": "b7303653763d0f1753bd9e3adea1f4f8cb665480d437aa65c9a00580e60cd92e",
+      "retrieved_at": "2026-10-15T21:59:50.973Z",
+      "size_bytes": 205345
+    },
+    {
+      "filename": "URY_Uruguay_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/URY_Uruguay_First_NDC_Translation_English.pdf",
+      "sha256": "c64847a0d2c7940dc9663ecdc0c330fdfa761d31b1fb93f92db0441f38ffc034",
+      "retrieved_at": "2026-10-15T21:59:52.020Z",
+      "size_bytes": 788069
+    },
+    {
+      "filename": "USA_United-States-of-America_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/USA_United-States-of-America_First_NDC_English.pdf",
+      "sha256": "a2fcbf3ca4053be6974a0abcc89fafbfb79bdfbc33d7f38490d7100ddf75573c",
+      "retrieved_at": "2026-10-15T21:59:53.017Z",
+      "size_bytes": 772050
+    },
+    {
+      "filename": "UZB_Uzbekistan_First_NDC_Translation_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/UZB_Uzbekistan_First_NDC_Translation_English.pdf",
+      "sha256": "46f40590ebfe8f840479f7757e8b0190329ee4583d4dafa42d5d8f6b2f76cf6e",
+      "retrieved_at": "2026-10-15T21:59:54.087Z",
+      "size_bytes": 1724259
+    },
+    {
+      "filename": "VCT_Saint-Vincent-and-the-Grenadines_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/VCT_Saint-Vincent-and-the-Grenadines_First_NDC_English.pdf",
+      "sha256": "0419d99bcd9b904677cdde15e7457ada7d3c9bd030e7c9f31a90de31f1671b5c",
+      "retrieved_at": "2026-10-15T21:59:55.107Z",
+      "size_bytes": 786639
+    },
+    {
+      "filename": "VEN_Venezuela-Bolivarian-Republic-of_First_NDC_Spanish.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/VEN_Venezuela-Bolivarian-Republic-of_First_NDC_Spanish.pdf",
+      "sha256": "699ff584e3d867799c96bf447cab8d0171806d8602334011f534f839fab7e891",
+      "retrieved_at": "2026-10-15T21:59:56.006Z",
+      "size_bytes": 638973
+    },
+    {
+      "filename": "VNM_Viet-Nam_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/VNM_Viet-Nam_First_NDC_English.pdf",
+      "sha256": "db57f3f2ec4181b32c8be756d2105b925553d9e7376dcc08c2113cd925a593aa",
+      "retrieved_at": "2026-10-15T21:59:57.041Z",
+      "size_bytes": 915179
+    },
+    {
+      "filename": "VUT_Vanuatu_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/VUT_Vanuatu_First_NDC_English.pdf",
+      "sha256": "4a75fdec64812438d66ab75a9e09d8d9af335d4cd54f40bda2299e0b9140ba59",
+      "retrieved_at": "2026-10-15T21:59:58.054Z",
+      "size_bytes": 953511
+    },
+    {
+      "filename": "WSM_Samoa_Second_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/WSM_Samoa_Second_NDC_English.pdf",
+      "sha256": "01dca7fc4c9886dc86bd5242aab0558d9a7ce42b8a0529b7c682e66dc5e1ebb0",
+      "retrieved_at": "2026-10-15T21:59:59.626Z",
+      "size_bytes": 6449058
+    },
+    {
+      "filename": "ZAF_South-Africa_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ZAF_South-Africa_First_NDC_English.pdf",
+      "sha256": "f32f32cd0fa0ba38ab63e2037be267f69da5d091ab6b5ea44c9d391bd214c1d9",
+      "retrieved_at": "2026-10-15T22:00:00.146Z",
+      "size_bytes": 602928
+    },
+    {
+      "filename": "ZMB_Zambia_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ZMB_Zambia_First_NDC_English.pdf",
+      "sha256": "480406c48dbbd184d3bfea7e6704f1ca60a21a097c9ba0c1265181768213211a",
+      "retrieved_at": "2026-10-15T22:00:01.101Z",
+      "size_bytes": 647446
+    },
+    {
+      "filename": "ZWE_Zimbabwe_First_NDC_English.pdf",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/ZWE_Zimbabwe_First_NDC_English.pdf",
+      "sha256": "9faa52f4d4ce65d0d2301ce68cefbfb9fe45f67d5091f3888b26baeb4532f555",
+      "retrieved_at": "2026-10-15T22:00:02.090Z",
+      "size_bytes": 754869
+    },
+    {
+      "filename": "national-climate-plans.csv",
+      "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/data/national-climate-plans.csv",
+      "sha256": "721aa825e2bf979b6b864620182bd48337d37db719795eebfd676e39681b74cd",
+      "retrieved_at": "2026-10-15T21:56:49.763Z",
+      "size_bytes": 35295
+    }
+  ]
+}

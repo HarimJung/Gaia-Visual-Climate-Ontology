@@ -1,0 +1,18 @@
+{
+  "sha": "0000000000000000000000000000000000000000",
+  "url": "https://api.github.com/repos/example/example/git/trees/0",
+  "truncated": false,
+  "tree": [
+    { "path": "README.md", "type": "blob" },
+    { "path": "downloaded_data/UNFCCC/00_new_downloads_BTR1-2024-05-03.csv", "type": "blob" },
+    { "path": "downloaded_data/UNFCCC/Alphaland", "type": "tree" },
+    { "path": "downloaded_data/UNFCCC/Alphaland/BTR1", "type": "tree" },
+    { "path": "downloaded_data/UNFCCC/Alphaland/BTR1/Alphaland-BTR1-Status_name_Final.pdf", "type": "blob" },
+    { "path": "downloaded_data/UNFCCC/Alphaland/BTR1/annex/CRT-Alphaland.xlsx", "type": "blob" },
+    { "path": "downloaded_data/UNFCCC/Alphaland/NC1/Alphaland-NC1.pdf", "type": "blob" },
+    { "path": "downloaded_data/UNFCCC/Betaland/BUR2/Betaland-BUR2.pdf", "type": "blob" },
+    { "path": "downloaded_data/UNFCCC/Gammaland/btr2/Gammaland-btr2.pdf", "type": "blob" },
+    { "path": "downloaded_data/non-UNFCCC/Deltaland/other.pdf", "type": "blob" },
+    { "path": "scripts/download.py", "type": "blob" }
+  ]
+}

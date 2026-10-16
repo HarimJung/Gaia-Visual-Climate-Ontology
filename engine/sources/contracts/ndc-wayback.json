@@ -1,0 +1,31 @@
+{
+  "source_id": "ndc-wayback",
+  "license_id": "web-archive-org",
+  "content_license_id": "unfccc",
+  "name": "NDC document bytes from EXISTING Internet Archive Wayback captures — second byte source for registry rows the openclimatedata mirror cannot serve",
+  "url": "https://web.archive.org/cdx/search/cdx",
+  "cdx_template": "https://web.archive.org/cdx/search/cdx?url={{url}}&output=json",
+  "fetch_template": "https://web.archive.org/web/{{timestamp}}id_/{{url}}",
+  "upstream_note": "reads existing public captures only — never Save Page Now, never a live proxy of unfccc.int; the id_ suffix returns the capture's original bytes",
+  "staleness_budget_days": 30,
+  "rationale": "follows the registry index it backfills: a monthly re-query can only find captures that already exist, and a row with none stays an honest no-archive-capture failure",
+  "success_criteria": {
+    "min_bytes": 2,
+    "format": "json"
+  },
+  "document_criteria_by_format": {
+    "pdf": { "min_bytes": 1024, "format": "pdf" },
+    "docx": { "min_bytes": 1024, "format": "docx" }
+  },
+  "extension_formats": {
+    "pdf": "pdf",
+    "docx": "docx"
+  },
+  "mimetype_formats": {
+    "application/pdf": "pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx"
+  },
+  "candidate_captures": 3,
+  "transient_cap": 3,
+  "concurrency": 4
+}

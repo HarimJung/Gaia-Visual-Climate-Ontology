@@ -1,1 +1,2 @@
 token,reason
+NFC,Unicode normalization form (String.prototype.normalize) — not a country code

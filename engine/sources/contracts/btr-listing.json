@@ -1,0 +1,15 @@
+{
+  "source_id": "btr-listing",
+  "license_id": "jguetschow-unfccc-nai",
+  "name": "BTR submission presence, via the JGuetschow/UNFCCC_non-AnnexI_data git tree",
+  "url": "https://api.github.com/repos/JGuetschow/UNFCCC_non-AnnexI_data/git/trees/main?recursive=1",
+  "gh_api_path": "repos/JGuetschow/UNFCCC_non-AnnexI_data/git/trees/main?recursive=1",
+  "tree_prefix": "downloaded_data/UNFCCC/",
+  "folder_pattern": "^btr[0-9]+$",
+  "evidence_note": "presence only: a folder in the mirror proves a submission exists (true); absence proves nothing (null), never false. Filename status words carry no evidence.",
+  "staleness_budget_days": 60,
+  "success_criteria": {
+    "min_bytes": 100000,
+    "format": "json"
+  }
+}

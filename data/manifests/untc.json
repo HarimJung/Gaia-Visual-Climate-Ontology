@@ -1,0 +1,19 @@
+{
+  "source_id": "untc",
+  "entries": [
+    {
+      "filename": "XXVII-7-d.en.pdf",
+      "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7-d.en.pdf",
+      "sha256": "cb2aec820cb4fa2691ca28ef4ef8a0f3f33aeac9f309ce4e55fb8f607b0deeee",
+      "retrieved_at": "2026-10-15T21:56:31.343Z",
+      "size_bytes": 134496
+    },
+    {
+      "filename": "XXVII-7.en.pdf",
+      "url": "https://treaties.un.org/doc/Publication/MTDSG/Volume%20II/Chapter%20XXVII/XXVII-7.en.pdf",
+      "sha256": "92a525f426a968a80e0b422f3f0a2f730b6ff1e5a70aa6f0eac80d13d060e897",
+      "retrieved_at": "2026-10-15T21:56:30.503Z",
+      "size_bytes": 127975
+    }
+  ]
+}

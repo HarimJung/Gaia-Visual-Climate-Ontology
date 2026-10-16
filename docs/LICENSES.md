@@ -101,6 +101,26 @@ mirror of document bytes in release assets**; cache + manifests + durable
 private storage only. If the terms page becomes readable and permits more,
 update the row with a new `verified_date`.
 
+## Internet Archive Wayback Machine (web.archive.org) — `yes-no-redistribution`
+
+Verified 2026-10-15. The live terms page (`archive.org/about/terms.php`)
+serves only a JavaScript application shell to a plain fetcher, so the terms
+text was read from an **existing Wayback capture of that same URL**
+(timestamp `20241128004511`) — the same read-only pattern the runtime uses.
+In our words: the Terms of Use (dated 31 Dec 2014) grant access to the
+Collections for scholarship and research purposes; use must be limited to
+noninfringing or fair use under copyright law; rights in archived content
+remain with its original publishers.
+
+Our use: **read-only access to existing public captures** as a second byte
+source for registry documents the openclimatedata mirror cannot serve — a
+CDX index lookup per document URL, then the `id_` raw-byte replay of an
+already-archived capture. We never trigger Save Page Now and never use the
+archive as a live proxy of unfccc.int or any other origin. The replayed
+bytes are UNFCCC Party submissions, so the `unfccc` row above also governs
+them: cache + committed SHA-256 manifests + durable private storage only,
+**no public mirror in release assets**.
+
 ## OECD — `blocked-pending` (NOT INGESTED)
 
 Not used by the runtime. The terms URL

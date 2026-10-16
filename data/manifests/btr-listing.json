@@ -1,0 +1,12 @@
+{
+  "source_id": "btr-listing",
+  "entries": [
+    {
+      "filename": "tree.json",
+      "url": "https://api.github.com/repos/JGuetschow/UNFCCC_non-AnnexI_data/git/trees/main?recursive=1",
+      "sha256": "0dfd707d6bf7e524a57cc4c497c424e01dd1b5e84f69775b019359a1324ef651",
+      "retrieved_at": "2026-10-15T21:56:26.772Z",
+      "size_bytes": 10839667
+    }
+  ]
+}

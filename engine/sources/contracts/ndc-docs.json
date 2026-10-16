@@ -1,0 +1,18 @@
+{
+  "source_id": "ndc-docs",
+  "license_id": "openclimatedata-national-climate-plans",
+  "name": "NDC document bytes, via the openclimatedata/national-climate-plans mirror",
+  "url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/data/national-climate-plans.csv",
+  "pdf_base_url": "https://raw.githubusercontent.com/openclimatedata/national-climate-plans/main/pdfs/",
+  "upstream_note": "document bytes are never fetched from unfccc.int (WAF); every byte comes from the mirror",
+  "staleness_budget_days": 30,
+  "success_criteria": {
+    "min_bytes": 10000,
+    "format": "csv",
+    "csv_header": "Code,Party,Kind,Language,Filename,SubmissionDate,EncodedAbsUrl"
+  },
+  "document_criteria": {
+    "min_bytes": 1024,
+    "format": "pdf"
+  }
+}
