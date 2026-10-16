@@ -1,7 +1,7 @@
 ---
 // The demo path (AD-10): world ledger → one country → a figure → its receipt →
-// the hash, every step deep-linked. The authoring step is a labeled
-// placeholder (WP-08) — nothing is mocked. The walked country is the richest
+// the hash → the author check, every step deep-linked and nothing mocked
+// (the authoring step links to its honest documentation). The walked country is the richest
 // one in the data (most rows with bytes held, among countries whose view
 // carries a page quote); the walked figure comes from its view. Neither is
 // ever named in code (R1).
@@ -64,12 +64,13 @@ const ev = treaty.events[0];
       <p>The SHA-256 of the fetched file: the identity this record rests on.</p>
     </li>
     <li>
-      <h2>Your own sentence</h2>
-      <div class="placeholder">
-        <span class="tag">PLACEHOLDER — ARRIVES WITH WP-08</span>
-        Authoring: a drafted sentence is checked against the record and comes back with a verdict and
-        receipts. The docx path lands with WP-08; no interface is mocked here.
-      </div>
+      <h2><a href="/author/">Your own sentence</a></h2>
+      <p>
+        Authoring: cite a receipt token in a .docx draft and the checker returns it with a verdict
+        comment — anchored, outdated, or unsupported — on each cited sentence. The grammar, the
+        verdict rules and the CLI are documented at <a href="/author/">/author/</a>; no upload UI is
+        mocked, because this site is static.
+      </p>
     </li>
   </ol>
 </Base>

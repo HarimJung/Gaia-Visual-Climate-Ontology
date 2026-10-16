@@ -1,0 +1,13 @@
+---
+// Not-found page, built to dist/404.html — static hosts serve it by
+// convention. It must exist so an unknown path returns a real 404 instead of
+// a soft-404 homepage fallback (docs/LAUNCH.md §4). Footer (as-of, build
+// hash) comes with the layout, so even this page states its record date.
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <h1>Page not found</h1>
+  <p>There is no page at this address. It may have moved with a rebuild, or the link may be mistyped.</p>
+  <p><a href="/">Back to the world ledger</a></p>
+</Base>

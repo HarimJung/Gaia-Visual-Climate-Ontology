@@ -308,6 +308,13 @@ test('r8 detects a manual deploy command in docs', () => {
   detected(gate('r8-one-deploy-path.mjs', dir));
 });
 
+test('r8 detects the wider manual deploy vocabulary', () => {
+  detected(gate('r8-one-deploy-path.mjs', fixture({ 'docs/n.md': 'netlify deploy --prod\n' })));
+  detected(gate('r8-one-deploy-path.mjs', fixture({ 'docs/n.md': 'firebase deploy\n' })));
+  detected(gate('r8-one-deploy-path.mjs', fixture({ 'docs/n.md': 'aws s3 sync dist/ s3://bucket\n' })));
+  detected(gate('r8-one-deploy-path.mjs', fixture({ 'docs/n.md': 'scp -r dist/ user@host:/var/www\n' })));
+});
+
 test('r8 passes a README without deploy commands', () => {
   const dir = fixture({ 'README.md': '# project\n\nnpm test\n' });
   clean(gate('r8-one-deploy-path.mjs', dir));

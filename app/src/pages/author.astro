@@ -1,0 +1,121 @@
+---
+// WP-08: honest static documentation of the authoring flow (AD-1·AD-2). This
+// page documents the grammar and the CLI — there is no upload UI, because the
+// site is static with no server runtime, and no interface is mocked (AD-9).
+// The worked sample is built from live view data: the receipt, the token and
+// the dates all arrive as data, never as code literals (R1), and every figure
+// rendered here sits inside a link or a verbatim-record container (R6).
+import Base from '../layouts/Base.astro';
+import { views } from '../lib/data.mjs';
+
+// The sample sentence needs a quoted, hashed receipt that also carries a
+// treaty event — require all three up front so a data reshuffle fails with
+// the honest refusal below, never a TypeError.
+const sampleRow = (v) =>
+  v.rows.find(
+    (r) => r.quote && r.sha256 && v.treaty_status?.some((t) => t.receipt === r.doc_id && t.events?.length),
+  );
+const withQuote = views.filter((v) => sampleRow(v));
+if (withQuote.length === 0) {
+  // R5: a worked sample without a real receipt would have to invent one — refuse.
+  throw new Error(
+    'no view carries a quoted, hashed row with a treaty event — the authoring sample cannot be built honestly',
+  );
+}
+const bytes = (v) => v.rows.filter((r) => r.sha256).length;
+// Same deterministic pick as the demo path: richest view, ties by name order.
+const view = withQuote.reduce((a, b) => (bytes(b) > bytes(a) ? b : a));
+const iso3 = view.country.iso3.toLowerCase();
+const doc = sampleRow(view);
+const treaty = view.treaty_status.find((t) => t.receipt === doc.doc_id && t.events?.length);
+const ev = treaty.events[0];
+const token = `⟦${iso3}:${doc.doc_id}⟧`;
+const pageToken = `⟦${iso3}:${doc.doc_id}#p${doc.quote.page}⟧`;
+const plainToken = `[[anchor:${iso3}:${doc.doc_id}]]`;
+const sample = `${view.country.name_en} recorded ${ev.label} of the ${treaty.treaty_label} on ${ev.display} ${token}.`;
+---
+
+<Base title="Author check">
+  <section class="head">
+    <h1>Check your own sentence</h1>
+    <p class="treaty">
+      Cite a receipt in a draft; learn before submission whether the citation is anchored, outdated,
+      or unsupported by the current build. Input is a .docx — the verdicts come back as a Word
+      comment layer, so the draft never leaves Word.
+    </p>
+  </section>
+
+  <section class="rblock">
+    <h2>The grammar</h2>
+    <p>
+      Only sentences that explicitly cite a receipt token receive verdicts — no free-text claim
+      extraction, and no model anywhere in the judgment path. A token names one receipt exactly as
+      this site's <a href={`/receipt/${iso3}/${doc.doc_id}/`}>receipt pages</a> name it, country
+      first, because document ids collide across countries:
+    </p>
+    <p class="quote"><span class="qtext">{token}</span></p>
+    <p>A page claim is an optional suffix, checked against what the receipt records:</p>
+    <p class="quote"><span class="qtext">{pageToken}</span></p>
+    <p>
+      The corner brackets have a plain-keyboard fallback with identical semantics:
+    </p>
+    <p class="quote"><span class="qtext">{plainToken}</span></p>
+  </section>
+
+  <section class="rblock">
+    <h2>A worked sample</h2>
+    <p>A draft sentence citing a real receipt from this build:</p>
+    <p class="quote"><span class="qtext">{sample}</span></p>
+    <p>
+      The checker resolves the token against
+      <a href={`/receipt/${iso3}/${doc.doc_id}/`}>{doc.title}</a> — the receipt exists, its bytes
+      are <a href={`/receipt/${iso3}/${doc.doc_id}/#sha256`}>hashed</a>, and the quoted page carries
+      the cited dates — so the sentence comes back ANCHORED, as a Word comment on that exact
+      sentence:
+    </p>
+    <p class="quote">
+      <span class="qtext">ANCHORED — receipt on record; evidence held — /receipt/{iso3}/{doc.doc_id}/ — build id</span>
+    </p>
+    <p>
+      A sentence citing nothing is flagged UNANCHORED — useful output, not an error. A sentence
+      carrying a figure with no citation is flagged UNANCHORED-NUMERIC: a number with no receipt,
+      the class a reviewer blocks on.
+    </p>
+  </section>
+
+  <section class="rblock">
+    <h2>The verdicts</h2>
+    <p>
+      Three deterministic lookup statuses — never an opinion about whether a sentence is true, only
+      what the record mechanically shows about its citation:
+    </p>
+    <ul>
+      <li><strong>ANCHORED</strong> — the receipt exists and holds evidence: a file hash or a quoted page anchor; any page claim matches the record.</li>
+      <li><strong>OUTDATED</strong> — the receipt exists but the record has moved past it: a newer document of the same type is on record for that country, or the receipt's own state has degraded to unknown. The reason says which.</li>
+      <li><strong>UNSUPPORTED</strong> — the token does not resolve (unknown country or document, a page the receipt never recorded, or a receipt holding no evidence), with the nearest miss named by string match.</li>
+    </ul>
+    <p>
+      Every verdict carries the receipt's deep link. Same draft, same build: byte-identical output —
+      the model never enters this path, which a dedicated gate enforces in CI.
+    </p>
+  </section>
+
+  <section class="rblock">
+    <h2>The CLI</h2>
+    <p>
+      This site is static — there is no server runtime, so there is no upload box to mock. Checking
+      runs locally, against the same published graph these pages are built from:
+    </p>
+    <p class="quote"><span class="qtext">node engine/author/check.mjs --in draft.docx --out annotated.docx --json report.json</span></p>
+    <p class="quote"><span class="qtext">node engine/author/check.mjs --text draft.txt --json report.json</span></p>
+    <p>
+      If more than ten percent of the graph's anchored rows have outlived their source's staleness
+      budget, the check refuses to run and says so with the numbers — it will not approve drafts
+      against a record it knows is outdated.
+    </p>
+    <p>
+      Full contract — grammar, rule order, segmentation limits, the .docx round trip:
+      <a href="https://github.com/HarimJung/Gaia-Visual-Climate-Ontology/blob/main/docs/AUTHORING.md">docs/AUTHORING.md</a>.
+    </p>
+  </section>
+</Base>

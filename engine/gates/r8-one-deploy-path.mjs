@@ -12,6 +12,10 @@ const PATTERNS = [
   /npm\s+run\s+deploy/i,
   /gh-pages/i,
   /\brsync\b[^\n]*@/i,
+  /netlify\s+deploy/i,
+  /firebase\s+deploy/i,
+  /aws\s+s3\s+(sync|cp)/i,
+  /\bscp\b[^\n]*@/i,
 ];
 
 const files = [join(root, 'README.md'), ...walk(join(root, 'docs'))].filter((p) => existsSync(p));

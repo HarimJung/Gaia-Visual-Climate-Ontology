@@ -28,6 +28,42 @@ jobs:
       - run: node --test
       - run: node engine/gates/run.mjs
 
-# No deploy job yet. Publishing will be a CI-only path (R8 / AD-11), added with
-# the app: a rebuild that passes all gates merges and publishes automatically;
-# publish credentials live only in CI secrets, so no manual path exists.
+# ── Deploy job skeleton — THE one deploy path (R8 / AD-11), not enabled ──────
+# Enabling this is the owner's act, and it is one secret away: when a host is
+# chosen, add DEPLOY_TOKEN under Settings → Secrets and variables → Actions,
+# then uncomment the job and fill in the single placeholder publish step with
+# the chosen host's publish action, reading only that secret. Publish
+# credentials exist ONLY as CI secrets — no local publish path exists, and the
+# r8 gate keeps any manual command out of the docs. Even uncommented, the job
+# refuses to run until the secret exists (env guard below), so nothing can
+# deploy by accident. See docs/LAUNCH.md §2.
+#
+#  deploy:
+#    needs: checks
+#    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#    runs-on: ubuntu-latest
+#    env:
+#      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+#    steps:
+#      - name: Refuse without the deploy secret (owner enables by adding it)
+#        run: test -n "$DEPLOY_TOKEN" || { echo "DEPLOY_TOKEN secret not set — deploy refused"; exit 1; }
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 22
+#      - run: npm ci
+#      # Rebuild the exact pipeline the checks job verified; GITHUB_SHA is in
+#      # the environment, so the footer stamps this commit's hash (AD-11).
+#      - run: npm run codegen
+#      - run: npm run graph
+#      - run: npm run verify
+#      - run: npm run build:views
+#      - run: npm run build
+#      - name: Publish app/dist to the chosen host
+#        run: echo "placeholder — replace with the chosen host's publish step, authenticated by DEPLOY_TOKEN only" && exit 1
+#      # R16 dead-man switch: ping the heartbeat on every completed publish;
+#      # the heartbeat service alarms when pings stop (incl. the 60-day
+#      # schedule auto-disable). Add HEARTBEAT_URL as a secret with the host.
+#      - name: Heartbeat ping
+#        if: always()
+#        run: test -z "${{ secrets.HEARTBEAT_URL }}" || curl -fsS --retry 3 "${{ secrets.HEARTBEAT_URL }}"

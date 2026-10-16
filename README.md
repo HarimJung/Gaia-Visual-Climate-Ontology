@@ -38,6 +38,7 @@ build id (SHA-256 over the graph bytes). The wall clock appears only as
 - Gates live in `engine/gates/`, one file per rule; `engine/gates/run.mjs` runs them
   all and prints a one-line-per-failure digest.
 - Source adapter contract shape: `docs/CONTRACTS.md`. Source licenses: `docs/LICENSES.md`.
+- Authoring verification (citation grammar, verdicts, .docx CLI): `docs/AUTHORING.md`.
 - Operational requirements (not claims): `docs/OPERATIONS.md`.
 - Golden files, once they exist, change only via `tools/update-golden.mjs --reason "<text>"`.
 
