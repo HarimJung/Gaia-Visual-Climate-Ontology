@@ -37,8 +37,36 @@
      hard-stop stripes, not a gradient wash. */
   --st-observed: var(--acc);
   --st-pledged: var(--acc-ink);
-  --st-unknown-hatch: repeating-linear-gradient(135deg, var(--wash) 0 4px, var(--ink-3) 4px 6px);
+  --st-unknown-hatch: repeating-linear-gradient(135deg, var(--wash) 0 5px, rgba(87, 96, 101, .72) 5px 7px);
   --st-absent-line: var(--line-2);
+  /* ── four-state MATERIALS ──────────────────────────────────────────────
+     Design language (not code) ported from the predecessor product's dial
+     (Visual Climate Watch, "Paris Movement"): observed = METAL (machined,
+     solid, light catches an edge) · pledged = GLASS (transparent, outlined)
+     · unknown = UNVERIFIED plate (hairline outline + hatch) · absent = VOID
+     (an explicitly machined empty socket).
+     DELIBERATE DEVIATION from the VC house kit base of this file: the kit
+     bans decorative gradients and glass effects in bid demos; this product
+     deviates here and ONLY here, because the subtle metallic sheen and the
+     glass translucency ARE the state encoding — material is the semantics,
+     not decoration. Shape + pattern still separate the states without
+     color: solid / dashed outline / hatch / dotted socket.
+     AA, recomputed where text sits on a material: white on the metal's
+     lightest stop #137abf = 4.6:1 (grooves are darker than the base, so
+     they only raise contrast); --st-pledged #075289 on the glass fill over
+     paper ≥ 6.9:1; --ink-3 #576065 on the void face #e2e5e1 = 5.0:1. */
+  --mtl-face: linear-gradient(180deg, #137abf 0%, var(--acc) 44%, #085a92 100%);
+  --mtl-groove: repeating-linear-gradient(112deg, rgba(5, 42, 68, .22) 0 1px, rgba(0, 0, 0, 0) 1px 6px);
+  /* raking key light for NON-text metal only (segments, swatches): white
+     over the lightest stop would drop white chip text below AA */
+  --mtl-lit: linear-gradient(118deg, rgba(255, 255, 255, .22) 0%, rgba(255, 255, 255, 0) 46%);
+  --mtl-edge: inset 0 1px 0 rgba(255, 255, 255, .42), inset 0 -1px 0 rgba(4, 38, 62, .5), 0 1px 2px rgba(21, 25, 28, .18);
+  --gls-fill: rgba(10, 108, 180, .07);
+  --gls-glare: linear-gradient(118deg, rgba(255, 255, 255, .72) 0%, rgba(255, 255, 255, 0) 48%);
+  --gls-edge: 0 1px 2px rgba(21, 25, 28, .08);
+  --unv-hairline: inset 0 0 0 1px rgba(87, 96, 101, .55), inset 0 1px 2px rgba(21, 25, 28, .14);
+  --void-face: linear-gradient(180deg, #e2e5e1 0%, var(--wash) 72%);
+  --void-edge: inset 0 2px 4px rgba(21, 25, 28, .16), inset 0 0 0 1px rgba(21, 25, 28, .05);
 }
 
 * { box-sizing: border-box; }
@@ -75,15 +103,35 @@ h1, h2, h3 { font-family: var(--f-d); color: var(--ink); text-wrap: balance; ove
 .nextdate { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; margin: 0 0 30px; padding-top: 12px; border-top: 1px solid var(--line-2); font-size: 15.5px; }
 .nextdate .lbl { font-weight: 600; color: var(--ink); }
 
+/* world-ledger hero (frontend-prompts role 04, adapted): opens with the
+   product's most characteristic object — the four-state material band,
+   every number census-linked; no invented figures, no %, no gauge */
+.hero .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; font: 500 11.5px/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); }
+.hero .eyebrow [data-meta] { white-space: nowrap; }
+.hero .eyebrow::before { content: ""; flex: 0 0 26px; height: 1px; background: var(--acc); }
+.worldband { display: flex; gap: 4px; height: clamp(54px, 7vw, 78px); margin: 30px 0 0; }
+.worldband .seg { min-width: 0; }
+.worldband .seg-absent { flex: 0 0 28px; }
+.bandkey { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 28px; margin: 16px 0 0; padding: 0; list-style: none; }
+.bandkey li { display: flex; flex-direction: column; align-items: flex-start; }
+.bandkey .lbl { display: flex; align-items: center; gap: 8px; font: 500 10.5px/1.4 var(--f-m); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+.bandkey .sw { flex: 0 0 13px; width: 13px; height: 13px; }
+.bandkey .cnt { display: inline-block; margin-top: auto; padding-top: 8px; font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.1; letter-spacing: -.02em; }
+.nb { white-space: nowrap; }
+.hero .action { margin: 30px 0 0; padding-top: 14px; border-top: 1px solid var(--line-2); font-size: 15.5px; color: var(--ink-2); max-width: 44rem; }
+.hero .action b { color: var(--ink); font-weight: 600; }
+
 /* figures: every displayed number is a link to its census key or receipt */
 a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-decoration-thickness: 1px; }
 
-/* state chips — the four-state vocabulary */
+/* state chips — the four-state vocabulary, rendered in its materials */
 .chip { display: inline-block; font: 500 12.5px/1 var(--f-m); padding: 4px 8px; border-radius: 4px; vertical-align: 1px; }
-.chip-observed { background: var(--st-observed); color: var(--paper); }
-.chip-pledged { background: var(--paper); color: var(--st-pledged); border: 1.5px dashed var(--st-pledged); }
-.chip-unknown { background: var(--st-unknown-hatch); color: var(--ink); box-shadow: inset 0 0 0 200px rgba(255, 255, 255, .72); border: 1px solid var(--ink-3); }
-.chip-absent { background: transparent; color: var(--ink-3); border: 1px dotted var(--st-absent-line); }
+.chip-observed { background-image: var(--mtl-groove), var(--mtl-face); color: var(--paper); box-shadow: var(--mtl-edge); text-shadow: 0 1px 1px rgba(4, 38, 62, .35); }
+.chip-pledged { background-color: var(--gls-fill); background-image: var(--gls-glare); color: var(--st-pledged); border: 1.5px dashed var(--st-pledged); box-shadow: var(--gls-edge); }
+/* the 200px inset scrim keeps the reason text readable over the hatch; it
+   paints over any further inset shadow, so the plate edge is an outer one */
+.chip-unknown { background: var(--st-unknown-hatch); color: var(--ink); box-shadow: inset 0 0 0 200px rgba(255, 255, 255, .72), 0 1px 2px rgba(21, 25, 28, .10); border: 1px solid var(--ink-3); }
+.chip-absent { background-image: var(--void-face); color: var(--ink-3); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
 .reason { color: var(--ink-2); font-size: 14.5px; }
 
 /* completeness strip: segmented, counts only, no aggregate percentage, no gauge */
@@ -91,17 +139,15 @@ a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-d
 .stripsec h2 { font-size: 1.05rem; font-family: var(--f-t); font-weight: 600; color: var(--ink-2); margin: 0 0 10px; }
 .strip { display: flex; gap: 3px; height: 26px; }
 .strip .seg { min-width: 0; }
-/* segment paint is shared by the big strip and the world-ledger ministrip */
-.seg-observed { background: var(--st-observed); }
-.seg-pledged { background: var(--paper); border: 1.5px dashed var(--st-pledged); }
-.seg-unknown { background: var(--st-unknown-hatch); }
-.seg-absent { flex: 0 0 26px; background: transparent; border: 1px dotted var(--st-absent-line); }
+/* segment paint is shared by the big strip, the world-ledger ministrip, the
+   hero band and the legend swatches — one material per state everywhere */
+.seg-observed, .sw-observed { background-image: var(--mtl-lit), var(--mtl-groove), var(--mtl-face); box-shadow: var(--mtl-edge); }
+.seg-pledged, .sw-pledged { background-color: var(--gls-fill); background-image: var(--gls-glare); border: 1.5px dashed var(--st-pledged); box-shadow: var(--gls-edge); }
+.seg-unknown, .sw-unknown { background-image: var(--st-unknown-hatch); box-shadow: var(--unv-hairline); }
+.seg-absent, .sw-absent { background-image: var(--void-face); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
+.seg-absent { flex: 0 0 26px; }
 .strip-key { display: flex; flex-wrap: wrap; gap: 6px 22px; list-style: none; margin: 10px 0 6px; padding: 0; font-size: 14.5px; color: var(--ink-2); }
 .strip-key .sw { width: 12px; height: 12px; display: inline-block; margin-right: 7px; vertical-align: -1px; }
-.strip-key .sw-observed { background: var(--st-observed); }
-.strip-key .sw-pledged { background: var(--paper); border: 1.5px dashed var(--st-pledged); }
-.strip-key .sw-unknown { background: var(--st-unknown-hatch); border: 1px solid var(--ink-3); }
-.strip-key .sw-absent { background: transparent; border: 1px dotted var(--st-absent-line); }
 
 /* ledger table: hairlines, no cards */
 section + section { margin-top: 56px; }
@@ -141,11 +187,12 @@ h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-we
 .receipt h1 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); letter-spacing: -.028em; line-height: 1.05; margin: 0 0 6px; }
 .crumb { font-size: 14px; margin: 0 0 22px; }
 .rblock { border-top: 1px solid var(--ink); padding: 14px 0 22px; max-width: 54rem; }
-.rblock h2 { font: 600 13px/1 var(--f-m); letter-spacing: .05em; color: var(--ink-2); margin: 0 0 10px; text-transform: uppercase; }
+.rblock h2 { font: 600 12px/1 var(--f-m); letter-spacing: .16em; color: var(--ink-2); margin: 0 0 12px; text-transform: uppercase; }
 .quote { font-size: 1.15rem; margin: 0; }
 .quote .qtext { font-family: var(--f-m); background: var(--acc-soft); padding: 2px 6px; }
-.hash { font-family: var(--f-m); font-size: 14.5px; word-break: break-all; margin: 0; }
-.void { border: 1px dotted var(--st-absent-line); padding: 14px 16px; color: var(--ink-2); max-width: 44rem; }
+/* the hash is the case-back: the chain's last machined plate */
+.hash { font-family: var(--f-m); font-size: 14.5px; word-break: break-all; margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 12px 14px; max-width: 44rem; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 2px rgba(21, 25, 28, .08); }
+.void { border: 1px dotted var(--st-absent-line); background-image: var(--void-face); box-shadow: var(--void-edge); padding: 14px 16px; color: var(--ink-2); max-width: 44rem; }
 .facts { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 0; font-size: 15px; }
 .facts dt { color: var(--ink-3); font-size: 13.5px; padding-top: 2px; }
 .facts dd { margin: 0; overflow-wrap: anywhere; }
@@ -173,7 +220,22 @@ footer p { margin: 0 0 6px; }
   .bar nav a { padding: 8px 6px; font-size: 14px; }
 }
 
-/* motion: nothing moves on its own; hovers stay under .2s; no count-up anywhere */
+/* motion (frontend-prompts role 06, adapted): five motions on the whole
+   product, each ≤.6s, all dead under prefers-reduced-motion, and none ever
+   on a figure's value (no count-up anywhere). Motion follows the evidence
+   chain — value → document → hash:
+     1 · a figure on hover/focus lights the path to its evidence (.18s)
+     2 · a document/receipt link on hover, the same light (.18s)
+     3 · a receipt page gets one entrance that settles the hash block into
+         place (.45s, once) — the resting state IS the complete page; with
+         motion off (or CSS animation unsupported) nothing is missing
+     4·5 · the pre-existing nav and copy-button hovers (.15s, above) */
+a.fig { transition: background-color .18s var(--ease), text-decoration-thickness .18s var(--ease); }
+a.fig:hover, a.fig:focus-visible { background-color: var(--acc-soft); }
+.table a[data-receipt] { transition: background-color .18s var(--ease); }
+.table a[data-receipt]:hover { background-color: var(--acc-soft); }
+@keyframes settle { from { opacity: .25; transform: translateY(6px); } }
+.receipt #sha256 .hash, .receipt #sha256 .void { animation: settle .45s var(--ease); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }

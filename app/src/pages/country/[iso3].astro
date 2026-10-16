@@ -40,14 +40,10 @@ const ledgerUrl = REPO_BLOB + entry.ledger;
               </span>
             )}
             <b>{t.treaty_label}</b>{' '}
+            {/* one line per event: newline whitespace around the anchor pads its
+                underline and opens a gap before the comma separator */}
             {t.events.map((ev, j) => (
-              <>
-                {j > 0 && ', '}
-                {ev.label}{' '}
-                <a class="fig" data-receipt={t.receipt} href={`/receipt/${iso3}/${t.receipt}/`}>
-                  {ev.display}
-                </a>
-              </>
+              <>{j > 0 && ', '}{ev.label} <a class="fig" data-receipt={t.receipt} href={`/receipt/${iso3}/${t.receipt}/`}>{ev.display}</a></>
             ))}
           </>
         ))
@@ -59,9 +55,7 @@ const ledgerUrl = REPO_BLOB + entry.ledger;
       {
         view.next_date.date ? (
           <>
-            <a class="fig" data-receipt={view.next_date.receipt} href={`/receipt/${iso3}/${view.next_date.receipt}/`}>
-              <time datetime={view.next_date.date}>{view.next_date.date}</time>
-            </a>
+            <a class="fig" data-receipt={view.next_date.receipt} href={`/receipt/${iso3}/${view.next_date.receipt}/`}><time datetime={view.next_date.date}>{view.next_date.date}</time></a>
             {view.next_date.label && <span class="reason">{view.next_date.label}</span>}
           </>
         ) : (

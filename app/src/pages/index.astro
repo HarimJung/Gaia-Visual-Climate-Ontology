@@ -6,17 +6,55 @@
 // file (R1), and the row set is whatever views the reader produced.
 import Base from '../layouts/Base.astro';
 import StateLegend from '../components/StateLegend.astro';
-import { views, census, countryEntry, REPO_BLOB } from '../lib/data.mjs';
+import { views, census, countryEntry, fmt, REPO_BLOB } from '../lib/data.mjs';
 
 const ledgerUrl = REPO_BLOB + census.ledger;
+
+// Hero band (role 04): the world's four-state totals as materials — the same
+// vocabulary StateLegend spells out, keyed to the census rows on this page.
+const band = [
+  { state: 'observed', material: 'metal', key: 'states_observed' },
+  { state: 'pledged', material: 'glass', key: 'states_pledged' },
+  { state: 'unknown', material: 'unverified', key: 'states_unknown' },
+  { state: 'absent', material: 'void', key: 'states_absent' },
+];
 ---
 
 <Base title="World ledger">
-  <section class="head">
+  <section class="head hero">
+    <p class="eyebrow">
+      <span>National climate record · as of <span data-meta="as_of">{census.as_of}</span></span>
+    </p>
     <h1>World ledger</h1>
     <p class="treaty">
       One row per country on record. Every figure on these pages links to the receipt it rests on;
       unknown and absent describe this runtime's reading, not the country.
+    </p>
+    <div class="worldband" aria-hidden="true">
+      {
+        band
+          .filter((s) => census.counts[s.key] > 0)
+          .map((s) => <div class={`seg seg-${s.state}`} style={`flex-grow:${census.counts[s.key]}`} />)
+      }
+    </div>
+    <ul class="bandkey">
+      {
+        band.map((s) => (
+          <li>
+            <span class="lbl">
+              <span class={`sw sw-${s.state}`} aria-hidden="true" />
+              {s.state} · {s.material}
+            </span>
+            <a class="fig cnt" data-census={s.key} href={`#census-${s.key}`}>
+              {fmt(census.counts[s.key])}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="action">
+      One action everywhere: <b>click a figure, get the receipt it rests on</b> — document, verbatim
+      quote, <span class="nb">SHA-256</span>.
     </p>
   </section>
 
