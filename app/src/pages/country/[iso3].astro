@@ -33,7 +33,9 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
 <Base title={`${view.country.name_en} — ledger`}>
   <section class="head">
     <p class="crumb"><a href={`/ledger/#c-${iso3}`}>← world ledger</a></p>
-    <h1>{view.country.name_en}</h1>
+    {/* the name this record is known by travels here from the ledger row the
+        reader clicked: the same element, carried across the navigation */}
+    <h1 style={`view-transition-name:n-${view.country.iso3.toLowerCase()}`}>{view.country.name_en}</h1>
 
     <p class="treaty" id="treaty">
       {view.treaty_status.length === 0 && (

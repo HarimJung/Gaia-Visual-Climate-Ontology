@@ -25,7 +25,11 @@ const figHref = row.sha256 ? '#sha256' : '#state';
 <Base title={`Receipt — ${row.title}`}>
   <article class="receipt">
     <p class="crumb"><a href={`/country/${iso3}/#row-${row.doc_id}`}>← ledger row</a></p>
-    <h1>{row.title}</h1>
+    {/* the document's own title carries over from whichever list named it.
+        A doc_id repeats across countries — the depositary list is one document
+        for all of them — so the name is namespaced by record, or the browser
+        sees a duplicate and abandons the transition for the whole page. */}
+    <h1 style={`view-transition-name:d-${iso3.toLowerCase()}-${row.doc_id.replace(/[^a-z0-9]+/gi, '-')}`}>{row.title}</h1>
     <p class="muted" style="margin:0 0 26px">receipt <span class="mono">{iso3}/{row.doc_id}</span></p>
 
     <section class="rblock" id="state" aria-labelledby={`state-h-${row.doc_id}`}>

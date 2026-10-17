@@ -93,6 +93,21 @@
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: var(--t3); line-height: 1.6; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
 h1, h2, h3 { font-family: var(--font-display); color: var(--ink); text-wrap: balance; overflow-wrap: break-word; }
+/* ── moving between pages ────────────────────────────────────────────────
+   The browser's own cross-document view transitions: no router, no script,
+   no dependency, and nothing to re-run after a navigation. A browser that
+   does not support it simply navigates, which is the baseline this product
+   is built on. Motion carries the evidence chain — a record's name travels
+   into its page, a figure grows into the receipt it rests on — and never a
+   value: nothing here animates a number. */
+@view-transition { navigation: auto; }
+::view-transition-group(*) { animation-duration: var(--dur, 200ms); animation-timing-function: var(--ease, ease); }
+::view-transition-old(root) { animation-duration: var(--dur-quick, .18s); }
+::view-transition-new(root) { animation-duration: var(--dur, 200ms); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
 /* prose holds a readable measure by default; a class that needs more says so */
 p { max-width: 68ch; }
 td p, th p, .facts p, .bandkey p, .legend p { max-width: none; }

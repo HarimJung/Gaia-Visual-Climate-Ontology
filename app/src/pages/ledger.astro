@@ -184,7 +184,7 @@ const trayUnits = entries.map(({ v, e }, i) => {
                       becomes a card and the column headers are out of view,
                       so every figure keeps a visible name beside it */}
                   <td data-l="country">
-                    <a class="cname" href={`/country/${iso3}/`}>
+                    <a class="cname" href={`/country/${iso3}/`} style={`view-transition-name:n-${iso3}`}>
                       {v.country.name_en}
                     </a>
                     <span class="rowmeta mono">{v.country.iso3}</span>
@@ -211,7 +211,11 @@ const trayUnits = entries.map(({ v, e }, i) => {
                   <td data-l="latest dated document">
                     {latest ? (
                       <>
-                        <a class="doc-title" href={`/receipt/${iso3}/${latest.doc_id}/`}>
+                        <a
+                          class="doc-title"
+                          href={`/receipt/${iso3}/${latest.doc_id}/`}
+                          style={`view-transition-name:d-${iso3}-${latest.doc_id.replace(/[^a-z0-9]+/gi, '-')}`}
+                        >
                           {latest.title}
                         </a>
                         <span class="rowmeta">
