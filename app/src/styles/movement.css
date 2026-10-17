@@ -1,0 +1,400 @@
+/* ═══ THE MOVEMENT — the hero instrument ═══════════════════════════════════
+   PROVENANCE. Every declaration below is lifted from the predecessor comp
+
+     10-engines/vc-watch/pdf-45-50p-1-owid-climate/work/references/Main/Main.dc.html
+
+   (the 1440x900 frame with its 800px stage), with the material legend's
+   spheres and the glass card from the same file, and the conditional/ghost
+   wheel treatment from its sibling references/Dial/Dial.dc.html. The comp
+   writes its styles inline; they become classes here so the phone width can
+   re-flow the same declarations. Lifted as written: every gradient, every
+   shadow, every radius, every angle, every opacity, the barrel and wheel
+   faces, and the keyframes. Owner authorisation 2026-10-17 (the comps are
+   the owner's own work).
+
+   NOT ported: the comp's vendor React, its dc-runtime and support.js —
+   unknown licence, never shipped. The nodes the comp's inline script
+   generated (barrels, wheels, flow paths) are generated instead at build
+   time by components/HeroMovement.astro, so the whole instrument is
+   server-rendered HTML and is complete with JavaScript off.
+
+   FOUR deliberate changes, and nothing else:
+     1. The keyframes are prefixed `vcm-`. scene.css already owns the global
+        names @keyframes vc-flow and vc-tick for the SVG dial, and a second
+        global definition of the same name re-points that animation.
+     2. The comp's absolute pixel geometry is driven through ONE ratio,
+        --u (= viewport / 1440), so `calc(618 * var(--u))` is the comp's own
+        618px. At a 1440 viewport --u is exactly 1px and this renders the
+        comp's pixel geometry. Proportions never change with width.
+     3. The frame gets `isolation: isolate`: the comp's specular sweep is
+        mix-blend-mode: screen and the comp's frame is the page root, ours
+        is not.
+     4. Below 760px the frame stops being an absolute 1440x900 canvas and
+        becomes a flow column with the stage on its own ratio, so a phone
+        gets the whole instrument and the whole text, contained.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* the full-bleed breakout below is 100vw wide; `clip` (not `hidden`) keeps
+   position: sticky working on the page's pinned stages */
+html { overflow-x: clip; }
+
+.vc-wrap {
+  position: relative;
+  margin-inline: calc(50% - 50vw);
+  /* the comp's frame is 900 tall and owns the whole screen. The sticky bar
+     is translucent and blurred, so the frame starts behind it and the comp's
+     own 900 lands inside a 900 viewport instead of 60px short of it. */
+  margin-top: calc(-1 * var(--top-h));
+  width: 100vw;
+  overflow: hidden;
+  background: #0B0D0F;
+}
+
+/* ── the comp's frame ─────────────────────────────────────────────────── */
+.vc-frame {
+  --u: calc(min(100vw, 1760px) / 1440);
+  position: relative;
+  width: min(100vw, 1760px);
+  margin-inline: auto;
+  height: calc(900 * var(--u));
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(120% 90% at 78% 8%, #1E242A 0%, #12161A 42%, #0A0C0E 100%);
+  font-family: var(--f-d);
+}
+
+/* raking key light */
+.vc-rake {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .055) 0%, rgba(255, 255, 255, 0) 38%);
+}
+/* grain — device-level texture, so its 1px pitch is not scaled */
+.vc-grain {
+  position: absolute; inset: 0; opacity: .30; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .018) 0 1px, rgba(0, 0, 0, 0) 1px 2px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .012) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
+}
+
+/* ══ STAGE : the movement ══ (comp: left 618, top 50, 800 x 800) ───────── */
+.vc-stagebox {
+  position: absolute;
+  left: calc(618 * var(--u)); top: calc(50 * var(--u));
+  width: calc(800 * var(--u)); height: calc(800 * var(--u));
+}
+.vc-stage { position: absolute; inset: 0; }
+
+/* the comp centres every layer this way */
+.vc-c {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+/* ambient halo */
+.vc-halo {
+  width: calc(900 * var(--u)); height: calc(900 * var(--u));
+  background: radial-gradient(circle, rgba(255, 138, 61, .10) 0%, rgba(255, 138, 61, .03) 38%, rgba(0, 0, 0, 0) 66%);
+}
+/* outer engraved tick ring, and the black case it is cut into */
+.vc-tickring {
+  width: calc(712 * var(--u)); height: calc(712 * var(--u));
+  background: repeating-conic-gradient(from 0deg, rgba(190, 202, 210, .55) 0deg 0.28deg, rgba(0, 0, 0, 0) 0.28deg 4.5deg);
+}
+.vc-tickmask { width: calc(690 * var(--u)); height: calc(690 * var(--u)); background: #0B0D0F; }
+
+/* mainplate : côtes de genève (112°) + brushed conic sheen + radial base,
+   over the long drop shadow, the 1px rim bevel and the inner shadow */
+.vc-plate {
+  width: calc(672 * var(--u)); height: calc(672 * var(--u));
+  background-image:
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, .052) 0 calc(2 * var(--u)), rgba(0, 0, 0, .055) calc(2 * var(--u)) calc(15 * var(--u))),
+    conic-gradient(from 195deg, rgba(255, 255, 255, .13), rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, .07) 48%, rgba(255, 255, 255, 0) 74%, rgba(255, 255, 255, .14) 100%),
+    radial-gradient(circle at 32% 24%, #6E777E 0%, #4A5257 46%, #2C3236 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(226, 236, 242, .22),
+    inset 0 calc(2 * var(--u)) calc(26 * var(--u)) rgba(0, 0, 0, .55),
+    0 calc(40 * var(--u)) calc(90 * var(--u)) rgba(0, 0, 0, .65);
+}
+
+/* hairline guides */
+.vc-guide { box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .14); }
+.vc-g1 { width: calc(588 * var(--u)); height: calc(588 * var(--u)); }
+.vc-g2 { width: calc(470 * var(--u)); height: calc(470 * var(--u)); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .09); }
+.vc-g3 { width: calc(286 * var(--u)); height: calc(286 * var(--u)); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .07); }
+
+/* gear-train energy paths */
+.vc-flows { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.vc-flow-bed { fill: none; stroke: rgba(226, 236, 242, .13); stroke-width: 1; }
+.vc-flow-spark {
+  fill: none; stroke: #FF8A3D; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 5 255;
+  filter: drop-shadow(0 0 6px rgba(255, 138, 61, .9));
+  animation: vcm-flow 3s linear infinite;
+}
+@keyframes vcm-flow { to { stroke-dashoffset: -260; } }
+
+/* ── source barrels: the comp's three faces, one per document ─────────── */
+.vc-barrel {
+  position: absolute; display: block; border-radius: 50%;
+  text-decoration: none;
+}
+.vc-barrel.vc-live {
+  background-image: radial-gradient(circle at 34% 28%, #FFD3AA 0%, #FF9B52 42%, #A85B22 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 205, 160, .55), 0 0 calc(20 * var(--u)) rgba(255, 138, 61, .75);
+}
+.vc-barrel.vc-metal {
+  background-image:
+    conic-gradient(from 160deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, .09) 68%, rgba(255, 255, 255, 0) 96%),
+    radial-gradient(circle at 34% 28%, #838C93 0%, #525A60 52%, #2F353A 100%);
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .26), 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(0, 0, 0, .55);
+}
+.vc-barrel.vc-glass {
+  background: rgba(180, 205, 225, .16);
+  box-shadow: inset 0 0 0 1px rgba(200, 225, 245, .45);
+}
+.vc-barrel.vc-void {
+  background: #090B0D;
+  box-shadow: inset 0 calc(3 * var(--u)) calc(7 * var(--u)) rgba(0, 0, 0, .95), inset 0 0 0 1px rgba(194, 69, 63, .62), 0 0 calc(12 * var(--u)) rgba(194, 69, 63, .18);
+}
+.vc-barrel:focus-visible { outline: 2px solid #FF8A3D; outline-offset: 3px; }
+.vc-barrel:hover { box-shadow: inset 0 0 0 1px rgba(255, 205, 160, .75), 0 0 calc(26 * var(--u)) rgba(255, 138, 61, .55); }
+
+/* ── complication wheels ──────────────────────────────────────────────── */
+.vc-wheel {
+  position: absolute; display: block; border-radius: 50%; text-decoration: none;
+  filter: drop-shadow(0 calc(10 * var(--u)) calc(22 * var(--u)) rgba(0, 0, 0, .6));
+}
+/* the ROOT circle the teeth are cut from. The comp carries 48 teeth, so the
+   comb itself draws the root; a family holding four documents cuts four
+   teeth, and with nothing between them those four read as loose spikes
+   rather than as a wheel. This ring is the machining line, not a reading. */
+.vc-wheel::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 80%; height: 80%;
+  transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle at 34% 26%, #5B6369 0%, #3D4448 58%, #262B2F 100%);
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .16);
+}
+.vc-wheel-body {
+  position: absolute; left: 50%; top: 50%; width: 74%; height: 74%;
+  transform: translate(-50%, -50%); border-radius: 50%;
+  background-image:
+    conic-gradient(from 140deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, .08) 60%, rgba(255, 255, 255, 0) 88%),
+    radial-gradient(circle at 34% 26%, #79828A 0%, #4C5459 55%, #2E3438 100%);
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .20);
+}
+/* the comp hangs every label under its wheel. Ours sit on the side of the
+   wheel that faces OUT of the stage, so no label is ever covered by the
+   escapement or by the next wheel's rim. */
+.vc-wheel.vc-up .vc-wheel-label { bottom: auto; top: calc(-20 * var(--u)); }
+.vc-wheel-label {
+  position: absolute; left: 0; right: 0; bottom: calc(-26 * var(--u));
+  text-align: center;
+  font: 500 calc(10 * var(--u))/1.4 var(--f-m);
+  letter-spacing: .20em; text-transform: uppercase; color: #9AA4AB;
+  white-space: nowrap;
+}
+.vc-wheel-label b { font-weight: 500; color: #EDF2F6; }
+.vc-wheel:hover .vc-wheel-label b, .vc-wheel:focus-visible .vc-wheel-label b { color: #FF8A3D; }
+.vc-wheel:focus-visible { outline: 2px solid #FF8A3D; outline-offset: 4px; }
+/* a source family with nothing on record: the comp's unmeshed wheel —
+   outline only, never omitted, never drawn with invented teeth */
+.vc-wheel.vc-ghost { filter: none; box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .22); }
+.vc-wheel.vc-ghost::before { background: none; box-shadow: inset 0 0 0 1px rgba(200, 225, 245, .20); }
+.vc-wheel.vc-ghost .vc-wheel-body {
+  background-image: none; background: rgba(180, 205, 225, .05);
+  box-shadow: inset 0 0 0 1px rgba(200, 225, 245, .30);
+}
+.vc-wheel.vc-ghost .vc-wheel-label { color: #C2453F; }
+.vc-wheel-reason {
+  position: absolute; left: calc(-40 * var(--u)); right: calc(-40 * var(--u)); bottom: calc(-44 * var(--u));
+  text-align: center; font: 400 calc(9 * var(--u))/1.5 var(--f-m);
+  letter-spacing: .14em; text-transform: uppercase; color: #C2453F;
+}
+
+/* ── escapement / balance : the ratchet heartbeat ─────────────────────── */
+.vc-esc-halo {
+  width: calc(196 * var(--u)); height: calc(196 * var(--u));
+  background: radial-gradient(circle, rgba(255, 138, 61, .34) 0%, rgba(255, 138, 61, .06) 52%, rgba(0, 0, 0, 0) 72%);
+}
+.vc-esc-teeth {
+  width: calc(132 * var(--u)); height: calc(132 * var(--u));
+  animation: vcm-tick 3.6s cubic-bezier(.4, 0, .2, 1) infinite;
+  background-image: repeating-conic-gradient(from 0deg, rgba(232, 240, 246, .62) 0deg 1.1deg, rgba(0, 0, 0, 0) 1.1deg 9deg);
+}
+.vc-esc-body {
+  width: calc(108 * var(--u)); height: calc(108 * var(--u));
+  background-image:
+    conic-gradient(from 210deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, .10) 66%, rgba(255, 255, 255, 0) 96%),
+    radial-gradient(circle at 34% 26%, #7E878E 0%, #4B5358 58%, #2B3135 100%);
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .28), 0 calc(8 * var(--u)) calc(26 * var(--u)) rgba(0, 0, 0, .6);
+}
+.vc-esc-jewel {
+  width: calc(26 * var(--u)); height: calc(26 * var(--u));
+  background: radial-gradient(circle at 34% 30%, #FFC38C, #FF8A3D 60%, #C25C1C 100%);
+  box-shadow: 0 0 calc(22 * var(--u)) rgba(255, 138, 61, .85);
+}
+@keyframes vcm-tick {
+  0%, 46% { transform: translate(-50%, -50%) rotate(-7deg); }
+  50%, 96% { transform: translate(-50%, -50%) rotate(7deg); }
+  100% { transform: translate(-50%, -50%) rotate(-7deg); }
+}
+
+/* specular sweep */
+.vc-sweep {
+  width: calc(672 * var(--u)); height: calc(672 * var(--u)); pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, .02) 26%, rgba(255, 255, 255, 0) 46%, rgba(0, 0, 0, .20) 100%);
+  mix-blend-mode: screen;
+}
+
+/* ══ COPY ══ (comp: left 86, top 118, width 470, column gap 22) ────────── */
+.vc-copy {
+  position: absolute;
+  left: calc(86 * var(--u)); top: calc(118 * var(--u)); width: calc(500 * var(--u));
+  display: flex; flex-direction: column; gap: calc(22 * var(--u));
+}
+
+.vc-eyebrow { display: flex; align-items: center; gap: calc(12 * var(--u)); margin: 0; }
+.vc-eyebrow::before {
+  content: ""; flex: 0 0 calc(26 * var(--u)); height: 1px; background: #FF8A3D;
+}
+.vc-eyebrow span {
+  font: 500 calc(11 * var(--u))/1.2 var(--f-m);
+  letter-spacing: .30em; text-transform: uppercase; color: #FF8A3D;
+}
+
+.vc-h1 {
+  margin: 0;
+  font-size: calc(68 * var(--u)); line-height: .94; font-weight: 800;
+  letter-spacing: -.025em; color: #EDF2F6; text-transform: uppercase; text-wrap: balance;
+}
+
+.vc-lede {
+  margin: 0; max-width: calc(440 * var(--u));
+  font-size: calc(15.5 * var(--u)); line-height: 1.65; color: #98A2AA;
+}
+
+/* verdict card : the comp's glass surface, carrying our own true sentence */
+.vc-card {
+  margin-top: calc(6 * var(--u));
+  padding: calc(18 * var(--u)) calc(20 * var(--u));
+  border-radius: 2px; border: 1px solid rgba(200, 225, 245, .22);
+  background: linear-gradient(140deg, rgba(180, 205, 225, .10), rgba(180, 205, 225, .03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07);
+  backdrop-filter: blur(2px);
+}
+.vc-card-head { display: flex; align-items: center; gap: calc(8 * var(--u)); margin-bottom: calc(10 * var(--u)); }
+.vc-card-eyebrow {
+  font: 500 calc(9.5 * var(--u))/1.2 var(--f-m);
+  letter-spacing: .26em; text-transform: uppercase; color: #6F7A82;
+}
+.vc-card-tag {
+  padding: 1px calc(6 * var(--u)); border: 1px solid rgba(194, 69, 63, .55);
+  font: 500 calc(8.5 * var(--u))/1.5 var(--f-m);
+  letter-spacing: .16em; text-transform: uppercase; color: #C2453F;
+}
+.vc-card-body { font-size: calc(15 * var(--u)); line-height: 1.62; color: #D6DEE4; }
+.vc-card-body a { color: #9FC3E0; text-decoration: none; border-bottom: 1px solid rgba(159, 195, 224, .45); }
+.vc-card-body a:hover, .vc-card-body a:focus-visible { color: #FFA765; border-bottom-color: #FFA765; }
+.vc-card-body .vc-strong { color: #EDF2F6; font-weight: 600; }
+.vc-card-reason {
+  margin: calc(10 * var(--u)) 0 0;
+  font-size: calc(13 * var(--u)); line-height: 1.55; color: #98A2AA;
+}
+.vc-card-reason a { color: #E0695F; text-decoration: none; border-bottom: 1px solid rgba(224, 105, 95, .45); }
+.vc-card-reason a:hover, .vc-card-reason a:focus-visible { color: #FFA765; border-bottom-color: #FFA765; }
+
+/* material legend : the comp's small spheres, labels on one line */
+.vc-legend {
+  display: flex; flex-wrap: wrap; gap: calc(10 * var(--u)) calc(22 * var(--u));
+  margin: calc(8 * var(--u)) 0 0; padding: 0; list-style: none;
+}
+.vc-legend li { display: flex; align-items: center; gap: calc(9 * var(--u)); }
+.vc-legend .vc-sw {
+  flex: 0 0 calc(15 * var(--u)); width: calc(15 * var(--u)); height: calc(15 * var(--u)); border-radius: 50%;
+}
+.vc-sw-observed {
+  background: radial-gradient(circle at 34% 28%, #8E979E, #454C51);
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .3);
+}
+.vc-sw-pledged {
+  background: rgba(180, 205, 225, .16);
+  box-shadow: inset 0 0 0 1px rgba(200, 225, 245, .45);
+}
+.vc-sw-unknown {
+  background-image: repeating-linear-gradient(135deg, #1A2026 0 3px, rgba(168, 178, 185, .40) 3px 5px);
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .22);
+}
+.vc-sw-absent {
+  background: #0A0C0E;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .9), inset 0 0 0 1px rgba(194, 69, 63, .6);
+}
+.vc-legend .vc-lbl {
+  font: 400 calc(11 * var(--u))/1.4 var(--f-m);
+  letter-spacing: .10em; text-transform: uppercase; color: #8A949B; white-space: nowrap;
+}
+.vc-legend a {
+  color: #EDF2F6; text-decoration: none;
+  border-bottom: 1px solid rgba(237, 242, 246, .35);
+}
+.vc-legend a:hover, .vc-legend a:focus-visible { color: #FFA765; border-bottom-color: #FFA765; }
+
+.vc-action { margin: calc(4 * var(--u)) 0 0; }
+.vc-action a {
+  font: 600 calc(14 * var(--u))/1.4 var(--f-d);
+  color: #FF8A3D; text-decoration: none; border-bottom: 1px solid rgba(255, 138, 61, .5);
+}
+.vc-action a:hover, .vc-action a:focus-visible { color: #FFA765; border-bottom-color: #FFA765; }
+
+/* ── footer rail ──────────────────────────────────────────────────────── */
+.vc-foot {
+  position: absolute; left: calc(86 * var(--u)); right: calc(86 * var(--u)); bottom: calc(54 * var(--u));
+  display: flex; align-items: center; justify-content: space-between; gap: calc(18 * var(--u));
+}
+.vc-foot-l { display: flex; align-items: center; gap: calc(18 * var(--u)); }
+.vc-pulse {
+  flex: 0 0 calc(8 * var(--u)); width: calc(8 * var(--u)); height: calc(8 * var(--u)); border-radius: 50%;
+  background: #FF8A3D; box-shadow: 0 0 calc(14 * var(--u)) rgba(255, 138, 61, .9);
+  animation: vcm-breathe 2.6s ease-in-out infinite;
+}
+@keyframes vcm-breathe { 0%, 100% { opacity: .30; } 50% { opacity: .95; } }
+.vc-foot-t {
+  font: 400 calc(11 * var(--u))/1.5 var(--f-m);
+  letter-spacing: .18em; text-transform: uppercase; color: #6F7A82;
+}
+.vc-foot-t a { color: #9AA4AB; text-decoration: none; border-bottom: 1px solid rgba(154, 164, 171, .4); }
+.vc-foot-t a:hover, .vc-foot-t a:focus-visible { color: #FFA765; border-bottom-color: #FFA765; }
+/* the readout the wheels draw, in words — secondary to them, and the only
+   form of it a 390px phone can actually read */
+.vc-readout { text-align: right; }
+
+.vc-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ── phone: the same declarations, re-flowed ──────────────────────────── */
+@media (max-width: 760px) {
+  /* the bar wraps to two rows at this width, so it is taller than --top-h:
+     tucking the frame under it would bury the nav */
+  .vc-wrap { margin-top: 0; margin-inline: calc(50% - 50vw); }
+  .vc-frame {
+    --u: calc((100vw - 32px) / 430);
+    width: 100%; height: auto; padding: calc(26 * var(--u)) 16px calc(34 * var(--u));
+    display: flex; flex-direction: column; gap: calc(26 * var(--u));
+  }
+  .vc-stagebox {
+    --u: calc((100vw - 32px) / 800);
+    position: relative; left: auto; top: auto; order: -1;
+    width: calc(800 * var(--u)); height: calc(800 * var(--u)); margin-inline: auto;
+  }
+  .vc-copy { position: static; width: auto; }
+  .vc-foot {
+    position: static; flex-direction: column; align-items: flex-start;
+    gap: calc(12 * var(--u)); text-align: left;
+  }
+  .vc-readout { text-align: left; }
+  /* at 390px the engraved label would set at 4.5px. The wheel keeps its
+     accessible name and its link; the readout under the rail carries the
+     same family and the same count as text a phone can read. */
+  .vc-wheel-label, .vc-wheel-reason { display: none; }
+}

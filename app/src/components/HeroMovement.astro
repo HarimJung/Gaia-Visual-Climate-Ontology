@@ -1,0 +1,274 @@
+---
+// THE MOVEMENT — the hero instrument, lifted from the predecessor comp
+// references/Main/Main.dc.html (owner authorisation 2026-10-17) and bound to
+// this runtime's own record. The comp's styling lives in styles/movement.css
+// with its provenance note; this file is the comp's inline generator
+// (40 barrels, 3 wheels, the flow paths) re-implemented at BUILD time, so the
+// whole instrument is server-rendered HTML and is complete with JavaScript
+// off and with WebGL gone.
+//
+// Device by device, and the data under each:
+//
+//   · BARREL RING — one barrel per document on record, at the comp's own
+//     R = 286 on its 800 stage. LIT = the bytes are held and hashed. METAL /
+//     GLASS = the row is read and on record, the bytes are not held. VOID =
+//     a sunken well with the comp's clay-red hairline, for a row this runtime
+//     has not read. Every barrel is a link to that document's receipt.
+//   · COMPLICATION WHEELS — one per SOURCE FAMILY the runtime reads. Each
+//     wheel's TOOTH COUNT is the number of documents on record from that
+//     family for this record; its label is that family's own name, engraved;
+//     the wheel is a link to that family's row in the record's ledger. A
+//     family with nothing on record keeps its wheel as the comp's unmeshed
+//     ghost — outline only, with the reason — never omitted, never faked.
+//   · FLOW PATHS + travelling spark (PULSE) — one path from each lit barrel
+//     into the escapement. Evidence moving into the record; never a number,
+//     never a count-up.
+//   · ESCAPEMENT — the comp's TICK, and the single amber jewel at the point
+//     where evidence enters the record.
+//   · VERDICT CARD — the comp's glass surface, carrying one true sentence
+//     assembled from this record's own counts, every figure inside its link,
+//     and the verbatim reason the unread rows carry.
+//
+// No percentage, no gauge, no count-up, no invented figure anywhere on it.
+import { fmt } from '../lib/data.mjs';
+import { sourceFamilies } from '../lib/derive.mjs';
+import '../styles/movement.css';
+
+const { view, entry, iso3, census, allRows, eyebrow, title, lede } = Astro.props;
+const c = entry.counts;
+
+// ── the comp's own stage geometry: CX/CY 400, barrel ring R 286 ──────────
+const CX = 400, CY = 400, R = 286, WR = 148;
+const u = (n) => `calc(${Number(n.toFixed(2))} * var(--u))`;
+const n2 = (x) => Number(x.toFixed(2));
+
+// ── barrels: one per document on record ─────────────────────────────────
+const face = (r) =>
+  r.sha256 ? 'vc-live' : r.state === 'observed' ? 'vc-metal' : r.state === 'pledged' ? 'vc-glass' : 'vc-void';
+const reading = {
+  'vc-live': 'bytes held and hashed',
+  'vc-metal': 'on record, read, bytes not held',
+  'vc-glass': 'pledged, bytes not held',
+  'vc-void': 'on record, not read',
+};
+const barrels = view.rows.map((r, i) => {
+  const a = (i / view.rows.length) * Math.PI * 2 - Math.PI / 2;
+  const cls = face(r);
+  const d = cls === 'vc-live' ? 26 : 22;
+  return {
+    row: r,
+    cls,
+    a,
+    x: CX + Math.cos(a) * R,
+    y: CY + Math.sin(a) * R,
+    style:
+      `left:${u(CX + Math.cos(a) * R)};top:${u(CY + Math.sin(a) * R)};` +
+      `width:${u(d)};height:${u(d)};margin-left:${u(-d / 2)};margin-top:${u(-d / 2)}`,
+  };
+});
+
+// ── flow paths: the comp's quadratic curve from barrel to escapement ────
+const flows = barrels
+  .filter((b) => b.cls === 'vc-live')
+  .map((b, n) => ({
+    d:
+      `M ${n2(b.x)} ${n2(b.y)} Q ${n2(CX + Math.cos(b.a + 0.34) * R * 0.52)} ` +
+      `${n2(CY + Math.sin(b.a + 0.34) * R * 0.52)} ${CX} ${CY}`,
+    style: `animation-duration:${n2(2.6 + n * 0.42)}s;animation-delay:${n2(n * 0.55)}s`,
+  }));
+
+// ── wheels: one per source family, teeth = that family's documents ──────
+const fams = sourceFamilies(allRows, view.rows);
+const wheels = fams.map((f, i) => {
+  const deg = -90 + (i * 360) / fams.length;
+  const ang = deg * (Math.PI / 180);
+  const d = i === 0 ? 158 : 138;
+  // the comp cuts its teeth as a repeating conic gradient; the repeat is one
+  // tooth pitch, so the teeth ARE countable on the rim. A family holding few
+  // documents gets few, wide teeth — a ratchet wheel, not a fake comb.
+  // the comp cuts a 1.5deg tooth on a 7.5deg pitch. Ours holds that cut and
+  // only opens it to 5.5deg so a family with a handful of documents still cuts
+  // teeth that can be seen and counted; past 48 documents the comp's own 20% duty takes
+  // over and the comb closes up exactly as the comp's does.
+  const pitch = f.n > 0 ? 360 / f.n : 0;
+  const tooth = f.n > 0 ? Math.min(5.5, pitch * 0.2) : 0;
+  const teeth =
+    f.n > 0
+      ? `background-image:repeating-conic-gradient(from 0deg, rgba(214,224,232,.70) 0deg ${n2(tooth)}deg, rgba(0,0,0,0) ${n2(tooth)}deg ${n2(pitch)}deg);`
+      : '';
+  return {
+    ...f,
+    up: Math.sin(ang) < 0,
+    style:
+      `left:${u(CX + Math.cos(ang) * WR)};top:${u(CY + Math.sin(ang) * WR)};` +
+      `width:${u(d)};height:${u(d)};margin-left:${u(-d / 2)};margin-top:${u(-d / 2)};${teeth}`,
+    href: f.first
+      ? `/country/${iso3}/#row-${f.first.doc_id}`
+      : `/country/${iso3}/#census-documents_on_record`,
+  };
+});
+
+// ── the verdict card: one true sentence, every figure inside its link ───
+// The reason is the first unread row's own recorded words — verbatim, with
+// the document it was recorded on linked. If no row carries one, the card
+// carries only the sentence; nothing is written to fill the slot.
+const unread = view.rows.find((r) => !r.sha256 && r.state_reason) ?? null;
+
+// ── the four-state legend: the world census, as the comp's small spheres ─
+const legend = [
+  { state: 'observed', material: 'metal', key: 'states_observed' },
+  { state: 'pledged', material: 'glass', key: 'states_pledged' },
+  { state: 'unknown', material: 'unverified', key: 'states_unknown' },
+  { state: 'absent', material: 'void', key: 'states_absent' },
+];
+---
+
+{/* no .head / .hero here: site.css's page-header rules (its padding and its
+    clamped h1) would overwrite the comp's own frame and type scale */}
+<section class="vc-wrap" aria-label="The record as an instrument">
+  <div class="vc-frame">
+    <div class="vc-rake" aria-hidden="true"></div>
+    <div class="vc-grain" aria-hidden="true"></div>
+
+    {/* ══ STAGE : the movement ══ */}
+    <div class="vc-stagebox">
+      <div class="vc-stage">
+        <div class="vc-c vc-halo" aria-hidden="true"></div>
+        <div class="vc-c vc-tickring" aria-hidden="true"></div>
+        <div class="vc-c vc-tickmask" aria-hidden="true"></div>
+        <div class="vc-c vc-plate" aria-hidden="true"></div>
+        <div class="vc-c vc-guide vc-g1" aria-hidden="true"></div>
+        <div class="vc-c vc-guide vc-g2" aria-hidden="true"></div>
+        <div class="vc-c vc-guide vc-g3" aria-hidden="true"></div>
+
+        {/* gear-train energy paths: one per lit barrel (PULSE) */}
+        <svg class="vc-flows" viewBox="0 0 800 800" aria-hidden="true">
+          {flows.map((f) => <path class="vc-flow-bed" d={f.d}></path>)}
+          {flows.map((f) => <path class="vc-flow-spark" d={f.d} style={f.style}></path>)}
+        </svg>
+
+        {/* one barrel per document on record, each one its own receipt */}
+        {
+          barrels.map((b) => (
+            <a
+              class={`vc-barrel ${b.cls}`}
+              style={b.style}
+              href={`/receipt/${iso3}/${b.row.doc_id}/`}
+              data-receipt={b.row.doc_id}
+              data-barrel={b.cls}
+            >
+              <span class="vc-sr">{b.row.title} — {reading[b.cls]}</span>
+            </a>
+          ))
+        }
+
+        {/* complication wheels: one per source family, teeth = its documents */}
+        {
+          wheels.map((w) => (
+            <a
+              class={`vc-wheel${w.up ? ' vc-up' : ''}${w.n === 0 ? ' vc-ghost' : ''}`}
+              style={w.style}
+              href={w.href}
+              data-wheel={w.key}
+              data-teeth={w.n}
+            >
+              <span class="vc-wheel-body" aria-hidden="true"></span>
+              <span class="vc-wheel-label">
+                {w.label} <b>{w.n}</b>
+              </span>
+              {w.n === 0 && <span class="vc-wheel-reason">nothing on record</span>}
+              <span class="vc-sr">
+                {w.label}: {w.n} document{w.n === 1 ? '' : 's'} on record from this source
+                {w.n === 0 ? ' — this record holds none, so the wheel has no teeth' : ''}
+              </span>
+            </a>
+          ))
+        }
+
+        {/* escapement / balance : the ratchet heartbeat */}
+        <div class="vc-c vc-esc-halo" aria-hidden="true"></div>
+        <div class="vc-c vc-esc-teeth" aria-hidden="true"></div>
+        <div class="vc-c vc-esc-body" aria-hidden="true"></div>
+        <div class="vc-c vc-esc-jewel" aria-hidden="true"></div>
+
+        <div class="vc-c vc-sweep" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    {/* ══ COPY ══ */}
+    <div class="vc-copy">
+      <p class="vc-eyebrow">
+        <span>{eyebrow} · as of <span data-meta="as_of">{census.as_of}</span></span>
+      </p>
+
+      <h1 class="vc-h1">{title}</h1>
+
+      <p class="vc-lede">{lede}</p>
+
+      {/* the comp's glass verdict card — our sentence, our figures, our links */}
+      <div class="vc-card">
+        <div class="vc-card-head">
+          <div class="vc-card-eyebrow">what this runtime holds</div>
+          <div class="vc-card-tag">counted</div>
+        </div>
+        <div class="vc-card-body">
+          On <a class="vc-strong" href={`/country/${iso3}/`}>{view.country.name_en}</a>’s record this
+          runtime holds{' '}
+          <a data-census="documents_on_record" href={`/country/${iso3}/#census-documents_on_record`}>{fmt(c.documents_on_record)}</a>{' '}
+          documents; the bytes of{' '}
+          <a data-census="documents_with_bytes" href={`/country/${iso3}/#census-documents_with_bytes`}>{fmt(c.documents_with_bytes)}</a>{' '}
+          are held and hashed here, and{' '}
+          <a data-census="documents_without_bytes" href={`/country/${iso3}/#census-documents_without_bytes`}>{fmt(c.documents_without_bytes)}</a>{' '}
+          are on record without them.
+        </div>
+        {
+          unread && (
+            <p class="vc-card-reason reason">
+              “{unread.state_reason}” —{' '}
+              <a href={`/receipt/${iso3}/${unread.doc_id}/#state`} data-receipt={unread.doc_id}>
+                {unread.title}
+              </a>
+            </p>
+          )
+        }
+      </div>
+
+      {/* material legend: the comp's spheres, labels on one line */}
+      <ul class="vc-legend">
+        {
+          legend.map((s) => (
+            <li>
+              <span class={`vc-sw vc-sw-${s.state}`} aria-hidden="true" />
+              <span class="vc-lbl">
+                {s.state} · {s.material}{' '}
+                <a data-census={s.key} href={`/ledger/#census-${s.key}`}>{fmt(census.counts[s.key])}</a>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="vc-action">
+        <a href="/ledger/">The world ledger holds every row →</a>
+      </p>
+    </div>
+
+    {/* ── footer rail ── */}
+    <div class="vc-foot">
+      <div class="vc-foot-l">
+        <span class="vc-pulse" aria-hidden="true"></span>
+        <span class="vc-foot-t">pulse = bytes entering the record · one barrel per document</span>
+      </div>
+      <div class="vc-foot-t vc-readout">
+        {
+          wheels.map((w, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <a href={w.href}>{w.label} {w.n}</a>
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

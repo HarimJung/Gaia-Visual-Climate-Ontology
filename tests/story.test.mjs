@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sourceFamilies } from '../app/src/lib/derive.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(repo, 'app', 'dist');
@@ -174,6 +175,103 @@ test('the dial carries the comps\' devices, and each one carries real data', { s
   } else {
     assert.doesNotMatch(svg, /class="d-satellite"/, 'no orphan row, no satellite — never an illustration');
   }
+});
+
+// ── THE HERO MOVEMENT (the ported Main.dc.html instrument) ────────────────
+// The walked record is derived exactly as the page derives it (richestView):
+// no country is named here either (R1).
+const allViews = viewFiles.map((f) => JSON.parse(readFileSync(join(viewsDir, f), 'utf8')));
+const byName = [...allViews].sort((a, b) =>
+  a.country.name_en < b.country.name_en ? -1
+  : a.country.name_en > b.country.name_en ? 1
+  : a.country.iso3 < b.country.iso3 ? -1 : 1,
+);
+const held = (v) => v.rows.filter((r) => r.sha256).length;
+const quoted = byName.filter((v) => v.rows.some((r) => r.quote && r.sha256));
+const walked = quoted.length > 0 ? quoted.reduce((a, b) => (held(b) > held(a) ? b : a)) : null;
+const heroSkip = skip || (!walked && 'no view carries a quoted, hashed row');
+const heroOf = (html) => {
+  const at = html.indexOf('class="vc-wrap"');
+  return at === -1 ? '' : html.slice(at, html.indexOf('</section>', at));
+};
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+test('hero movement: one barrel per document on record, lit where the bytes are held', { skip: heroSkip }, () => {
+  const hero = heroOf(readFileSync(story, 'utf8'));
+  assert.ok(hero.length > 0, 'the hero instrument is server-rendered into the page');
+  const barrels = [...hero.matchAll(/class="vc-barrel vc-/g)].length;
+  assert.equal(barrels, walked.rows.length, 'one barrel per document on record');
+  const lit = [...hero.matchAll(/class="vc-barrel vc-live"/g)].length;
+  assert.equal(lit, held(walked), 'a lit barrel is a document whose bytes are held and hashed');
+  // and every barrel IS the link to its own receipt — the mark is the evidence
+  for (const row of walked.rows) {
+    assert.match(
+      hero,
+      new RegExp(`<a class="vc-barrel vc-[a-z]+"[^>]*href="/receipt/[a-z]{3}/${esc(row.doc_id)}/"`),
+      `the barrel for ${row.doc_id} links its receipt`,
+    );
+  }
+  // PULSE: one flow path per lit barrel and never one more
+  assert.equal([...hero.matchAll(/class="vc-flow-spark"/g)].length, held(walked), 'one flow path per lit barrel');
+});
+
+test('hero movement: one wheel per source family, teeth = that family\'s documents', { skip: heroSkip }, () => {
+  const hero = heroOf(readFileSync(story, 'utf8'));
+  // the family universe is every document type the runtime holds anywhere
+  const universe = new Set(allViews.flatMap((v) => v.rows.map((r) => r.doc_type)));
+  const wheels = [...hero.matchAll(/<a class="vc-wheel([^"]*)"[^>]*href="([^"]+)"[^>]*data-wheel="([^"]+)" data-teeth="(\d+)"/g)];
+  assert.equal(wheels.length, universe.size, 'one wheel per source family the runtime reads');
+  const seen = new Set();
+  for (const [, cls, href, key, teeth] of wheels) {
+    assert.ok(universe.has(key), `wheel "${key}" is a source family the runtime holds`);
+    seen.add(key);
+    const n = walked.rows.filter((r) => r.doc_type === key).length;
+    assert.equal(Number(teeth), n, `the ${key} wheel cuts one tooth per document on record from it`);
+    // the wheel is a link, and it renders its own count inside that link (R6)
+    assert.match(href, /^\/(country|ledger)\//, `the ${key} wheel links into the record`);
+    // ghost iff zero: no teeth means outline only, with its reason — never dropped
+    assert.equal(/\bvc-ghost\b/.test(cls), n === 0, `the ${key} wheel is a ghost exactly when it has nothing on record`);
+  }
+  assert.equal(seen.size, universe.size, 'no family is drawn twice and none is omitted');
+  // the ghost reason is on the page whenever a ghost wheel is
+  const ghosts = wheels.filter(([, cls]) => /\bvc-ghost\b/.test(cls)).length;
+  assert.equal([...hero.matchAll(/class="vc-wheel-reason"/g)].length, ghosts, 'every ghost wheel states why it is empty');
+});
+
+test('source families: a family with nothing on this record keeps its wheel, with zero teeth', () => {
+  // the universe is every type the runtime holds; the teeth are one record's
+  const all = [{ doc_type: 'alpha' }, { doc_type: 'alpha' }, { doc_type: 'beta' }, { doc_type: 'gamma' }];
+  const fams = sourceFamilies(all, [{ doc_type: 'alpha' }, { doc_type: 'gamma' }]);
+  assert.deepEqual(fams.map((f) => f.key), ['alpha', 'beta', 'gamma'], 'ordered by how much of the record each family carries, then by name');
+  assert.deepEqual(fams.map((f) => f.n), [1, 0, 1], 'teeth are counted from THIS record, not from the universe');
+  assert.equal(fams[1].first, null, 'a family with nothing on record has no row to point at — a ghost wheel, never a dropped one');
+  assert.equal(fams[0].first.doc_type, 'alpha', 'a family with documents points at its first one');
+  // the label is the family's own word, never a name invented for it
+  assert.deepEqual(sourceFamilies([{ doc_type: 'treaty-status_list' }], []).map((f) => f.label), ['treaty status list']);
+});
+
+test('hero movement: the comp is ported, not re-approximated, and its loops are stoppable', () => {
+  const css = readFileSync(join(repo, 'app', 'src', 'styles', 'movement.css'), 'utf8');
+  // the provenance of a lifted design is part of the deliverable
+  assert.match(css, /references\/Main\/Main\.dc\.html/, 'the ported sheet names the comp it came from');
+  // the comp's own declarations, spot-checked where an approximation would show
+  assert.match(css, /radial-gradient\(120% 90% at 78% 8%, #1E242A 0%, #12161A 42%, #0A0C0E 100%\)/, 'the ground is the comp\'s own');
+  assert.match(css, /repeating-linear-gradient\(112deg/, 'the mainplate is cut in the comp\'s 112-degree cotes');
+  assert.match(css, /repeating-conic-gradient\(from 0deg, rgba\(190, 202, 210, \.55\) 0deg 0\.28deg/, 'the engraved tick bezel is the comp\'s');
+  assert.match(css, /radial-gradient\(circle at 34% 28%, #FFD3AA 0%, #FF9B52 42%, #A85B22 100%\)/, 'the lit barrel is the comp\'s sphere');
+  // the keyframes are renamed, because scene.css already owns vc-flow/vc-tick
+  // globally and a second definition would re-point the SVG dial's animation
+  assert.match(css, /@keyframes vcm-(flow|tick|breathe)/, 'the ported keyframes carry their own names');
+  const code = css.replace(/\/\*[\s\S]*?\*\//g, ''); // the note explains the rename; the rule is about the code
+  assert.doesNotMatch(code, /@keyframes vc-(flow|tick)\b/, 'the ported sheet never redefines the dial\'s keyframes');
+  // every loop it adds is infinite, so the reduce block's iteration count —
+  // not its duration — is what stops them
+  for (const loop of [/\.vc-flow-spark[^}]*animation: vcm-flow[^}]*infinite/, /\.vc-esc-teeth[^}]*animation: vcm-tick[^}]*infinite/, /\.vc-pulse[^}]*animation: vcm-breathe[^}]*infinite/]) {
+    assert.match(css, loop, `the hero's loop ${loop.source.slice(0, 18)} is declared infinite`);
+  }
+  const site = readFileSync(join(repo, 'app', 'src', 'styles', 'site.css'), 'utf8');
+  const block = site.slice(site.indexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.match(block, /\*, \*::before, \*::after/, 'the reduce block reaches every element, the hero included');
 });
 
 test('the tray gives every record the same case and counts the inside', { skip }, () => {

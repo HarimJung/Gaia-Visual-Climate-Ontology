@@ -11,6 +11,7 @@
 import Base from '../layouts/Base.astro';
 import SceneStage from '../components/SceneStage.astro';
 import StaticDial from '../components/StaticDial.astro';
+import HeroMovement from '../components/HeroMovement.astro';
 import { views, census, countryEntry, fmt, richestView, REPO_BLOB } from '../lib/data.mjs';
 import { sceneDataFor } from '../lib/scene-data.mjs';
 import { STORY, WORLD_STEPS, MACHINE_CARDS } from '../lib/story-content.mjs';
@@ -22,14 +23,10 @@ import '../styles/stage.css';
 
 const ledgerUrl = REPO_BLOB + census.ledger;
 
-// Cover band: the world's four-state totals as materials (moved from the old
-// front page; /ledger/ keeps its own copy).
-const band = [
-  { state: 'observed', material: 'metal', key: 'states_observed' },
-  { state: 'pledged', material: 'glass', key: 'states_pledged' },
-  { state: 'unknown', material: 'unverified', key: 'states_unknown' },
-  { state: 'absent', material: 'void', key: 'states_absent' },
-];
+// The hero's four-state legend and its wheels read the same two things: the
+// world census (the legend's totals) and every row the runtime holds (the
+// source-family universe the wheels are cut from). Both go through the door.
+const allRows = views.flatMap((v) => v.rows);
 
 // ── World stage data: one bead and one column per country ────────────────
 // Centroid of the largest subpath of a country's base-map shape (predecessor
@@ -175,70 +172,21 @@ for (const v of views) {
 ---
 
 <Base title="National Climate Record Runtime">
-  {/* THE HERO (Main.dc.html): copy on the left, the instrument on the right
-      at three quarters of the frame's height. The dial here is the walked
-      record's own dial — the same server-rendered object the pinned chapter
-      falls back to — so the cover opens on the product's most characteristic
-      object instead of on a wall of type, and every mark on it is a document
-      this runtime holds, each one a link to that document's receipt. */}
-  <section class="head hero cover">
-    <div class="cover-copy">
-    <p class="eyebrow">
-      <span>{STORY.eyebrow} · as of <span data-meta="as_of">{census.as_of}</span></span>
-    </p>
-    <h1>{STORY.title}</h1>
-    <p class="treaty">{STORY.lede}</p>
-    {/* all four states show, including the zeros: zero is a reading, and the
-        key below names four materials — the object it describes has four */}
-    <div class="worldband" aria-hidden="true">
-      {
-        band.map((s) => (
-          <div
-            class={`seg seg-${s.state}${census.counts[s.key] > 0 ? '' : ' seg-zero'}`}
-            style={`flex-grow:${census.counts[s.key]}`}
-          />
-        ))
-      }
-    </div>
-    <ul class="bandkey">
-      {
-        band.map((s) => (
-          <li>
-            <span class="lbl">
-              <span class={`sw sw-${s.state}`} aria-hidden="true" />
-              {s.state} · {s.material}
-            </span>
-            <a class="fig cnt" data-census={s.key} href={`/ledger/#census-${s.key}`}>
-              {fmt(census.counts[s.key])}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <p class="action">
-      <span class="action-txt">
-        These four states are the whole vocabulary. Unknown and absent describe this runtime's
-        reading, not the country — and they are stated, never hidden.
-      </span>
-      <a class="action-cta" href="/ledger/">The world ledger holds every row →</a>
-    </p>
-    </div>
-    <div class="cover-stage">
-      <StaticDial
-        counts={entry.counts}
-        rows={walked.rows}
-        sockets={scene.sockets}
-        iso3={iso3}
-        href={`/country/${iso3}/#census-documents_with_bytes`}
-        onRecordHref={`/country/${iso3}/#census-documents_on_record`}
-      />
-      <p class="cover-cap">
-        <span class="cover-cap-k">The instrument</span>
-        <a href={`/country/${iso3}/`}>{walked.country.name_en}</a> — one barrel per document on
-        record; lit where the bytes are held and hashed, a machined void where they are not.
-      </p>
-    </div>
-  </section>
+  {/* THE HERO — the predecessor comp Main.dc.html, lifted (see
+      styles/movement.css for the provenance note) and bound to the walked
+      record: one barrel per document, one wheel per source family with its
+      documents as teeth, the comp's glass card carrying this record's own
+      counts. Server-rendered HTML; complete with JavaScript off. */}
+  <HeroMovement
+    view={walked}
+    entry={entry}
+    iso3={iso3}
+    census={census}
+    allRows={allRows}
+    eyebrow={STORY.eyebrow}
+    title={STORY.title}
+    lede={STORY.lede}
+  />
 
   <section class="scrolly" id="world" data-world aria-label="The world's records, step by step">
     <div class="wsteps">
@@ -569,28 +517,8 @@ for (const v of views) {
 </Base>
 
 <style>
-  /* The cover composes its band: the kicker starts a measured distance under
-     the bar instead of floating in a 127px dead band, and the closing action
-     strip runs the full line — hairline across, sentence left, action right.
-     (The old rule centred the block and then padded the bottom, which biased
-     the content DOWN by the padding and inverted the rhythm on a phone.) */
-  /* the comps' hero proportion: the copy column holds its measure and the
-     instrument takes the rest of the frame, centred in its own cell, at
-     ~75% of the viewport's height — never clipped, never over the copy */
-  .cover { min-height: calc(92svh - var(--top-h)); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); align-items: center; gap: clamp(20px, 3vw, 56px); padding-top: clamp(16px, 3svh, 40px); padding-bottom: clamp(16px, 4svh, 40px); }
-  .cover-copy { min-width: 0; }
-  .cover .action { max-width: none; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
-  .cover .action .action-txt { max-width: 34rem; }
-  .cover .action .action-cta { white-space: nowrap; font-weight: 600; }
-  .cover-stage { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .cover-stage :global(svg) { display: block; width: 100%; height: auto; max-height: 78svh; }
-  .cover-cap { margin: 4px 0 0; max-width: 42ch; text-align: center; font-size: var(--t-xs); line-height: 1.5; color: var(--ink-3); }
-  .cover-cap-k { display: block; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .26em; text-transform: uppercase; color: var(--acc); margin-bottom: 4px; }
-  @media (max-width: 860px) {
-    .cover { grid-template-columns: 1fr; min-height: 0; gap: 28px; }
-    .cover-stage { order: -1; }
-    .cover-stage :global(svg) { max-height: 52svh; }
-  }
+  /* the hero is the ported instrument now (components/HeroMovement.astro,
+     styles/movement.css); the old two-column cover's rules went with it */
   .scrolly { margin-top: 10svh; }
   .doc-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font: 500 11.5px/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); }
   .doc-eyebrow::before { content: ''; flex: 0 0 26px; height: 1px; background: var(--acc); }
