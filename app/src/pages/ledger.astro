@@ -140,6 +140,16 @@ const trayUnits = entries.map(({ v, e }, i) => {
 
   <section aria-labelledby="countries-h">
     <h2 class="sec" id="countries-h">Countries on record</h2>
+    {/* The server renders every row, so the ledger is whole with JavaScript
+        off and whole in print. Script only makes a long table workable: it
+        folds the list and filters it. Nothing here hides a record. */}
+    <div class="tbar" data-tbar hidden>
+      <label class="tfind">
+        <span class="sr-only">Find a country by name or code</span>
+        <input type="search" id="findc" placeholder="Find a country — name or code" autocomplete="off" data-find />
+      </label>
+      <p class="tcount" data-tcount aria-live="polite"></p>
+    </div>
     <div class="tablewrap">
       <table class="table countries">
         <caption class="sr-only">
@@ -149,9 +159,8 @@ const trayUnits = entries.map(({ v, e }, i) => {
         <thead>
           <tr>
             <th scope="col">Country</th>
-            <th scope="col">Code</th>
-            <th scope="col" class="num">Documents</th>
-            <th scope="col" class="num">With bytes</th>
+            <th scope="col">On record</th>
+            <th scope="col">Latest dated document</th>
             <th scope="col">What's been read</th>
           </tr>
         </thead>
@@ -160,20 +169,27 @@ const trayUnits = entries.map(({ v, e }, i) => {
             views.map((v) => {
               const e = countryEntry(v.country.iso3);
               const iso3 = v.country.iso3.toLowerCase();
+              // the newest document this record carries a date for — the record
+              // itself, not a ranking: a country with no dated row says so
+              const dated = v.rows.filter((r) => r.date);
+              const latest = dated.length
+                ? dated.reduce((a, b) => (b.date > a.date ? b : a))
+                : null;
+              // only the states this record actually holds get a mark; a state
+              // at zero is in the census, not repeated down every row
+              const held = v.strip.segments.filter((s) => e.counts[s.census_key] > 0);
               return (
-                <tr id={`c-${iso3}`}>
-                  <td>
-                    <a class="cname" href={`/country/${iso3}/`}>
-                      {v.country.name_en}
-                    </a>
-                  </td>
+                <tr id={`c-${iso3}`} data-row data-name={v.country.name_en.toLowerCase()} data-iso={iso3}>
                   {/* data-l carries each cell's own label: below 768px the row
                       becomes a card and the column headers are out of view,
                       so every figure keeps a visible name beside it */}
-                  <td class="mono" style="font-size:13px" data-l="code">
-                    {v.country.iso3}
+                  <td data-l="country">
+                    <a class="cname" href={`/country/${iso3}/`}>
+                      {v.country.name_en}
+                    </a>
+                    <span class="rowmeta mono">{v.country.iso3}</span>
                   </td>
-                  <td class="num" data-l="documents">
+                  <td data-l="on record">
                     <a
                       class="fig"
                       data-census="documents_on_record"
@@ -181,34 +197,50 @@ const trayUnits = entries.map(({ v, e }, i) => {
                     >
                       {e.counts.documents_on_record}
                     </a>
+                    <span class="rowmeta">
+                      <a
+                        class="fig"
+                        data-census="documents_with_bytes"
+                        href={`/country/${iso3}/#census-documents_with_bytes`}
+                      >
+                        {e.counts.documents_with_bytes}
+                      </a>{' '}
+                      hashed here
+                    </span>
                   </td>
-                  <td class="num" data-l="with bytes">
-                    <a
-                      class="fig"
-                      data-census="documents_with_bytes"
-                      href={`/country/${iso3}/#census-documents_with_bytes`}
-                    >
-                      {e.counts.documents_with_bytes}
-                    </a>
+                  <td data-l="latest dated document">
+                    {latest ? (
+                      <>
+                        <a class="doc-title" href={`/receipt/${iso3}/${latest.doc_id}/`}>
+                          {latest.title}
+                        </a>
+                        <span class="rowmeta">
+                          {latest.doc_type} · {latest.date}
+                        </span>
+                      </>
+                    ) : (
+                      <span class="rowmeta">no document on this record carries a date</span>
+                    )}
                   </td>
                   <td class="statecell" data-l="what's been read">
                     {e.counts.documents_on_record > 0 && (
                       <div class="ministrip" aria-hidden="true">
-                        {v.strip.segments
-                          .filter((s) => e.counts[s.census_key] > 0)
-                          .map((s) => (
-                            <div class={`seg seg-${s.state}`} style={`flex-grow:${e.counts[s.census_key]}`} />
-                          ))}
+                        {held.map((s) => (
+                          <div class={`seg seg-${s.state}`} style={`flex-grow:${e.counts[s.census_key]}`} />
+                        ))}
                       </div>
                     )}
+                    {/* every state stays on the row, because a state this
+                        record holds none of is a reading too — but a zero does
+                        not get the weight of a count that carries documents */}
                     <span class="strip-key ministrip-key">
                       {v.strip.segments.map((s) => (
-                        <span class="mk">
+                        <span class={`mk${e.counts[s.census_key] > 0 ? '' : ' mk-none'}`}>
                           <span class={`sw sw-${s.state}`} aria-hidden="true" />
-                          <span class="sr-only">{s.state} </span>
                           <a class="fig" data-census={s.census_key} href={`/country/${iso3}/#census-${s.census_key}`}>
                             {e.counts[s.census_key]}
-                          </a>
+                          </a>{' '}
+                          {s.state}
                         </span>
                       ))}
                     </span>
@@ -258,3 +290,57 @@ const trayUnits = entries.map(({ v, e }, i) => {
     <StateLegend counts={census.counts} />
   </section>
 </Base>
+
+<style>
+  /* the one control row this page needs: find, and how many you are looking at */
+  .tbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3) var(--s5); margin: 0 0 var(--s4); }
+  .tfind { flex: 1 1 280px; max-width: 420px; }
+  .tfind input { width: 100%; padding: 9px 12px; border: 1px solid var(--rule-strong); border-radius: var(--radius); background: var(--paper-raised); font: var(--t2) var(--font-sans); color: var(--ink); }
+  .tfind input::placeholder { color: var(--ink-4); }
+  .tfind input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .tcount { margin: 0; font: var(--t1) var(--font-sans); color: var(--ink-3); }
+  .tmore { display: block; width: 100%; margin: var(--s4) 0 0; padding: 10px 14px; border: 1px solid var(--rule-strong); border-radius: var(--radius); background: var(--paper-raised); font: 500 var(--t2) var(--font-sans); color: var(--ink); cursor: pointer; }
+  .tmore:hover { background: var(--paper-sunken); }
+  .countries tbody tr[hidden] { display: none; }
+</style>
+
+<script>
+  // Progressive enhancement only: every row is already in the page. With
+  // script, the list folds to a readable first screen and can be searched;
+  // without it, the whole ledger is there, as it is in print.
+  const FOLD = 20;
+  const table = document.querySelector('.countries');
+  const bar = document.querySelector('[data-tbar]');
+  if (table && bar) {
+    const rows = [...table.querySelectorAll('tr[data-row]')];
+    const count = bar.querySelector('[data-tcount]');
+    const find = bar.querySelector('[data-find]');
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'tmore';
+    let folded = true;
+    const apply = () => {
+      const q = (find.value || '').trim().toLowerCase();
+      let shown = 0;
+      let matched = 0;
+      for (const tr of rows) {
+        const hit = !q || tr.dataset.name.includes(q) || tr.dataset.iso.includes(q);
+        if (hit) matched++;
+        const show = hit && (!folded || q || shown < FOLD);
+        tr.hidden = !show;
+        if (show) shown++;
+      }
+      const hiddenByFold = matched - shown;
+      more.hidden = hiddenByFold <= 0;
+      more.textContent = `Show all ${matched} rows`;
+      count.textContent = q
+        ? `${matched} of ${rows.length} countries match “${find.value.trim()}”`
+        : `${shown} of ${rows.length} countries shown`;
+    };
+    more.addEventListener('click', () => { folded = false; apply(); });
+    find.addEventListener('input', apply);
+    table.after(more);
+    bar.hidden = false;
+    apply();
+  }
+</script>

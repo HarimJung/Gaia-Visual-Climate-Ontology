@@ -243,7 +243,7 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
 .tablewrap { overflow-x: auto; position: relative; }
 .table { width: 100%; border-collapse: collapse; font-size: var(--t2); }
 /* the header holds its ground down a long table */
-.table th { position: sticky; top: var(--top-h, 64px); z-index: 2; background: var(--paper); padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule-strong); text-align: left; font: 500 var(--t1) var(--font-sans); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
+.table th { position: sticky; top: var(--top-h, 64px); z-index: 6; background: var(--paper); box-shadow: 0 1px 0 var(--rule-strong); padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule-strong); text-align: left; font: 500 var(--t1) var(--font-sans); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
 .table td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; color: var(--ink-2); }
 .table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .table tbody tr { transition: background var(--dur) var(--ease); }
@@ -251,7 +251,14 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
 .doc-title { font-weight: 500; color: var(--ink); }
 .rowmeta { margin: 3px 0 0; font-size: var(--t1); color: var(--ink-4); }
 .cname { font-weight: 500; color: var(--ink); }
-.countries td { vertical-align: middle; }
+/* a ledger row is two lines: the value, and the clue under it */
+.countries td { vertical-align: top; padding-top: var(--s3); padding-bottom: var(--s3); }
+.countries .rowmeta { display: block; }
+.countries td > .fig { font-size: var(--t4); font-weight: 500; }
+.countries .doc-title { display: block; }
+/* a state this record holds none of stays on the row, quietly */
+.ministrip-key .mk-none { opacity: .45; }
+.ministrip-key .mk-none .fig { font-weight: 400; }
 .statecell { min-width: 220px; }
 .census-src { font-size: var(--t2); color: var(--ink-3); margin: 0 0 var(--s3); }
 .table .ckey { font-family: var(--font-code); font-size: var(--t1); }
