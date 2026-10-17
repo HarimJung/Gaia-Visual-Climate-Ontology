@@ -10,6 +10,7 @@
 // map, dial and full text (AD-6R baseline).
 import Base from '../layouts/Base.astro';
 import SceneStage from '../components/SceneStage.astro';
+import StaticDial from '../components/StaticDial.astro';
 import { views, census, countryEntry, fmt, richestView, REPO_BLOB } from '../lib/data.mjs';
 import { sceneDataFor } from '../lib/scene-data.mjs';
 import { STORY, WORLD_STEPS, MACHINE_CARDS } from '../lib/story-content.mjs';
@@ -174,7 +175,14 @@ for (const v of views) {
 ---
 
 <Base title="National Climate Record Runtime">
+  {/* THE HERO (Main.dc.html): copy on the left, the instrument on the right
+      at three quarters of the frame's height. The dial here is the walked
+      record's own dial — the same server-rendered object the pinned chapter
+      falls back to — so the cover opens on the product's most characteristic
+      object instead of on a wall of type, and every mark on it is a document
+      this runtime holds, each one a link to that document's receipt. */}
   <section class="head hero cover">
+    <div class="cover-copy">
     <p class="eyebrow">
       <span>{STORY.eyebrow} · as of <span data-meta="as_of">{census.as_of}</span></span>
     </p>
@@ -214,6 +222,22 @@ for (const v of views) {
       </span>
       <a class="action-cta" href="/ledger/">The world ledger holds every row →</a>
     </p>
+    </div>
+    <div class="cover-stage">
+      <StaticDial
+        counts={entry.counts}
+        rows={walked.rows}
+        sockets={scene.sockets}
+        iso3={iso3}
+        href={`/country/${iso3}/#census-documents_with_bytes`}
+        onRecordHref={`/country/${iso3}/#census-documents_on_record`}
+      />
+      <p class="cover-cap">
+        <span class="cover-cap-k">The instrument</span>
+        <a href={`/country/${iso3}/`}>{walked.country.name_en}</a> — one barrel per document on
+        record; lit where the bytes are held and hashed, a machined void where they are not.
+      </p>
+    </div>
   </section>
 
   <section class="scrolly" id="world" data-world aria-label="The world's records, step by step">
@@ -266,9 +290,16 @@ for (const v of views) {
             {/* objectBoundingBox on both axes: the cells are sized by
                 transform, so a user-space tile would scale with them */}
             <pattern id="w-gap" width=".34" height=".34" patternUnits="objectBoundingBox" patternContentUnits="objectBoundingBox">
-              <rect width=".34" height=".34" fill="var(--wash)"></rect>
+              <rect width=".34" height=".34" fill="#1A2026"></rect>
               <path d="M0,0 L.34,.34 M-.17,.17 L.17,.51" stroke="var(--ink-3)" stroke-width=".1" fill="none"></path>
             </pattern>
+            {/* observed = METAL, the same machined pearl the band, the chips,
+                the record stage and the dial's barrels are cut from */}
+            <linearGradient id="w-metal" x1="0" y1="0" x2=".55" y2="1">
+              <stop offset="0%" stop-color="#C6D0D7"></stop>
+              <stop offset="46%" stop-color="#9AA4AB"></stop>
+              <stop offset="100%" stop-color="#6B757C"></stop>
+            </linearGradient>
           </defs>
           <g class="stage-map" style={`transform:translate(0px,${MAP_TY}px)`}>
             {
@@ -543,15 +574,28 @@ for (const v of views) {
      strip runs the full line — hairline across, sentence left, action right.
      (The old rule centred the block and then padded the bottom, which biased
      the content DOWN by the padding and inverted the rhythm on a phone.) */
-  .cover { min-height: calc(74svh - 60px); display: flex; flex-direction: column; justify-content: flex-start; padding-top: clamp(28px, 7svh, 72px); padding-bottom: clamp(16px, 4svh, 40px); }
-  .cover .action { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px 40px; }
-  .cover .action .action-txt { max-width: 40rem; }
+  /* the comps' hero proportion: the copy column holds its measure and the
+     instrument takes the rest of the frame, centred in its own cell, at
+     ~75% of the viewport's height — never clipped, never over the copy */
+  .cover { min-height: calc(92svh - var(--top-h)); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); align-items: center; gap: clamp(20px, 3vw, 56px); padding-top: clamp(16px, 3svh, 40px); padding-bottom: clamp(16px, 4svh, 40px); }
+  .cover-copy { min-width: 0; }
+  .cover .action { max-width: none; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cover .action .action-txt { max-width: 34rem; }
   .cover .action .action-cta { white-space: nowrap; font-weight: 600; }
+  .cover-stage { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .cover-stage :global(svg) { display: block; width: 100%; height: auto; max-height: 78svh; }
+  .cover-cap { margin: 4px 0 0; max-width: 42ch; text-align: center; font-size: var(--t-xs); line-height: 1.5; color: var(--ink-3); }
+  .cover-cap-k { display: block; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .26em; text-transform: uppercase; color: var(--acc); margin-bottom: 4px; }
+  @media (max-width: 860px) {
+    .cover { grid-template-columns: 1fr; min-height: 0; gap: 28px; }
+    .cover-stage { order: -1; }
+    .cover-stage :global(svg) { max-height: 52svh; }
+  }
   .scrolly { margin-top: 10svh; }
   .doc-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font: 500 11.5px/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); }
   .doc-eyebrow::before { content: ''; flex: 0 0 26px; height: 1px; background: var(--acc); }
   .docopen, .voids, .closer { padding: clamp(64px, 12svh, 140px) 0 0; max-width: 54rem; }
-  .docopen h2, .voids h2, .closer h2 { font: 760 clamp(1.8rem, 3.4vw, 2.6rem)/1.05 var(--f-d); letter-spacing: -.028em; margin: 0 0 12px; }
+  .docopen h2, .voids h2, .closer h2 { font: 800 clamp(1.9rem, 3.6vw, 2.8rem)/1.0 var(--f-d); letter-spacing: -.024em; text-transform: uppercase; margin: 0 0 14px; }
   .docbody { font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.6; color: var(--ink-2); margin: 0 0 28px; max-width: 44rem; }
   .docchain .rblock h3 { font: 600 12px/1 var(--f-m); letter-spacing: .16em; color: var(--ink-2); margin: 0 0 12px; text-transform: uppercase; }
   .docline { margin: 6px 0 0; color: var(--ink-2); font-size: 15.5px; }
@@ -560,8 +604,8 @@ for (const v of views) {
   .voids .figrow a.fig { font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.1; align-self: flex-start; }
   .closer { padding-bottom: 10svh; }
   .ways { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0 0; }
-  .way { display: inline-block; font: 600 15.5px/1 var(--f-t); color: var(--acc-ink); border: 1px solid var(--line-2); border-radius: 8px; padding: 13px 18px; text-decoration: none; transition: border-color .15s var(--ease), background .15s var(--ease); }
-  .way:hover { border-color: var(--acc-ink); background: var(--acc-soft); }
+  .way { display: inline-block; font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .14em; text-transform: uppercase; color: var(--acc); border: 1px solid var(--line-2); border-radius: var(--r); padding: 15px 20px; text-decoration: none; transition: border-color .15s var(--ease), box-shadow .15s var(--ease); }
+  .way:hover { border-color: var(--acc); box-shadow: 0 0 0 1px rgba(255, 138, 61, .3), 0 0 22px rgba(255, 138, 61, .16); }
   .cardfigs { margin-top: 10px !important; padding-top: 10px; border-top: 1px solid var(--line-2); }
   /* no entrance animation here: this block sits 13,000px down the page, so a
      CSS animation with no trigger played and finished at parse time and no

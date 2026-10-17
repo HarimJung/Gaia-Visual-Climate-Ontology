@@ -160,7 +160,7 @@ export const RECORD_STEPS = [
     eyebrow: 'assembled',
     title: 'The marks gather and the instrument is seated',
     body:
-      'Every document takes a place on the ring, and the dial seats in the middle: one countable segment per document, machined where the bytes are held, hatched where the state is unknown. No sweep, no gauge — segments you can count.',
+      'Every document takes a place on the ring, and the dial seats in the middle: one barrel per document, lit where the bytes are held and hashed, a machined void where they are not. No sweep, no gauge — barrels you can count, each one its own receipt.',
     figs: ['documents_with_bytes', 'documents_on_record'],
   },
 ];

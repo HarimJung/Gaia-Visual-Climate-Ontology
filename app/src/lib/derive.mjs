@@ -17,3 +17,10 @@ export function countsFromRows(rows, keys) {
   }
   return counts;
 }
+
+// A build-unique suffix for SVG fragment ids. The dial is rendered more than
+// once on a page (the cover's hero, the pinned instrument's fallback, the
+// record stage's seated hero); without this every copy would define the same
+// `dial-cotes` and the whole page would paint from the first one's defs.
+let n = 0;
+export const nextUid = () => `d${++n}`;

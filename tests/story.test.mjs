@@ -111,15 +111,69 @@ test('record stage: the stage rests on a complete step with JavaScript off', { s
   assert.ok(tracks >= 6, `the record morph carries its stages (found ${tracks})`);
 });
 
-test('the dial draws one countable segment per document on record — no sweep, no gauge', { skip: countrySkip }, () => {
+test('the dial draws one countable barrel per document on record — no sweep, no gauge', { skip: countrySkip }, () => {
   const html = readFileSync(countryPage, 'utf8');
-  const dial = html.slice(html.indexOf('class="d-seg"'));
-  const segs = [...dial.slice(0, dial.indexOf('</g>')).matchAll(/<path /g)].length;
+  // The barrel ring replaced the arc-segment ring (the predecessor's forty
+  // barrels, Main.dc.html). The honesty contract is unchanged and stricter:
+  // the marks are still COUNTABLE and still one per document, and now each
+  // one also carries the receipt of the document it stands for.
+  const dial = html.slice(html.indexOf('class="d-barrels"'));
+  const ring = dial.slice(0, dial.indexOf('</g>'));
   const onRecord = anyCountry.rows.length;
-  assert.equal(segs, onRecord, 'one arc segment per document on record');
+  const barrels = [...ring.matchAll(/class="d-barrel /g)].length;
+  assert.equal(barrels, onRecord, 'one barrel per document on record');
+  // live = the bytes are held and hashed. Never more, never fewer.
+  const live = [...ring.matchAll(/class="d-barrel live"/g)].length;
+  const held = anyCountry.rows.filter((r) => r.sha256).length;
+  assert.equal(live, held, 'a lit barrel is a document whose bytes are held and hashed');
+  const voids = [...ring.matchAll(/class="d-barrel void"/g)].length;
+  assert.equal(voids, onRecord - held, 'every other barrel is an explicit machined void');
+  // every barrel is its document's receipt (R6: the mark IS the link)
+  for (const row of anyCountry.rows) {
+    const re = new RegExp(
+      `href="/receipt/[a-z]{3}/${row.doc_id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/"[^>]*>` +
+        `[\\s\\S]{0,260}?class="d-barrel `,
+    );
+    assert.match(ring, re, `the barrel for ${row.doc_id} links its receipt`);
+  }
   // the centre readout is two census figures, each inside its link (R6)
   assert.match(html, /<a href="#census-documents_with_bytes">\s*<text[^>]*class="d-read"[^>]*>\s*\d+\s*<\/text>\s*<\/a>/);
-  assert.doesNotMatch(html, /class="static-dial"[\s\S]{0,4000}%/, 'no percentage anywhere on the dial');
+  // No percentage is ever DISPLAYED on the dial. The old form of this check
+  // scanned the first 4000 characters of the markup for a "%", which the
+  // gradient coordinates in <defs> now trip; it is replaced by the exact
+  // rule — every rendered string on the instrument, checked, all of them.
+  const svg = html.slice(html.indexOf('class="static-dial"'));
+  const drawn = [...svg.slice(0, svg.indexOf('</svg>')).matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/g)]
+    .map((m) => m[1].replace(/<[^>]*>/g, ''));
+  assert.ok(drawn.length > 0, 'the dial is engraved with something');
+  for (const t of drawn) assert.ok(!t.includes('%'), `no percentage on the dial: ${t.trim()}`);
+});
+
+test('the dial carries the comps\' devices, and each one carries real data', { skip: countrySkip }, () => {
+  const html = readFileSync(countryPage, 'utf8');
+  const dial = html.slice(html.indexOf('class="static-dial"'));
+  const svg = dial.slice(0, dial.indexOf('</svg>'));
+  // the engraved tick bezel: one bold tick per document on record
+  const bold = svg.slice(svg.indexOf('class="d-bold"'));
+  const ticks = [...bold.slice(0, bold.indexOf('</g>')).matchAll(/<line /g)].length;
+  assert.equal(ticks, anyCountry.rows.length, 'one bold bezel tick per document on record');
+  // the cotes mainplate, the escapement and the pledge ghost ring are present
+  assert.match(svg, /patternTransform="rotate\(112\)"/, 'the mainplate is cut in 112-degree cotes');
+  assert.match(svg, /class="d-escape"/, 'the escapement is on the plate');
+  assert.match(svg, /class="d-ghost"/, 'the unread pledge path is a ghost ring');
+  // PULSE: one amber flow path per LIVE barrel, and never one more. The flow
+  // animates evidence moving; it is not allowed to become a reading.
+  const sparks = [...svg.matchAll(/class="d-spark"/g)].length;
+  const held = anyCountry.rows.filter((r) => r.sha256).length;
+  assert.equal(sparks, held, 'one flow path per document whose bytes are held');
+  // the satellite only exists when a real orphan row does, and it is a link
+  const orphan = anyCountry.rows.find((r) => !r.sha256);
+  if (orphan) {
+    assert.match(svg, /class="d-satellite"/, 'a document on record with no bytes held is tethered, unengaged');
+    assert.match(svg, /class="d-tether"/, 'the satellite hangs on a dashed tether');
+  } else {
+    assert.doesNotMatch(svg, /class="d-satellite"/, 'no orphan row, no satellite — never an illustration');
+  }
 });
 
 test('the tray gives every record the same case and counts the inside', { skip }, () => {
@@ -154,6 +208,41 @@ test('the case-back carries source, run time and checksum, and is complete witho
   // no data-flip-ready in the built HTML: both faces are plain blocks until
   // the enhancement script runs, so JS off loses no fact
   assert.doesNotMatch(html, /data-flip-ready/, 'the flip is added at runtime, never baked in');
+});
+
+test('the instrument world is declared once, with its faces and its AA math', () => {
+  const css = readFileSync(join(repo, 'app', 'src', 'styles', 'site.css'), 'utf8');
+  const root = css.slice(css.indexOf(':root'), css.indexOf('* { box-sizing'));
+  // the dark ground and the one amber, in the tokens the whole product reads
+  assert.match(root, /--bg:\s*#0B0D0F/i, 'the ground is the near-black of the comps');
+  assert.match(root, /--acc:\s*#FF8A3D/i, 'the accent is the comps\' amber');
+  assert.match(root, /color-scheme:\s*dark/, 'the page declares its scheme');
+  // Archivo is pinned AND falls back to a face this repo actually ships
+  assert.match(root, /--f-d:\s*"Archivo"[^;]*"Hanken Grotesk"/, 'the display stack falls back to a shipped grotesque');
+  assert.match(root, /--f-m:\s*"IBM Plex Mono"/, 'figures stay in the mono');
+  const base = readFileSync(join(repo, 'app', 'src', 'layouts', 'Base.astro'), 'utf8');
+  assert.match(base, /family=Archivo:wght@400;500;600;800/, 'the family is pinned to its four weights');
+  // a new face is a new licence row, or the build is lying about its deps
+  const licenses = readFileSync(join(repo, 'data', 'licenses.csv'), 'utf8');
+  assert.match(licenses, /^archivo-google-fonts,/m, 'Archivo has a row in the licence register');
+  assert.match(licenses, /Open Font License 1\.1[\s\S]{0,400}Archivo|Archivo[\s\S]{0,400}Open Font License 1\.1/,
+    'the row states the licence');
+  assert.match(readFileSync(join(repo, 'docs', 'LICENSES.md'), 'utf8'), /## Archivo \(Google Fonts\)/,
+    'and the register prose carries it too');
+  // the AA numbers are stated, not assumed
+  assert.match(css, /17\.28:1/, 'the body ink contrast on the ground is written down');
+  assert.match(css, /8\.31:1/, 'the accent contrast on the ground is written down');
+});
+
+test('reduced motion stops the instrument\'s permanent loops, not just their speed', () => {
+  const css = readFileSync(join(repo, 'app', 'src', 'styles', 'site.css'), 'utf8');
+  const block = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.match(block, /animation-iteration-count:\s*1\s*!important/,
+    'an infinite loop needs its iteration count cut, not only its duration');
+  // and the loops that need it are the ones the comps allow: PULSE and TICK
+  const scene = readFileSync(join(repo, 'app', 'src', 'styles', 'scene.css'), 'utf8');
+  assert.match(scene, /\.d-spark[^}]*animation:\s*vc-flow[^}]*infinite/, 'PULSE runs the flow paths');
+  assert.match(scene, /\.d-escape\s*\{[^}]*animation:\s*vc-tick[^}]*infinite/, 'TICK runs the escapement');
 });
 
 test('reduced motion kills the delays, not only the durations', () => {

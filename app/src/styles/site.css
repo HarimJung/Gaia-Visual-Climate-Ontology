@@ -1,17 +1,40 @@
 /* National Climate Record Runtime — product screens (WP-07, fixture stage).
-   Base = the Visual Climate house kit (vc-crm tools/vc/DESIGN.md + kit/vc.css):
-   neutral palette, light only, lines over boxes, Bricolage Grotesque display /
-   Hanken Grotesk body / IBM Plex Mono for numbers with tabular-nums.
-   Fonts: woff2 + OFL license files copied verbatim from the kit's kit/fonts/
-   into app/public/fonts/ (Bricolage Grotesque, Hanken Grotesk, IBM Plex Mono —
-   each under the SIL Open Font License shipped alongside).
-   Per the kit's own rule, only the accent family is swapped: this product
-   introduces a UN-blue accent (the kit has no blue). UN blue #009edb itself
-   fails AA on the kit background (2.83:1), so the family is darkened:
-   --acc #0a6cb4 = 5.12:1 on --bg, --acc-ink #075289 = 7.58:1 on --bg and
-   6.92:1 on --acc-soft (all AA for normal text). */
+   ── THE INSTRUMENT WORLD ───────────────────────────────────────────────────
+   The owner's 2026-10-16 verdict moved the whole product onto the predecessor's
+   dark instrument ground (references/Main.dc.html, Dial.dc.html, Motion.dc.html,
+   Storyboard.dc.html, Tray.dc.html). This REPLACES the light house kit globally:
+   near-black ground, pearl/steel metals, one amber accent for live energy and
+   the single action, a cool blue reserved for the record's own observed state,
+   and a clay red for every void and every refusal.
+   FULL DARK, not a split: the receipts and the ledger carry the same ground as
+   the stage. A paper island inside a metal world reads as an accident at the
+   scroll boundary; one world, with the document surfaces raised a step on
+   --paper and ruled in hairlines, reads as the case-back of the same object.
 
-@font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque-latin.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+   ── FACES ──────────────────────────────────────────────────────────────────
+   Archivo (the comps' own display face) 400/500/600/800 from Google Fonts,
+   family pinned, behind a real fallback stack that ends on the house kit's
+   locally-shipped Hanken Grotesk — if fonts.googleapis.com never answers the
+   page is still set in a grotesque, not in Times. IBM Plex Mono stays local
+   and carries every figure, hash, id and microcap eyebrow at .18–.30em.
+   Tabular numerals stay on at the body root.
+
+   ── AA, recomputed on the dark ground (#0B0D0F, L = 0.0039) ────────────────
+     --ink     #EDF2F6  17.28:1   body + display
+     --ink-2   #A8B2B9   9.02:1   secondary prose
+     --ink-3   #8A949B   6.30:1   captions, eyebrows, the smallest intentional
+     --acc     #FF8A3D   8.31:1   links, the one action, live energy
+     --acc-ink #FFA765  10.26:1   link hover
+     --st-pledged #9FC3E0 10.53:1 glass / pledged
+     --void-ink   #E0695F  5.90:1 void + refusal text        (all AA normal)
+     --void-line  #C2453F  3.91:1 void hairline              (AA 1.4.11, 3:1)
+     --line-2  #4B565D   3.07:1   load-bearing borders       (AA 1.4.11, 3:1)
+     --line    #242B31   1.56:1   row hairlines, non-meaning
+   On the pearl metal (chips, swatches) the ink flips: --ink-inv #0B0D0F on the
+   metal's DARKEST stop #9AA4AB = 7.67:1, on its lightest #D8E0E6 = 14.9:1.
+   On --paper #12161A (L = 0.0066): --ink 14.5:1, --ink-2 7.57:1, --ink-3 5.29:1,
+   --acc 6.98:1, --void-ink 4.95:1 — every pair still AA. */
+
 @font-face { font-family: "Hanken Grotesk"; src: url("/fonts/hanken-grotesk-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Hanken Grotesk"; src: url("/fonts/hanken-grotesk-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "Hanken Grotesk"; src: url("/fonts/hanken-grotesk-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
@@ -20,18 +43,22 @@
 @font-face { font-family: "IBM Plex Mono"; src: url("/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 
 :root {
-  color-scheme: light;
-  /* house kit neutrals. The structural lines were raised: WCAG 1.4.11 asks
-     3:1 of a border that carries meaning, and at #c2c8c4 (1.58:1 on --bg)
-     nothing on the page had an edge. --line stays a hairline (1.5:1) for row
-     rules; --line-2 is now 3.0:1 and is used wherever a border is load-
-     bearing (the band, buttons, the base map, a void's edge). */
-  --bg: #f6f7f5; --paper: #ffffff; --ink: #15191c; --ink-2: #3f474c; --ink-3: #576065;
-  --line: #cfd4d0; --line-2: #a7aeaa; --wash: #e7eae6;
-  /* product accent: UN-blue family, new to the kit (see header comment for AA math) */
-  --acc: #0a6cb4; --acc-ink: #075289; --acc-soft: #e3eef7;
-  --f-d: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --f-t: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: dark;
+  --bg: #0B0D0F; --paper: #12161A; --ink: #EDF2F6; --ink-2: #A8B2B9; --ink-3: #8A949B;
+  --ink-inv: #0B0D0F;
+  /* the colour an engraving is cut in: read by the 3D scene through ink() */
+  --engrave: #C6D0D7;
+  --line: #242B31; --line-2: #4B565D; --wash: #171C21;
+  /* amber: live energy and the one action, and nothing else */
+  --acc: #FF8A3D; --acc-ink: #FFA765; --acc-soft: rgba(255, 138, 61, .15);
+  /* the ground itself: the comps' raking studio, not a flat fill */
+  --ground: radial-gradient(118% 92% at 76% -6%, #1E242A 0%, #12161A 42%, #0A0C0E 100%);
+  --rake: linear-gradient(118deg, rgba(255, 255, 255, .055) 0%, rgba(255, 255, 255, 0) 38%);
+  --grain:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .018) 0 1px, rgba(0, 0, 0, 0) 1px 2px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .012) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
+  --f-d: "Archivo", "Hanken Grotesk", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --f-t: "Archivo", "Hanken Grotesk", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
   --f-m: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --ease: cubic-bezier(.2, 0, 0, 1);
   --gut: clamp(16px, 4vw, 48px);
@@ -43,72 +70,89 @@
   --t-xs: 13.5px; --t-sm: 14.5px; --t-md: 16px; --t-lg: 19px; --t-xl: 25.6px;
   --t-cap: 11.5px; /* the one microcap size, mono, wide-tracked */
   /* four-state visual vocabulary (new tokens this product introduces):
-     observed = solid fill · pledged = dashed outline · unknown = hatched with
+     observed = solid metal · pledged = glass outline · unknown = hatched with
      its reason always visible · absent = explicit void. The unknown hatch is
      hard-stop stripes, not a gradient wash. */
-  --st-observed: var(--acc);
-  --st-pledged: var(--acc-ink);
-  --st-unknown-hatch: repeating-linear-gradient(135deg, var(--wash) 0 5px, rgba(87, 96, 101, .72) 5px 7px);
-  --st-absent-line: var(--ink-3);
+  --st-observed: #C6D0D7;
+  --st-pledged: #9FC3E0;
+  --void-ink: #E0695F; --void-line: #C2453F;
+  --st-unknown-hatch: repeating-linear-gradient(135deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
+  --st-absent-line: var(--void-line);
   /* one hatch angle per recorded reason for an unknown: four distinguishable
      textures, so "unknown" reads as a taxonomy with named families rather
      than one shrug (predecessor world-stage.tsx HATCH=[45,135,0,90,…]) */
   /* the CSS angle is the gradient's axis, so the stripes run perpendicular to
      it: 135deg draws "/" and matches the SVG pattern of the same family */
-  --hatch-0: repeating-linear-gradient(135deg, var(--wash) 0 5px, rgba(87, 96, 101, .72) 5px 7px);
-  --hatch-1: repeating-linear-gradient(45deg, var(--wash) 0 5px, rgba(87, 96, 101, .72) 5px 7px);
-  --hatch-2: repeating-linear-gradient(90deg, var(--wash) 0 5px, rgba(87, 96, 101, .72) 5px 7px);
-  --hatch-3: repeating-linear-gradient(0deg, var(--wash) 0 5px, rgba(87, 96, 101, .72) 5px 7px);
+  --hatch-0: repeating-linear-gradient(135deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
+  --hatch-1: repeating-linear-gradient(45deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
+  --hatch-2: repeating-linear-gradient(90deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
+  --hatch-3: repeating-linear-gradient(0deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
   /* ── four-state MATERIALS ──────────────────────────────────────────────
-     Design language (not code) ported from the predecessor product's dial
-     (Visual Climate Watch, "Paris Movement"): observed = METAL (machined,
-     solid, light catches an edge) · pledged = GLASS (transparent, outlined)
-     · unknown = UNVERIFIED plate (hairline outline + hatch) · absent = VOID
-     (an explicitly machined empty socket).
-     DELIBERATE DEVIATION from the VC house kit base of this file: the kit
-     bans decorative gradients and glass effects in bid demos; this product
-     deviates here and ONLY here, because the subtle metallic sheen and the
-     glass translucency ARE the state encoding — material is the semantics,
-     not decoration. Shape + pattern still separate the states without
-     color: solid / dashed outline / hatch / dotted socket.
-     AA, recomputed where text sits on a material: white on the metal's
-     lightest stop #137abf = 4.6:1 (grooves are darker than the base, so
-     they only raise contrast); --st-pledged #075289 on the glass fill over
-     paper ≥ 6.9:1; --ink-3 #576065 on the void face #d9ddd8 = 4.6:1.
-     The machining was below the perceptual floor at a 1.25:1 modulation on a
-     6px pitch: the groove is now 2px on a 9px pitch (2.0:1 against the face),
-     which survives a viewing distance, and the band is segmented into plates
-     with real seams so there is something to look at at a metre. */
-  --mtl-face: linear-gradient(180deg, #137abf 0%, var(--acc) 44%, #085a92 100%);
-  --mtl-groove: repeating-linear-gradient(112deg, rgba(5, 42, 68, .42) 0 2px, rgba(0, 0, 0, 0) 2px 9px);
-  /* raking key light for NON-text metal only (segments, swatches): white
-     over the lightest stop would drop white chip text below AA */
-  --mtl-lit: linear-gradient(118deg, rgba(255, 255, 255, .26) 0%, rgba(255, 255, 255, 0) 46%);
-  --mtl-seam: repeating-linear-gradient(90deg, rgba(226, 236, 242, .26) 0 1px, rgba(4, 38, 62, .34) 1px 2px, rgba(0, 0, 0, 0) 2px 38px);
-  --mtl-edge: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(4, 38, 62, .62), 0 1px 2px rgba(21, 25, 28, .22);
-  /* glass and void had to read as distinct materials without their captions:
-     at .07 the glass fill was 1.10:1 on the background (invisible) and the
-     void face 1.18:1 with a 1.34:1 border of its own. Both are raised. */
-  --gls-fill: rgba(10, 108, 180, .16);
-  --gls-glare: linear-gradient(118deg, rgba(255, 255, 255, .72) 0%, rgba(255, 255, 255, 0) 48%);
-  --gls-edge: inset 0 1px 0 rgba(255, 255, 255, .85), 0 1px 2px rgba(21, 25, 28, .10);
-  --unv-hairline: inset 0 0 0 1px rgba(87, 96, 101, .62), inset 0 1px 2px rgba(21, 25, 28, .14);
-  --void-face: linear-gradient(180deg, #d9ddd8 0%, #e1e4e0 72%);
-  --void-face-flat: #d9ddd8;
-  --void-edge: inset 0 2px 5px rgba(21, 25, 28, .22), inset 0 0 0 1px rgba(21, 25, 28, .07);
+     Design language ported from the predecessor's dial (Main.dc.html's own
+     material legend: METAL · 관측 / GLASS · 약속 / VOID · 부재):
+     observed = METAL — a machined pearl plate, cotes de Geneve at the comps'
+     112 degree pitch under a conic sheen and a raking key light, cast cool so
+     the blue that belongs to the record's own observed state lives IN the
+     metal rather than beside it · pledged = GLASS — translucent, outlined in
+     --st-pledged, a glare across it, never filled · unknown = UNVERIFIED —
+     a hairline plate under a hard-stop hatch, one angle per recorded reason ·
+     absent = VOID — a sunken, machined, empty socket ringed in clay red.
+     Shape and pattern still separate the four without colour: solid / dashed
+     outline / hatch / sunken dotted socket.
+     AA where text sits on a material: --ink-inv #0B0D0F on the chip metal's
+     darkest stop #9AA4AB = 7.67:1 (on its lightest #D8E0E6 = 14.9:1) ·
+     --st-pledged #9FC3E0 over the glass fill on the ground = 9.6:1 ·
+     --void-ink #E0695F on the void face #08090B = 6.1:1.
+     The machining stays above the perceptual floor at the comps' own pitch —
+     a 2px groove on a 15px repeat, 1.9:1 against the face — and the band
+     keeps real plate seams so a 900px run reads as a row of machined plates
+     rather than one slab. */
+  --mtl-face: radial-gradient(circle at 32% 24%, #8E99A2 0%, #5A646B 46%, #333B41 100%);
+  --mtl-groove: repeating-linear-gradient(112deg, rgba(255, 255, 255, .052) 0 2px, rgba(0, 0, 0, .19) 2px 15px);
+  /* the conic sheen: what turns an extruded disc into a turned plate */
+  --mtl-sheen: conic-gradient(from 195deg, rgba(255, 255, 255, .13), rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, .07) 48%, rgba(255, 255, 255, 0) 74%, rgba(255, 255, 255, .14) 100%);
+  --mtl-lit: linear-gradient(118deg, rgba(255, 255, 255, .17) 0%, rgba(255, 255, 255, .02) 26%, rgba(255, 255, 255, 0) 46%, rgba(0, 0, 0, .20) 100%);
+  --mtl-seam: repeating-linear-gradient(90deg, rgba(226, 236, 242, .22) 0 1px, rgba(0, 0, 0, .40) 1px 2px, rgba(0, 0, 0, 0) 2px 38px);
+  --mtl-edge: inset 0 0 0 1px rgba(226, 236, 242, .22), inset 0 2px 16px rgba(0, 0, 0, .55), 0 6px 18px rgba(0, 0, 0, .55);
+  /* the chip metal is the same plate run LIGHT, because dark ink has to sit
+     on it and read (see the AA block above) */
+  --mtl-chip: radial-gradient(circle at 34% 28%, #D8E0E6 0%, #B4BFC7 48%, #9AA4AB 100%);
+  --mtl-chip-groove: repeating-linear-gradient(112deg, rgba(255, 255, 255, .30) 0 2px, rgba(31, 38, 43, .22) 2px 11px);
+  /* the engraved tick bezel: the comps' repeating-conic hairline ring */
+  --bezel: repeating-conic-gradient(from 0deg, rgba(190, 202, 210, .55) 0deg .28deg, rgba(0, 0, 0, 0) .28deg 4.5deg);
+  --gls-fill: rgba(159, 195, 224, .13);
+  --gls-glare: linear-gradient(140deg, rgba(180, 205, 225, .22), rgba(180, 205, 225, .04));
+  --gls-edge: inset 0 0 0 1px rgba(200, 225, 245, .40);
+  --unv-hairline: inset 0 0 0 1px rgba(168, 178, 185, .50), inset 0 1px 3px rgba(0, 0, 0, .6);
+  --void-face: linear-gradient(180deg, #08090B 0%, #0D1012 72%);
+  --void-face-flat: #08090B;
+  --void-edge: inset 0 3px 8px rgba(0, 0, 0, .95), inset 0 0 0 1px rgba(194, 69, 63, .62);
+  /* amber energy: the glow a LIVE part carries. Never applied to a figure. */
+  --live-glow: 0 0 20px rgba(255, 138, 61, .55);
 }
 
 * { box-sizing: border-box; }
 /* a stable gutter: navigating between a scrolling page and a short one must
    not shift every centred element by the scrollbar's width */
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+/* The ground is the comps' raking studio, fixed so it does not scroll away
+   from under a 14,000px story: the dark radial, one raking key light across
+   the top-left, and the fine grain that keeps a near-black field from
+   banding. All three are decoration on ::before — nothing reads them. */
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--f-t); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: var(--grain), var(--rake), var(--ground);
+}
 ::selection { background: var(--acc-soft); color: var(--ink); }
-a { color: var(--acc-ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { text-decoration-thickness: 2px; }
-:focus-visible { outline: 2px solid var(--acc-ink); outline-offset: 2px; border-radius: var(--r); }
+a { color: var(--acc); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--acc-ink); text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; border-radius: var(--r); }
+/* The display register of the comps: Archivo 800, tight, and cut in caps at
+   the two sizes that carry a screen (the cover and a section head). Case is
+   presentation — the sentence in the markup is unchanged. */
 h1, h2, h3 { font-family: var(--f-d); color: var(--ink); text-wrap: balance; overflow-wrap: break-word; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gut); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gut); }
 .mono { font-family: var(--f-m); }
 .muted { color: var(--ink-3); font-size: var(--t-sm); }
 /* main holds the viewport even on a short page, so the footer never floats
@@ -122,16 +166,18 @@ main { min-height: calc(100svh - var(--top-h, 60px) - 190px); }
 
 /* top bar. Sticky, and its height IS --top-h: the pinned stages offset by
    that token, so the bar fills the strip instead of leaving a dead band. */
-.bar { position: sticky; top: 0; z-index: 6; background: var(--bg); border-bottom: 1px solid var(--line); }
+.bar { position: sticky; top: 0; z-index: 6; background: rgba(11, 13, 15, .86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .bar .wrap { display: flex; align-items: center; gap: 18px; height: var(--top-h); }
-.mark { font: 800 17px/1.15 var(--f-d); letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+/* the mark is engraved, not set: mono microcaps at the comps' tracking */
+.mark { font: 500 12px/1.15 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 11px; }
+.mark::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 12px rgba(255, 138, 61, .9); flex: none; }
 .bar nav { margin-left: auto; display: flex; gap: 4px; }
-.bar nav a { color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 500; padding: 8px 10px; border-radius: var(--r); transition: background .15s var(--ease); }
+.bar nav a { color: var(--ink-3); text-decoration: none; font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .14em; text-transform: uppercase; padding: 9px 11px; border-radius: var(--r); transition: background .15s var(--ease), color .15s var(--ease); }
 .bar nav a:hover { color: var(--ink); background: var(--wash); }
 
 /* first three seconds: country · treaty line · next date · strip */
 .head { padding: clamp(36px, 6vw, 72px) 0 8px; }
-.head h1 { font-size: clamp(2.5rem, 5.5vw, 4.2rem); line-height: .98; font-weight: 800; letter-spacing: -.035em; margin: 0 0 .35em; }
+.head h1 { font-size: clamp(2.6rem, 6.2vw, 5rem); line-height: .92; font-weight: 800; letter-spacing: -.028em; text-transform: uppercase; margin: 0 0 .32em; }
 /* a measure, not the full column: the lede was running 103ch and filling its
    box to 99.4%, which reads as a wall rather than a sentence */
 .treaty { font-size: clamp(1.02rem, 1.4vw, 1.22rem); color: var(--ink-2); margin: 0 0 14px; line-height: 1.6; max-width: 34em; }
@@ -145,8 +191,9 @@ main { min-height: calc(100svh - var(--top-h, 60px) - 190px); }
    every number census-linked; no invented figures, no %, no gauge */
 .hero .eyebrow, .doc-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); }
 .hero .eyebrow [data-meta] { white-space: nowrap; }
-.hero .eyebrow::before, .doc-eyebrow::before { content: ""; flex: 0 0 26px; height: 1px; background: var(--acc); }
-.worldband { display: flex; gap: 4px; height: clamp(54px, 7vw, 78px); margin: 30px 0 0; }
+.hero .eyebrow::before, .doc-eyebrow::before { content: ""; flex: 0 0 26px; height: 1px; background: var(--acc); box-shadow: 0 0 8px rgba(255, 138, 61, .7); }
+.hero .eyebrow, .doc-eyebrow { letter-spacing: .30em; color: var(--acc); }
+.worldband { display: flex; gap: 4px; height: clamp(54px, 7vw, 78px); margin: 30px 0 0; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
 .worldband .seg { min-width: 0; }
 /* a zero state still gets presence: zero is a reading, and the key below
    names four materials, so the object the key describes shows four */
@@ -169,23 +216,27 @@ main { min-height: calc(100svh - var(--top-h, 60px) - 190px); }
    takes a full cell and "1,428" reads as "1 , 4 2 8", so a DISPLAY figure
    uses the text face with tabular numerals and carries its link as a border
    (body already sets font-variant-numeric: tabular-nums). */
-a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-decoration-thickness: 1px; }
+a.fig { font-family: var(--f-m); font-weight: 500; color: var(--ink); text-decoration-color: var(--acc); text-decoration-thickness: 1px; }
+a.fig:hover { color: var(--acc-ink); }
+/* a DISPLAY figure is engraved: mono, tabular, tracked open, and it carries
+   its link as an amber underline rather than a browser rule */
 .bandkey .cnt, .wstep .figrow a.fig, .voids .figrow a.fig, .cardfigs a.fig {
-  font-family: var(--f-t); font-weight: 600; font-variant-numeric: tabular-nums;
-  text-decoration: none; border-bottom: 1px solid currentColor;
+  font-family: var(--f-m); font-weight: 500; font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em; color: var(--ink);
+  text-decoration: none; border-bottom: 1px solid var(--acc);
 }
 .bandkey .cnt:hover, .wstep .figrow a.fig:hover, .voids .figrow a.fig:hover, .cardfigs a.fig:hover { border-bottom-width: 2px; }
 
 /* state chips — the four-state vocabulary, rendered in its materials */
 .chip { display: inline-block; font: 500 12.5px/1 var(--f-m); padding: 4px 8px; border-radius: var(--r); vertical-align: 1px; }
-.chip-observed { background-image: var(--mtl-groove), var(--mtl-face); color: var(--paper); box-shadow: var(--mtl-edge); text-shadow: 0 1px 1px rgba(4, 38, 62, .35); }
+.chip-observed { background-image: var(--mtl-chip-groove), var(--mtl-chip); color: var(--ink-inv); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .35), 0 2px 6px rgba(0, 0, 0, .6); }
 .chip-pledged { background-color: var(--gls-fill); background-image: var(--gls-glare); color: var(--st-pledged); border: 1.5px dashed var(--st-pledged); box-shadow: var(--gls-edge); }
 /* the hatch stays at full strength — a scrim over the whole plate destroyed
    the material the chip exists to show (3.14:1 down to 1.30:1). The word
    instead gets its own opaque inline plate, so both read. */
-.chip-unknown { position: relative; isolation: isolate; z-index: 0; background-image: var(--st-unknown-hatch); color: var(--ink); box-shadow: 0 1px 2px rgba(21, 25, 28, .10); border: 1px solid var(--ink-3); padding: 5px 9px; }
-.chip-unknown::before { content: ""; position: absolute; inset: 3px; z-index: -1; background: var(--paper); border-radius: 1px; }
-.chip-absent { background-image: var(--void-face); color: var(--ink-3); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
+.chip-unknown { position: relative; isolation: isolate; z-index: 0; background-image: var(--st-unknown-hatch); color: var(--ink); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .6); border: 1px solid var(--ink-3); padding: 5px 9px; }
+.chip-unknown::before { content: ""; position: absolute; inset: 3px; z-index: -1; background: var(--bg); border-radius: 1px; }
+.chip-absent { background-image: var(--void-face); color: var(--void-ink); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
 .reason { color: var(--ink-2); font-size: var(--t-sm); }
 
 /* completeness strip: segmented, counts only, no aggregate percentage, no gauge */
@@ -197,8 +248,8 @@ a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-d
    hero band and the legend swatches — one material per state everywhere.
    On the big band the metal also carries plate seams every 38px, so a 900px
    run of it is a row of machined plates rather than one flat slab. */
-.seg-observed, .sw-observed { background-image: var(--mtl-lit), var(--mtl-groove), var(--mtl-face); box-shadow: var(--mtl-edge); }
-.worldband .seg-observed, .strip .seg-observed { background-image: var(--mtl-seam), var(--mtl-lit), var(--mtl-groove), var(--mtl-face); }
+.seg-observed, .sw-observed { background-image: var(--mtl-lit), var(--mtl-sheen), var(--mtl-groove), var(--mtl-face); box-shadow: var(--mtl-edge); }
+.worldband .seg-observed, .strip .seg-observed { background-image: var(--mtl-seam), var(--mtl-lit), var(--mtl-sheen), var(--mtl-groove), var(--mtl-face); }
 .seg-pledged, .sw-pledged { background-color: var(--gls-fill); background-image: var(--gls-glare); border: 1.5px dashed var(--st-pledged); box-shadow: var(--gls-edge); }
 .seg-unknown, .sw-unknown { background-image: var(--st-unknown-hatch); box-shadow: var(--unv-hairline); }
 .seg-absent, .sw-absent { background-image: var(--void-face); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
@@ -209,7 +260,7 @@ a.fig { font-family: var(--f-m); font-weight: 500; color: var(--acc-ink); text-d
 
 /* ledger table: hairlines, no cards */
 section + section { margin-top: 56px; }
-h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-weight: 800; margin: 0 0 14px; }
+h2.sec { font-size: clamp(1.6rem, 2.8vw, 2.2rem); letter-spacing: -.022em; font-weight: 800; text-transform: uppercase; line-height: 1.02; margin: 0 0 16px; }
 /* relative: absolutely-positioned sr-only text inside a scrolled table must
    resolve against the scroller, or it escapes the clip and the page itself
    gains a horizontal scroll at phone widths.
@@ -218,22 +269,23 @@ h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-we
 .tablewrap {
   overflow-x: auto; position: relative;
   background:
-    linear-gradient(to right, var(--bg) 30%, rgba(246, 247, 245, 0)) left center / 44px 100% no-repeat,
-    linear-gradient(to left, var(--bg) 30%, rgba(246, 247, 245, 0)) right center / 44px 100% no-repeat,
-    radial-gradient(farthest-side at 0 50%, rgba(21, 25, 28, .18), rgba(21, 25, 28, 0)) left center / 16px 100% no-repeat,
-    radial-gradient(farthest-side at 100% 50%, rgba(21, 25, 28, .18), rgba(21, 25, 28, 0)) right center / 16px 100% no-repeat;
+    linear-gradient(to right, var(--bg) 30%, rgba(11, 13, 15, 0)) left center / 44px 100% no-repeat,
+    linear-gradient(to left, var(--bg) 30%, rgba(11, 13, 15, 0)) right center / 44px 100% no-repeat,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0)) left center / 16px 100% no-repeat,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0)) right center / 16px 100% no-repeat;
   background-attachment: local, local, scroll, scroll;
 }
 .table { width: 100%; border-collapse: collapse; font-size: 15px; }
-.table th { text-align: left; font-size: 13px; font-weight: 600; color: var(--ink-2); border-bottom: 1px solid var(--ink); padding: 8px 12px 8px 0; white-space: nowrap; }
+.table th { text-align: left; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line-2); padding: 10px 12px 10px 0; white-space: nowrap; }
 .table td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
 .table .num { text-align: right; white-space: nowrap; }
 .doc-title { font-weight: 600; }
 .rowmeta { margin: 4px 0 0; font-size: 13.5px; color: var(--ink-3); }
 
-/* refusal is first-class content, not an error style */
-.refusal { margin: 8px 0 0; padding: 8px 12px; border-left: 3px solid var(--ink); background: var(--wash); font-size: 14.5px; color: var(--ink); max-width: 44rem; }
-.refusal .tag { font: 500 11.5px/1 var(--f-m); color: var(--ink-2); display: block; margin-bottom: 4px; letter-spacing: .04em; }
+/* refusal is first-class content, not an error style: a machined plate in
+   the void's own clay red, sunk into the ground, never a browser warning */
+.refusal { margin: 8px 0 0; padding: 12px 15px; border-left: 3px solid var(--void-line); background: linear-gradient(140deg, rgba(194, 69, 63, .10), rgba(194, 69, 63, .03)); font-size: 14.5px; color: var(--ink); max-width: 44rem; box-shadow: inset 0 0 0 1px rgba(194, 69, 63, .22); }
+.refusal .tag { font: 500 11.5px/1 var(--f-m); color: var(--void-ink); display: block; margin-bottom: 6px; letter-spacing: .18em; text-transform: uppercase; }
 
 /* world ledger: one row per country, a mini strip per row. Listing-only
    countries (unknown hatch, explicit zeros) are the norm, not an error. */
@@ -248,20 +300,23 @@ h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-we
 
 /* the tray: 200 identical cases in one sunken frame — an argument you can
    see, under the table that is the argument you can read */
-.tray { margin: 22px 0 0; padding: 18px 16px; background: linear-gradient(160deg, var(--wash), var(--bg)); box-shadow: inset 0 0 0 1px var(--line-2), inset 0 2px 14px rgba(21, 25, 28, .10); border-radius: var(--r); }
+.tray { margin: 22px 0 0; padding: 18px 16px; background: linear-gradient(160deg, #15191D 0%, #0D1013 100%); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .08), inset 0 2px 22px rgba(0, 0, 0, .6); border-radius: var(--r); }
 .tray svg { display: block; width: 100%; height: auto; }
-.t-case { fill: var(--paper); stroke: var(--line-2); stroke-width: .7; }
+.t-case { fill: #0A0C0E; stroke: var(--line-2); stroke-width: .7; }
 /* a pip is 4 units across: at that size a hatch is noise, so the void is an
    explicitly machined empty cell — outlined, sunk, never a pale blank */
+/* the pip is the filled part of a case: amber is LIVE here, because a hashed
+   document is bytes this runtime actually holds — the same meaning amber
+   carries on the barrels and on the flow paths */
 .t-pip { fill: var(--acc); }
-.t-pip.t-listed { fill: #c6ccc6; stroke: var(--ink-3); stroke-width: .7; }
-.tray a:hover .t-case, .tray a:focus-visible .t-case { stroke: var(--ink); stroke-width: 1.4; }
+.t-pip.t-listed { fill: #4A5257; stroke: var(--void-line); stroke-width: .7; }
+.tray a:hover .t-case, .tray a:focus-visible .t-case { stroke: var(--acc); stroke-width: 1.4; }
 .traykey { display: flex; flex-wrap: wrap; gap: 8px 26px; list-style: none; margin: 14px 0 0; padding: 0; font-size: var(--t-sm); color: var(--ink-2); }
 .traykey li { display: flex; align-items: center; gap: 8px; }
 .traykey .tsw { width: 12px; height: 12px; }
-.traykey .t-held { background: var(--acc); }
-.traykey .t-listed { background: #c6ccc6; border: 1px solid var(--ink-3); }
-.traykey .t-case { background: var(--paper); border: 1px solid var(--line-2); }
+.traykey .t-held { background: var(--acc); box-shadow: var(--live-glow); }
+.traykey .t-listed { background: #4A5257; border: 1px solid var(--void-line); }
+.traykey .t-case { background: #0A0C0E; border: 1px solid var(--line-2); }
 
 /* census */
 .census-src { font-size: 14px; color: var(--ink-3); margin: 0 0 12px; }
@@ -269,39 +324,48 @@ h2.sec { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; font-we
 
 /* receipt page */
 .receipt { padding: clamp(32px, 5vw, 56px) 0 0; }
-.receipt h1 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); letter-spacing: -.028em; line-height: 1.05; margin: 0 0 6px; }
+/* a document's own title is quoted material: it keeps its case. The
+   engraved register is carried by the eyebrows and the rules around it. */
+.receipt h1 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); letter-spacing: -.028em; line-height: 1.05; margin: 0 0 6px; font-weight: 600; }
 .crumb { font-size: 14px; margin: 0 0 22px; }
 .receipt section + section { margin-top: 40px; }
-.rblock { border-top: 1px solid var(--ink); padding: 14px 0 22px; max-width: 54rem; }
-.rblock h3, .rblock h2 { font: 600 12px/1 var(--f-m); letter-spacing: .16em; color: var(--ink-2); margin: 0 0 12px; text-transform: uppercase; }
+/* The receipt is the case-back of the instrument, not a sheet of paper: the
+   plates are raised a step on --paper, the section rules are hairlines in
+   --line-2, and every label is engraved mono microcaps. Legibility is carried
+   by --ink at 14.5:1 on --paper, --ink-2 at 7.57:1, --ink-3 at 5.29:1. */
+.rblock { border-top: 1px solid var(--line-2); padding: 16px 0 24px; max-width: 54rem; }
+.rblock h3, .rblock h2 { font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .24em; color: var(--acc); margin: 0 0 14px; text-transform: uppercase; }
 .quote { font-size: 1.15rem; margin: 0; max-width: 46em; }
-.quote .qtext { font-family: var(--f-m); background: var(--acc-soft); padding: 2px 6px; }
+.quote .qtext { font-family: var(--f-m); font-size: .92em; background: var(--acc-soft); box-shadow: inset 0 0 0 1px rgba(255, 138, 61, .3); padding: 3px 7px; color: var(--ink); }
 /* the hash is the case-back: the chain's last machined plate */
-.hash { font-family: var(--f-m); font-size: var(--t-sm); word-break: break-all; margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; max-width: 44rem; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 2px rgba(21, 25, 28, .08); }
-.void { border: 1px dotted var(--st-absent-line); background-image: var(--void-face); box-shadow: var(--void-edge); padding: 14px 16px; color: var(--ink-2); max-width: 44rem; }
+.hash { font-family: var(--f-m); font-size: var(--t-sm); word-break: break-all; margin: 0; background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 13px 15px; max-width: 44rem; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 2px 10px rgba(0, 0, 0, .5); }
+.void { border: 1px dotted var(--st-absent-line); background-image: var(--void-face); box-shadow: var(--void-edge); padding: 14px 16px; color: var(--void-ink); max-width: 44rem; }
 .facts { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 0; font-size: 15px; }
 .facts dt { color: var(--ink-3); font-size: 13.5px; padding-top: 2px; }
 .facts dd { margin: 0; overflow-wrap: anywhere; }
 .prov { margin: 0; padding-left: 1.1em; font-size: 14.5px; color: var(--ink-2); }
 .prov li + li { margin-top: 6px; }
-button.copy { font: 500 13px/1 var(--f-m); color: var(--acc-ink); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 6px 10px; margin-top: 10px; cursor: pointer; transition: border-color .15s var(--ease); }
-button.copy:hover { border-color: var(--acc-ink); }
+button.copy { font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .14em; text-transform: uppercase; color: var(--acc); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 8px 12px; margin-top: 10px; cursor: pointer; transition: border-color .15s var(--ease), color .15s var(--ease); }
+button.copy:hover { border-color: var(--acc); color: var(--acc-ink); }
 
 /* demo path */
 .steps-list { list-style: none; counter-reset: step; margin: 0; padding: 0; max-width: 54rem; }
 .steps-list > li { counter-increment: step; border-top: 1px solid var(--line-2); padding: 18px 0 20px 56px; position: relative; }
-.steps-list > li::before { content: counter(step); position: absolute; left: 0; top: 16px; font: 500 15px/1 var(--f-m); color: var(--acc-ink); border: 1px solid var(--line-2); border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center; }
+.steps-list > li::before { content: counter(step); position: absolute; left: 0; top: 16px; font: 500 15px/1 var(--f-m); color: var(--acc); border: 1px solid var(--line-2); border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center; background: var(--paper); }
 .steps-list h2 { font-size: 1.2rem; letter-spacing: -.01em; margin: 0 0 4px; }
 .steps-list p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
-.placeholder { border: 1px dotted var(--st-absent-line); padding: 14px 16px; color: var(--ink-2); }
+.placeholder { border: 1px dotted var(--st-absent-line); background-image: var(--void-face); box-shadow: var(--void-edge); padding: 14px 16px; color: var(--ink-2); }
 .placeholder .tag { font: 500 11.5px/1 var(--f-m); letter-spacing: .04em; color: var(--ink-3); display: block; margin-bottom: 6px; }
 
 /* footer: as-of, build commit, honest maturity line (R16 / AD-11) */
-footer { margin-top: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); padding: 26px 0 48px; font-size: 14px; color: var(--ink-2); }
+footer { margin-top: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); padding: 26px 0 48px; font-size: 14px; color: var(--ink-3); }
 footer p { margin: 0 0 6px; max-width: 60ch; }
+/* the comps' footer rail: the as-of line is the runtime's own heartbeat, so
+   it gets the breathing amber dot — the same amber the live barrels carry */
+footer p:first-child { display: flex; align-items: center; gap: 12px; font-family: var(--f-m); letter-spacing: .14em; text-transform: uppercase; font-size: var(--t-cap); color: var(--ink-2); }
+footer p:first-child::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 12px rgba(255, 138, 61, .9); animation: vc-breathe 2.6s ease-in-out infinite; }
+@keyframes vc-breathe { 0%, 100% { opacity: .30; } 50% { opacity: 1; } }
 
-/* the refusal block is a block: at a 1.07:1 wash only its 3px rule carried it */
-.refusal { background: var(--wash); }
 
 /* Below 768px the world-ledger row becomes a card: five columns in 358px cut
    the four-state vocabulary off at the viewport edge with no scrollbar to say
@@ -366,8 +430,8 @@ a.fig:hover, a.fig:focus-visible { background-color: var(--acc-soft); }
    prefers-reduced-motion, every fact is on the page with nothing hidden
    behind a transform that cannot run. */
 .caseback .cb-face { max-width: 44rem; }
-.caseback .cb-btn { font: 500 13px/1 var(--f-m); color: var(--acc-ink); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 7px 11px; margin-top: 12px; cursor: pointer; transition: border-color .15s var(--ease); }
-.caseback .cb-btn:hover { border-color: var(--acc-ink); }
+.cb-btn { font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .16em; text-transform: uppercase; color: var(--acc); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 9px 13px; margin-top: 12px; cursor: pointer; transition: border-color .15s var(--ease), box-shadow .15s var(--ease); }
+.cb-btn:hover { border-color: var(--acc); box-shadow: 0 0 0 1px rgba(255, 138, 61, .3), 0 0 18px rgba(255, 138, 61, .18); }
 .caseback[data-flip-ready] { position: relative; perspective: 1400px; max-width: 44rem; }
 /* the back is the taller face, so it sets the plate's height and the front
    is the one that floats over it: no magic min-height to drift out of date */
@@ -377,13 +441,16 @@ a.fig:hover, a.fig:focus-visible { background-color: var(--acc-soft); }
 .caseback[data-flip-ready] .cb-front { position: absolute; inset: 0; display: flex; align-items: center; }
 .caseback[data-flip-ready] .cb-front .hash { width: 100%; }
 .caseback[data-flip-ready] .cb-back { transform: rotateY(180deg); }
-.caseback .cb-back { border: 1px solid var(--acc); background: var(--paper); padding: 14px 16px; border-radius: var(--r); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 2px rgba(21, 25, 28, .08); }
+/* the back of the plate, to the comps' spec (Motion.dc.html 05): a darker
+   face than the front, hairlined in amber, the source line amber, the run
+   time plain, the checksum engraved down into --ink-3 */
+.caseback .cb-back { border: 0; background: linear-gradient(146deg, #1B1F23, #0F1215); padding: 16px 18px; border-radius: var(--r); box-shadow: inset 0 0 0 1px rgba(255, 138, 61, .35), 0 8px 24px rgba(0, 0, 0, .6); }
 .caseback .cb-back dl { margin: 0; }
-.caseback .cb-back dt { font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+.caseback .cb-back dt { font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--acc); }
 .caseback .cb-back dd { margin: 2px 0 10px; font-family: var(--f-m); font-size: var(--t-xs); overflow-wrap: anywhere; }
 .caseback .cb-back dd:last-child { margin-bottom: 0; }
 /* inside the case-back the checksum is engraved text, not a second plate */
-.caseback .cb-back .hash { background: none; border: 0; box-shadow: none; padding: 0; }
+.caseback .cb-back .hash { background: none; border: 0; box-shadow: none; padding: 0; color: var(--ink-3); }
 
 @media (prefers-reduced-motion: reduce) {
   /* the delays matter as much as the durations: a staggered cascade lives
@@ -392,6 +459,11 @@ a.fig:hover, a.fig:focus-visible { background-color: var(--acc-soft); }
   *, *::before, *::after {
     transition-duration: .01ms !important; animation-duration: .01ms !important;
     transition-delay: 0s !important; animation-delay: 0s !important;
+    /* the instrument's loops (PULSE on the flow paths, TICK on the
+       escapement, the footer rail's breath) are INFINITE: a .01ms duration
+       only makes an infinite loop spin faster. The iteration count is what
+       actually stops them. */
+    animation-iteration-count: 1 !important;
   }
   .caseback[data-flip-ready] .cb-plate { transition: none !important; }
 }

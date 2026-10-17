@@ -17,16 +17,27 @@ const canonical = new URL(Astro.url.pathname, 'https://harimjung.github.io/Gaia-
 ---
 
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f6f7f5" />
+    <meta name="theme-color" content="#0B0D0F" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {/* the two faces above the fold: without a preload the display H1 paints
-        in system-ui and reflows on every first visit */}
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/bricolage-grotesque-latin.woff2" crossorigin />
+    {/* Archivo is the comps' display face (Main.dc.html, Dial.dc.html,
+        Motion.dc.html all load exactly this family). Pinned to the four
+        weights the kit uses; licensed OFL 1.1, recorded in data/licenses.csv
+        (archivo-google-fonts) and docs/LICENSES.md.
+        Behind it the stack falls back to the house kit's LOCALLY shipped
+        Hanken Grotesk, preloaded here: if fonts.googleapis.com never answers
+        the page is still set in a grotesque, not in a browser default. */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap"
+    />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/hanken-grotesk-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/ibm-plex-mono-500.woff2" crossorigin />
     <title>{title === PRODUCT ? title : `${title} — ${PRODUCT}`}</title>
     <meta name="description" content={desc} />
     <link rel="canonical" href={canonical.href} />

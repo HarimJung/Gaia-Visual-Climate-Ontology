@@ -40,16 +40,20 @@ export function sceneDataFor(view, entry) {
     })),
     finance: { live: false },
     labels: {
-      plate: { chip: SCENE_COPY.plateChip, title: SCENE_COPY.plateTitle, value: treatyLine(view) || view.country.name_en, color: '#4c565c' },
-      pledge: { chip: SCENE_COPY.pledgeChip, title: SCENE_COPY.pledgeTitle, value: SCENE_COPY.pledgeGhost, color: '#00689d' },
+      // the instrument palette (app/src/styles/site.css): pearl for the
+      // shared chassis, glass blue for a promise, amber ONLY where something
+      // is live — here the hashed documents actually held — clay red for a
+      // void, steel grey for a part that was never read.
+      plate: { chip: SCENE_COPY.plateChip, title: SCENE_COPY.plateTitle, value: treatyLine(view) || view.country.name_en, color: '#C6D0D7' },
+      pledge: { chip: SCENE_COPY.pledgeChip, title: SCENE_COPY.pledgeTitle, value: SCENE_COPY.pledgeGhost, color: '#9FC3E0' },
       inventory: {
         chip: SCENE_COPY.inventoryChip,
         title: SCENE_COPY.inventoryTitle,
         value: `${c.documents_with_bytes} hashed of ${c.documents_on_record} on record`,
-        color: '#3f7e44',
+        color: '#FF8A3D',
       },
-      evidence: { chip: SCENE_COPY.evidenceChip, title: SCENE_COPY.evidenceTitle, value: SCENE_COPY.evidenceUnread, color: '#b0105a' },
-      finance: { chip: SCENE_COPY.financeChip, title: SCENE_COPY.financeTitle, value: SCENE_COPY.financeUnknown, color: '#8a6208' },
+      evidence: { chip: SCENE_COPY.evidenceChip, title: SCENE_COPY.evidenceTitle, value: SCENE_COPY.evidenceUnread, color: '#E0695F' },
+      finance: { chip: SCENE_COPY.financeChip, title: SCENE_COPY.financeTitle, value: SCENE_COPY.financeUnknown, color: '#8A949B' },
     },
   };
 }

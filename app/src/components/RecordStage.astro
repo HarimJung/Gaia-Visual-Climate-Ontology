@@ -113,10 +113,18 @@ const wrap = (s, n, lines = 3) => {
             'M0,.125 L.25,.125',
           ].map((d, k) => (
             <pattern id={`r-hatch-${k}`} width=".25" height=".25" patternUnits="objectBoundingBox" patternContentUnits="objectBoundingBox">
-              <rect width=".25" height=".25" fill="var(--wash)"></rect>
+              <rect width=".25" height=".25" fill="#1A2026"></rect>
               <path d={d} stroke="var(--ink-3)" stroke-width=".07" fill="none"></path>
             </pattern>
           ))}
+          {/* observed = METAL. A flat pale fill is a colour; this is the same
+              machined pearl the band, the chips and the dial's barrels use,
+              so one material means one state everywhere in the product. */}
+          <linearGradient id="r-metal" x1="0" y1="0" x2=".55" y2="1">
+            <stop offset="0%" stop-color="#C6D0D7"></stop>
+            <stop offset="46%" stop-color="#9AA4AB"></stop>
+            <stop offset="100%" stop-color="#6B757C"></stop>
+          </linearGradient>
         </defs>
 
         {/* the plate the instrument is seated on: drawn first, under the
@@ -234,6 +242,7 @@ const wrap = (s, n, lines = 3) => {
           counts={counts}
           rows={view.rows}
           sockets={[]}
+          iso3={iso3}
           href="#census-documents_with_bytes"
           onRecordHref="#census-documents_on_record"
         />

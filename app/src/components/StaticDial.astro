@@ -1,114 +1,310 @@
 ---
 // The dial as flat SVG: no three.js, no client boundary. Ported from the
-// frozen predecessor (static-dial.tsx for the frame, Dial.dc.html for the
-// surfaces — owner decision 2026-10-16) and remapped onto this runtime's
-// honest data. Four devices come across from the comp, each carrying a count
-// this runtime actually holds; nothing here is a ratio, a gauge or a guess:
+// frozen predecessor (static-dial.tsx for the frame, Dial.dc.html and
+// Main.dc.html for the surfaces and devices — owner decision 2026-10-16) and
+// remapped onto this runtime's honest data. This is NOT a leftover: with
+// JavaScript off, with WebGL lost, or under a reduced-data browser, this IS
+// the instrument, so it carries every device the comps carry.
 //
-//   · the engraved TICK BEZEL — a fine decorative ring plus one bold tick per
-//     document on record, the bold tick inked by that document's state
-//   · the DOCUMENT SEGMENT RING — one countable arc segment per document, at a
-//     fixed angular pitch, machined solid where the bytes are held and hashed,
-//     hairline where the document is on record only, hatched where the state
-//     is unknown. Segments, not a sweep: the reading is "how many", not "how
-//     full", so there is no gauge and no percentage anywhere on the dial.
-//   · the PLEDGE GHOST RING — dashed, with its reason etched on, because no
-//     pledge figure was read from any filing
-//   · the EIGHT COMPONENT BORES — the report's eight parts; a part this
-//     runtime has read would seat a jewel, and today every one is an empty
-//     machined bore, which is the thesis rather than a blank
+// Device by device, and the data behind each:
 //
-// The centre readout is two census figures inside their links (R6). Server
-// -rendered everywhere the 3D movement mounts, so the instrument is itself on
-// every screen — JavaScript off, WebGL lost, reduced data — not only the ones
-// with a canvas.
+//   · ENGRAVED TICK BEZEL — a fine machined edge (decoration, no reading),
+//     plus one bold tick per document on record, each tick inked by that
+//     document's own state.
+//   · BARREL RING (Main.dc.html's forty barrels) — one barrel per document on
+//     record. LIVE = the bytes are held and hashed, lit amber. VOID = the
+//     document is on record and this runtime never held its bytes: a sunken,
+//     machined, empty socket in clay red. Every barrel is a link to that
+//     document's receipt.
+//   · AMBER FLOW PATHS + travelling spark (the PULSE motion) — one path from
+//     each live barrel into the escapement. It animates EVIDENCE MOVING INTO
+//     THE RECORD; it is never a number and it never counts up.
+//   · CONCENTRIC HAIRLINE GUIDES and the PLEDGE GHOST RING — dashed, with its
+//     reason etched under the bezel, because no pledge figure was read from
+//     any filing.
+//   · COTES MAINPLATE — the comps' 112 degree Geneva stripe under a raking
+//     key light.
+//   · BTR SUBDIAL — the report's eight parts: a part this runtime has read
+//     seats a jewel, a pledged part a glass bore, an absent part a plugged
+//     void, and an unread part stays an empty machined bore, which is the
+//     thesis rather than a blank.
+//   · ESCAPEMENT — the TICK, the one permanent loop, with the single amber
+//     jewel at the point where evidence enters the record.
+//   · SATELLITE on a dashed tether — a real case, not an illustration: a
+//     document on record whose bytes this runtime never held. It exists, it
+//     is addressed, it is not engaged. It carries that document's own title
+//     and links to its receipt; it carries no figure, because the difference
+//     between two counts is not a figure this runtime recorded.
+//
+// The centre readout is two census figures inside their links (R6). No ratio,
+// no percentage, no gauge, no count-up anywhere on the dial.
 import { SOCKETS, SCENE_COPY } from '../lib/story-content.mjs';
+import { nextUid } from '../lib/derive.mjs';
 
-const { counts, href, onRecordHref = href, sockets = [], rows = [] } = Astro.props;
-const C = 210;
-const pol = (r, deg) => [C + r * Math.cos((deg - 90) * Math.PI / 180), C + r * Math.sin((deg - 90) * Math.PI / 180)];
-// One arc segment per document on record, at a fixed pitch — countable marks,
-// never a swept fraction. State decides the material, exactly as the band and
-// the chips do elsewhere in the kit.
-const seg = rows.length > 0
-  ? rows.map((r) => ({ state: r.state, held: Boolean(r.sha256) }))
-  : Array.from({ length: Math.max(1, counts.documents_on_record) }, () => ({ state: 'unknown', held: false }));
-const pitch = 360 / seg.length;
-const gap = Math.min(3.2, pitch * 0.22);
-const RING = 176;
-const arcs = seg.map((s, i) => {
-  const a0 = i * pitch + gap / 2, a1 = (i + 1) * pitch - gap / 2;
-  const [x0, y0] = pol(RING, a0);
-  const [x1, y1] = pol(RING, a1);
+const { counts, href, onRecordHref = href, sockets = [], rows = [], iso3 = '' } = Astro.props;
+// every fragment id on this instance is suffixed, so three dials on one page
+// do not all paint from the first one's defs
+const U = nextUid();
+const C = 500;
+const pol = (r, deg) => [
+  C + r * Math.cos(((deg - 90) * Math.PI) / 180),
+  C + r * Math.sin(((deg - 90) * Math.PI) / 180),
+];
+const f1 = (n) => n.toFixed(1);
+
+// One barrel per document on record. Order and identity come from the view's
+// own rows; when a caller hands us no rows (the cover's bare counts) we fall
+// back to anonymous barrels at the recorded count, every one a void, because
+// without a row there is no receipt to point at and nothing to claim held.
+const docs =
+  rows.length > 0
+    ? rows.map((r) => ({
+        live: Boolean(r.sha256),
+        state: r.state,
+        title: r.title,
+        id: r.doc_id,
+      }))
+    : Array.from({ length: Math.max(1, counts.documents_on_record) }, () => ({
+        live: false,
+        state: 'unknown',
+        title: '',
+        id: null,
+      }));
+// Geometry scaled straight off Main.dc.html (an 800 stage, plate 672, barrels
+// at R=286, guides at 588/470/286, escapement 196/132/108/26) by 1000/800:
+// the mainplate is 84% of the frame and the barrels sit ON it, which is the
+// difference between an instrument and a diagram floating on a dark page.
+const BEZEL = 445, CASE = 431, PLATE = 420;
+const G1 = 367, G2 = 294;
+const RING = 357;
+const barrels = docs.map((d, i) => {
+  const a = (i / docs.length) * 360;
+  const [x, y] = pol(RING, a);
+  return { ...d, a, x, y, r: d.live ? 17 : 14 };
+});
+// PULSE: one flow path per live barrel, curving into the escapement rim the
+// way the comp's gear-train energy paths curve into the balance.
+const HUB = 194;
+const flows = barrels
+  .filter((b) => b.live)
+  .map((b, n) => {
+    const rad = ((b.a - 90) * Math.PI) / 180;
+    const [mx, my] = [C + Math.cos(rad + 0.34) * RING * 0.52, C + Math.sin(rad + 0.34) * RING * 0.52];
+    const [ex, ey] = pol(HUB, b.a);
+    return {
+      d: `M ${f1(b.x)} ${f1(b.y)} Q ${f1(mx)} ${f1(my)} ${f1(ex)} ${f1(ey)}`,
+      style: `animation-duration:${(2.6 + n * 0.42).toFixed(2)}s;animation-delay:${(n * 0.55).toFixed(2)}s`,
+    };
+  });
+
+// the bezel: a fine engraved ring, and one bold tick per document on record
+const fine = Array.from({ length: 90 }, (_, i) => i * 4);
+const boldTick = barrels.map((b) => ({
+  cls: b.live ? 'metal' : b.state === 'unknown' ? 'unv' : 'hair',
+  a: b.a,
+}));
+
+// the BTR subdial, from Dial.dc.html: jewels at 56% of the plate's radius,
+// each label outside its own bore. The engraved caption is the component's
+// own key (the comp engraves NIR / CRT / CTF, not a sentence); the full
+// recorded label stays on the mark as its accessible name.
+const SUB = 250, LBL = 272;
+const bores = SOCKETS.map((s, i) => {
+  const a = (i / SOCKETS.length) * 360;
+  const [x, y] = pol(SUB, a);
+  const dx = Math.sin((a * Math.PI) / 180);
+  const dy = -Math.cos((a * Math.PI) / 180);
+  const anchor = dx > .3 ? 'start' : dx < -.3 ? 'end' : 'middle';
+  const [lx, ly] = pol(LBL, a);
+  const state = sockets[i]?.state ?? 'unknown';
   return {
-    d: `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${RING} ${RING} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`,
-    cls: s.held ? 'metal' : s.state === 'unknown' ? 'unv' : 'hair',
-    mid: a0 + (a1 - a0) / 2,
+    x, y, anchor,
+    lx: lx + (anchor === 'start' ? 16 : anchor === 'end' ? -16 : 0),
+    ly: ly + (anchor === 'middle' ? (dy < 0 ? -14 : 26) : 7),
+    code: s.key.replace(/_/g, ' ').toUpperCase(),
+    label: s.label,
+    state,
   };
 });
-// the bezel: a fine engraved ring, and one bold tick per document on record
-const fine = Array.from({ length: 72 }, (_, i) => i * 5);
-const bores = SOCKETS.map((s, i) => {
-  const [x, y] = pol(99, (i / SOCKETS.length) * 360 + 22.5);
-  return { x, y, label: s.label, state: sockets[i]?.state ?? 'unknown' };
-});
+
+// the escapement's teeth: drawn, not patterned, so the tick stays crisp
+const teeth = Array.from({ length: 72 }, (_, i) => i * 5);
+
+// THE SATELLITE — the first document on record whose bytes were never held.
+// A real row or nothing at all; never an illustration of a case we do not
+// have. It sits outside the bezel on a dashed tether, unengaged.
+const orphan = docs.find((d) => !d.live && d.id);
+const satTitle = orphan ? (orphan.title.length > 30 ? orphan.title.slice(0, 29) + '…' : orphan.title) : '';
+const [satX, satY] = pol(478, 35);
+const [tethX, tethY] = pol(PLATE + 6, 35);
 ---
 
-{/* 420 wide, 452 tall: the ghost ring's reason is etched UNDER the bezel, not
-    across its ticks */}
-<svg viewBox="0 0 420 452" class="static-dial" aria-hidden="true">
+{/* 1000 wide, 1072 tall: the ghost ring's reason is etched UNDER the bezel,
+    not across its ticks */}
+<svg viewBox="0 0 1000 1072" class="static-dial" role="group" aria-label="Record dial">
   <defs>
     {/* côtes de Genève: the comp's 112° hairline pitch, re-tokened. The
         mainplate is a surface, not a colour fill — it is what separates a
         machined part from an extruded shape. */}
-    <pattern id="dial-cotes" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(112)">
-      <rect width="9" height="9" fill="var(--paper)"></rect>
-      <line x1="0" y1="0" x2="9" y2="0" stroke="var(--line)" stroke-width="1.2"></line>
+    <pattern id={`dial-cotes-${U}`} width="15" height="15" patternUnits="userSpaceOnUse" patternTransform="rotate(112)">
+      <rect width="15" height="15" fill="rgba(0,0,0,.24)"></rect>
+      <rect width="15" height="3" fill="rgba(255,255,255,.085)"></rect>
     </pattern>
+    <radialGradient id={`dial-halo-${U}`} cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF8A3D" stop-opacity=".10"></stop>
+      <stop offset="38%" stop-color="#FF8A3D" stop-opacity=".03"></stop>
+      <stop offset="66%" stop-color="#FF8A3D" stop-opacity="0"></stop>
+    </radialGradient>
+    {/* the comp's own mainplate stops (Main.dc.html) */}
+    <radialGradient id={`dial-plate-${U}`} cx="32%" cy="24%" r="78%">
+      <stop offset="0%" stop-color="#6E777E"></stop>
+      <stop offset="46%" stop-color="#4A5257"></stop>
+      <stop offset="100%" stop-color="#2C3236"></stop>
+    </radialGradient>
+    <radialGradient id={`dial-escape-${U}`} cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF8A3D" stop-opacity=".34"></stop>
+      <stop offset="52%" stop-color="#FF8A3D" stop-opacity=".06"></stop>
+      <stop offset="72%" stop-color="#FF8A3D" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id={`dial-metal-r-${U}`} cx="34%" cy="28%" r="78%">
+      <stop offset="0%" stop-color="#838C93"></stop>
+      <stop offset="52%" stop-color="#525A60"></stop>
+      <stop offset="100%" stop-color="#2F353A"></stop>
+    </radialGradient>
+    <radialGradient id={`dial-live-${U}`} cx="34%" cy="28%" r="78%">
+      <stop offset="0%" stop-color="#FFD3AA"></stop>
+      <stop offset="42%" stop-color="#FF9B52"></stop>
+      <stop offset="100%" stop-color="#A85B22"></stop>
+    </radialGradient>
+    <radialGradient id={`dial-jewel-${U}`} cx="34%" cy="28%" r="78%">
+      <stop offset="0%" stop-color="#E3EBF1"></stop>
+      <stop offset="46%" stop-color="#9FB0BC"></stop>
+      <stop offset="100%" stop-color="#5A6B78"></stop>
+    </radialGradient>
+    {/* the raking key light, 118° as in every comp */}
+    <linearGradient id={`dial-rake-${U}`} x1="0" y1="0" x2="1" y2="1" gradientTransform="rotate(-28 .5 .5)">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".16"></stop>
+      <stop offset="26%" stop-color="#ffffff" stop-opacity=".02"></stop>
+      <stop offset="46%" stop-color="#ffffff" stop-opacity="0"></stop>
+      <stop offset="100%" stop-color="#000000" stop-opacity=".20"></stop>
+    </linearGradient>
+    <filter id={`dial-amber-${U}`} x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="7" result="b"></feGaussianBlur>
+      <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
   </defs>
 
-  {/* bezel */}
-  <circle cx={C} cy={C} r="202" class="d-case"></circle>
+  {/* the ambient halo the comps put behind the plate */}
+  <circle cx={C} cy={C} r="500" fill={`url(#dial-halo-${U})`}></circle>
+
+  {/* ── engraved tick bezel: a fine machined edge, then one bold tick per
+         document on record, inked by that document's own state ─────── */}
   <g class="d-fine">{fine.map((a) => {
-    const [x0, y0] = pol(196, a);
-    const [x1, y1] = pol(202, a);
-    return <line x1={x0} y1={y0} x2={x1} y2={y1}></line>;
+    const [x0, y0] = pol(BEZEL - 13, a);
+    const [x1, y1] = pol(BEZEL, a);
+    return <line x1={f1(x0)} y1={f1(y0)} x2={f1(x1)} y2={f1(y1)}></line>;
   })}</g>
-  <g class="d-bold">{arcs.map((a) => {
-    const [x0, y0] = pol(190, a.mid);
-    const [x1, y1] = pol(203, a.mid);
-    return <line x1={x0} y1={y0} x2={x1} y2={y1} class={a.cls}></line>;
+  <g class="d-bold">{boldTick.map((t) => {
+    const [x0, y0] = pol(BEZEL - 24, t.a);
+    const [x1, y1] = pol(BEZEL + 4, t.a);
+    return <line x1={f1(x0)} y1={f1(y0)} x2={f1(x1)} y2={f1(y1)} class={t.cls}></line>;
   })}</g>
+  {/* the black case ring: what the bezel's ticks are cut into */}
+  <circle cx={C} cy={C} r={CASE} class="d-case"></circle>
 
-  {/* the document segment ring: one countable segment per document */}
-  <circle cx={C} cy={C} r={RING} class="d-track"></circle>
-  <g class="d-seg">{arcs.map((a) => <path d={a.d} class={a.cls}></path>)}</g>
+  {/* ── côtes mainplate under the raking key light ───────────────────── */}
+  <circle cx={C} cy={C} r={PLATE} class="d-plate" fill={`url(#dial-plate-${U})`}></circle>
+  <circle cx={C} cy={C} r={PLATE} fill={`url(#dial-cotes-${U})`}></circle>
+  <circle cx={C} cy={C} r={PLATE} fill={`url(#dial-rake-${U})`}></circle>
+  <circle cx={C} cy={C} r={PLATE} class="d-plate-edge"></circle>
 
-  {/* the pledge path: no figure read, so the ring is a ghost with its reason
-      etched on — dashed in ink, never a guessed arc (same as the 3D ring) */}
-  <circle cx={C} cy={C} r="148" class="d-ghost"></circle>
-  <text x={C} y="440" text-anchor="middle" class="d-etch">{SCENE_COPY.pledgeEtch.toUpperCase()}</text>
+  {/* ── concentric hairline guides (the comps' machining lines) ──────── */}
+  <circle cx={C} cy={C} r={G1} class="d-hair"></circle>
+  <circle cx={C} cy={C} r={G2} class="d-hair"></circle>
 
-  {/* mainplate */}
-  <circle cx={C} cy={C} r="126" class="d-plate"></circle>
-  <circle cx={C} cy={C} r="126" class="d-plate-edge"></circle>
+  {/* ── the pledge path: no figure read, so the ring is a ghost with its
+         reason etched on — dashed, never a guessed arc ───────────────── */}
+  <circle cx={C} cy={C} r="330" class="d-ghost"></circle>
+  <text x={C} y="1052" text-anchor="middle" class="d-etch">{SCENE_COPY.pledgeEtch.toUpperCase()}</text>
 
-  {/* the eight component bores */}
+  {/* ── amber flow paths, and the spark that runs them (PULSE) ───────── */}
+  <g aria-hidden="true">
+    {flows.map((f) => <path d={f.d} class="d-flow"></path>)}
+    {flows.map((f) => <path d={f.d} class="d-spark" style={f.style}></path>)}
+  </g>
+
+  {/* ── the barrel ring: one document each, every one a receipt ──────── */}
+  <g class="d-barrels">
+    {barrels.map((b) =>
+      b.id ? (
+        <a href={`/receipt/${iso3}/${b.id}/`} data-receipt={b.id}>
+          <title>{b.title} — {b.live ? 'bytes held and hashed' : 'on record, bytes not held'}</title>
+          <circle
+            cx={f1(b.x)}
+            cy={f1(b.y)}
+            r={b.r}
+            class={`d-barrel ${b.live ? 'live' : 'void'}`}
+            fill={b.live ? `url(#dial-live-${U})` : undefined}
+            filter={b.live ? `url(#dial-amber-${U})` : undefined}
+          ></circle>
+        </a>
+      ) : (
+        <circle cx={f1(b.x)} cy={f1(b.y)} r={b.r} class="d-barrel void"></circle>
+      ),
+    )}
+  </g>
+
+  {/* ── the BTR subdial: jewels seated, bores still empty ────────────── */}
+  <circle cx={C} cy={C} r={SUB} class="d-hair"></circle>
   {bores.map((b) => (
     <circle
-      cx={b.x}
-      cy={b.y}
-      r="13"
-      class={`d-bore ${b.state === 'observed' ? 'jewel' : b.state === 'absent' ? 'plug' : 'bore'}`}
+      cx={f1(b.x)}
+      cy={f1(b.y)}
+      r="15"
+      class={`d-bore ${b.state === 'observed' ? 'jewel' : b.state === 'pledged' ? 'glass' : b.state === 'absent' ? 'plug' : 'bore'}`}
+      fill={b.state === 'observed' ? `url(#dial-jewel-${U})` : undefined}
     ></circle>
   ))}
+  {bores.map((b) => (
+    <text x={f1(b.lx)} y={f1(b.ly)} text-anchor={b.anchor} class="d-cap">
+      <title>{b.label}</title>{b.code}
+    </text>
+  ))}
 
-  {/* centre readout: two census figures, each inside its link (R6) */}
-  <text x={C} y="182" text-anchor="middle" class="d-cap">DOCUMENTS HASHED</text>
+  {/* ── the escapement: TICK, the only permanent loop ────────────────── */}
+  <circle cx={C} cy={C} r="216" fill={`url(#dial-escape-${U})`} aria-hidden="true"></circle>
+  <g class="d-escape" aria-hidden="true">
+    {teeth.map((a) => {
+      const [x0, y0] = pol(166, a);
+      const [x1, y1] = pol(190, a);
+      return <line x1={f1(x0)} y1={f1(y0)} x2={f1(x1)} y2={f1(y1)}></line>;
+    })}
+  </g>
+  {/* the single amber jewel: where evidence enters the record */}
+  <circle cx={C} cy={C - 178} r="13" class="d-jewel-core" fill={`url(#dial-live-${U})`} filter={`url(#dial-amber-${U})`} aria-hidden="true"></circle>
+
+  {/* ── centre readout: two census figures, each inside its link (R6) ── */}
+  <text x={C} y="452" text-anchor="middle" class="d-cap">DOCUMENTS HASHED</text>
   <a href={href}>
-    <text x={C} y="230" text-anchor="middle" class="d-read">{counts.documents_with_bytes}</text>
+    <text x={C} y="528" text-anchor="middle" class="d-read">{counts.documents_with_bytes}</text>
   </a>
-  <text x={C} y="256" text-anchor="middle" class="d-of">
+  <text x={C} y="566" text-anchor="middle" class="d-of">
     of <a href={onRecordHref}><tspan class="d-of-n">{counts.documents_on_record}</tspan></a> on record
   </text>
+
+  {/* ── the satellite: on record, never held, not engaged ────────────── */}
+  {orphan && (
+    <g class="d-satellite">
+      <path d={`M ${f1(tethX)} ${f1(tethY)} L ${f1(satX)} ${f1(satY)}`} class="d-tether"></path>
+      {/* the whole satellite is one link: the barrel, the state word and the
+          document's own title all go to that document's receipt, so the
+          title's own numerals are never a figure standing free (R6) */}
+      <a href={`/receipt/${iso3}/${orphan.id}/`} data-receipt={orphan.id}>
+        <title>{orphan.title} — on record, bytes not held</title>
+        <circle cx={f1(satX)} cy={f1(satY)} r="18" class="d-barrel void"></circle>
+        <text x={f1(satX)} y={f1(satY - 34)} text-anchor="middle" class="d-sat-lbl">NOT ENGAGED</text>
+        <text x={f1(satX)} y={f1(satY - 56)} text-anchor="middle" class="d-cap">{satTitle.toUpperCase()}</text>
+      </a>
+    </g>
+  )}
 </svg>

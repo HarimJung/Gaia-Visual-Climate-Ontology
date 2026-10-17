@@ -12,9 +12,36 @@
    the pin starts under it and the stage owns the rest of the viewport. */
 .scroll-chapter { position: relative; }
 .scroll-pin { position: sticky; top: var(--top-h); height: calc(100svh - var(--top-h)); display: flex; flex-direction: column; overflow: hidden; }
+/* The HUD bands. The camera frames the MECHANISM, and for five chapters the
+   case lid is deliberately out of shot above it — so a part can and does
+   travel behind the heading strip. These two gradients are what the comps
+   put under their own rails: the chapter title, the dot row and the
+   affordance line keep their ground at every scroll position and every
+   viewport, and nothing has to be made smaller to buy it. */
+.scroll-pin::before, .scroll-pin::after {
+  content: ""; position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none;
+  /* feathered at the sides so the band has no vertical edge of its own */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+}
+.scroll-pin::before { top: 0; height: 132px; background: linear-gradient(180deg, #0B0D0F 0%, rgba(11, 13, 15, .88) 38%, rgba(11, 13, 15, 0) 100%); }
+.scroll-pin::after { bottom: 0; height: 84px; background: linear-gradient(0deg, #0B0D0F 0%, rgba(11, 13, 15, .80) 44%, rgba(11, 13, 15, 0) 100%); }
 
 /* ── Stage: the instrument itself ────────────────────────────────────── */
+/* THE FRAME (Main.dc.html): the comps put an ambient amber halo behind the
+   plate and let the plate fill ~75% of the frame's height. Ours gets the same
+   halo — a radial behind the canvas, centred on the same point the camera
+   frames — so the object sits in a lit pocket of the ground instead of
+   floating on a flat field. Decoration only: aria-hidden, no data. */
 .scene-stage { position: relative; flex: 1; min-height: 0; isolation: isolate; }
+.scene-stage::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: min(112%, 126vh); aspect-ratio: 1;
+  transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; z-index: 0;
+  /* the halo has to reach zero INSIDE the stage: the pin clips its overflow
+     at the page's measure, and a halo still glowing at that line draws a
+     hard vertical edge down the screen where there is no object */
+  background: radial-gradient(circle, rgba(255, 138, 61, .11) 0%, rgba(255, 138, 61, .035) 34%, rgba(0, 0, 0, 0) 60%);
+}
 .scene-host { position: absolute; inset: 0; overflow: hidden; contain: layout paint; z-index: 0; }
 .scene-host canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
 .scene-host canvas:active { cursor: grabbing; }
@@ -24,9 +51,9 @@
 /* The instrument is given the frame (predecessor Main.dc.html: the mainplate
    is 75% of the frame height). A dial parked small in whitespace reads as a
    placeholder; one that owns its frame reads as a product. */
-.dial-fallback svg { width: auto; height: 100%; max-height: min(94%, 620px); max-width: 94%; }
-.dial-fallback p { margin: 0; font-size: 14.5px; color: var(--ink-3); text-align: center; max-width: 40ch; }
-.scene-stage.is-live .dial-fallback { opacity: 0; pointer-events: none; }
+.dial-fallback svg { width: auto; height: 100%; max-height: min(100%, 760px); max-width: 100%; }
+.dial-fallback p { margin: 0; font: 400 var(--t-cap)/1.5 var(--f-m); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); text-align: center; max-width: 46ch; }
+.scene-stage.is-live .dial-fallback { opacity: 0; pointer-events: none; visibility: hidden; transition: opacity .4s var(--out), visibility 0s .4s; }
 /* the title sits top-left; the affordance line goes bottom-left, under the
    card column, where the instrument never travels (and never on touch, where
    "drag to turn" is the wrong instruction) */
@@ -38,48 +65,81 @@
 @media (hover: none) { .stage-afford { display: none; } }
 
 /* ── The engraved dial surfaces (predecessor Dial.dc.html, re-tokened) ── */
+/* ── The engraved dial surfaces (predecessor Dial.dc.html, re-tokened) ──
+   Every mark here is a count this runtime holds. Nothing is a ratio, nothing
+   sweeps, and the only moving things are PULSE (evidence travelling a flow
+   path) and TICK (the escapement) — both dead under reduced motion. */
 .static-dial { font-family: var(--f-m); }
-.d-case { fill: var(--paper); stroke: var(--line-2); }
-.d-fine line { stroke: var(--line-2); stroke-width: 1; }
-.d-bold line { stroke-width: 2.6; }
-.d-bold line.metal { stroke: var(--acc); }
-.d-bold line.hair, .d-bold line.unv { stroke: var(--ink-3); }
-.d-track { fill: none; stroke: var(--wash); stroke-width: 17; }
-.d-seg path { fill: none; stroke-width: 15; stroke-linecap: butt; }
-.d-seg path.metal { stroke: var(--acc); }
-/* on record only: a thin machined line. Unknown: the full band, cut open —
-   the seat is there, nothing is seated in it. */
-.d-seg path.hair { stroke: var(--ink-3); stroke-width: 3; }
-.d-seg path.unv { stroke: var(--ink-3); stroke-width: 15; stroke-dasharray: 3 4; }
-.d-ghost { fill: none; stroke: var(--ink-3); stroke-width: 5; stroke-dasharray: 4 10; }
-.d-etch { fill: var(--ink-3); font-size: 11.5px; letter-spacing: 1.5px; }
-.d-plate { fill: url(#dial-cotes); }
-.d-plate-edge { fill: none; stroke: var(--line-2); }
+.d-case { fill: #0B0D0F; stroke: none; }
+/* the engraved tick bezel: a fine machined edge, and one bold tick per
+   document on record, inked by that document's state */
+.d-fine line { stroke: rgba(190, 202, 210, .55); stroke-width: 1; }
+.d-bold line { stroke-width: 3; }
+.d-bold line.metal { stroke: var(--st-observed); }
+.d-bold line.hair { stroke: var(--void-line); }
+.d-bold line.unv { stroke: var(--ink-3); }
+.d-ghost { fill: none; stroke: rgba(170, 205, 235, .34); stroke-width: 6; stroke-dasharray: 5 13; }
+.d-etch { fill: var(--ink-3); font-size: 19px; letter-spacing: 3.4px; }
+/* the comp's plate sits ON the ground, not in it: a long soft drop under it
+   and a bright bevel at its rim (Main.dc.html's
+   `inset 0 0 0 1px rgba(226,236,242,.22), 0 40px 90px rgba(0,0,0,.65)`) */
+.d-plate { filter: drop-shadow(0 26px 54px rgba(0, 0, 0, .85)); }
+.d-plate-edge { fill: none; stroke: rgba(226, 236, 242, .24); stroke-width: 1.6; }
+.d-hair { fill: none; stroke: rgba(226, 236, 242, .13); }
 .d-bore { stroke: var(--ink-3); }
-.d-bore.bore { fill: var(--wash); stroke-dasharray: 2 3; }
-.d-bore.jewel { fill: var(--acc); }
-.d-bore.plug { fill: var(--ink-3); }
-.d-cap { fill: var(--ink-3); font-size: 10px; letter-spacing: 1.8px; }
-.d-read { fill: var(--acc-ink); font-size: 46px; font-weight: 500; }
-.d-of { fill: var(--ink-3); font-size: 15px; font-family: var(--f-t); }
-.d-of-n { fill: var(--acc-ink); font-family: var(--f-m); }
+.d-bore.bore { fill: #0A0C0E; stroke-dasharray: 2 3; }
+.d-bore.jewel { stroke: rgba(226, 236, 242, .35); }
+.d-bore.glass { fill: var(--gls-fill); stroke: var(--st-pledged); stroke-dasharray: 4 3; }
+.d-bore.plug { fill: #08090B; stroke: var(--void-line); }
+/* the dial is drawn in a 1000-unit frame and shown between 520 and 900 CSS
+   pixels wide, so a unit is roughly half a pixel: a 10-unit cap was 5px on
+   screen. These are the comps' own sizes multiplied back up. */
+.d-cap { fill: var(--ink-3); font-size: 17px; letter-spacing: 3px; }
+.d-read { fill: var(--ink); font-size: 86px; font-weight: 500; letter-spacing: -2px; }
+.d-of { fill: var(--ink-3); font-size: 24px; font-family: var(--f-m); letter-spacing: .6px; }
+.d-of-n { fill: var(--ink); font-family: var(--f-m); }
+.static-dial a:hover .d-barrel, .static-dial a:focus-visible .d-barrel { stroke: var(--ink); stroke-width: 1.6; }
+
+/* ── the BARREL RING (Main.dc.html's 40 barrels, carrying our own data) ──
+   One barrel per document on record for this record. LIVE = the bytes are
+   held and hashed, so it is lit amber and a flow path runs from it to the
+   centre. VOID = the document is on record and this runtime never held its
+   bytes: a sunken, machined, empty socket in clay red. Each barrel is a link
+   to that document's receipt. */
+.d-barrel { stroke-width: 1.3; }
+.d-barrel.live { stroke: rgba(255, 205, 160, .55); }
+.d-barrel.void { fill: #08090B; stroke: var(--void-line); }
+/* PULSE: the amber spark travelling a flow path from a live barrel into the
+   centre. It animates EVIDENCE MOVING, never a number, and it carries no
+   reading of its own — the counts are in the readout and in the step cards. */
+.d-flow { fill: none; stroke: rgba(226, 236, 242, .20); stroke-width: 1.8; }
+.d-spark { fill: none; stroke: var(--acc); stroke-width: 3.4; stroke-linecap: round; stroke-dasharray: 9 440; filter: drop-shadow(0 0 6px rgba(255, 138, 61, .9)); animation: vc-flow 3.2s linear infinite; }
+@keyframes vc-flow { to { stroke-dashoffset: -449; } }
+/* TICK: the escapement. The only permanent loop on the product. */
+.d-escape line { stroke: rgba(232, 240, 246, .62); stroke-width: 2.2; }
+.d-escape { transform-box: view-box; transform-origin: 500px 500px; animation: vc-tick 3.6s cubic-bezier(.4, 0, .2, 1) infinite; }
+@keyframes vc-tick { 0%, 46% { transform: rotate(-7deg); } 50%, 96% { transform: rotate(7deg); } 100% { transform: rotate(-7deg); } }
+
+/* the satellite: a part that exists but is NOT engaged, on a dashed tether */
+.d-tether { fill: none; stroke: rgba(224, 105, 95, .55); stroke-width: 1.8; stroke-dasharray: 6 8; }
+.d-sat-lbl { fill: var(--void-ink); font-size: 19px; letter-spacing: 3.4px; }
 
 /* ── Labels projected onto the canvas: hairline tags, never cards ────── */
 .projected-labels { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 1; }
-.component-label, .btr-piece-label { position: absolute; top: 0; left: 0; padding: 5px 9px 6px; border: 0; border-radius: 2px; background: color-mix(in srgb, var(--bg) 86%, transparent); text-align: left; opacity: 0; translate: 0 5px; visibility: hidden; will-change: transform; transition: opacity 140ms var(--out), translate 140ms var(--out), visibility 0s 140ms; }
+.component-label, .btr-piece-label { position: absolute; top: 0; left: 0; padding: 7px 11px 8px; border: 0; border-radius: 2px; background: rgba(11, 13, 15, .88); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .14); backdrop-filter: blur(3px); text-align: left; opacity: 0; translate: 0 5px; visibility: hidden; will-change: transform; transition: opacity 140ms var(--out), translate 140ms var(--out), visibility 0s 140ms; }
 /* The leader draws out from the part first; the words follow it. */
 .component-label.is-shown, .btr-piece-label.is-shown { opacity: 1; translate: 0 0; visibility: visible; transition: opacity 240ms var(--out) 160ms, translate 360ms var(--out) 160ms, visibility 0s; }
 .component-label { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 8px; align-items: baseline; max-width: 236px; }
-.component-label i { font: 500 12px/1.3 var(--f-m); font-style: normal; color: var(--component-color); font-variant-numeric: tabular-nums; }
+.component-label i { font: 500 12px/1.3 var(--f-m); font-style: normal; color: var(--acc); font-variant-numeric: tabular-nums; letter-spacing: .1em; }
 .component-label strong { font: 600 13px/1.3 var(--f-t); color: var(--ink); }
 .component-label span { grid-column: 2; margin-top: 1px; font-size: 13px; line-height: 1.4; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .assembly-leaders { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
-.assembly-leaders polyline { fill: none; stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 120ms var(--out); }
+.assembly-leaders polyline { fill: none; stroke: rgba(226, 236, 242, .40); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 120ms var(--out); }
 .assembly-leaders polyline.is-shown { stroke-dashoffset: 0; transition: stroke-dashoffset 380ms var(--out); }
-.assembly-leaders circle { fill: var(--paper); stroke-width: 1.5; opacity: 0; transition: opacity 120ms var(--out); }
+.assembly-leaders circle { fill: var(--bg); stroke-width: 1.5; opacity: 0; transition: opacity 120ms var(--out); }
 .assembly-leaders circle.is-shown { opacity: 1; transition: opacity 160ms var(--out); }
 .btr-piece-label { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; cursor: pointer; pointer-events: auto; font-family: var(--f-t); }
-.btr-piece-label small { font: 500 12px/1.3 var(--f-m); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.btr-piece-label small { font: 500 12px/1.3 var(--f-m); color: var(--acc); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
 .btr-piece-label strong { font: 600 13px/1.3 var(--f-t); color: var(--ink); white-space: nowrap; }
 .btr-piece-label span { font-size: 13px; color: var(--ink-2); }
 .btr-piece-label:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 2px; }
@@ -87,11 +147,11 @@
 /* ── The chapter row: which chapter is on screen, and the way back ─────
       (predecessor instrument-hero's nine-dot row + "watch it again") ──── */
 .chapterrow { position: absolute; right: var(--gut); top: 14px; z-index: 4; display: flex; align-items: center; gap: 7px; }
-.chapterrow .dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--ink-3); transition: background .2s var(--ease), transform .2s var(--ease); }
-.chapterrow .dot.is-done { background: var(--ink-3); }
-.chapterrow .dot.is-on { background: var(--acc); border-color: var(--acc); transform: scale(1.5); }
-.chapterrow .replay { margin-left: 8px; font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .1em; text-transform: uppercase; color: var(--acc-ink); background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: 6px 9px; cursor: pointer; }
-.chapterrow .replay:hover { border-color: var(--acc-ink); }
+.chapterrow .dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--line-2); transition: background .2s var(--ease), transform .2s var(--ease); }
+.chapterrow .dot.is-done { background: var(--ink-3); border-color: var(--ink-3); }
+.chapterrow .dot.is-on { background: var(--acc); border-color: var(--acc); box-shadow: var(--live-glow); transform: scale(1.5); }
+.chapterrow .replay { margin-left: 8px; font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .14em; text-transform: uppercase; color: var(--acc); background: rgba(11, 13, 15, .7); border: 1px solid var(--line-2); border-radius: var(--r); padding: 7px 10px; cursor: pointer; }
+.chapterrow .replay:hover { border-color: var(--acc); color: var(--acc-ink); }
 @media (max-width: 699px) { .chapterrow { display: none; } }
 
 /* ── The cards: the story passes over the machine ────────────────────── */
@@ -101,8 +161,8 @@
    visible effect — and padded 20px right, 0 left, so the text sat hard
    against the gutter with 50px of tint trailing it. */
 .scene-cards { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-.scene-card { position: absolute; left: var(--gut); margin-left: -22px; width: min(480px, 40vw); pointer-events: auto; background: color-mix(in srgb, var(--bg) 96%, transparent); border-top: 1px solid var(--ink); padding: 18px 22px 20px; }
-.scene-card .eyebrow { display: block; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
+.scene-card { position: absolute; left: var(--gut); margin-left: -22px; width: min(480px, 40vw); pointer-events: auto; background: linear-gradient(140deg, rgba(23, 28, 33, .94), rgba(11, 13, 15, .90)); backdrop-filter: blur(6px); border-top: 1px solid var(--acc); box-shadow: 0 18px 50px rgba(0, 0, 0, .55); padding: 18px 22px 20px; }
+.scene-card .eyebrow { display: block; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .28em; text-transform: uppercase; color: var(--acc); margin: 0 0 10px; }
 .scene-card h3 { font: 700 clamp(1.25rem, 1.9vw, 1.6rem)/1.1 var(--f-d); letter-spacing: -.02em; margin: 0 0 8px; }
 .scene-card p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
 .scene-card p + p { margin-top: 8px; }
@@ -116,7 +176,7 @@
   .scroll-chapter[data-machine] { height: auto !important; }
   /* the short stage stays opaque on top; the cards pass under it. The top
      bar is not sticky, so the stage pins to the viewport edge itself. */
-  .scroll-pin { top: 0; height: 46svh; z-index: 4; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .scroll-pin { top: 0; height: 46svh; z-index: 4; background: var(--bg); background-image: var(--ground); border-bottom: 1px solid var(--line); }
   .scene-cards { position: static; display: grid; gap: 28px; padding: 24px var(--gut) 40px; }
   .scene-card { position: static; width: auto; margin-left: 0; padding: 18px 0 20px; }
   /* the record chapter keeps its pinned stage and its one card at a time */
@@ -129,3 +189,16 @@
 /* outside the pin there is no flex parent: the stage fills its section */
 .dial-stage .scene-stage { position: absolute; inset: 0; }
 @media (max-width: 699px) { .dial-stage { aspect-ratio: 4 / 3.4; } }
+
+/* The dial is one drawing at every width, so its engraved type has to be
+   scaled by the frame it lands in: on a phone the same 17-unit cap that
+   reads at 900px wide is 6 CSS pixels. */
+@media (max-width: 860px) {
+  /* the readout's own cap has to stay INSIDE the escapement ring: at 26 units
+     "DOCUMENTS HASHED" is wider than the ring's bore and the teeth cut
+     through the words */
+  .d-cap { font-size: 22px; letter-spacing: 2.6px; }
+  .d-etch, .d-sat-lbl { font-size: 27px; letter-spacing: 4.4px; }
+  .d-read { font-size: 112px; }
+  .d-of { font-size: 32px; }
+}

@@ -46,18 +46,20 @@ export async function mountScene(el, data, controls, opts = {}) {
   let cancelled = false;
   const fail = () => { cleanup(); if (!cancelled) opts.onFail?.(); };
   try {
+    const textures = [];
     const scene = new T.Scene();
     const renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setClearColor(0xfbfbfa, 0);
+    renderer.setClearColor(0x0b0d0f, 0);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = T.PCFSoftShadowMap;
-    // Filmic tone mapping under a slight exposure cut: this is how a product
-    // photograph is made, and it is what the predecessor's own first pass
-    // used (work/scene-first-pass.tsx: ACESFilmic at .85). Neutral at 1.0
-    // flattened every specular highlight the machining depends on.
+    // Filmic tone mapping under the predecessor's own exposure cut
+    // (work/scene-first-pass.tsx: ACESFilmic at .85). On the dark instrument
+    // ground anything above that blows the specular roll-off the machining
+    // depends on; 1.12 was a paper-studio number and it read as white
+    // plastic on white paper.
     renderer.toneMapping = T.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.12;
+    renderer.toneMappingExposure = .85;
     el.appendChild(renderer.domElement);
     renderer.outputColorSpace = T.SRGBColorSpace;
     renderer.domElement.setAttribute('role', 'img');
@@ -67,14 +69,19 @@ export async function mountScene(el, data, controls, opts = {}) {
     const room = new RoomEnvironment();
     const env = pm.fromScene(room, .04);
     scene.environment = env.texture;
-    scene.environmentIntensity = .85;
+    // .45, the first pass's value: the room is what a metal REFLECTS, and at
+    // .85 the whole object was lit by ambience and nothing was lit by the key.
+    scene.environmentIntensity = .45;
     room.dispose(); pm.dispose();
 
-    // A paper studio with a RAKING key: the key sits nearly overhead and well
-    // off-axis so a lifted part shadows the part under it and the metal
-    // catches an edge. The fills were cancelling every shadow edge in the
-    // scene — one strong key plus a soft bounce is how hardware is lit.
-    const keyLight = new T.DirectionalLight(0xffffff, 2.1);
+    // A DARK studio with a raking warm key: the key sits off-axis so a lifted
+    // part shadows the part under it and the metal catches an edge, and the
+    // ambient is cut to a trace so the ground stays near-black behind the
+    // object (the first pass: key 0xfff3dc at 1.9, ambient 0xc4d4df at .22).
+    // A cool rim separates the silhouette from the ground; an amber kicker
+    // from below is the only warm bounce, and it is the same amber the live
+    // barrels and the flow paths carry.
+    const keyLight = new T.DirectionalLight(0xfff3dc, 2.3);
     keyLight.position.set(-5.2, -3.4, 10);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(2048, 2048);
@@ -82,37 +89,54 @@ export async function mountScene(el, data, controls, opts = {}) {
     keyLight.shadow.camera.top = 7; keyLight.shadow.camera.bottom = -7;
     keyLight.shadow.bias = -.001; keyLight.shadow.normalBias = .025; keyLight.shadow.radius = 5;
     scene.add(keyLight);
-    scene.add(new T.AmbientLight(0xffffff, .16));
-    const rimL = new T.DirectionalLight(0xffffff, .62); rimL.position.set(5, 9, 5); scene.add(rimL);
-    const fillLeft = new T.DirectionalLight(0xffffff, .2); fillLeft.position.set(-9, 3, 4); scene.add(fillLeft);
+    scene.add(new T.AmbientLight(0xc4d4df, .22));
+    const rimL = new T.DirectionalLight(0xbcd4e4, .85); rimL.position.set(5, 9, 5); scene.add(rimL);
+    const kicker = new T.DirectionalLight(0xff8a3d, .34); kicker.position.set(-7, -6, -3); scene.add(kicker);
 
     const camera = new T.PerspectiveCamera(34, 1, .1, 100);
     const world = new T.Group(); world.rotation.z = -.13; scene.add(world);
 
-    // Hardware finishes on white paper; colour only on the evidence parts.
-    // The kit's own material language (site.css) says observed = METAL,
-    // machined, light catches an edge — so the scene's parts are metal, not
-    // matte plastic. metalness + a low roughness under one strong key is
-    // literally how a product photograph of hardware is made; metalness 0 at
-    // roughness .58 is how a CAD viewport looks (predecessor's own first pass:
-    // silver .95/.3, chrome 1/.17).
-    const silver = new T.MeshStandardMaterial({ color: 0xd2d5d1, metalness: .88, roughness: .34 });
-    const edge = new T.MeshStandardMaterial({ color: 0x9a9f9c, metalness: .95, roughness: .22 });
-    const steel = new T.MeshStandardMaterial({ color: 0x55697b, metalness: .7, roughness: .3 });
-    const porcelain = new T.MeshPhysicalMaterial({ color: 0xe4e2dd, metalness: .62, roughness: .36, clearcoat: .3, clearcoatRoughness: .3 });
-    const white = new T.MeshStandardMaterial({ color: 0xf5f4f0, metalness: 0, roughness: .52 });
-    const shadowM = new T.MeshStandardMaterial({ color: 0x23272b, metalness: 0, roughness: .7 });
-    const blue = new T.MeshPhysicalMaterial({ color: 0x009edb, metalness: 0, roughness: .45, clearcoat: .25, clearcoatRoughness: .4, emissive: 0x009edb, emissiveIntensity: 0 });
-    const teal = new T.MeshPhysicalMaterial({ color: 0x3f9e4a, metalness: 0, roughness: .48, clearcoat: .2, clearcoatRoughness: .4 });
-    const violet = new T.MeshPhysicalMaterial({ color: 0xdd1367, metalness: 0, roughness: .3, clearcoat: .6, clearcoatRoughness: .2, emissive: 0x3a0618, emissiveIntensity: .4 });
-    const gold = new T.MeshPhysicalMaterial({ color: 0xd9a13a, metalness: .15, roughness: .42, clearcoat: .2, clearcoatRoughness: .4 });
-    const glass = new T.MeshPhysicalMaterial({ color: 0xe3e9f4, transparent: true, opacity: .7, metalness: 0, roughness: .04, clearcoat: 1, ior: 1.77, side: T.DoubleSide, depthWrite: false });
-    const clear = new T.MeshPhysicalMaterial({ color: 0xe6ebf5, transparent: true, opacity: .2, metalness: 0, roughness: .05, clearcoat: 1, side: T.DoubleSide, depthWrite: false });
-    const ghost = new T.MeshStandardMaterial({ color: 0xb9bfc6, metalness: .25, roughness: .55, transparent: true, opacity: .45 });
-    const plateM = new T.MeshStandardMaterial({ color: 0xcfd1cc, metalness: .8, roughness: .4 });
-    const cotes = new T.MeshStandardMaterial({ color: 0xc6c7c2, metalness: .9, roughness: .26 });
+    // ── MATERIALS, ported from the predecessor's own first pass ─────────
+    // (work/scene-first-pass.tsx: silver .95/.3 over a grain bump, chrome
+    // 1/.17, glass transmission .62 at ior 1.45, ruby clearcoat 1.)
+    // The old set here was porcelain at metalness 0 under neutral tone
+    // mapping, which is exactly why it read as white plastic. Metal is not a
+    // colour: it is metalness near 1 at a low roughness with something in the
+    // environment to reflect, and the grain bump is what stops a machined
+    // face from looking like a rendered primitive.
+    const grainData = new Uint8Array(256 * 256 * 4);
+    for (let y = 0; y < 256; y++) {
+      for (let x = 0; x < 256; x++) {
+        const j = (y * 256 + x) * 4;
+        const g = 105 + Math.sin(y * 2.3) * 17 + Math.sin(y * .31) * 13 + Math.sin(x * 51.9 + y * 7.3) * 7;
+        grainData[j] = grainData[j + 1] = grainData[j + 2] = g;
+        grainData[j + 3] = 255;
+      }
+    }
+    const grain = new T.DataTexture(grainData, 256, 256);
+    grain.wrapS = grain.wrapT = T.RepeatWrapping;
+    grain.repeat.set(2, 3);
+    grain.needsUpdate = true;
+    textures.push(grain);
+    const silver = new T.MeshStandardMaterial({ color: 0x9aa5aa, metalness: .95, roughness: .30, bumpMap: grain, bumpScale: .009 });
+    const edge = new T.MeshStandardMaterial({ color: 0xe2e8e9, metalness: 1, roughness: .17 });
+    const steel = new T.MeshStandardMaterial({ color: 0x30373a, metalness: .87, roughness: .34, bumpMap: grain, bumpScale: .015 });
+    const porcelain = new T.MeshStandardMaterial({ color: 0x79828a, metalness: .92, roughness: .28, bumpMap: grain, bumpScale: .009 });
+    const white = new T.MeshStandardMaterial({ color: 0xaab2b8, metalness: .85, roughness: .30 });
+    const shadowM = new T.MeshStandardMaterial({ color: 0x08090b, metalness: .2, roughness: .85 });
+    const blue = new T.MeshPhysicalMaterial({ color: 0x9fc3e0, metalness: .25, roughness: .18, clearcoat: 1, clearcoatRoughness: .14 });
+    const teal = new T.MeshStandardMaterial({ color: 0x8e979e, metalness: .93, roughness: .26, bumpMap: grain, bumpScale: .009 });
+    // the seated jewel: the first pass's ruby — a clearcoated bearing, which
+    // is what a jewel IS, and the only part on the plate that is not steel
+    const violet = new T.MeshPhysicalMaterial({ color: 0xc2453f, metalness: .70, roughness: .16, clearcoat: 1, emissive: 0x3a0e0c, emissiveIntensity: .5 });
+    const gold = new T.MeshPhysicalMaterial({ color: 0xaa9c7f, metalness: .87, roughness: .29, clearcoat: .3 });
+    const glass = new T.MeshPhysicalMaterial({ color: 0xabc4cf, metalness: .08, roughness: .12, transmission: .62, transparent: true, opacity: .44, thickness: .3, ior: 1.45, side: T.DoubleSide, depthWrite: false });
+    const clear = new T.MeshPhysicalMaterial({ color: 0xabc4cf, metalness: .08, roughness: .14, transmission: .55, transparent: true, opacity: .22, thickness: .2, ior: 1.45, side: T.DoubleSide, depthWrite: false });
+    const ghost = new T.MeshStandardMaterial({ color: 0x91a1a8, metalness: .65, roughness: .40, transparent: true, opacity: .42 });
+    const plateM = new T.MeshStandardMaterial({ color: 0x8e99a2, metalness: .94, roughness: .31, bumpMap: grain, bumpScale: .012 });
+    const cotes = new T.MeshStandardMaterial({ color: 0x79828a, metalness: .95, roughness: .24, bumpMap: grain, bumpScale: .016 });
 
-    const parts = []; const gears = []; const hits = []; const textures = []; const labels = [];
+    const parts = []; const gears = []; const hits = []; const labels = [];
     const topLabels = document.createElement('div');
     topLabels.className = 'projected-labels';
     topLabels.setAttribute('aria-hidden', 'true');
@@ -125,13 +149,17 @@ export async function mountScene(el, data, controls, opts = {}) {
     const blob = document.createElement('canvas');
     blob.width = blob.height = 256;
     const bctx = blob.getContext('2d');
+    // On the dark ground a grey contact shadow is invisible: the pool under
+    // the object becomes the comps' ambient amber halo instead, which is what
+    // seats the instrument in the frame (Main.dc.html's radial behind the
+    // plate). Additive, so it lifts the ground rather than darkening it.
     const fall = bctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    fall.addColorStop(0, 'rgba(34,38,42,.28)'); fall.addColorStop(.45, 'rgba(34,38,42,.11)'); fall.addColorStop(1, 'rgba(34,38,42,0)');
+    fall.addColorStop(0, 'rgba(255,138,61,.26)'); fall.addColorStop(.38, 'rgba(255,138,61,.08)'); fall.addColorStop(.7, 'rgba(255,138,61,.015)'); fall.addColorStop(1, 'rgba(255,138,61,0)');
     bctx.fillStyle = fall; bctx.fillRect(0, 0, 256, 256);
     const blobTexture = new T.CanvasTexture(blob);
     blobTexture.colorSpace = T.SRGBColorSpace;
     textures.push(blobTexture);
-    const floor = new T.Mesh(new T.PlaneGeometry(9.6, 9.6), new T.MeshBasicMaterial({ map: blobTexture, transparent: true, depthWrite: false, toneMapped: false }));
+    const floor = new T.Mesh(new T.PlaneGeometry(13.5, 13.5), new T.MeshBasicMaterial({ map: blobTexture, transparent: true, depthWrite: false, toneMapped: false, blending: T.AdditiveBlending }));
     floor.position.set(.3, .2, -3.43);
     scene.add(floor);
 
@@ -245,7 +273,7 @@ export async function mountScene(el, data, controls, opts = {}) {
     function chip(parent, name, css, x, y, z, id) {
       const g = new T.Group(); g.position.set(x, y, z); parent.add(g);
       clickable(slab(g, 1.16, .86, 0, cotes, .14), id);
-      slab(g, 1.00, .70, .18, white, .04);
+      slab(g, 1.00, .70, .18, shadowM, .04);
       engraving(g, name, css, .80, .28, .262);
       screw(g, -.38, -.24, .26, .028);
       screw(g, .38, .24, .26, .028);
@@ -347,7 +375,7 @@ export async function mountScene(el, data, controls, opts = {}) {
     clickable(slab(bridge, 2.0, .48, 0, cotes, .13), 'evidence');
     screw(bridge, -.81, 0, .19, .07);
     screw(bridge, .81, 0, .19, .07);
-    if (data.bridge?.engrave) engraving(bridge, data.bridge.engrave, data.bridge.seated ? '#b0105a' : '#9a93a6', .7, .22, .174);
+    if (data.bridge?.engrave) engraving(bridge, data.bridge.engrave, data.bridge.seated ? '#E0695F' : '#8A949B', .7, .22, .174);
     const socketSpecs = (data.sockets || []).slice(0, 8);
     const sockets = [];
     socketSpecs.forEach((spec, i) => {
@@ -467,10 +495,10 @@ export async function mountScene(el, data, controls, opts = {}) {
     if (cancelled) { cleanup(); return () => {}; }
     const R = 2.9;
     let beacon = null;
-    const globeBase = new T.MeshStandardMaterial({ color: 0x0b5f9e, roughness: .62, metalness: .08, emissive: 0x053a66, emissiveIntensity: .55, side: T.DoubleSide });
+    const globeBase = new T.MeshStandardMaterial({ color: 0x141c23, roughness: .55, metalness: .35, emissive: 0x0a141c, emissiveIntensity: .7, side: T.DoubleSide });
     const rimGlow = new T.ShaderMaterial({
       transparent: true, side: T.BackSide, depthWrite: false,
-      uniforms: { glow: { value: new T.Color(0x7fcdf2) } },
+      uniforms: { glow: { value: new T.Color(0x9fc3e0) } },
       vertexShader: 'varying vec3 n; varying vec3 v; void main(){vec4 mv=modelViewMatrix*vec4(position,1.);n=normalize(normalMatrix*normal);v=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}',
       fragmentShader: 'varying vec3 n; varying vec3 v; uniform vec3 glow; void main(){float rim=pow(1.-abs(dot(normalize(n),normalize(v))),2.4);gl_FragColor=vec4(glow,rim*.6);}',
     });
@@ -522,8 +550,10 @@ export async function mountScene(el, data, controls, opts = {}) {
         }
       }
       const turnG = Math.atan2(-1, .2) + .13 - (homeN ? homeLon / homeN : 0);
-      const landDot = new T.MeshBasicMaterial({ color: 0xb4c9ff, toneMapped: false });
-      const homeDot = new T.MeshBasicMaterial({ color: 0xff7ac6, toneMapped: false });
+      const landDot = new T.MeshBasicMaterial({ color: 0x7e8f9c, toneMapped: false });
+      // the walked record is the one part of the world this screen is about:
+      // it carries the product's single amber, exactly as a live barrel does
+      const homeDot = new T.MeshBasicMaterial({ color: 0xff8a3d, toneMapped: false });
       const place = new T.Object3D(), out = new T.Vector3();
       for (const [g, north_] of [[north, true], [south, false]]) {
         for (const home of [false, true]) {
@@ -552,7 +582,7 @@ export async function mountScene(el, data, controls, opts = {}) {
         }
         n.normalize();
         const g = n.z >= 0 ? north : south;
-        const pink = new T.MeshBasicMaterial({ color: 0xff7ac6, toneMapped: false, transparent: true });
+        const pink = new T.MeshBasicMaterial({ color: 0xff8a3d, toneMapped: false, transparent: true });
         const beam = new T.Mesh(new T.CylinderGeometry(.009, .009, .55, 8), pink);
         beam.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), n);
         beam.position.copy(n).multiplyScalar(R + .28);
@@ -700,7 +730,7 @@ export async function mountScene(el, data, controls, opts = {}) {
     const threadPositions = new Float32Array(sockets.length * 6);
     const threadGeometry = new T.BufferGeometry();
     threadGeometry.setAttribute('position', new T.BufferAttribute(threadPositions, 3));
-    const threads = new T.LineSegments(threadGeometry, new T.LineBasicMaterial({ color: 0xa8adb3, transparent: true, opacity: .45 }));
+    const threads = new T.LineSegments(threadGeometry, new T.LineBasicMaterial({ color: 0x9fc3e0, transparent: true, opacity: .45 }));
     threads.frustumCulled = false;
     evidence.add(threads);
 
@@ -880,7 +910,12 @@ export async function mountScene(el, data, controls, opts = {}) {
       return bounds;
     }
     // One shot per chapter; the camera travels only when the chapter changes.
-    const SHOTS = { 0: [0], 1: [.052, .1365], 2: [.1365, .234], 3: [.234, .3315], 4: [.3315, .5915], 5: [.5915, .6999], 6: [.8, .8399], 8: [1] };
+    // Each entry samples the poses a chapter PASSES THROUGH, not only the one
+    // it starts on: the camera travels once per chapter, so a chapter whose
+    // box is measured at a single instant frames a pose the parts have
+    // already left — which is how the lid came to climb out of the top of the
+    // frame and into the heading strip during chapter 0.
+    const SHOTS = { 0: [0, .026, .0519], 1: [.052, .1365], 2: [.1365, .234], 3: [.234, .3315], 4: [.3315, .5915], 5: [.5915, .6999], 6: [.8, .8399], 8: [1] };
     function shot(chapter) {
       let box = shots.get(chapter);
       if (box) return box;
@@ -916,10 +951,21 @@ export async function mountScene(el, data, controls, opts = {}) {
       const right = new T.Vector3().crossVectors(camera.up, direction).normalize();
       const up = new T.Vector3().crossVectors(direction, right).normalize();
       const tangent = Math.tan(T.MathUtils.degToRad(camera.fov / 2));
+      // THE FRAME. The comps' plate fills about three quarters of the frame's
+      // height; this instrument was filling barely a quarter, because the fit
+      // reserved 80px top-and-bottom plus 96px each side plus a 4% ring of
+      // air — on a 900px stage that is a third of the frame given away before
+      // the object is placed. The margins now only have to clear the stage's
+      // own chrome (the heading strip and the affordance line).
+      // Vertically the margin is NOT free: the stage's own chrome (the
+      // heading strip at the top, the affordance line at the bottom) lives
+      // inside the canvas, and the object must never cross either. Sideways
+      // there is nothing to clear but the card column, which `inset` already
+      // accounts for, so that margin comes down to a hairline of air.
       const padY = el.clientWidth > 700 ? 80 : Math.min(80, el.clientHeight * .12);
       const tanY = tangent * Math.max(.5, (el.clientHeight - padY) / el.clientHeight);
       const inset = Math.min(controls.inset ?? 0, el.clientWidth * .5);
-      const edgePx = el.clientWidth > 700 ? 96 : 36;
+      const edgePx = el.clientWidth > 700 ? 52 : 24;
       const tanX = tangent * camera.aspect * Math.max(.5, (el.clientWidth - edgePx - inset) / el.clientWidth);
       let distance = 0;
       for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
@@ -927,7 +973,7 @@ export async function mountScene(el, data, controls, opts = {}) {
         const depth = corner.dot(direction);
         distance = Math.max(distance, depth + Math.abs(corner.dot(right)) / tanX, depth + Math.abs(corner.dot(up)) / tanY);
       }
-      distance = distance * 1.04;
+      distance = distance * 1.015;
       lookGoal.addScaledVector(right, -(inset + 36 - edgePx) / el.clientWidth * distance * tangent * camera.aspect);
       cameraGoal.copy(direction).multiplyScalar(distance).add(lookGoal);
       camera.far = Math.max(150, distance + 80);

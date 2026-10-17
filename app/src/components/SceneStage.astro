@@ -12,7 +12,7 @@ const { scene, counts, dialHref, onRecordHref, rows = [], start = 0 } = Astro.pr
 
 <div class="scene-stage" data-scene data-start={start}>
   <div class="dial-fallback">
-    <StaticDial counts={counts} href={dialHref} onRecordHref={onRecordHref ?? dialHref} rows={rows} sockets={scene.sockets} />
+    <StaticDial counts={counts} href={dialHref} onRecordHref={onRecordHref ?? dialHref} rows={rows} sockets={scene.sockets} iso3={(scene.iso3 || '').toLowerCase()} />
     <p>{SCENE_COPY.fallbackNote}</p>
   </div>
   <div class="scene-host"></div>

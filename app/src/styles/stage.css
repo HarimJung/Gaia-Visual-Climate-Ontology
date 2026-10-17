@@ -15,11 +15,11 @@
 /* map */
 .stage-map { transition: opacity .5s var(--out); }
 .stage-map.hide { opacity: 0; }
-.stage-map path { fill: none; stroke: var(--line-2); stroke-width: .6; vector-effect: non-scaling-stroke; }
-.stage-map path.c { stroke: var(--ink-3); }
+.stage-map path { fill: none; stroke: #2E383F; stroke-width: .6; vector-effect: non-scaling-stroke; }
+.stage-map path.c { stroke: #5A676F; }
 
 /* beads: one keyed circle per country; place = translate, size = scale */
-.stage-bead { fill: var(--ink-2); fill-opacity: .72; transition: transform .75s var(--out), fill .4s var(--ease), fill-opacity .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.stage-bead { fill: var(--st-observed); fill-opacity: .62; transition: transform .75s var(--out), fill .4s var(--ease), fill-opacity .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .stage-bead.on { fill: var(--acc); fill-opacity: 1; }
 /* the marks the copy points at are never the faintest marks on the page */
 .stage-bead.ctx { fill: var(--ink-3); fill-opacity: .85; }
@@ -27,8 +27,8 @@
 .stage-bead.off { opacity: 0; }
 
 /* cells: one keyed unit-rect per country, placed and sized by transform */
-.stage-cell { fill: var(--acc); transition: transform .7s var(--out), fill .45s var(--ease), opacity .35s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
-.stage-cell.metal { fill: var(--acc); }
+.stage-cell { fill: url(#w-metal); transition: transform .7s var(--out), fill .45s var(--ease), opacity .35s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.stage-cell.metal { fill: url(#w-metal); }
 /* absence is a material, not a lighter grey */
 .stage-cell.gap { fill: url(#w-gap); }
 .stage-cell.off { opacity: 0; }
@@ -82,7 +82,9 @@
 
 /* the instrument seated inside the ring (predecessor stage.css .stage-hero):
    75% of the frame's height is the plate's diameter, as in the comp */
-.r-hero { position: absolute; left: 50%; top: 50%; height: 78%; aspect-ratio: 1; transform: translate(-50%, -50%); opacity: 0; transition: opacity .45s var(--out) .25s; }
+/* the dial's own frame is 1000 x 1072; a 1:1 box letterboxed it and threw
+   away a tenth of the instrument's height for nothing */
+.r-hero { position: absolute; left: 50%; top: 50%; height: 88%; aspect-ratio: 1000 / 1072; transform: translate(-50%, -50%); opacity: 0; transition: opacity .45s var(--out) .25s; }
 .r-hero svg { width: 100%; height: 100%; }
 .rstage.is-dial .r-hero { opacity: 1; }
 
@@ -91,7 +93,7 @@
 .rstage.is-split .g-split, .rstage.is-types .g-types, .rstage.is-tiles .g-tiles,
 .rstage.is-sizes .g-sizes, .rstage.is-dial .g-dial { opacity: 1; }
 .r-ann line { stroke: var(--line-2); stroke-width: 1; }
-.r-seat { fill: var(--paper); stroke: var(--line-2); }
+.r-seat { fill: #0A0C0E; stroke: var(--line-2); }
 .rstage text { font-family: var(--f-m); fill: var(--ink-3); }
 .r-grp { font: 600 17px/1 var(--f-t); fill: var(--ink-2); letter-spacing: .02em; }
 .r-row { font-size: 15px; fill: var(--ink-2); }
@@ -101,31 +103,31 @@
 /* the stamp pool: one receipt-linked card per document */
 .r-stamp { transition: transform .75s var(--out), opacity .4s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .r-stamp.off { opacity: 0; pointer-events: none; }
-.r-card { fill: var(--paper); stroke: var(--line-2); }
-.r-card.observed { fill: var(--acc-soft); stroke: var(--acc); }
-.r-card.unknown { fill: var(--wash); stroke: var(--ink-3); stroke-dasharray: 5 4; }
-.r-card.absent { fill: var(--wash); stroke: var(--line-2); }
+.r-card { fill: #12161A; stroke: var(--line-2); }
+.r-card.observed { fill: #1C242A; stroke: var(--st-observed); }
+.r-card.unknown { fill: #161B20; stroke: var(--ink-3); stroke-dasharray: 5 4; }
+.r-card.absent { fill: #08090B; stroke: var(--void-line); }
 .r-kind { font: 500 15px/1 var(--f-m); letter-spacing: .14em; fill: var(--ink-3); text-transform: uppercase; }
 .r-title { font: 600 21px/1 var(--f-d); fill: var(--ink); letter-spacing: -.01em; }
 .r-state { font: 400 16px/1 var(--f-t); fill: var(--ink-2); }
-.r-cross line { stroke: var(--ink-3); stroke-width: 2; }
-.r-stamps a:focus-visible .r-card { stroke: var(--ink); stroke-width: 2; }
+.r-cross line { stroke: var(--void-line); stroke-width: 2; }
+.r-stamps a:hover .r-card, .r-stamps a:focus-visible .r-card { stroke: var(--acc); stroke-width: 2; }
 
 /* the cell pool: unit rects placed and sized by transform */
 .r-cell { transition: transform .7s var(--out), fill .45s var(--ease), opacity .35s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .r-cell.off { opacity: 0; }
-.r-cell.observed, .r-cell.metal { fill: var(--acc); }
+.r-cell.observed, .r-cell.metal { fill: url(#r-metal); }
 .r-cell.pledged { fill: var(--gls-fill); stroke: var(--st-pledged); stroke-width: 1.5; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
-.r-cell.hair { fill: var(--wash); stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
-.r-cell.absent { fill: var(--void-face-flat); stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.r-cell.bore { fill: var(--wash); stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
+.r-cell.hair { fill: #161B20; stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
+.r-cell.absent { fill: var(--void-face-flat); stroke: var(--void-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.r-cell.bore { fill: #0A0C0E; stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
 .r-cell.unv.u0 { fill: url(#r-hatch-0); }
 .r-cell.unv.u1 { fill: url(#r-hatch-1); }
 .r-cell.unv.u2 { fill: url(#r-hatch-2); }
 .r-cell.unv.u3 { fill: url(#r-hatch-3); }
 
 /* the bead pool: one per document, closing into the ring */
-.r-bead { fill: var(--ink-2); fill-opacity: .8; transition: transform .75s var(--out), fill .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
+.r-bead { fill: var(--st-observed); fill-opacity: .7; transition: transform .75s var(--out), fill .4s var(--ease), opacity .3s var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .r-bead.on { fill: var(--acc); fill-opacity: 1; }
 .r-bead.ctx { fill: var(--ink-3); fill-opacity: .85; }
 .r-bead.ghost { fill: none; stroke: var(--ink-2); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
@@ -138,7 +140,7 @@
 .rsteps .scene-card {
   position: absolute; left: 0; right: 0; bottom: 0; width: auto; margin-left: 0;
   display: grid; grid-template-columns: 1fr 1.35fr; gap: 6px 38px; align-items: start;
-  padding: 16px 0 0; background: none;
+  padding: 16px 0 0; background: none; box-shadow: none; backdrop-filter: none;
   opacity: 0; pointer-events: none; transition: opacity .3s var(--ease);
 }
 .rsteps .scene-card.is-on { opacity: 1; pointer-events: auto; }
@@ -162,7 +164,7 @@
      stage must come FIRST in the column, or the reader scrolls every caption
      with no graphic and meets the graphic alone at the end. */
   .scrolly { grid-template-columns: 1fr; display: flex; flex-direction: column; }
-  .wstage { order: -1; top: 0; z-index: 2; background: var(--bg); padding: 6px 0; min-height: 0; }
+  .wstage { order: -1; top: 0; z-index: 2; background: var(--bg); background-image: var(--ground); padding: 6px 0; min-height: 0; }
   .wstage svg { max-height: calc(46svh - 60px); }
   .wstep { min-height: 72svh; max-width: none; }
   .wstage text { font-size: 34px; }
