@@ -13,6 +13,10 @@
   --ink-4: #6c737a;
   --rule: #e3e3df;
   --rule-strong: #c8c8c2;
+  --sheen: #fffefa;
+  --sheen-fade: #f4f2ec00;
+  --wash: #e9ecf7;
+  --map-ground: #f4f9fc;
 
   /* meaning */
   --un: #009edb;
@@ -40,6 +44,8 @@
   --dial-track: #e2e2dc;
   --dial-absent: #4c565c;
   --dial-socket: #a294b3;
+  --dial-bevel-hi: #fdfdfb;
+  --dial-bevel-lo: #a8b0b4;
   --dial-engrave: #4c565c;
 
   /* type */
@@ -70,6 +76,10 @@
   --s8: 64px;
   --s9: 96px;
 
+  /* grain */
+  --grain-blend: multiply;
+  --grain-opacity: .1;
+
   /* radius */
   --radius: 3px;
 
@@ -78,7 +88,7 @@
 
   /* dur */
   --dur-quick: .18s;
-  --dur: .3s;
+  --dur: 200ms;
   --dur-slow: .64s;
 
   /* ease */
@@ -90,4 +100,5 @@
   /* shadow */
   --shadow-1: 0 1px 2px #2a271f0d,0 8px 22px #2a271f0a;
   --shadow-2: 0 2px 6px #2a271f10,0 20px 46px #2a271f14;
+  --shadow-well: inset 1px 1px 2px #0e1a1f80;
 }

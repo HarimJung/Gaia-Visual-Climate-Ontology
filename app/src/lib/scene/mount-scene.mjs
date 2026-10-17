@@ -36,30 +36,42 @@ import {
   reveal, btrReveal, btrStepAt, storyPhase, LAYER_WINDOWS,
 } from './explosion-motion.mjs';
 
-const ink = (name, fallback) => {
-  try { return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback; }
-  catch { return fallback; }
-};
-
 export async function mountScene(el, data, controls, opts = {}) {
   let cleanup = () => {};
   let cancelled = false;
   const fail = () => { cleanup(); if (!cancelled) opts.onFail?.(); };
   try {
+    // ── COLOUR ─────────────────────────────────────────────────────────
+    // This module holds no palette. Every colour it spends is read off the
+    // mounted element, where engine/generated/design-tokens.css put it
+    // (docs/DESIGN.md, gate R17) — so the scene cannot drift from the canon
+    // the flat pages draw from, and a token the seed stops carrying stops
+    // this scene rather than silently painting something else. A missing
+    // token means the stylesheet never loaded, and the honest thing to show
+    // then is the server-rendered dial, which the throw below falls back to.
+    // The encoding is the canon's: MEANING spends hue — treaty and pledge
+    // --un, measured --inv, reporting --btr, finance --fin — and every
+    // structural part takes the neutral ramp or the paper surfaces.
+    const css = getComputedStyle(el);
+    const tok = (name) => {
+      const v = css.getPropertyValue(name).trim();
+      if (!v) throw new Error(`design token ${name} is not on the page — the canon did not load`);
+      return v;
+    };
+    const hue = (name) => new T.Color(tok(name));
     const textures = [];
     const scene = new T.Scene();
     const renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setClearColor(0x0b0d0f, 0);
+    renderer.setClearColor(hue('--paper'), 0);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = T.PCFSoftShadowMap;
-    // Filmic tone mapping under the predecessor's own exposure cut
-    // (work/scene-first-pass.tsx: ACESFilmic at .85). On the dark instrument
-    // ground anything above that blows the specular roll-off the machining
-    // depends on; 1.12 was a paper-studio number and it read as white
-    // plastic on white paper.
+    // Filmic tone mapping on a PAPER ground. The .85 cut belonged to a
+    // near-black studio, where anything above it blew the specular roll-off
+    // the machining depends on; on --paper the object is lit from the page
+    // itself and 1.1 is what keeps a cream plate cream instead of grey.
     renderer.toneMapping = T.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = .85;
+    renderer.toneMappingExposure = 1.1;
     el.appendChild(renderer.domElement);
     renderer.outputColorSpace = T.SRGBColorSpace;
     renderer.domElement.setAttribute('role', 'img');
@@ -69,19 +81,16 @@ export async function mountScene(el, data, controls, opts = {}) {
     const room = new RoomEnvironment();
     const env = pm.fromScene(room, .04);
     scene.environment = env.texture;
-    // .45, the first pass's value: the room is what a metal REFLECTS, and at
-    // .85 the whole object was lit by ambience and nothing was lit by the key.
-    scene.environmentIntensity = .45;
+    // The room is what a metal REFLECTS. On paper the environment carries
+    // most of the modelling and the key only rakes the edges.
+    scene.environmentIntensity = .9;
     room.dispose(); pm.dispose();
 
-    // A DARK studio with a raking warm key: the key sits off-axis so a lifted
-    // part shadows the part under it and the metal catches an edge, and the
-    // ambient is cut to a trace so the ground stays near-black behind the
-    // object (the first pass: key 0xfff3dc at 1.9, ambient 0xc4d4df at .22).
-    // A cool rim separates the silhouette from the ground; an amber kicker
-    // from below is the only warm bounce, and it is the same amber the live
-    // barrels and the flow paths carry.
-    const keyLight = new T.DirectionalLight(0xfff3dc, 2.3);
+    // A PAPER studio: the key still sits off-axis so a lifted part shadows
+    // the part under it and an edge catches, but the ambient is the page
+    // itself rather than a trace, and the bounce comes off --paper-raised.
+    // Nothing here is a hue: every light is a surface token of the canon.
+    const keyLight = new T.DirectionalLight(hue('--paper-raised'), 1.9);
     keyLight.position.set(-5.2, -3.4, 10);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(2048, 2048);
@@ -89,9 +98,9 @@ export async function mountScene(el, data, controls, opts = {}) {
     keyLight.shadow.camera.top = 7; keyLight.shadow.camera.bottom = -7;
     keyLight.shadow.bias = -.001; keyLight.shadow.normalBias = .025; keyLight.shadow.radius = 5;
     scene.add(keyLight);
-    scene.add(new T.AmbientLight(0xc4d4df, .22));
-    const rimL = new T.DirectionalLight(0xbcd4e4, .85); rimL.position.set(5, 9, 5); scene.add(rimL);
-    const kicker = new T.DirectionalLight(0xff8a3d, .34); kicker.position.set(-7, -6, -3); scene.add(kicker);
+    scene.add(new T.AmbientLight(hue('--paper'), .85));
+    const rimL = new T.DirectionalLight(hue('--paper-raised'), .6); rimL.position.set(5, 9, 5); scene.add(rimL);
+    const bounce = new T.DirectionalLight(hue('--paper-sunken'), .45); bounce.position.set(-7, -6, -3); scene.add(bounce);
 
     const camera = new T.PerspectiveCamera(34, 1, .1, 100);
     const world = new T.Group(); world.rotation.z = -.13; scene.add(world);
@@ -118,23 +127,33 @@ export async function mountScene(el, data, controls, opts = {}) {
     grain.repeat.set(2, 3);
     grain.needsUpdate = true;
     textures.push(grain);
-    const silver = new T.MeshStandardMaterial({ color: 0x9aa5aa, metalness: .95, roughness: .30, bumpMap: grain, bumpScale: .009 });
-    const edge = new T.MeshStandardMaterial({ color: 0xe2e8e9, metalness: 1, roughness: .17 });
-    const steel = new T.MeshStandardMaterial({ color: 0x30373a, metalness: .87, roughness: .34, bumpMap: grain, bumpScale: .015 });
-    const porcelain = new T.MeshStandardMaterial({ color: 0x79828a, metalness: .92, roughness: .28, bumpMap: grain, bumpScale: .009 });
-    const white = new T.MeshStandardMaterial({ color: 0xaab2b8, metalness: .85, roughness: .30 });
-    const shadowM = new T.MeshStandardMaterial({ color: 0x08090b, metalness: .2, roughness: .85 });
-    const blue = new T.MeshPhysicalMaterial({ color: 0x9fc3e0, metalness: .25, roughness: .18, clearcoat: 1, clearcoatRoughness: .14 });
-    const teal = new T.MeshStandardMaterial({ color: 0x8e979e, metalness: .93, roughness: .26, bumpMap: grain, bumpScale: .009 });
-    // the seated jewel: the first pass's ruby — a clearcoated bearing, which
-    // is what a jewel IS, and the only part on the plate that is not steel
-    const violet = new T.MeshPhysicalMaterial({ color: 0xc2453f, metalness: .70, roughness: .16, clearcoat: 1, emissive: 0x3a0e0c, emissiveIntensity: .5 });
-    const gold = new T.MeshPhysicalMaterial({ color: 0xaa9c7f, metalness: .87, roughness: .29, clearcoat: .3 });
-    const glass = new T.MeshPhysicalMaterial({ color: 0xabc4cf, metalness: .08, roughness: .12, transmission: .62, transparent: true, opacity: .44, thickness: .3, ior: 1.45, side: T.DoubleSide, depthWrite: false });
-    const clear = new T.MeshPhysicalMaterial({ color: 0xabc4cf, metalness: .08, roughness: .14, transmission: .55, transparent: true, opacity: .22, thickness: .2, ior: 1.45, side: T.DoubleSide, depthWrite: false });
-    const ghost = new T.MeshStandardMaterial({ color: 0x91a1a8, metalness: .65, roughness: .40, transparent: true, opacity: .42 });
-    const plateM = new T.MeshStandardMaterial({ color: 0x8e99a2, metalness: .94, roughness: .31, bumpMap: grain, bumpScale: .012 });
-    const cotes = new T.MeshStandardMaterial({ color: 0x79828a, metalness: .95, roughness: .24, bumpMap: grain, bumpScale: .016 });
+    // STRUCTURE takes the neutral ramp and the paper surfaces; only the four
+    // meanings spend hue. Metalness and roughness are unchanged — metal is
+    // not a colour, it is metalness near 1 at a low roughness with something
+    // in the environment to reflect, and the grain bump is what stops a
+    // machined face from looking like a rendered primitive.
+    const silver = new T.MeshStandardMaterial({ color: hue('--rule-strong'), metalness: .80, roughness: .32, bumpMap: grain, bumpScale: .009 });
+    const edge = new T.MeshStandardMaterial({ color: hue('--paper-raised'), metalness: .9, roughness: .20 });
+    const steel = new T.MeshStandardMaterial({ color: hue('--src-a'), metalness: .85, roughness: .34, bumpMap: grain, bumpScale: .015 });
+    const porcelain = new T.MeshStandardMaterial({ color: hue('--dial-face'), metalness: .35, roughness: .40, bumpMap: grain, bumpScale: .009 });
+    const white = new T.MeshStandardMaterial({ color: hue('--paper-raised'), metalness: .6, roughness: .34 });
+    // the recess a part sits in: the dial's own bezel edge, not a black well
+    const shadowM = new T.MeshStandardMaterial({ color: hue('--dial-edge'), metalness: .2, roughness: .85 });
+    // MEANING — treaty and pledge: a read pledge segment, and the marker that
+    // stands for a document whose bytes are held and hashed
+    const blue = new T.MeshPhysicalMaterial({ color: hue('--un'), metalness: .25, roughness: .18, clearcoat: 1, clearcoatRoughness: .14 });
+    // MEANING — measured: the record train's own driving gear
+    const measured = new T.MeshStandardMaterial({ color: hue('--inv'), metalness: .55, roughness: .30, bumpMap: grain, bumpScale: .009 });
+    // MEANING — reporting: the seated jewel, a clearcoated bearing, which is
+    // what a jewel IS, and the only part on the bridge that is not steel
+    const violet = new T.MeshPhysicalMaterial({ color: hue('--btr'), metalness: .45, roughness: .16, clearcoat: 1 });
+    // MEANING — finance
+    const gold = new T.MeshPhysicalMaterial({ color: hue('--fin'), metalness: .80, roughness: .29, clearcoat: .3 });
+    const glass = new T.MeshPhysicalMaterial({ color: hue('--dial-track'), metalness: .08, roughness: .12, transmission: .62, transparent: true, opacity: .44, thickness: .3, ior: 1.45, side: T.DoubleSide, depthWrite: false });
+    const clear = new T.MeshPhysicalMaterial({ color: hue('--dial-track'), metalness: .08, roughness: .14, transmission: .55, transparent: true, opacity: .22, thickness: .2, ior: 1.45, side: T.DoubleSide, depthWrite: false });
+    const ghost = new T.MeshStandardMaterial({ color: hue('--rule-strong'), metalness: .45, roughness: .40, transparent: true, opacity: .55 });
+    const plateM = new T.MeshStandardMaterial({ color: hue('--paper-raised'), metalness: .55, roughness: .36, bumpMap: grain, bumpScale: .012 });
+    const cotes = new T.MeshStandardMaterial({ color: hue('--dial-face'), metalness: .45, roughness: .34, bumpMap: grain, bumpScale: .016 });
 
     const parts = []; const gears = []; const hits = []; const labels = [];
     const topLabels = document.createElement('div');
@@ -290,10 +309,10 @@ export async function mountScene(el, data, controls, opts = {}) {
     ring(chassis, 2.94, .024, .25, white);
     cylinder(chassis, 1.03, .11, .09, white);
     ring(chassis, 1.07, .022, .19, silver);
-    if (data.engravePlate) engraving(chassis, data.engravePlate, ink('--ink-2', '#3c464d'), 1.75, .14, .29).position.y = -2.42;
+    if (data.engravePlate) engraving(chassis, data.engravePlate, tok('--ink-2'), 1.75, .14, .29).position.y = -2.42;
     if (L.plate) {
-      const anchorT = chip(chassis, L.plate.chip, ink('--engrave', '#4c565c'), -2.62, -2.62, .30, 'treaty');
-      label(anchorT, L.plate.title, L.plate.value, L.plate.color || '#4c565c', 0, [-150, 26]);
+      const anchorT = chip(chassis, L.plate.chip, tok('--dial-engrave'), -2.62, -2.62, .30, 'treaty');
+      label(anchorT, L.plate.title, L.plate.value, tok('--un-ink'), 0, [-150, 26]);
     }
     for (let i = 0; i < 12; i++) {
       const a = i / 12 * Math.PI * 2;
@@ -322,11 +341,11 @@ export async function mountScene(el, data, controls, opts = {}) {
     }
     // The etched reason in the window (copy arrives as data — R1).
     if (pledgeUnknown && data.pledge?.etch) {
-      engraving(promise, data.pledge.etch, ink('--engrave', '#4c565c'), 1.5, .19, .20).position.y = -2.58;
+      engraving(promise, data.pledge.etch, tok('--dial-engrave'), 1.5, .19, .20).position.y = -2.58;
     }
     if (L.pledge) {
-      const anchorN = chip(promise, L.pledge.chip, L.pledge.color || '#00689d', -1.86, 2.62, .37, 'pledge');
-      label(anchorN, L.pledge.title, L.pledge.value, L.pledge.color || '#00689d', 1, [-110, -28]);
+      const anchorN = chip(promise, L.pledge.chip, tok('--un-ink'), -1.86, 2.62, .37, 'pledge');
+      label(anchorN, L.pledge.title, L.pledge.value, tok('--un-ink'), 1, [-110, -28]);
     }
 
     // 2. The record train: gear sizes and motion come only from what was
@@ -336,10 +355,10 @@ export async function mountScene(el, data, controls, opts = {}) {
     (data.gears || []).slice(0, 3).forEach((spec, i) => {
       const [x, y, r, sign] = seats[i];
       const teeth = Math.max(9, Math.min(64, spec.teeth || 9));
-      const g = clickable(cog(inventory, x, y, r, teeth, i === 0 ? teal : steel, sign, spec.live ? 1 : 0), 'delivery');
+      const g = clickable(cog(inventory, x, y, r, teeth, i === 0 ? measured : steel, sign, spec.live ? 1 : 0), 'delivery');
       if (!spec.live) ghost_(g);
       const cap = new T.Group(); cap.position.set(x, y, .43); inventory.add(cap);
-      if (spec.engrave) engraving(cap, spec.engrave, ink('--ink-2', '#3c464d'), r * 1.22, r * .30, .02);
+      if (spec.engrave) engraving(cap, spec.engrave, tok('--ink-2'), r * 1.22, r * .30, .02);
       clickable(cap, 'delivery');
     });
     const gearSupports = [[[-1.05, -.30], [.55, -.30]], [[.55, -.30], [1.33, .75]]];
@@ -356,13 +375,13 @@ export async function mountScene(el, data, controls, opts = {}) {
     const pins = Math.max(0, data.pins | 0);
     for (let i = 0; i < pins; i++) {
       const a = Math.PI * .1 + i / Math.max(pins, 15) * Math.PI * 1.8;
-      const m = cylinder(inventory, .075, .045, .25, teal, Math.cos(a) * 2.26, Math.sin(a) * 2.26);
+      const m = cylinder(inventory, .075, .045, .25, blue, Math.cos(a) * 2.26, Math.sin(a) * 2.26);
       clickable(m, 'delivery');
       dataMarks.push(m);
     }
     if (L.inventory) {
-      const anchorI = chip(inventory, L.inventory.chip, L.inventory.color || '#3f7e44', -2.28, -1.79, .30, 'delivery');
-      label(anchorI, L.inventory.title, L.inventory.value, L.inventory.color || '#3f7e44', 2, [-144, 10]);
+      const anchorI = chip(inventory, L.inventory.chip, tok('--inv'), -2.28, -1.79, .30, 'delivery');
+      label(anchorI, L.inventory.title, L.inventory.value, tok('--inv'), 2, [-144, 10]);
     }
 
     // 3. The reporting bridge and its eight sockets. A state nothing was read
@@ -375,7 +394,7 @@ export async function mountScene(el, data, controls, opts = {}) {
     clickable(slab(bridge, 2.0, .48, 0, cotes, .13), 'evidence');
     screw(bridge, -.81, 0, .19, .07);
     screw(bridge, .81, 0, .19, .07);
-    if (data.bridge?.engrave) engraving(bridge, data.bridge.engrave, data.bridge.seated ? '#E0695F' : '#8A949B', .7, .22, .174);
+    if (data.bridge?.engrave) engraving(bridge, data.bridge.engrave, data.bridge.seated ? tok('--btr') : tok('--ink-4'), .7, .22, .174);
     const socketSpecs = (data.sockets || []).slice(0, 8);
     const sockets = [];
     socketSpecs.forEach((spec, i) => {
@@ -421,8 +440,8 @@ export async function mountScene(el, data, controls, opts = {}) {
     const btrUnread = socketSpecs.length > 0 && socketSpecs.every((c) => c.state === 'unknown');
     if (btrUnread) { bridge.position.z += .32; bridge.rotation.y = -.19; }
     if (L.evidence) {
-      const anchorB = chip(evidence, L.evidence.chip, L.evidence.color || '#b0105a', 2.18, 1.58, .27, 'evidence');
-      label(anchorB, L.evidence.title, L.evidence.value, L.evidence.color || '#b0105a', 3, [36, -42]);
+      const anchorB = chip(evidence, L.evidence.chip, tok('--btr'), 2.18, 1.58, .27, 'evidence');
+      label(anchorB, L.evidence.title, L.evidence.value, tok('--btr'), 3, [36, -42]);
     }
 
     // 4. Finance docks beside the mechanism; unknown never makes it mesh.
@@ -434,15 +453,15 @@ export async function mountScene(el, data, controls, opts = {}) {
     ring(finance, .68, .018, .13, edge);
     cylinder(finance, .11, .15, .15, gold);
     if (L.finance) {
-      const anchorF = chip(finance, L.finance.chip, L.finance.color || '#8a6208', 0, 1.06, .04, 'conditions');
-      label(anchorF, L.finance.title, L.finance.value, L.finance.color || '#8a6208', 4, [32, 18]);
+      const anchorF = chip(finance, L.finance.chip, tok('--fin-ink'), 0, 1.06, .04, 'conditions');
+      label(anchorF, L.finance.title, L.finance.value, tok('--fin-ink'), 4, [32, 18]);
     }
 
     // 5. The assessment core seats only after the inputs.
     const core = part('assessment', 5, 1.02);
     const corePlate = slab(core, .89, .75, 0, porcelain, .13);
     clickable(corePlate, 'delivery');
-    if (data.iso3) engraving(core, data.iso3, ink('--ink-2', '#3c464d'), .63, .24, .174);
+    if (data.iso3) engraving(core, data.iso3, tok('--ink-2'), .63, .24, .174);
     ring(core, .48, .018, .05, edge);
 
     // Hover restyles a mesh by swapping its authored material for a lit twin,
@@ -495,10 +514,13 @@ export async function mountScene(el, data, controls, opts = {}) {
     if (cancelled) { cleanup(); return () => {}; }
     const R = 2.9;
     let beacon = null;
-    const globeBase = new T.MeshStandardMaterial({ color: 0x141c23, roughness: .55, metalness: .35, emissive: 0x0a141c, emissiveIntensity: .7, side: T.DoubleSide });
+    // the planet is a QUANTITY surface, so it takes the sequential blue ramp
+    // and never a new hue: the deepest step for the body, the palest for the
+    // land it carries, and the rim glow between them.
+    const globeBase = new T.MeshStandardMaterial({ color: hue('--q4'), roughness: .55, metalness: .35, side: T.DoubleSide });
     const rimGlow = new T.ShaderMaterial({
       transparent: true, side: T.BackSide, depthWrite: false,
-      uniforms: { glow: { value: new T.Color(0x9fc3e0) } },
+      uniforms: { glow: { value: hue('--q2') } },
       vertexShader: 'varying vec3 n; varying vec3 v; void main(){vec4 mv=modelViewMatrix*vec4(position,1.);n=normalize(normalMatrix*normal);v=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}',
       fragmentShader: 'varying vec3 n; varying vec3 v; uniform vec3 glow; void main(){float rim=pow(1.-abs(dot(normalize(n),normalize(v))),2.4);gl_FragColor=vec4(glow,rim*.6);}',
     });
@@ -528,6 +550,9 @@ export async function mountScene(el, data, controls, opts = {}) {
       const mc = mask.getContext('2d', { willReadFrequently: true });
       mc.scale(2, 2);
       for (const [iso, d] of Object.entries(basemap.shapes)) {
+        // not a design colour: this canvas is never shown. It is a lookup
+        // mask read back per pixel, and the green channel is the one bit that
+        // says "this land is the record on the stage".
         mc.fillStyle = iso === data.iso3 ? '#ff0000' : '#ffffff';
         mc.fill(new Path2D(d));
       }
@@ -550,10 +575,10 @@ export async function mountScene(el, data, controls, opts = {}) {
         }
       }
       const turnG = Math.atan2(-1, .2) + .13 - (homeN ? homeLon / homeN : 0);
-      const landDot = new T.MeshBasicMaterial({ color: 0x7e8f9c, toneMapped: false });
-      // the walked record is the one part of the world this screen is about:
-      // it carries the product's single amber, exactly as a live barrel does
-      const homeDot = new T.MeshBasicMaterial({ color: 0xff8a3d, toneMapped: false });
+      const landDot = new T.MeshBasicMaterial({ color: hue('--q1'), toneMapped: false });
+      // the walked record is the one part of the world this screen is about,
+      // so it carries the treaty hue the record's own held rows carry
+      const homeDot = new T.MeshBasicMaterial({ color: hue('--un'), toneMapped: false });
       const place = new T.Object3D(), out = new T.Vector3();
       for (const [g, north_] of [[north, true], [south, false]]) {
         for (const home of [false, true]) {
@@ -582,12 +607,12 @@ export async function mountScene(el, data, controls, opts = {}) {
         }
         n.normalize();
         const g = n.z >= 0 ? north : south;
-        const pink = new T.MeshBasicMaterial({ color: 0xff8a3d, toneMapped: false, transparent: true });
-        const beam = new T.Mesh(new T.CylinderGeometry(.009, .009, .55, 8), pink);
+        const beam_ = new T.MeshBasicMaterial({ color: hue('--un'), toneMapped: false, transparent: true });
+        const beam = new T.Mesh(new T.CylinderGeometry(.009, .009, .55, 8), beam_);
         beam.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), n);
         beam.position.copy(n).multiplyScalar(R + .28);
         g.add(beam);
-        beacon = new T.Mesh(new T.RingGeometry(.05, .068, 40), pink.clone());
+        beacon = new T.Mesh(new T.RingGeometry(.05, .068, 40), beam_.clone());
         beacon.position.copy(n).multiplyScalar(R + .012);
         beacon.quaternion.setFromUnitVectors(new T.Vector3(0, 0, 1), n);
         g.add(beacon);
@@ -595,7 +620,7 @@ export async function mountScene(el, data, controls, opts = {}) {
     }
     const equator = part('planet-label', 0, -.23);
     ring(equator, 3.11, .01, 0, steel);
-    if (data.engraveRim) engraving(equator, data.engraveRim, ink('--engrave', '#4c565c'), 2.32, .17, .09).position.y = -2.82;
+    if (data.engraveRim) engraving(equator, data.engraveRim, tok('--dial-engrave'), 2.32, .17, .09).position.y = -2.82;
     const obligations = new T.Group();
     chassis.add(obligations);
     (data.slabs || []).slice(0, 4).forEach((name, i) => {
@@ -605,7 +630,7 @@ export async function mountScene(el, data, controls, opts = {}) {
       g.rotation.z = a - Math.PI / 2;
       obligations.add(g);
       clickable(slab(g, .80, .27, 0, steel, .06), 'treaty');
-      engraving(g, name, '#d6e0e6', .68, .10, .094);
+      engraving(g, name, tok('--ink-3'), .68, .10, .094);
     });
 
     const familyOf = (o) => {
@@ -730,7 +755,7 @@ export async function mountScene(el, data, controls, opts = {}) {
     const threadPositions = new Float32Array(sockets.length * 6);
     const threadGeometry = new T.BufferGeometry();
     threadGeometry.setAttribute('position', new T.BufferAttribute(threadPositions, 3));
-    const threads = new T.LineSegments(threadGeometry, new T.LineBasicMaterial({ color: 0x9fc3e0, transparent: true, opacity: .45 }));
+    const threads = new T.LineSegments(threadGeometry, new T.LineBasicMaterial({ color: hue('--q2'), transparent: true, opacity: .45 }));
     threads.frustumCulled = false;
     evidence.add(threads);
 

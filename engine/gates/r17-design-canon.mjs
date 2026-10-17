@@ -12,15 +12,6 @@ import { rootArg, walk, violation, note, lineOf } from './_lib.mjs';
 import { parseCSVWithHeader } from '../lib/csv.mjs';
 import { readGraph } from '../reader/reader.mjs';
 
-// ── Failing by design ──────────────────────────────────────────────────────
-// One rule below is written in full and switched off, because the material it
-// judges is not ready yet: the app still carries its pre-canon dark instrument
-// palette inline. Re-skinning the pages on the generated custom properties is
-// the next work package, and it flips this on. Nothing is weakened — the rule
-// prints what it WOULD refuse on every run, so the count visibly falls as the
-// re-skin lands.
-const TODO_ENFORCE_NO_LITERAL_COLOUR = false;
-
 const root = rootArg();
 const seedDir = join(root, 'engine', 'seed', 'platform', 'design');
 const genDir = join(root, 'engine', 'generated');
@@ -298,35 +289,27 @@ if (ramp.length < 2) {
 }
 
 // ── 8. no-literal-colour ───────────────────────────────────────────────────
-// The app spends colour only through the generated custom properties. Hex,
-// rgb() and hsl() literals in app/src CSS and .astro style blocks are a second
-// canon. currentColor, transparent and none are not colour choices, and an SVG
-// <defs>/<pattern> block carries the generated textures' own literals.
+// The app spends colour only through the generated custom properties. A hex
+// or an rgb/hsl function anywhere under app/src — a stylesheet, an .astro
+// style block, an .astro SVG attribute or its frontmatter — is a second
+// canon. The only things that are not a colour choice are currentColor,
+// transparent and none, and the one exempt region is an SVG <defs>/<pattern>
+// block, which carries a generated texture tile's own literals. Nothing else
+// is exempt: a value the seed does not carry is a row to add to the seed.
 const HEX = /(?<![\w&#])#[0-9a-fA-F]{3,8}\b/g;
 const FUNC = /\b(?:rgba?|hsla?)\(/g;
-const STYLE_BLOCK = /<style\b[^>]*>([\s\S]*?)<\/style>/g;
 const OWNED_SVG = /<(defs|pattern)\b[\s\S]*?<\/\1>/g;
 const blank = (s) => s.replace(/[^\n]/g, ' ');
 
 const literals = [];
+let files = 0;
 for (const file of walk(join(root, 'app', 'src'))) {
   const rel = relative(root, file).split(sep).join('/');
   if (!/\.(css|astro)$/.test(file)) continue;
-  const text = readFileSync(file, 'utf8');
-  let scanned;
-  if (file.endsWith('.css')) {
-    scanned = text;
-  } else {
-    // Only the style blocks are CSS; the rest of the .astro file (markup, the
-    // generated textures' own <defs>) is blanked but keeps its offsets so the
-    // reported line numbers stay the file's own.
-    scanned = blank(text);
-    for (const m of text.matchAll(STYLE_BLOCK)) {
-      const at = m.index + m[0].indexOf('>') + 1;
-      scanned = scanned.slice(0, at) + m[1] + scanned.slice(at + m[1].length);
-    }
-  }
-  scanned = scanned.replace(OWNED_SVG, blank);
+  files += 1;
+  // The exempt region is blanked but keeps its offsets, so the reported line
+  // numbers stay the file's own.
+  const scanned = readFileSync(file, 'utf8').replace(OWNED_SVG, blank);
   for (const re of [HEX, FUNC]) {
     for (const m of scanned.matchAll(re)) {
       literals.push(`${rel}:${lineOf(scanned, m.index)} ${m[0].trim()}`);
@@ -334,27 +317,12 @@ for (const file of walk(join(root, 'app', 'src'))) {
   }
 }
 if (literals.length > 0) {
-  if (TODO_ENFORCE_NO_LITERAL_COLOUR) {
-    for (const l of literals) {
-      fail(
-        'no-literal-colour',
-        `${l} — colour comes from engine/generated/design-tokens.css (var(--…)), never a literal`,
-      );
-    }
-  } else {
-    // Per-file tally plus the first few, so the digest stays one readable line
-    // and a single planted literal is still pinpointed.
-    const tally = new Map();
-    for (const l of literals) {
-      const f = l.split(':')[0];
-      tally.set(f, (tally.get(f) ?? 0) + 1);
-    }
-    note(
-      `TODO-DISABLED no-literal-colour (TODO_ENFORCE_NO_LITERAL_COLOUR) would refuse ${literals.length}: ` +
-        [...tally].map(([f, n]) => `${f} ${n}`).join(' · ') +
-        ` — first: ${literals.slice(0, 10).join(' · ')}`,
+  for (const l of literals) {
+    fail(
+      'no-literal-colour',
+      `${l} — colour comes from engine/generated/design-tokens.css (var(--…)), never a literal`,
     );
   }
 } else {
-  note('no-literal-colour: app/src spends no colour literal');
+  note(`no-literal-colour: app/src spends no colour literal across ${files} file(s)`);
 }

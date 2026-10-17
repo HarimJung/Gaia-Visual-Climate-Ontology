@@ -241,25 +241,32 @@ test('greyscale-separation: the committed ramp prints its computed steps', () =>
 
 // ---------------------------------------------------------------- no-literal-colour
 
-test('no-literal-colour: flipped on, a planted hex in app CSS is refused', () => {
+test('no-literal-colour: a planted hex in app CSS is refused', () => {
   const root = fixture();
-  edit(root, GATE, 'const TODO_ENFORCE_NO_LITERAL_COLOUR = false;', 'const TODO_ENFORCE_NO_LITERAL_COLOUR = true;');
   write(root, 'app/src/styles/planted.css', '.a { color: #ff00aa; }\n');
   const r = gate(root);
   detected(r, 'no-literal-colour');
   assert.match(r.stderr, /app\/src\/styles\/planted\.css:1 #ff00aa/);
 });
 
-test('no-literal-colour: flipped on, a planted rgb() in an .astro style block is refused', () => {
+test('no-literal-colour: a planted rgb() in an .astro style block is refused', () => {
   const root = fixture();
-  edit(root, GATE, 'const TODO_ENFORCE_NO_LITERAL_COLOUR = false;', 'const TODO_ENFORCE_NO_LITERAL_COLOUR = true;');
   write(root, 'app/src/pages/planted.astro', '<p>x</p>\n<style>\n.a { color: rgb(1,2,3); }\n</style>\n');
   detected(gate(root), 'no-literal-colour');
 });
 
-test('no-literal-colour: flipped on, var() markup and an owned <defs> block pass', () => {
+// The rule reaches the markup too, not only the <style> block: an SVG
+// presentation attribute is exactly where the pre-canon palette hid.
+test('no-literal-colour: a planted hex in .astro MARKUP is refused', () => {
   const root = fixture();
-  edit(root, GATE, 'const TODO_ENFORCE_NO_LITERAL_COLOUR = false;', 'const TODO_ENFORCE_NO_LITERAL_COLOUR = true;');
+  write(root, 'app/src/pages/planted.astro', '<svg><circle fill="#c0ffee" /></svg>\n');
+  const r = gate(root);
+  detected(r, 'no-literal-colour');
+  assert.match(r.stderr, /app\/src\/pages\/planted\.astro:1 #c0ffee/);
+});
+
+test('no-literal-colour: var() markup and an owned <defs> block pass', () => {
+  const root = fixture();
   write(root, 'app/src/styles/clean.css', '.a { color: var(--ink); border-color: currentColor; background: none; }\n');
   write(
     root,
@@ -272,10 +279,67 @@ test('no-literal-colour: flipped on, var() markup and an owned <defs> block pass
   assert.match(r.stdout, /no-literal-colour: app\/src spends no colour literal/);
 });
 
-test('no-literal-colour: switched off, the app’s pre-canon palette is reported and not refused', () => {
+// The rule is live and the product is at zero: this is the assertion that
+// stops the dark pre-canon palette, or any successor to it, coming back.
+test('no-literal-colour: the committed app spends no colour literal at all', () => {
   const r = gate(repo);
   clean(r);
-  assert.match(r.stdout, /TODO-DISABLED no-literal-colour \(TODO_ENFORCE_NO_LITERAL_COLOUR\) would refuse \d+:/);
+  assert.match(r.stdout, /no-literal-colour: app\/src spends no colour literal across \d+ file\(s\)/);
+  assert.doesNotMatch(r.stdout, /TODO/);
+  assert.doesNotMatch(readFileSync(join(repo, GATE), 'utf8'), /TODO_ENFORCE_NO_LITERAL_COLOUR/);
+});
+
+// ------------------------------------------------------- the surface tokens
+// The shipped product's own surface vocabulary — the sheen over the sheet,
+// the paper's tooth, the bevel a raised part is turned with and the inner
+// shadow a socket is cut with — is seed, at that product's own values, and
+// reaches the app through codegen like every other token. Without these the
+// re-skin has no depth to spend and reaches zero literals by deleting it.
+test('surface tokens: the seed carries the shipped product’s own values', () => {
+  const seed = read(repo, `${SEED}/tokens_record.csv`);
+  for (const [token, value] of [
+    ['colour.sheen', '#fffefa'],
+    ['colour.sheen-fade', '#f4f2ec00'],
+    ['colour.wash', '#e9ecf7'],
+    ['colour.map-ground', '#f4f9fc'],
+    ['dial.bevel-hi', '#fdfdfb'],
+    ['dial.bevel-lo', '#a8b0b4'],
+    ['grain.blend', 'multiply'],
+    ['grain.opacity', '.1'],
+  ]) {
+    assert.match(seed, new RegExp(`^${token.replace('.', '\\.')},${value.replace(/[.#]/g, '\\$&')},`, 'm'),
+      `${token} is seeded at the shipped product's value ${value}`);
+  }
+  assert.match(seed, /^shadow\.well,"inset 1px 1px 2px #0e1a1f80",shadow,/m, 'the sunken socket’s inner shadow is a token');
+  assert.match(seed, /^dur,200ms,dur,/m, 'the standard duration is the shipped product’s 200ms');
+});
+
+test('surface tokens: codegen emits every one of them as a custom property', () => {
+  const css = read(repo, 'engine/generated/design-tokens.css');
+  for (const [v, value] of [
+    ['--sheen', '#fffefa'],
+    ['--sheen-fade', '#f4f2ec00'],
+    ['--wash', '#e9ecf7'],
+    ['--map-ground', '#f4f9fc'],
+    ['--dial-bevel-hi', '#fdfdfb'],
+    ['--dial-bevel-lo', '#a8b0b4'],
+    ['--grain-blend', 'multiply'],
+    ['--grain-opacity', '.1'],
+    ['--shadow-well', 'inset 1px 1px 2px #0e1a1f80'],
+  ]) {
+    assert.ok(css.includes(`${v}: ${value};`), `${v} reaches the app as ${value}`);
+  }
+});
+
+test('surface tokens: the app spends them, so the depth is not decoration', () => {
+  const site = read(repo, 'app/src/styles/site.css');
+  assert.match(site, /var\(--sheen\)/, 'the sheet carries its sheen');
+  assert.match(site, /var\(--grain-opacity\)/, 'and its tooth');
+  assert.match(site, /--bevel:\s*linear-gradient\(140deg, var\(--dial-bevel-hi\), var\(--dial-bevel-lo\)\)/,
+    'a raised part is turned with the bevel');
+  assert.match(site, /var\(--shadow-well\)/, 'a sunken one sits in its well');
+  // and a mark that means something is FILLED in that meaning, never outlined
+  assert.match(site, /\.seg-observed \{ background: var\(--un\); \}/, 'an established reading is a fill');
 });
 
 // ---------------------------------------------------------------- codegen

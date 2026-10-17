@@ -3,6 +3,13 @@
 // generated vocab, adapters: all of it); fixtures under app/fixtures are the
 // single door. The reversed direction (engine importing app) is covered by the
 // same scan running on specifiers, which name their target path either way.
+//
+// The one crossing, named: the DESIGN canon. R17 makes
+// engine/seed/platform/design/ the source of every colour, face, size and
+// texture the product spends, and codegen emits exactly three files for the
+// app to read. Those three are listed below and nothing else is permitted —
+// a record still has one door, and these carry no record. The CSS half of the
+// same crossing is app/src/styles/site.css's @import of design-tokens.css.
 import { readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { rootArg, walk, violation, lineOf, note } from './_lib.mjs';
@@ -12,6 +19,11 @@ const CODE_EXT = /\.(ts|js|mjs|astro)$/;
 // import x from '…' · import '…' · import('…') · import.meta.glob('…') · require('…')
 const IMPORT_RE = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+|\bimport\.meta\.glob\s*\(\s*|\brequire\s*\(\s*)(['"])([^'"\n]+)\1/g;
 const ENGINE_PATH = /(^|\/)engine\//;
+// The generated design canon, and only it: the token file in both forms and
+// the texture tiles. A query suffix (?raw) is part of a specifier, so it is
+// stripped before the comparison.
+const DESIGN_DOOR = /(^|\/)engine\/generated\/(design-tokens\.(css|json)|textures\.svg)$/;
+const bare = (spec) => spec.split('?')[0];
 
 const files = walk(join(root, 'app'))
   .filter((p) => CODE_EXT.test(p))
@@ -27,10 +39,12 @@ for (const file of files) {
   for (const m of text.matchAll(IMPORT_RE)) {
     checked += 1;
     const spec = m[2];
-    if (ENGINE_PATH.test(spec)) {
+    if (ENGINE_PATH.test(spec) && !DESIGN_DOOR.test(bare(spec))) {
       violation(
         `R11: ${rel}:${lineOf(text, m.index)} imports "${spec}" — ` +
-          'screens read only view JSON under app/fixtures, never seeds or engine internals',
+          'screens read only view JSON under app/fixtures, never seeds or engine internals ' +
+          '(the one exception is the generated design canon: engine/generated/design-tokens.css, ' +
+          'design-tokens.json and textures.svg)',
       );
     }
   }

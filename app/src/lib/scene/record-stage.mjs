@@ -126,7 +126,7 @@ export function recordLayout(step, data) {
           return {
             x: g.x0 + (k % g.cols) * g.pitch, y: g.y0 + Math.floor(k / g.cols) * g.pitch,
             sx: g.pitch - 10, sy: g.pitch - 10,
-            cls: d.s === 'unknown' ? `unv u${Math.max(0, d.f) % 4}` : d.s,
+            cls: d.s === 'unknown' ? `unv u${Math.max(0, d.f) % 6}` : d.s,
             d: stagger(k, 22),
           };
         },
@@ -194,7 +194,7 @@ export function recordLayout(step, data) {
             x: cx + ((k % cols) - (cols - 1) / 2) * (s + 3),
             y: cy + (Math.floor(k / cols) - (rows - 1) / 2) * (s + 3),
             sx: s, sy: s,
-            cls: d.h ? 'metal' : d.s === 'unknown' ? `unv u${Math.max(0, d.f) % 4}` : 'hair',
+            cls: d.h ? 'metal' : d.s === 'unknown' ? `unv u${Math.max(0, d.f) % 6}` : 'hair',
             d: stagger(c * 3 + r, 30),
           };
         },
@@ -271,9 +271,11 @@ export function applyRecordStep(stage, data, step) {
       if (p) {
         st.style.setProperty('--d', `${p.d || 0}ms`);
         st.style.transform = `translate(${p.x}px,${p.y}px)`;
-        st.setAttribute('class', 'r-stamp');
+        // the state rides on the group too: a filled card sets its own
+        // label in the sheet rather than in ink (stage.css .r-stamp.observed)
+        st.setAttribute('class', `r-stamp ${doc.s}`);
       } else {
-        st.setAttribute('class', 'r-stamp off');
+        st.setAttribute('class', `r-stamp off ${doc.s}`);
       }
     }
     const cell = stage.querySelector(`[data-rcell="${doc.i}"]`);

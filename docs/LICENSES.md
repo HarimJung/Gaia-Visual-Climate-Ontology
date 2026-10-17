@@ -135,38 +135,42 @@ Not used by the runtime. The terms URL served only a cookie-consent notice on
 Policy Radar content is fetched, parsed or stored until the terms are
 verified and the row is updated.
 
-## House-kit webfonts (Hanken Grotesk, IBM Plex Mono) — `yes`
+## House-kit webfonts (Bricolage Grotesque, Hanken Grotesk, IBM Plex Mono) — `yes`
 
-The product screens (`app/`) serve two font families as woff2, copied from
+The product screens (`app/`) serve three font families as woff2, copied from
 the Visual Climate house kit together with their SIL Open Font License 1.1
-texts (`app/public/fonts/OFL*.txt`, one per foundry). IBM Plex Mono carries
-every figure, hash, id and microcap eyebrow; Hanken Grotesk is the local
-fallback that sits behind Archivo in the stack. OFL 1.1 permits bundling and
-redistribution as long as the fonts are not sold on their own and the license
-text travels with them; it does, in the same directory the pages load them
-from.
+texts (`app/public/fonts/OFL*.txt`, one per foundry). This is the shipped
+Visual Climate product's own type system, ported with its stylesheet on
+2026-10-17: **Bricolage Grotesque** (variable, 200–800) is the display voice;
+**Hanken Grotesk** carries the prose, the reading and the figures — the
+product deliberately points its `--font-mono` name at the sans, because three
+families read as three authors; **IBM Plex Mono** carries only what is
+character-for-character, which is hashes, run ids and keys. OFL 1.1 permits
+bundling and redistribution as long as the fonts are not sold on their own
+and the license text travels with them; it does, in the same directory the
+pages load them from.
 
-Bricolage Grotesque was the display face until the 2026-10-16 move onto the
-predecessor comps' instrument world. No screen loads it any more, so its
-woff2 and its OFL text were **removed** from `app/public/fonts/` rather than
-left shipping unused — a register that lists a font nobody serves is the same
-kind of untruth this product exists to refuse.
+Every face the screens use is served from this repository. Nothing is fetched
+from a font host, so a blocked or unreachable third party cannot change what
+the page is set in.
 
-## Archivo (Google Fonts) — `yes-no-redistribution` (OFL 1.1)
+## Archivo (Google Fonts) — NO LONGER LOADED — `yes-no-redistribution` (OFL 1.1)
 
 Verified 2026-10-16: Archivo is published by Omnibus-Type under the **SIL Open
 Font License 1.1** and Google Fonts serves it under that same license.
 
-Our use: Archivo is the display and text face of the product screens — the
-face the predecessor's comps (`Main.dc.html`, `Dial.dc.html`,
-`Motion.dc.html`) are set in. `app/src/layouts/Base.astro` loads
-`https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap`,
-with the family and its four weights pinned. We do **not** redistribute the
-font files: the bytes are served by Google from the upstream family, so the
-license travels with it rather than needing a copy here. The CSS fallback
-stack ends on the locally shipped Hanken Grotesk (see the house-kit row), so
-a blocked or unreachable `fonts.googleapis.com` degrades to a grotesque this
-repository already licenses, never to a browser default.
+Our use: **none, as of 2026-10-17.** Archivo was the display and text face of
+the product screens for one day — between the 2026-10-16 move onto the
+predecessor comps' dark instrument world and the 2026-10-17 port of the
+shipped Visual Climate product's own stylesheet, which returned the screens to
+Bricolage Grotesque and Hanken Grotesk (see the house-kit row). The
+`fonts.googleapis.com` stylesheet link was removed from
+`app/src/layouts/Base.astro` with it, and no screen requests Archivo.
+
+The row is kept rather than deleted: a register that quietly drops what it
+once served is the same kind of untruth this product exists to refuse. We
+never redistributed the font files, so nothing has to be removed from this
+repository.
 
 ## Natural Earth 1:110m base map — `yes`
 

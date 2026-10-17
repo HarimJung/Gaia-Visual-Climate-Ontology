@@ -10,22 +10,23 @@
 // Device by device, and the data under each:
 //
 //   · BARREL RING — one barrel per document on record, at the comp's own
-//     R = 286 on its 800 stage. LIT = the bytes are held and hashed. METAL /
-//     GLASS = the row is read and on record, the bytes are not held. VOID =
-//     a sunken well with the comp's clay-red hairline, for a row this runtime
-//     has not read. Every barrel is a link to that document's receipt.
+//     R = 286 on its 800 stage. Material, never hue: the dial face with the
+//     treaty edge = the bytes are held and hashed; the plain face = read and
+//     on record, bytes not held; the dial track = pledged; a sunken well with
+//     the absent edge = a row this runtime has not read. Every barrel is a
+//     link to that document's receipt.
 //   · COMPLICATION WHEELS — one per SOURCE FAMILY the runtime reads. Each
 //     wheel's TOOTH COUNT is the number of documents on record from that
 //     family for this record; its label is that family's own name, engraved;
 //     the wheel is a link to that family's row in the record's ledger. A
 //     family with nothing on record keeps its wheel as the comp's unmeshed
 //     ghost — outline only, with the reason — never omitted, never faked.
-//   · FLOW PATHS + travelling spark (PULSE) — one path from each lit barrel
-//     into the escapement. Evidence moving into the record; never a number,
-//     never a count-up.
-//   · ESCAPEMENT — the comp's TICK, and the single amber jewel at the point
-//     where evidence enters the record.
-//   · VERDICT CARD — the comp's glass surface, carrying one true sentence
+//   · FLOW PATHS + travelling spark (PULSE) — one path from each barrel whose
+//     bytes are held, into the escapement. Evidence moving into the record;
+//     never a number, never a count-up.
+//   · ESCAPEMENT — the comp's TICK, and the single jewel, in the reporting
+//     hue, at the point where evidence enters the record.
+//   · VERDICT CARD — a raised document face, carrying one true sentence
 //     assembled from this record's own counts, every figure inside its link,
 //     and the verbatim reason the unread rows carry.
 //
@@ -92,9 +93,11 @@ const wheels = fams.map((f, i) => {
   // over and the comb closes up exactly as the comp's does.
   const pitch = f.n > 0 ? 360 / f.n : 0;
   const tooth = f.n > 0 ? Math.min(5.5, pitch * 0.2) : 0;
+  // the teeth are cut in the source-family ramp's darkest step, which is also
+  // the border token the wheel's own fills declare — one family, one ramp
   const teeth =
     f.n > 0
-      ? `background-image:repeating-conic-gradient(from 0deg, rgba(214,224,232,.70) 0deg ${n2(tooth)}deg, rgba(0,0,0,0) ${n2(tooth)}deg ${n2(pitch)}deg);`
+      ? `background-image:repeating-conic-gradient(from 0deg, var(--src-a) 0deg ${n2(tooth)}deg, transparent ${n2(tooth)}deg ${n2(pitch)}deg);`
       : '';
   return {
     ...f,
@@ -114,12 +117,14 @@ const wheels = fams.map((f, i) => {
 // carries only the sentence; nothing is written to fill the slot.
 const unread = view.rows.find((r) => !r.sha256 && r.state_reason) ?? null;
 
-// ── the four-state legend: the world census, as the comp's small spheres ─
+// ── the four-state legend: the world census, as the comp's small spheres.
+// The second word is the READING in plain English — what the state means for
+// a document. A legend never shows the design token behind its swatch.
 const legend = [
-  { state: 'observed', material: 'metal', key: 'states_observed' },
-  { state: 'pledged', material: 'glass', key: 'states_pledged' },
-  { state: 'unknown', material: 'unverified', key: 'states_unknown' },
-  { state: 'absent', material: 'void', key: 'states_absent' },
+  { state: 'observed', reading: 'read', key: 'states_observed' },
+  { state: 'pledged', reading: 'pledged, not measured', key: 'states_pledged' },
+  { state: 'unknown', reading: 'on file, not read', key: 'states_unknown' },
+  { state: 'absent', reading: 'confirmed absent', key: 'states_absent' },
 ];
 ---
 
@@ -127,13 +132,9 @@ const legend = [
     clamped h1) would overwrite the comp's own frame and type scale */}
 <section class="vc-wrap" aria-label="The record as an instrument">
   <div class="vc-frame">
-    <div class="vc-rake" aria-hidden="true"></div>
-    <div class="vc-grain" aria-hidden="true"></div>
-
     {/* ══ STAGE : the movement ══ */}
     <div class="vc-stagebox">
       <div class="vc-stage">
-        <div class="vc-c vc-halo" aria-hidden="true"></div>
         <div class="vc-c vc-tickring" aria-hidden="true"></div>
         <div class="vc-c vc-tickmask" aria-hidden="true"></div>
         <div class="vc-c vc-plate" aria-hidden="true"></div>
@@ -186,12 +187,9 @@ const legend = [
         }
 
         {/* escapement / balance : the ratchet heartbeat */}
-        <div class="vc-c vc-esc-halo" aria-hidden="true"></div>
         <div class="vc-c vc-esc-teeth" aria-hidden="true"></div>
         <div class="vc-c vc-esc-body" aria-hidden="true"></div>
         <div class="vc-c vc-esc-jewel" aria-hidden="true"></div>
-
-        <div class="vc-c vc-sweep" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -233,14 +231,14 @@ const legend = [
         }
       </div>
 
-      {/* material legend: the comp's spheres, labels on one line */}
+      {/* the legend: the state, its reading in plain English, its count */}
       <ul class="vc-legend">
         {
           legend.map((s) => (
             <li>
               <span class={`vc-sw vc-sw-${s.state}`} aria-hidden="true" />
               <span class="vc-lbl">
-                {s.state} · {s.material}{' '}
+                {s.state} · {s.reading}{' '}
                 <a data-census={s.key} href={`/ledger/#census-${s.key}`}>{fmt(census.counts[s.key])}</a>
               </span>
             </li>

@@ -1,40 +1,48 @@
-/* National Climate Record Runtime — product screens (WP-07, fixture stage).
-   ── THE INSTRUMENT WORLD ───────────────────────────────────────────────────
-   The owner's 2026-10-16 verdict moved the whole product onto the predecessor's
-   dark instrument ground (references/Main.dc.html, Dial.dc.html, Motion.dc.html,
-   Storyboard.dc.html, Tray.dc.html). This REPLACES the light house kit globally:
-   near-black ground, pearl/steel metals, one amber accent for live energy and
-   the single action, a cool blue reserved for the record's own observed state,
-   and a clay red for every void and every refusal.
-   FULL DARK, not a split: the receipts and the ledger carry the same ground as
-   the stage. A paper island inside a metal world reads as an accident at the
-   scroll boundary; one world, with the document surfaces raised a step on
-   --paper and ruled in hairlines, reads as the case-back of the same object.
+/* National Climate Record Runtime — product screens.
+   ── PORTED, NOT DERIVED ────────────────────────────────────────────────────
+   This sheet is the shipped Visual Climate product's own stylesheet, carried
+   across rule by rule from the frozen source of visual-climate.visualclimate
+   .workers.dev (app/globals.css and app/styles/{chrome,story,stage,record,
+   world,figure}.css). Owner authorisation to port its visual code directly is
+   on the record, 2026-10-16. Their gradients, shadows, sheens, radii, spacing,
+   type rules and class names are kept as written; what changed is only which
+   selector a body hangs on, where our markup differs from theirs.
 
-   ── FACES ──────────────────────────────────────────────────────────────────
-   Archivo (the comps' own display face) 400/500/600/800 from Google Fonts,
-   family pinned, behind a real fallback stack that ends on the house kit's
-   locally-shipped Hanken Grotesk — if fonts.googleapis.com never answers the
-   page is still set in a grotesque, not in Times. IBM Plex Mono stays local
-   and carries every figure, hash, id and microcap eyebrow at .18–.30em.
-   Tabular numerals stay on at the body root.
+   ── THE SEED MATCHES IT ────────────────────────────────────────────────────
+   Every value they declare in :root now lives in
+   engine/seed/platform/design/tokens_record.csv and reaches this sheet
+   through codegen as engine/generated/design-tokens.css, imported below.
+   Where their stylesheet carried a value the seed did not — the sheen and its
+   fade, the paper's grain, the selection wash, the map sheet, the bevel a
+   raised part is turned with, the inner shadow a socket is cut with — that
+   value was added to the seed AT THEIR NUMBER, not approximated. If the two
+   ever disagree, their stylesheet wins and the seed is corrected.
 
-   ── AA, recomputed on the dark ground (#0B0D0F, L = 0.0039) ────────────────
-     --ink     #EDF2F6  17.28:1   body + display
-     --ink-2   #A8B2B9   9.02:1   secondary prose
-     --ink-3   #8A949B   6.30:1   captions, eyebrows, the smallest intentional
-     --acc     #FF8A3D   8.31:1   links, the one action, live energy
-     --acc-ink #FFA765  10.26:1   link hover
-     --st-pledged #9FC3E0 10.53:1 glass / pledged
-     --void-ink   #E0695F  5.90:1 void + refusal text        (all AA normal)
-     --void-line  #C2453F  3.91:1 void hairline              (AA 1.4.11, 3:1)
-     --line-2  #4B565D   3.07:1   load-bearing borders       (AA 1.4.11, 3:1)
-     --line    #242B31   1.56:1   row hairlines, non-meaning
-   On the pearl metal (chips, swatches) the ink flips: --ink-inv #0B0D0F on the
-   metal's DARKEST stop #9AA4AB = 7.67:1, on its lightest #D8E0E6 = 14.9:1.
-   On --paper #12161A (L = 0.0066): --ink 14.5:1, --ink-2 7.57:1, --ink-3 5.29:1,
-   --acc 6.98:1, --void-ink 4.95:1 — every pair still AA. */
+   `engine/gates/r17-design-canon.mjs` rule `no-literal-colour` refuses every
+   colour literal under app/src — comments included, so this note cannot spell
+   one either. Translucency is color-mix against a token, which is how their
+   own sheet writes it; it is never a four-channel literal.
 
+   ── ONE AXIS, ONE CHANNEL (docs/DESIGN.md) ─────────────────────────────────
+   meaning → COLOUR, and a mark that carries meaning is FILLED in it, never
+   outlined in it: treaty & pledge --un, measured --inv, reporting --btr,
+   finance --fin, failure --warn. An outline in the same hue is the same
+   meaning not yet established — their filings grid reads exactly this way,
+   solid for read and dashed for on-file-but-unread.
+   epistemic-state → MATERIAL: a raised bevelled token, a filled token, a
+   dashed socket, a sunken socket with its inner shadow.
+   source-family → the NEUTRAL RAMP --src-a/-b/-c and the hatches.
+   reason-family → the six generated texture tiles (engine/generated/
+   textures.svg, inlined once per page by the layout).
+   quantity → the blue sequential ramp --q1…--q4, never a new hue. */
+
+@import '../../../engine/generated/design-tokens.css';
+
+/* The canon's three faces, shipped from this repo under OFL 1.1 with their
+   licence texts beside them — nothing is fetched from a font host, so a
+   blocked third party cannot change what the page is set in. Bricolage
+   Grotesque is the variable display face (one file, 200–800). */
+@font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque-latin.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
 @font-face { font-family: "Hanken Grotesk"; src: url("/fonts/hanken-grotesk-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Hanken Grotesk"; src: url("/fonts/hanken-grotesk-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "Hanken Grotesk"; src: url("/fonts/hanken-grotesk-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
@@ -43,427 +51,329 @@
 @font-face { font-family: "IBM Plex Mono"; src: url("/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 
 :root {
-  color-scheme: dark;
-  --bg: #0B0D0F; --paper: #12161A; --ink: #EDF2F6; --ink-2: #A8B2B9; --ink-3: #8A949B;
-  --ink-inv: #0B0D0F;
-  /* the colour an engraving is cut in: read by the 3D scene through ink() */
-  --engrave: #C6D0D7;
-  --line: #242B31; --line-2: #4B565D; --wash: #171C21;
-  /* amber: live energy and the one action, and nothing else */
-  --acc: #FF8A3D; --acc-ink: #FFA765; --acc-soft: rgba(255, 138, 61, .15);
-  /* the ground itself: the comps' raking studio, not a flat fill */
-  --ground: radial-gradient(118% 92% at 76% -6%, #1E242A 0%, #12161A 42%, #0A0C0E 100%);
-  --rake: linear-gradient(118deg, rgba(255, 255, 255, .055) 0%, rgba(255, 255, 255, 0) 38%);
-  --grain:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, .018) 0 1px, rgba(0, 0, 0, 0) 1px 2px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .012) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
-  --f-d: "Archivo", "Hanken Grotesk", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
-  --f-t: "Archivo", "Hanken Grotesk", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
-  --f-m: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --ease: cubic-bezier(.2, 0, 0, 1);
-  --gut: clamp(16px, 4vw, 48px);
-  --top-h: 60px; /* the sticky bar's height; the pinned stages offset by it */
-  --r: 3px; /* one radius for everything but the round step counter */
-  /* type scale: five steps and the two clamped display sizes. Components use
-     these tokens, never a raw px size, so the ladder cannot refill with half
-     steps (the page had twelve fixed sizes inside a 6.5px band). */
-  --t-xs: 13.5px; --t-sm: 14.5px; --t-md: 16px; --t-lg: 19px; --t-xl: 25.6px;
-  --t-cap: 11.5px; /* the one microcap size, mono, wide-tracked */
-  /* four-state visual vocabulary (new tokens this product introduces):
-     observed = solid metal · pledged = glass outline · unknown = hatched with
-     its reason always visible · absent = explicit void. The unknown hatch is
-     hard-stop stripes, not a gradient wash. */
-  --st-observed: #C6D0D7;
-  --st-pledged: #9FC3E0;
-  --void-ink: #E0695F; --void-line: #C2453F;
-  --st-unknown-hatch: repeating-linear-gradient(135deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
-  --st-absent-line: var(--void-line);
-  /* one hatch angle per recorded reason for an unknown: four distinguishable
-     textures, so "unknown" reads as a taxonomy with named families rather
-     than one shrug (predecessor world-stage.tsx HATCH=[45,135,0,90,…]) */
-  /* the CSS angle is the gradient's axis, so the stripes run perpendicular to
-     it: 135deg draws "/" and matches the SVG pattern of the same family */
-  --hatch-0: repeating-linear-gradient(135deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
-  --hatch-1: repeating-linear-gradient(45deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
-  --hatch-2: repeating-linear-gradient(90deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
-  --hatch-3: repeating-linear-gradient(0deg, #1A2026 0 5px, rgba(168, 178, 185, .40) 5px 7px);
-  /* ── four-state MATERIALS ──────────────────────────────────────────────
-     Design language ported from the predecessor's dial (Main.dc.html's own
-     material legend: METAL · 관측 / GLASS · 약속 / VOID · 부재):
-     observed = METAL — a machined pearl plate, cotes de Geneve at the comps'
-     112 degree pitch under a conic sheen and a raking key light, cast cool so
-     the blue that belongs to the record's own observed state lives IN the
-     metal rather than beside it · pledged = GLASS — translucent, outlined in
-     --st-pledged, a glare across it, never filled · unknown = UNVERIFIED —
-     a hairline plate under a hard-stop hatch, one angle per recorded reason ·
-     absent = VOID — a sunken, machined, empty socket ringed in clay red.
-     Shape and pattern still separate the four without colour: solid / dashed
-     outline / hatch / sunken dotted socket.
-     AA where text sits on a material: --ink-inv #0B0D0F on the chip metal's
-     darkest stop #9AA4AB = 7.67:1 (on its lightest #D8E0E6 = 14.9:1) ·
-     --st-pledged #9FC3E0 over the glass fill on the ground = 9.6:1 ·
-     --void-ink #E0695F on the void face #08090B = 6.1:1.
-     The machining stays above the perceptual floor at the comps' own pitch —
-     a 2px groove on a 15px repeat, 1.9:1 against the face — and the band
-     keeps real plate seams so a 900px run reads as a row of machined plates
-     rather than one slab. */
-  --mtl-face: radial-gradient(circle at 32% 24%, #8E99A2 0%, #5A646B 46%, #333B41 100%);
-  --mtl-groove: repeating-linear-gradient(112deg, rgba(255, 255, 255, .052) 0 2px, rgba(0, 0, 0, .19) 2px 15px);
-  /* the conic sheen: what turns an extruded disc into a turned plate */
-  --mtl-sheen: conic-gradient(from 195deg, rgba(255, 255, 255, .13), rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, .07) 48%, rgba(255, 255, 255, 0) 74%, rgba(255, 255, 255, .14) 100%);
-  --mtl-lit: linear-gradient(118deg, rgba(255, 255, 255, .17) 0%, rgba(255, 255, 255, .02) 26%, rgba(255, 255, 255, 0) 46%, rgba(0, 0, 0, .20) 100%);
-  --mtl-seam: repeating-linear-gradient(90deg, rgba(226, 236, 242, .22) 0 1px, rgba(0, 0, 0, .40) 1px 2px, rgba(0, 0, 0, 0) 2px 38px);
-  --mtl-edge: inset 0 0 0 1px rgba(226, 236, 242, .22), inset 0 2px 16px rgba(0, 0, 0, .55), 0 6px 18px rgba(0, 0, 0, .55);
-  /* the chip metal is the same plate run LIGHT, because dark ink has to sit
-     on it and read (see the AA block above) */
-  --mtl-chip: radial-gradient(circle at 34% 28%, #D8E0E6 0%, #B4BFC7 48%, #9AA4AB 100%);
-  --mtl-chip-groove: repeating-linear-gradient(112deg, rgba(255, 255, 255, .30) 0 2px, rgba(31, 38, 43, .22) 2px 11px);
-  /* the engraved tick bezel: the comps' repeating-conic hairline ring */
-  --bezel: repeating-conic-gradient(from 0deg, rgba(190, 202, 210, .55) 0deg .28deg, rgba(0, 0, 0, 0) .28deg 4.5deg);
-  --gls-fill: rgba(159, 195, 224, .13);
-  --gls-glare: linear-gradient(140deg, rgba(180, 205, 225, .22), rgba(180, 205, 225, .04));
-  --gls-edge: inset 0 0 0 1px rgba(200, 225, 245, .40);
-  --unv-hairline: inset 0 0 0 1px rgba(168, 178, 185, .50), inset 0 1px 3px rgba(0, 0, 0, .6);
-  --void-face: linear-gradient(180deg, #08090B 0%, #0D1012 72%);
-  --void-face-flat: #08090B;
-  --void-edge: inset 0 3px 8px rgba(0, 0, 0, .95), inset 0 0 0 1px rgba(194, 69, 63, .62);
-  /* amber energy: the glow a LIVE part carries. Never applied to a figure. */
-  --live-glow: 0 0 20px rgba(255, 138, 61, .55);
+  color-scheme: light;
+  /* One paper, and only one. This product is printed on an ivory sheet and
+     stays on it whatever the operating system prefers. */
+
+  /* Compositions of canon tokens — a face needs a fallback chain a token
+     cannot carry, and their system deliberately points --font-mono at the
+     SANS: one family sets the voice, the reading and the figures, because
+     three families read as three authors. Monospace is only for what is
+     character-for-character: hashes, run ids, keys. */
+  --font-display: var(--type-display), var(--type-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: var(--type-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-sans);
+  --font-code: var(--type-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --top-h: 64px;
+
+  /* Sources are not evidence: a source mark never borrows an evidence hue.
+     It takes the ramp, told apart by weight and pattern, always labelled. */
+  --src-d: repeating-linear-gradient(135deg, var(--src-a) 0 2px, transparent 2px 4px);
+
+  /* The six generated textures in CSS form, for the surfaces that are HTML
+     and not SVG. Same 5px tile, same 1.4 stroke, same two tokens as
+     engine/generated/textures.svg; a CSS gradient angle is the axis and the
+     stripes run perpendicular to it, so a tile the SVG draws at 45° is a
+     135° gradient here. SVG surfaces fill from the generated pattern ids
+     themselves — url(#t-hatch-45) and friends — never from these. */
+  --t-hatch-0: repeating-linear-gradient(0deg, var(--ink-4) 0 1.4px, var(--paper-sunken) 1.4px 5px);
+  --t-hatch-45: repeating-linear-gradient(135deg, var(--ink-4) 0 1.4px, var(--paper-sunken) 1.4px 5px);
+  --t-hatch-90: repeating-linear-gradient(90deg, var(--ink-4) 0 1.4px, var(--paper-sunken) 1.4px 5px);
+  --t-hatch-135: repeating-linear-gradient(45deg, var(--ink-4) 0 1.4px, var(--paper-sunken) 1.4px 5px);
+  --t-cross: repeating-linear-gradient(45deg, var(--ink-4) 0 1.4px, transparent 1.4px 5px), repeating-linear-gradient(135deg, var(--ink-4) 0 1.4px, var(--paper-sunken) 1.4px 5px);
+  --t-dots: radial-gradient(var(--ink-4) 1.1px, var(--paper-sunken) 1.3px) 0 0 / 5px 5px;
+
+  /* The bevel a raised part is turned with, and the well a sunken one sits
+     in: their .state-token surfaces, as tokens. */
+  --bevel: linear-gradient(140deg, var(--dial-bevel-hi), var(--dial-bevel-lo));
 }
 
+/* ── Base ─────────────────────────────────────────────────────────────── */
 * { box-sizing: border-box; }
-/* a stable gutter: navigating between a scrolling page and a short one must
-   not shift every centred element by the scrollbar's width */
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
-/* The ground is the comps' raking studio, fixed so it does not scroll away
-   from under a 14,000px story: the dark radial, one raking key light across
-   the top-left, and the fine grain that keeps a near-black field from
-   banding. All three are decoration on ::before — nothing reads them. */
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--f-t); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: var(--t3); line-height: 1.6; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--font-display); color: var(--ink); text-wrap: balance; overflow-wrap: break-word; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
+a:hover, a:focus-visible { color: var(--un-ink); text-decoration-color: currentColor; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+::selection { background: var(--wash); }
+svg { flex-shrink: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+.mono { font-family: var(--font-code); }
+.muted { color: var(--ink-3); font-size: var(--t2); }
+main { min-height: calc(100svh - var(--top-h, 64px) - 190px); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* the generated texture defs, inlined once per page by the layout */
+.vc-textures { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Paper, on every page: one fixed layer, never repainted by scroll. The page
+   is a printed sheet, not a screen fill — a sheen where the loupe lamp falls,
+   and the sheet's own tooth multiplied over it. */
 body::before {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background-image: var(--grain), var(--rake), var(--ground);
+  background-image: radial-gradient(120% 78% at 66% 26%, var(--sheen) 0, var(--sheen-fade) 60%);
 }
-::selection { background: var(--acc-soft); color: var(--ink); }
-a { color: var(--acc); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { color: var(--acc-ink); text-decoration-thickness: 2px; }
-:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; border-radius: var(--r); }
-/* The display register of the comps: Archivo 800, tight, and cut in caps at
-   the two sizes that carry a screen (the cover and a section head). Case is
-   presentation — the sentence in the markup is unchanged. */
-h1, h2, h3 { font-family: var(--f-d); color: var(--ink); text-wrap: balance; overflow-wrap: break-word; }
-.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gut); }
-.mono { font-family: var(--f-m); }
-.muted { color: var(--ink-3); font-size: var(--t-sm); }
-/* main holds the viewport even on a short page, so the footer never floats
-   in the middle of an empty screen */
-main { min-height: calc(100svh - var(--top-h, 60px) - 190px); }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity); mix-blend-mode: var(--grain-blend);
+}
 
-/* skip link: hidden until focused (a11y) */
-.skip { position: absolute; left: -9999px; top: 10px; z-index: 20; background: var(--paper); color: var(--acc-ink); border: 1px solid var(--acc-ink); border-radius: var(--r); padding: 10px 16px; font-weight: 600; text-decoration: none; }
-.skip:focus { left: var(--gut); }
+/* keyboard users land here first; visible only once focused */
+.skip { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 10px 14px; background: var(--paper-raised); color: var(--ink); border: 1px solid var(--ink); font: var(--t1) var(--font-mono); letter-spacing: 0; text-decoration: none; transform: translateY(-200%); transition: transform var(--dur-quick); }
+.skip:focus, .skip:focus-visible { transform: translateY(0); }
 
-/* top bar. Sticky, and its height IS --top-h: the pinned stages offset by
-   that token, so the bar fills the strip instead of leaving a dead band. */
-.bar { position: sticky; top: 0; z-index: 6; background: rgba(11, 13, 15, .86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.bar .wrap { display: flex; align-items: center; gap: 18px; height: var(--top-h); }
-/* the mark is engraved, not set: mono microcaps at the comps' tracking */
-.mark { font: 500 12px/1.15 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 11px; }
-.mark::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 12px rgba(255, 138, 61, .9); flex: none; }
-.bar nav { margin-left: auto; display: flex; gap: 4px; }
-.bar nav a { color: var(--ink-3); text-decoration: none; font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .14em; text-transform: uppercase; padding: 9px 11px; border-radius: var(--r); transition: background .15s var(--ease), color .15s var(--ease); }
-.bar nav a:hover { color: var(--ink); background: var(--wash); }
+/* ── one chrome for every route ─────────────────────────────────────────── */
+.bar { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; height: var(--top-h); max-width: none; }
+/* the lockup: the mark is the coverage shape, the wordmark the display voice */
+.mark { display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 600; font-size: var(--t4); letter-spacing: -.01em; line-height: 1; color: var(--ink); text-decoration: none; }
+.mark::before { content: ""; flex: none; width: 11px; height: 11px; border-radius: 50%; background: var(--un); box-shadow: inset 0 0 0 1px var(--un-ink); }
+.bar nav { display: flex; align-items: center; gap: 26px; margin-left: auto; }
+.bar nav a { position: relative; padding-block: 6px; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); text-decoration: none; transition: color var(--dur) var(--ease); }
+.bar nav a:hover { color: var(--ink-2); }
+.bar nav a[aria-current="page"] { color: var(--ink); }
+.bar nav a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--un); }
 
-/* first three seconds: country · treaty line · next date · strip */
-.head { padding: clamp(36px, 6vw, 72px) 0 8px; }
-.head h1 { font-size: clamp(2.6rem, 6.2vw, 5rem); line-height: .92; font-weight: 800; letter-spacing: -.028em; text-transform: uppercase; margin: 0 0 .32em; }
-/* a measure, not the full column: the lede was running 103ch and filling its
-   box to 99.4%, which reads as a wall rather than a sentence */
-.treaty { font-size: clamp(1.02rem, 1.4vw, 1.22rem); color: var(--ink-2); margin: 0 0 14px; line-height: 1.6; max-width: 34em; }
-.treaty b { color: var(--ink); font-weight: 600; }
-.treaty .sep { color: var(--line-2); padding: 0 .45em; }
-.nextdate { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; margin: 0 0 30px; padding-top: 12px; border-top: 1px solid var(--line-2); font-size: 15.5px; }
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 24px; margin-top: var(--s8); padding: 22px 0 48px; border-top: 1px solid var(--rule); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
+footer .wrap { max-width: none; }
+footer p { margin: 0 0 6px; max-width: 72ch; }
+footer p:first-child { display: flex; align-items: center; gap: 10px; color: var(--ink-2); }
+footer p:first-child::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--un); }
+
+/* ── page mastheads ─────────────────────────────────────────────────────── */
+.eyebrow, .doc-eyebrow, .hero .eyebrow { display: flex; align-items: center; gap: var(--s2); margin: 0 0 var(--s3); font: 500 var(--t0)/1.6 var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
+.hero .eyebrow [data-meta] { white-space: nowrap; }
+.head { padding-block: clamp(30px, 4vw, 56px) clamp(22px, 2.6vw, 34px); }
+/* a name you can read across a room */
+.head h1 { margin: var(--s3) 0 var(--s4); font-family: var(--font-display); font-weight: 600; font-size: clamp(44px, 7.4vw, 96px); line-height: .94; letter-spacing: -.035em; color: var(--ink); }
+.treaty { margin: var(--s4) 0 0; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 62ch; text-wrap: pretty; }
+.treaty b { color: var(--ink); font-weight: 500; }
+.treaty .sep { color: var(--rule-strong); padding: 0 .45em; }
+.nextdate { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; margin: var(--s5) 0 var(--s6); padding-top: var(--s3); border-top: 1px solid var(--rule-strong); font-size: var(--t3); }
 .nextdate .lbl { font-weight: 600; color: var(--ink); }
 
-/* world-ledger hero (frontend-prompts role 04, adapted): opens with the
-   product's most characteristic object — the four-state material band,
-   every number census-linked; no invented figures, no %, no gauge */
-.hero .eyebrow, .doc-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); }
-.hero .eyebrow [data-meta] { white-space: nowrap; }
-.hero .eyebrow::before, .doc-eyebrow::before { content: ""; flex: 0 0 26px; height: 1px; background: var(--acc); box-shadow: 0 0 8px rgba(255, 138, 61, .7); }
-.hero .eyebrow, .doc-eyebrow { letter-spacing: .30em; color: var(--acc); }
-.worldband { display: flex; gap: 4px; height: clamp(54px, 7vw, 78px); margin: 30px 0 0; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
-.worldband .seg { min-width: 0; }
-/* a zero state still gets presence: zero is a reading, and the key below
-   names four materials, so the object the key describes shows four */
-.worldband .seg-absent, .worldband .seg-pledged { flex: 0 0 28px; }
-.worldband .seg-zero { flex: 0 0 28px; }
-/* the key frames the band it describes: four tracks, the last right-aligned,
-   so nothing trails off into 200px of void under a hard-edged band */
-.bandkey { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 28px; margin: 16px 0 0; padding: 0; list-style: none; }
-.bandkey li { display: flex; flex-direction: column; align-items: flex-start; }
-.bandkey li:last-child { align-items: flex-end; text-align: right; }
-.bandkey .lbl { display: flex; align-items: center; gap: 8px; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
-.bandkey .sw { flex: 0 0 13px; width: 13px; height: 13px; }
-.bandkey .cnt { display: inline-block; margin-top: auto; padding-top: 8px; font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.1; letter-spacing: -.02em; }
-.nb { white-space: nowrap; }
-.hero .action { margin: 30px 0 0; padding-top: 14px; border-top: 1px solid var(--line-2); font-size: 15.5px; color: var(--ink-2); max-width: 44rem; }
-.hero .action b { color: var(--ink); font-weight: 600; }
+/* ── chapter heads: findable while scrolling ─────────────────────────────── */
+section + section { margin-top: clamp(40px, 4vw, 64px); }
+h2.sec, .sec-head h2 { display: flex; align-items: center; gap: var(--s4); margin: 0 0 var(--s4); font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3vw, var(--t7)); letter-spacing: -.025em; line-height: 1.02; }
+h2.sec::before, .sec-head h2::before { content: ""; flex: none; width: 4px; align-self: stretch; min-height: 1.1em; background: var(--un); }
+.sec-head.inv h2::before { background: var(--inv); }
+.sec-head.btr h2::before { background: var(--btr); }
+.sec-head.fin h2::before { background: var(--fin); }
+.sec-head.warn h2::before { background: var(--warn); }
 
-/* figures: every displayed number is a link to its census key or receipt.
-   Mono keeps hashes, ids, dates and paths aligned; at display size its comma
-   takes a full cell and "1,428" reads as "1 , 4 2 8", so a DISPLAY figure
-   uses the text face with tabular numerals and carries its link as a border
-   (body already sets font-variant-numeric: tabular-nums). */
-a.fig { font-family: var(--f-m); font-weight: 500; color: var(--ink); text-decoration-color: var(--acc); text-decoration-thickness: 1px; }
-a.fig:hover { color: var(--acc-ink); }
-/* a DISPLAY figure is engraved: mono, tabular, tracked open, and it carries
-   its link as an amber underline rather than a browser rule */
+/* ── the figure band: the finding, at reading distance ───────────────────── */
+/* Their hero figures: the display voice, heavy and tight, the first one in
+   the treaty blue, each one a door to the receipt it rests on. */
+.hero-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); justify-content: start; gap: var(--s3) var(--s7); margin: var(--s3) 0 0; padding-top: var(--s5); border-top: 1px solid var(--rule-strong); }
+.hero-figs > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.hero-figs dd { margin: 0; font: 800 clamp(34px, 3.4vw, 48px)/.95 var(--font-display); letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.hero-figs div:first-child dd { color: var(--un-ink); }
+.hero-figs dt { font-size: var(--t1); line-height: 1.35; color: var(--ink-3); }
+
+/* figures: every displayed number is a door to its census key or receipt.
+   The number as set, with a dotted underline that says it opens. */
+a.fig { display: inline; padding: 0; color: inherit; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; border-radius: 2px; text-decoration: underline dotted; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; text-decoration-thickness: 1px; transition: text-decoration-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+a.fig:hover { text-decoration-color: var(--un-ink); color: var(--un-ink); }
+a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
+/* a DISPLAY figure: the display voice, set at reading distance */
 .bandkey .cnt, .wstep .figrow a.fig, .voids .figrow a.fig, .cardfigs a.fig {
-  font-family: var(--f-m); font-weight: 500; font-variant-numeric: tabular-nums;
-  letter-spacing: -.01em; color: var(--ink);
-  text-decoration: none; border-bottom: 1px solid var(--acc);
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em; line-height: .95;
+  color: var(--ink); text-decoration-color: var(--rule-strong);
 }
-.bandkey .cnt:hover, .wstep .figrow a.fig:hover, .voids .figrow a.fig:hover, .cardfigs a.fig:hover { border-bottom-width: 2px; }
 
-/* state chips — the four-state vocabulary, rendered in its materials */
-.chip { display: inline-block; font: 500 12.5px/1 var(--f-m); padding: 4px 8px; border-radius: var(--r); vertical-align: 1px; }
-.chip-observed { background-image: var(--mtl-chip-groove), var(--mtl-chip); color: var(--ink-inv); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .35), 0 2px 6px rgba(0, 0, 0, .6); }
-.chip-pledged { background-color: var(--gls-fill); background-image: var(--gls-glare); color: var(--st-pledged); border: 1.5px dashed var(--st-pledged); box-shadow: var(--gls-edge); }
-/* the hatch stays at full strength — a scrim over the whole plate destroyed
-   the material the chip exists to show (3.14:1 down to 1.30:1). The word
-   instead gets its own opaque inline plate, so both read. */
-.chip-unknown { position: relative; isolation: isolate; z-index: 0; background-image: var(--st-unknown-hatch); color: var(--ink); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .6); border: 1px solid var(--ink-3); padding: 5px 9px; }
-.chip-unknown::before { content: ""; position: absolute; inset: 3px; z-index: -1; background: var(--bg); border-radius: 1px; }
-.chip-absent { background-image: var(--void-face); color: var(--void-ink); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
-.reason { color: var(--ink-2); font-size: var(--t-sm); }
+/* ── Evidence tokens: material stands for state ───────────────────────────
+   Theirs, rule for rule: a raised bevelled disc for what was read, the
+   pledge hue filled back at 22% for a promise, a dashed socket for unknown,
+   a sunken socket with its inner shadow for absent. */
+.state-token, .chip-state { display: inline-flex; align-items: center; gap: 7px; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
+/* a key swatch is the mark it describes, at 9px: a read mark is FILLED in
+   the treaty hue, a pledge is that hue at a quarter, unknown is the dashed
+   socket, absent is the socket filled and sunk */
+.sw, .state-token i { display: inline-block; width: 10px; height: 10px; flex-shrink: 0; border: 1px solid var(--un); border-radius: 50%; background: var(--un); }
+.sw-pledged, .state-token.pledged i { border-color: var(--un); background: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); }
+.sw-unknown, .state-token.unknown i { border: 1px dashed var(--dial-socket); background: none; }
+.sw-absent, .state-token.absent i { border-color: var(--dial-absent); background: var(--dial-absent); box-shadow: var(--shadow-well); }
 
-/* completeness strip: segmented, counts only, no aggregate percentage, no gauge */
-.stripsec { margin: 0 0 44px; }
-.stripsec h2 { font-size: 1.05rem; font-family: var(--f-t); font-weight: 600; color: var(--ink-2); margin: 0 0 10px; }
-.strip { display: flex; gap: 3px; height: 26px; }
+/* the chips our rows carry, in the same four materials */
+.chip { display: inline-flex; align-items: center; gap: var(--s2); padding: 4px 9px; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--paper-raised); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
+.chip-observed { border-color: var(--un); background: color-mix(in srgb, var(--un) 10%, var(--paper-raised)); color: var(--un-ink); }
+.chip-pledged { border-color: var(--rule-strong); background: var(--paper-raised); color: var(--ink-3); }
+.chip-unknown { border-style: dashed; border-color: var(--dial-socket); background: none; color: var(--ink-3); }
+.chip-absent { border-color: var(--dial-absent); background: var(--dial-absent); color: var(--paper-raised); box-shadow: var(--shadow-well); }
+.reason { color: var(--ink-2); font-size: var(--t2); }
+
+/* ── the four-state band: one segment per state, in its own material ─────
+   Their filings grid: a read mark is FILLED in the hue of what it is, an
+   on-file-but-unread one is the same hue dashed on paper, an absent one is a
+   sunken cell. A fill is never swapped for an outline of the same colour —
+   that is the difference between established and not. */
+.worldband { display: flex; gap: 2px; height: clamp(54px, 7vw, 78px); margin: var(--s5) 0 0; }
+.worldband .seg { min-width: 0; }
+.worldband .seg-absent, .worldband .seg-pledged, .worldband .seg-zero { flex: 0 0 28px; }
+.strip { display: flex; gap: 2px; height: 26px; }
 .strip .seg { min-width: 0; }
-/* segment paint is shared by the big strip, the world-ledger ministrip, the
-   hero band and the legend swatches — one material per state everywhere.
-   On the big band the metal also carries plate seams every 38px, so a 900px
-   run of it is a row of machined plates rather than one flat slab. */
-.seg-observed, .sw-observed { background-image: var(--mtl-lit), var(--mtl-sheen), var(--mtl-groove), var(--mtl-face); box-shadow: var(--mtl-edge); }
-.worldband .seg-observed, .strip .seg-observed { background-image: var(--mtl-seam), var(--mtl-lit), var(--mtl-sheen), var(--mtl-groove), var(--mtl-face); }
-.seg-pledged, .sw-pledged { background-color: var(--gls-fill); background-image: var(--gls-glare); border: 1.5px dashed var(--st-pledged); box-shadow: var(--gls-edge); }
-.seg-unknown, .sw-unknown { background-image: var(--st-unknown-hatch); box-shadow: var(--unv-hairline); }
-.seg-absent, .sw-absent { background-image: var(--void-face); border: 1px dotted var(--st-absent-line); box-shadow: var(--void-edge); }
-.seg-absent { flex: 0 0 26px; }
+.seg-observed { background: var(--un); }
+.seg-pledged { background: var(--paper-raised); box-shadow: inset 0 0 0 1.5px var(--un); }
+.seg-unknown { background: var(--paper-raised); box-shadow: inset 0 0 0 1px var(--rule-strong); background-image: var(--t-hatch-45); }
+.seg-absent { background: var(--paper-sunken); box-shadow: inset 0 0 0 1px var(--rule-strong), var(--shadow-well); flex: 0 0 26px; }
 .strip .seg-zero, .ministrip .seg-zero { flex: 0 0 14px; }
-.strip-key { display: flex; flex-wrap: wrap; gap: 6px 22px; list-style: none; margin: 10px 0 6px; padding: 0; font-size: 14.5px; color: var(--ink-2); }
-.strip-key .sw { width: 12px; height: 12px; display: inline-block; margin-right: 7px; vertical-align: -1px; }
-
-/* ledger table: hairlines, no cards */
-section + section { margin-top: 56px; }
-h2.sec { font-size: clamp(1.6rem, 2.8vw, 2.2rem); letter-spacing: -.022em; font-weight: 800; text-transform: uppercase; line-height: 1.02; margin: 0 0 16px; }
-/* relative: absolutely-positioned sr-only text inside a scrolled table must
-   resolve against the scroller, or it escapes the clip and the page itself
-   gains a horizontal scroll at phone widths.
-   The scroll shadow is the only affordance a macOS overlay scrollbar leaves:
-   without it a phone amputates the state column with nothing saying so. */
-.tablewrap {
-  overflow-x: auto; position: relative;
-  background:
-    linear-gradient(to right, var(--bg) 30%, rgba(11, 13, 15, 0)) left center / 44px 100% no-repeat,
-    linear-gradient(to left, var(--bg) 30%, rgba(11, 13, 15, 0)) right center / 44px 100% no-repeat,
-    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0)) left center / 16px 100% no-repeat,
-    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0)) right center / 16px 100% no-repeat;
-  background-attachment: local, local, scroll, scroll;
-}
-.table { width: 100%; border-collapse: collapse; font-size: 15px; }
-.table th { text-align: left; font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line-2); padding: 10px 12px 10px 0; white-space: nowrap; }
-.table td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-.table .num { text-align: right; white-space: nowrap; }
-.doc-title { font-weight: 600; }
-.rowmeta { margin: 4px 0 0; font-size: 13.5px; color: var(--ink-3); }
-
-/* refusal is first-class content, not an error style: a machined plate in
-   the void's own clay red, sunk into the ground, never a browser warning */
-.refusal { margin: 8px 0 0; padding: 12px 15px; border-left: 3px solid var(--void-line); background: linear-gradient(140deg, rgba(194, 69, 63, .10), rgba(194, 69, 63, .03)); font-size: 14.5px; color: var(--ink); max-width: 44rem; box-shadow: inset 0 0 0 1px rgba(194, 69, 63, .22); }
-.refusal .tag { font: 500 11.5px/1 var(--f-m); color: var(--void-ink); display: block; margin-bottom: 6px; letter-spacing: .18em; text-transform: uppercase; }
-
-/* world ledger: one row per country, a mini strip per row. Listing-only
-   countries (unknown hatch, explicit zeros) are the norm, not an error. */
-.cname { font-weight: 600; color: var(--ink); }
-.countries td { vertical-align: middle; }
-.statecell { min-width: 220px; }
 .ministrip { display: flex; gap: 2px; height: 12px; max-width: 240px; margin: 0 0 6px; }
 .ministrip .seg { min-width: 0; }
 .ministrip .seg-absent { flex: 0 0 12px; }
-.ministrip-key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; font-size: 13.5px; }
-.ministrip-key .sw { width: 9px; height: 9px; margin-right: 5px; }
+.ministrip-key, .strip-key { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); list-style: none; margin: var(--s3) 0 0; padding: 0; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
+.strip-key li, .ministrip-key li { display: inline-flex; align-items: center; gap: 7px; }
+.strip-key .sw, .ministrip-key .sw { margin-right: 0; }
+/* the band's key: the state in plain English, its count, and nothing else */
+.bandkey { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--s4) var(--s6); margin: var(--s4) 0 0; padding: 0; list-style: none; }
+.bandkey li { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.bandkey .lbl { display: inline-flex; align-items: center; gap: 7px; font: var(--t1) var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
+.bandkey .cnt { font: 800 clamp(28px, 2.8vw, 38px)/.95 var(--font-display); letter-spacing: -.03em; color: var(--ink); }
+.bandkey li:first-child .cnt { color: var(--un-ink); }
+.nb { white-space: nowrap; }
+.hero .action { margin: var(--s5) 0 0; padding-top: var(--s3); border-top: 1px solid var(--rule); font-size: var(--t3); color: var(--ink-2); max-width: 72ch; }
+.hero .action b { color: var(--ink); font-weight: 600; }
+.stripsec { margin: 0 0 var(--s7); }
+.stripsec h2 { font-family: var(--font-display); font-weight: 600; font-size: var(--t5); letter-spacing: -.02em; color: var(--ink); margin: 0 0 var(--s3); }
 
-/* the tray: 200 identical cases in one sunken frame — an argument you can
-   see, under the table that is the argument you can read */
-.tray { margin: 22px 0 0; padding: 18px 16px; background: linear-gradient(160deg, #15191D 0%, #0D1013 100%); box-shadow: inset 0 0 0 1px rgba(226, 236, 242, .08), inset 0 2px 22px rgba(0, 0, 0, .6); border-radius: var(--r); }
+/* ── rows and tables: hairlines, no cards ───────────────────────────────── */
+.tablewrap { overflow-x: auto; position: relative; }
+.table { width: 100%; border-collapse: collapse; font-size: var(--t2); }
+.table th { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule-strong); text-align: left; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); white-space: nowrap; }
+.table td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; color: var(--ink-2); }
+.table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.table tbody tr { transition: background var(--dur) var(--ease); }
+.table tbody tr:hover { background: var(--paper-sunken); }
+.doc-title { font-weight: 500; color: var(--ink); }
+.rowmeta { margin: 3px 0 0; font-size: var(--t1); color: var(--ink-4); }
+.cname { font-weight: 500; color: var(--ink); }
+.countries td { vertical-align: middle; }
+.statecell { min-width: 220px; }
+.census-src { font-size: var(--t2); color: var(--ink-3); margin: 0 0 var(--s3); }
+.table .ckey { font-family: var(--font-code); font-size: var(--t1); }
+
+/* refusal is first-class content, not an error style: the sentence quoted
+   whole, on the sheet, against the one rule that means failure */
+.refusal { margin: var(--s3) 0 0; padding: var(--s3) var(--s4); border-left: 2px solid var(--warn); background: var(--paper-sunken); font-size: var(--t2); line-height: 1.6; color: var(--ink-2); max-width: 72ch; }
+.refusal .tag { display: block; margin-bottom: 6px; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--warn); }
+
+/* ── the tray: every record at once ───────────────────────────────────────
+   Source family, so the ramp and the hatch — never an evidence hue. */
+.tray { margin: var(--s5) 0 0; padding: var(--s4); border: 1px solid var(--rule); background: var(--paper-raised); }
 .tray svg { display: block; width: 100%; height: auto; }
-.t-case { fill: #0A0C0E; stroke: var(--line-2); stroke-width: .7; }
-/* a pip is 4 units across: at that size a hatch is noise, so the void is an
-   explicitly machined empty cell — outlined, sunk, never a pale blank */
-/* the pip is the filled part of a case: amber is LIVE here, because a hashed
-   document is bytes this runtime actually holds — the same meaning amber
-   carries on the barrels and on the flow paths */
-.t-pip { fill: var(--acc); }
-.t-pip.t-listed { fill: #4A5257; stroke: var(--void-line); stroke-width: .7; }
-.tray a:hover .t-case, .tray a:focus-visible .t-case { stroke: var(--acc); stroke-width: 1.4; }
-.traykey { display: flex; flex-wrap: wrap; gap: 8px 26px; list-style: none; margin: 14px 0 0; padding: 0; font-size: var(--t-sm); color: var(--ink-2); }
-.traykey li { display: flex; align-items: center; gap: 8px; }
-.traykey .tsw { width: 12px; height: 12px; }
-.traykey .t-held { background: var(--acc); box-shadow: var(--live-glow); }
-.traykey .t-listed { background: #4A5257; border: 1px solid var(--void-line); }
-.traykey .t-case { background: #0A0C0E; border: 1px solid var(--line-2); }
+.t-case { fill: var(--paper); stroke: var(--rule-strong); stroke-width: .7; }
+.t-pip { fill: var(--src-a); }
+.t-pip.t-listed { fill: var(--paper); stroke: var(--rule-strong); stroke-width: .7; }
+.tray a:hover .t-case, .tray a:focus-visible .t-case { stroke: var(--un-ink); stroke-width: 1.4; }
+.traykey { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); list-style: none; margin: var(--s3) 0 0; padding: 0; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
+.traykey li { display: inline-flex; align-items: center; gap: 7px; }
+.traykey .tsw { width: 12px; height: 12px; border-radius: 2px; flex: none; }
+.traykey .t-held { background: var(--src-a); }
+.traykey .t-listed { background: var(--src-d), var(--paper-raised); border: 1px solid var(--rule-strong); }
+.traykey .t-case { background: var(--paper); border: 1px solid var(--rule-strong); }
 
-/* census */
-.census-src { font-size: 14px; color: var(--ink-3); margin: 0 0 12px; }
-.table .ckey { font-family: var(--f-m); font-size: 13.5px; }
-
-/* receipt page */
-.receipt { padding: clamp(32px, 5vw, 56px) 0 0; }
-/* a document's own title is quoted material: it keeps its case. The
-   engraved register is carried by the eyebrows and the rules around it. */
-.receipt h1 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); letter-spacing: -.028em; line-height: 1.05; margin: 0 0 6px; font-weight: 600; }
-.crumb { font-size: 14px; margin: 0 0 22px; }
-.receipt section + section { margin-top: 40px; }
-/* The receipt is the case-back of the instrument, not a sheet of paper: the
-   plates are raised a step on --paper, the section rules are hairlines in
-   --line-2, and every label is engraved mono microcaps. Legibility is carried
-   by --ink at 14.5:1 on --paper, --ink-2 at 7.57:1, --ink-3 at 5.29:1. */
-.rblock { border-top: 1px solid var(--line-2); padding: 16px 0 24px; max-width: 54rem; }
-.rblock h3, .rblock h2 { font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .24em; color: var(--acc); margin: 0 0 14px; text-transform: uppercase; }
-.quote { font-size: 1.15rem; margin: 0; max-width: 46em; }
-.quote .qtext { font-family: var(--f-m); font-size: .92em; background: var(--acc-soft); box-shadow: inset 0 0 0 1px rgba(255, 138, 61, .3); padding: 3px 7px; color: var(--ink); }
-/* the hash is the case-back: the chain's last machined plate */
-.hash { font-family: var(--f-m); font-size: var(--t-sm); word-break: break-all; margin: 0; background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 13px 15px; max-width: 44rem; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 2px 10px rgba(0, 0, 0, .5); }
-.void { border: 1px dotted var(--st-absent-line); background-image: var(--void-face); box-shadow: var(--void-edge); padding: 14px 16px; color: var(--void-ink); max-width: 44rem; }
-.facts { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 0; font-size: 15px; }
-.facts dt { color: var(--ink-3); font-size: 13.5px; padding-top: 2px; }
-.facts dd { margin: 0; overflow-wrap: anywhere; }
-.prov { margin: 0; padding-left: 1.1em; font-size: 14.5px; color: var(--ink-2); }
+/* ── the receipt: a document, ruled in hairlines ─────────────────────────── */
+.receipt { padding-block: clamp(28px, 4vw, 56px) 0; }
+.receipt h1 { margin: var(--s3) 0 var(--s3); font-family: var(--font-display); font-weight: 600; font-size: clamp(32px, 4.4vw, 54px); line-height: 1.02; letter-spacing: -.035em; }
+.crumb { font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); margin: 0 0 var(--s5); }
+.receipt section + section { margin-top: clamp(36px, 3.6vw, 56px); }
+.rblock { padding: var(--s4) 0 var(--s5); border-top: 1px solid var(--rule); max-width: 1080px; }
+.rblock h3, .rblock h2 { margin: 0 0 var(--s3); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
+/* the sentence a figure was read out of, quoted whole */
+.quote { margin: 0; max-width: 72ch; font-size: var(--t4); line-height: 1.7; color: var(--ink-2); border-left: 2px solid var(--un); padding-left: var(--s3); }
+.quote .qtext { color: var(--ink); }
+/* the hash: character-for-character, so the code face and nothing else */
+.hash { margin: 0; padding: var(--s3) var(--s4); border: 1px solid var(--rule); background: var(--paper-raised); border-radius: var(--radius); box-shadow: var(--shadow-1); font: var(--t1)/1.5 var(--font-code); color: var(--ink-2); word-break: break-all; max-width: 72ch; }
+/* a blank is drawn as the empty sheet it is, dashed, never hidden */
+.void, .placeholder { display: block; margin: var(--s3) 0; padding: var(--s3) var(--s4); border: 1px dashed var(--rule-strong); background: var(--paper-sunken); font-size: var(--t2); line-height: 1.6; color: var(--ink-2); max-width: 72ch; }
+.void { color: var(--warn); }
+.placeholder .tag { display: block; margin-bottom: 6px; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
+/* facts: a two-column list, the label in ink-3 and the value in tabular
+   figures, one hairline per row (their .rec-facts, as a plain <dl>) */
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0 var(--s5); margin: 0; font-size: var(--t2); }
+.facts > dt { padding: var(--s2) 0; border-bottom: 1px solid var(--rule); color: var(--ink-3); }
+.facts > dd { margin: 0; padding: var(--s2) 0; border-bottom: 1px solid var(--rule); color: var(--ink); overflow-wrap: anywhere; }
+.prov { margin: 0; padding-left: 1.1em; font-size: var(--t2); line-height: 1.6; color: var(--ink-2); }
 .prov li + li { margin-top: 6px; }
-button.copy { font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .14em; text-transform: uppercase; color: var(--acc); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 8px 12px; margin-top: 10px; cursor: pointer; transition: border-color .15s var(--ease), color .15s var(--ease); }
-button.copy:hover { border-color: var(--acc); color: var(--acc-ink); }
 
-/* demo path */
-.steps-list { list-style: none; counter-reset: step; margin: 0; padding: 0; max-width: 54rem; }
-.steps-list > li { counter-increment: step; border-top: 1px solid var(--line-2); padding: 18px 0 20px 56px; position: relative; }
-.steps-list > li::before { content: counter(step); position: absolute; left: 0; top: 16px; font: 500 15px/1 var(--f-m); color: var(--acc); border: 1px solid var(--line-2); border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center; background: var(--paper); }
-.steps-list h2 { font-size: 1.2rem; letter-spacing: -.01em; margin: 0 0 4px; }
-.steps-list p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
-.placeholder { border: 1px dotted var(--st-absent-line); background-image: var(--void-face); box-shadow: var(--void-edge); padding: 14px 16px; color: var(--ink-2); }
-.placeholder .tag { font: 500 11.5px/1 var(--f-m); letter-spacing: .04em; color: var(--ink-3); display: block; margin-bottom: 6px; }
+/* ── the ways out of a page, and the one control idiom ───────────────────── */
+button.copy, .cb-btn, .way { display: inline-flex; align-items: center; gap: var(--s2); min-height: 42px; padding: 0 var(--s4); border: 1px solid var(--rule-strong); border-radius: var(--radius); background: var(--paper-raised); font: 500 var(--t2) var(--font-sans); color: var(--ink-2); text-decoration: none; cursor: pointer; transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease), transform 120ms var(--out); }
+button.copy:hover, .cb-btn:hover, .way:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-1px); }
+.way.primary { background: var(--un-ink); border-color: var(--un-ink); color: var(--paper-raised); }
+.ways { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin: var(--s5) 0 0; }
 
-/* footer: as-of, build commit, honest maturity line (R16 / AD-11) */
-footer { margin-top: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); padding: 26px 0 48px; font-size: 14px; color: var(--ink-3); }
-footer p { margin: 0 0 6px; max-width: 60ch; }
-/* the comps' footer rail: the as-of line is the runtime's own heartbeat, so
-   it gets the breathing amber dot — the same amber the live barrels carry */
-footer p:first-child { display: flex; align-items: center; gap: 12px; font-family: var(--f-m); letter-spacing: .14em; text-transform: uppercase; font-size: var(--t-cap); color: var(--ink-2); }
-footer p:first-child::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 12px rgba(255, 138, 61, .9); animation: vc-breathe 2.6s ease-in-out infinite; }
-@keyframes vc-breathe { 0%, 100% { opacity: .30; } 50% { opacity: 1; } }
+/* ── the demo path: numbered steps, hairline rows ───────────────────────── */
+.steps-list { list-style: none; counter-reset: step; margin: var(--s4) 0 0; padding: 0; max-width: 1080px; border-top: 1px solid var(--rule); }
+.steps-list > li { counter-increment: step; position: relative; padding: var(--s4) 0 var(--s5) 56px; border-bottom: 1px solid var(--rule); }
+.steps-list > li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: calc(var(--s4) + 4px); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--un-ink); }
+.steps-list h2 { margin: 0 0 4px; font: 700 var(--t5)/1.2 var(--font-display); letter-spacing: -.02em; }
+.steps-list p { margin: 0; font-size: var(--t3); line-height: 1.6; color: var(--ink-2); }
 
-
-/* Below 768px the world-ledger row becomes a card: five columns in 358px cut
-   the four-state vocabulary off at the viewport edge with no scrollbar to say
-   so (macOS overlay scrollbars show nothing). Nothing is dropped — each cell
-   keeps its own label and the strip gets the full width. */
-@media (max-width: 767px) {
-  .countries thead { display: none; }
-  .countries tr { display: block; padding: 14px 0 16px; border-bottom: 1px solid var(--line); }
-  .countries td { display: flex; gap: 10px; align-items: baseline; border: 0; padding: 2px 0; text-align: left; }
-  .countries td[data-l]::before { content: attr(data-l); flex: 0 0 9.5rem; font-size: var(--t-xs); color: var(--ink-3); }
-  .countries td:first-child { font-size: 1.05rem; margin-bottom: 4px; }
-  .countries td.statecell { display: block; min-width: 0; margin-top: 8px; }
-  .countries td.statecell::before { display: block; margin-bottom: 6px; }
-  .countries .ministrip { max-width: none; height: 16px; }
-}
-
-@media (max-width: 720px) {
-  /* the bar wraps to its content here and stops being sticky, so the pinned
-     stages pin to the viewport edge instead of offsetting by a stale token */
-  .bar { position: static; }
-  .bar .wrap { height: auto; }
-  .facts { grid-template-columns: 1fr; gap: 2px 0; }
-  .facts dd { margin-bottom: 10px; }
-  .bar nav a { padding: 8px 6px; font-size: 14px; }
-  /* four nav items no longer fit beside the full mark on a phone: let the
-     bar wrap to its content instead of clipping at a fixed height */
-  .bar .wrap { height: auto; flex-wrap: wrap; row-gap: 0; padding-top: 10px; padding-bottom: 6px; }
-  .bar nav { margin-left: 0; flex-wrap: wrap; }
-  /* four key tracks do not fit beside a phone's gutter: the fourth state and
-     its figure were pushed off the page and took the whole document into
-     horizontal scroll. Two tracks, all four states on screen. */
-  .bandkey { grid-template-columns: repeat(2, 1fr); }
-  .bandkey li:last-child { align-items: flex-start; text-align: left; }
-}
-
-/* motion (frontend-prompts role 06, adapted): five motions on the whole
-   product, each ≤.6s, all dead under prefers-reduced-motion, and none ever
-   on a figure's value (no count-up anywhere). Motion follows the evidence
-   chain — value → document → hash:
-     1 · a figure on hover/focus lights the path to its evidence (.18s)
-     2 · a document/receipt link on hover, the same light (.18s)
-     3 · a receipt page gets one entrance that settles the hash block into
-         place (.45s, once) — the resting state IS the complete page; with
-         motion off (or CSS animation unsupported) nothing is missing
-     4·5 · the pre-existing nav and copy-button hovers (.15s, above) */
-a.fig { transition: background-color .18s var(--ease), text-decoration-thickness .18s var(--ease); }
-a.fig:hover, a.fig:focus-visible { background-color: var(--acc-soft); }
-.table a[data-receipt] { transition: background-color .18s var(--ease); }
-.table a[data-receipt]:hover { background-color: var(--acc-soft); }
-@keyframes settle { from { opacity: .25; transform: translateY(6px); } }
-.receipt #sha256 .hash, .receipt #sha256 .void { animation: settle .45s var(--ease); }
-
-/* ── FLIP: the case-back, the one gesture the product's own claim asks for ──
-   Ported from the predecessor's motion sheet (Motion.dc.html panel 05 /
-   Dial.dc.html footer: "click → BURST · flip → CASE-BACK (source · run time ·
-   checksum)"). Ours carries exactly that, and all three are already held:
-   the source document's URL, the build/as-of time, and the SHA-256 of the
-   fetched file. Turning the plate over to read its provenance is a gesture;
-   a paragraph is a paragraph.
+/* ── the case-back: the one gesture the product's own claim asks for ───────
    Progressive enhancement only: until the script marks the block ready both
    faces are ordinary stacked blocks, so with JavaScript off, and under
    prefers-reduced-motion, every fact is on the page with nothing hidden
    behind a transform that cannot run. */
-.caseback .cb-face { max-width: 44rem; }
-.cb-btn { font: 500 var(--t-cap)/1 var(--f-m); letter-spacing: .16em; text-transform: uppercase; color: var(--acc); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r); padding: 9px 13px; margin-top: 12px; cursor: pointer; transition: border-color .15s var(--ease), box-shadow .15s var(--ease); }
-.cb-btn:hover { border-color: var(--acc); box-shadow: 0 0 0 1px rgba(255, 138, 61, .3), 0 0 18px rgba(255, 138, 61, .18); }
-.caseback[data-flip-ready] { position: relative; perspective: 1400px; max-width: 44rem; }
-/* the back is the taller face, so it sets the plate's height and the front
-   is the one that floats over it: no magic min-height to drift out of date */
-.caseback[data-flip-ready] .cb-plate { position: relative; transform-style: preserve-3d; transition: transform .62s var(--out, cubic-bezier(.16, 1, .3, 1)); }
+.caseback .cb-face { max-width: 72ch; }
+.cb-btn { min-height: 36px; margin-top: var(--s3); font-size: var(--t1); }
+.caseback[data-flip-ready] { position: relative; perspective: 1400px; max-width: 72ch; }
+.caseback[data-flip-ready] .cb-plate { position: relative; transform-style: preserve-3d; transition: transform var(--dur-slow) var(--out); }
 .caseback[data-flip-ready][data-flipped] .cb-plate { transform: rotateY(180deg); }
 .caseback[data-flip-ready] .cb-face { backface-visibility: hidden; }
 .caseback[data-flip-ready] .cb-front { position: absolute; inset: 0; display: flex; align-items: center; }
 .caseback[data-flip-ready] .cb-front .hash { width: 100%; }
 .caseback[data-flip-ready] .cb-back { transform: rotateY(180deg); }
-/* the back of the plate, to the comps' spec (Motion.dc.html 05): a darker
-   face than the front, hairlined in amber, the source line amber, the run
-   time plain, the checksum engraved down into --ink-3 */
-.caseback .cb-back { border: 0; background: linear-gradient(146deg, #1B1F23, #0F1215); padding: 16px 18px; border-radius: var(--r); box-shadow: inset 0 0 0 1px rgba(255, 138, 61, .35), 0 8px 24px rgba(0, 0, 0, .6); }
+.caseback .cb-back { padding: var(--s4) var(--s5); border: 1px solid var(--rule); border-left: 4px solid var(--un); background: var(--paper-raised); box-shadow: var(--shadow-1); }
 .caseback .cb-back dl { margin: 0; }
-.caseback .cb-back dt { font: 500 var(--t-cap)/1.4 var(--f-m); letter-spacing: .22em; text-transform: uppercase; color: var(--acc); }
-.caseback .cb-back dd { margin: 2px 0 10px; font-family: var(--f-m); font-size: var(--t-xs); overflow-wrap: anywhere; }
+.caseback .cb-back dt { font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
+.caseback .cb-back dd { margin: 2px 0 var(--s3); font: var(--t1)/1.5 var(--font-code); color: var(--ink-2); overflow-wrap: anywhere; }
 .caseback .cb-back dd:last-child { margin-bottom: 0; }
-/* inside the case-back the checksum is engraved text, not a second plate */
-.caseback .cb-back .hash { background: none; border: 0; box-shadow: none; padding: 0; color: var(--ink-3); }
+.caseback .cb-back .hash { padding: 0; border: 0; background: none; box-shadow: none; color: var(--ink-3); }
 
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Below 768px the world-ledger row becomes a card: five columns in 358px
+     cut the four-state vocabulary off at the viewport edge with no scrollbar
+     to say so. Nothing is dropped — each cell keeps its own label. */
+  .countries thead { display: none; }
+  .countries tr { display: block; padding: 14px 0 16px; border-bottom: 1px solid var(--rule); }
+  .countries td { display: flex; gap: 10px; align-items: baseline; border: 0; padding: 2px 0; text-align: left; }
+  .countries td[data-l]::before { content: attr(data-l); flex: 0 0 9.5rem; font: var(--t0) var(--font-mono); color: var(--ink-4); }
+  .countries td:first-child { font-size: var(--t4); margin-bottom: 4px; }
+  .countries td.statecell { display: block; min-width: 0; margin-top: var(--s2); }
+  .countries td.statecell::before { display: block; margin-bottom: 6px; }
+  .countries .ministrip { max-width: none; height: 16px; }
+}
+@media (max-width: 720px) {
+  .bar { position: static; height: auto; }
+  .bar .wrap { height: auto; flex-wrap: wrap; gap: 10px 18px; padding-block: 12px; }
+  .bar nav { order: 1; flex-wrap: wrap; gap: 2px 18px; width: 100%; margin-left: 0; }
+  .facts { grid-template-columns: 1fr; }
+  .head h1 { font-size: clamp(34px, 11vw, 52px); }
+  .hero-figs { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--s3); }
+}
+
+/* ── motion: one vocabulary, and an off switch that covers it ───────────── */
+@keyframes riseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { opacity: .25; transform: translateY(6px); } }
+.receipt #sha256 .hash, .receipt #sha256 .void { animation: settle 320ms var(--out) both; }
 @media (prefers-reduced-motion: reduce) {
-  /* the delays matter as much as the durations: a staggered cascade lives
-     entirely in transition-delay, and leaving it armed means the setting
-     suppresses nothing on the stages */
+  /* the delays matter as much as the durations, and the instrument's loops
+     are INFINITE: a near-zero duration only makes an infinite loop spin
+     faster, so the iteration count is what actually stops them */
   *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
     transition-duration: .01ms !important; animation-duration: .01ms !important;
     transition-delay: 0s !important; animation-delay: 0s !important;
-    /* the instrument's loops (PULSE on the flow paths, TICK on the
-       escapement, the footer rail's breath) are INFINITE: a .01ms duration
-       only makes an infinite loop spin faster. The iteration count is what
-       actually stops them. */
     animation-iteration-count: 1 !important;
   }
-  .caseback[data-flip-ready] .cb-plate { transition: none !important; }
+}
+
+@media print {
+  body::after, .bar, .skip, footer { display: none !important; }
+  body { background: var(--paper-raised); }
+  .rblock, .steps-list > li, .tray { break-inside: avoid; }
 }

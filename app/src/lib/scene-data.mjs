@@ -39,21 +39,20 @@ export function sceneDataFor(view, entry) {
       index: `04.${i + 1}`,
     })),
     finance: { live: false },
+    // The payload carries COPY and COUNTS, never colour: each part's hue is
+    // the meaning it stands for, and mount-scene reads that off the mounted
+    // element where the generated tokens put it (docs/DESIGN.md). A palette
+    // carried in the data is a second canon waiting to drift.
     labels: {
-      // the instrument palette (app/src/styles/site.css): pearl for the
-      // shared chassis, glass blue for a promise, amber ONLY where something
-      // is live — here the hashed documents actually held — clay red for a
-      // void, steel grey for a part that was never read.
-      plate: { chip: SCENE_COPY.plateChip, title: SCENE_COPY.plateTitle, value: treatyLine(view) || view.country.name_en, color: '#C6D0D7' },
-      pledge: { chip: SCENE_COPY.pledgeChip, title: SCENE_COPY.pledgeTitle, value: SCENE_COPY.pledgeGhost, color: '#9FC3E0' },
+      plate: { chip: SCENE_COPY.plateChip, title: SCENE_COPY.plateTitle, value: treatyLine(view) || view.country.name_en },
+      pledge: { chip: SCENE_COPY.pledgeChip, title: SCENE_COPY.pledgeTitle, value: SCENE_COPY.pledgeGhost },
       inventory: {
         chip: SCENE_COPY.inventoryChip,
         title: SCENE_COPY.inventoryTitle,
         value: `${c.documents_with_bytes} hashed of ${c.documents_on_record} on record`,
-        color: '#FF8A3D',
       },
-      evidence: { chip: SCENE_COPY.evidenceChip, title: SCENE_COPY.evidenceTitle, value: SCENE_COPY.evidenceUnread, color: '#E0695F' },
-      finance: { chip: SCENE_COPY.financeChip, title: SCENE_COPY.financeTitle, value: SCENE_COPY.financeUnknown, color: '#8A949B' },
+      evidence: { chip: SCENE_COPY.evidenceChip, title: SCENE_COPY.evidenceTitle, value: SCENE_COPY.evidenceUnread },
+      finance: { chip: SCENE_COPY.financeChip, title: SCENE_COPY.financeTitle, value: SCENE_COPY.financeUnknown },
     },
   };
 }

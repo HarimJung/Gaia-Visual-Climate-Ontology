@@ -20,6 +20,21 @@ import { recordLayout, typesGeom, tilesGeom, stampBox } from '../lib/scene/recor
 const { view, counts, iso3 } = Astro.props;
 const W = 1000, H = 640;
 
+// The canon's six textures, in the order textures_record.csv carries them —
+// cross, dots, hatch-0, hatch-135, hatch-45, hatch-90 — as the path a .25
+// objectBoundingBox tile draws them at. A `dots` entry carries no path and is
+// drawn as the circle instead. A reason family takes the k-th tile, so the
+// swatch in the key below (stage.css .famkey .h0…h5) and the cells on the
+// stage are the same texture counted once.
+const TEXTURES = [
+  { d: 'M0,.25 L.25,0 M0,.5 L.5,0 M0,.125 L.25,.125' }, // cross: 45° over horizontal
+  { d: null },                                          // dots
+  { d: 'M0,.125 L.25,.125' },                           // hatch-0: horizontal
+  { d: 'M0,0 L.25,.25 M0,-.25 L.5,.25' },               // hatch-135: falling
+  { d: 'M0,.25 L.25,0 M0,.5 L.5,0' },                   // hatch-45: rising
+  { d: 'M.125,0 L.125,.25' },                           // hatch-90: vertical
+];
+
 // ── The data island: only what the stage needs to place a mark ──────────
 // Unknown-reason families: the distinct verbatim reasons on this record, in
 // row order. The hatch pattern is the family; the key below names each one.
@@ -99,32 +114,26 @@ const wrap = (s, n, lines = 3) => {
       <div class="r-frame">
       <svg viewBox={`0 0 ${W} ${H}`}>
         <defs>
-          {/* One hatch angle per recorded reason for an unknown: four
-              distinguishable textures turn "unknown" from a shrug into a
-              taxonomy the key below can name (predecessor world-stage HATCH).
-              Both pattern units are objectBoundingBox because the cells are
-              placed and sized by TRANSFORM (WebKit safety) — a user-space
-              tile would be multiplied by the cell's scale and render as one
-              enormous diagonal instead of a hatch. */}
-          {[
-            'M0,.25 L.25,0 M0,.5 L.5,0',
-            'M0,0 L.25,.25 M0,-.25 L.5,.25',
-            'M.125,0 L.125,.25',
-            'M0,.125 L.25,.125',
-          ].map((d, k) => (
-            <pattern id={`r-hatch-${k}`} width=".25" height=".25" patternUnits="objectBoundingBox" patternContentUnits="objectBoundingBox">
-              <rect width=".25" height=".25" fill="#1A2026"></rect>
-              <path d={d} stroke="var(--ink-3)" stroke-width=".07" fill="none"></path>
+          {/* reason-family → TEXTURE: the six tiles the canon declares
+              (engine/seed/platform/design/textures_record.csv), in its own
+              order, so "unknown" reads as a taxonomy with named families
+              rather than one shrug. These are the generated tiles' twins and
+              not a second canon: same two tokens, same angles, same
+              1.4-to-5 duty (.07 of a .25 tile) and the same dot radius.
+              They must be declared locally because these cells are placed AND
+              SIZED by transform (WebKit animates transforms, not geometry
+              attributes), and the generated defs' userSpaceOnUse tiles would
+              be multiplied by each cell's own scale and render as one
+              enormous diagonal. objectBoundingBox is the only unit that
+              survives that. */}
+          {TEXTURES.map((t, k) => (
+            <pattern id={`r-tex-${k}`} width=".25" height=".25" patternUnits="objectBoundingBox" patternContentUnits="objectBoundingBox">
+              <rect width=".25" height=".25" fill="var(--paper-sunken)"></rect>
+              {t.d
+                ? <path d={t.d} stroke="var(--ink-4)" stroke-width=".07" fill="none"></path>
+                : <circle cx=".125" cy=".125" r=".055" fill="var(--ink-4)"></circle>}
             </pattern>
           ))}
-          {/* observed = METAL. A flat pale fill is a colour; this is the same
-              machined pearl the band, the chips and the dial's barrels use,
-              so one material means one state everywhere in the product. */}
-          <linearGradient id="r-metal" x1="0" y1="0" x2=".55" y2="1">
-            <stop offset="0%" stop-color="#C6D0D7"></stop>
-            <stop offset="46%" stop-color="#9AA4AB"></stop>
-            <stop offset="100%" stop-color="#6B757C"></stop>
-          </linearGradient>
         </defs>
 
         {/* the plate the instrument is seated on: drawn first, under the
@@ -161,7 +170,7 @@ const wrap = (s, n, lines = 3) => {
             const word = cut(stateWord[r.state], fits(13, .5));
             return (
               <a href={`/receipt/${iso3}/${r.doc_id}/`} data-receipt={r.doc_id}>
-                <g data-stamp={r.doc_id} class="r-stamp off" style={`transform:translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px)`}>
+                <g data-stamp={r.doc_id} class={`r-stamp off ${r.state}`} style={`transform:translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px)`}>
                   <rect x="0" y="0" width={SW} height={SH} class={`r-card ${r.state}`} rx="4"></rect>
                   <text x="14" y="26" class="r-kind" style="font-size:12px">{kind}</text>
                   {lines.map((l, j) => (
@@ -277,7 +286,7 @@ const wrap = (s, n, lines = 3) => {
             <ul class="famkey">
               {fams.map((f, j) => (
                 <li>
-                  <span class={`hsw h${j % 4}`} aria-hidden="true" />
+                  <span class={`hsw h${j % TEXTURES.length}`} aria-hidden="true" />
                   <a class="reason" href={`/receipt/${iso3}/${f.doc_id}/#state`} data-receipt={f.doc_id}>“{f.reason}”</a>
                 </li>
               ))}

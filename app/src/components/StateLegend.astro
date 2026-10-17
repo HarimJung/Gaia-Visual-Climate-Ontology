@@ -7,19 +7,19 @@ const { counts } = Astro.props;
 
 <ul class="strip-key" style="margin-top:18px">
   <li>
-    <span class="sw sw-observed" aria-hidden="true"></span>observed — metal, machined solid:{' '}
+    <span class="sw sw-observed" aria-hidden="true"></span>observed — read:{' '}
     <a class="fig" data-census="states_observed" href="#census-states_observed">{counts.states_observed}</a>
   </li>
   <li>
-    <span class="sw sw-pledged" aria-hidden="true"></span>pledged — glass, outlined:{' '}
+    <span class="sw sw-pledged" aria-hidden="true"></span>pledged — pledged, not measured:{' '}
     <a class="fig" data-census="states_pledged" href="#census-states_pledged">{counts.states_pledged}</a>
   </li>
   <li>
-    <span class="sw sw-unknown" aria-hidden="true"></span>unknown — unverified: hairline + hatch, reason stays visible:{' '}
+    <span class="sw sw-unknown" aria-hidden="true"></span>unknown — on file, not read; the reason stays visible:{' '}
     <a class="fig" data-census="states_unknown" href="#census-states_unknown">{counts.states_unknown}</a>
   </li>
   <li>
-    <span class="sw sw-absent" aria-hidden="true"></span>absent — void, an empty socket:{' '}
+    <span class="sw sw-absent" aria-hidden="true"></span>absent — confirmed absent:{' '}
     <a class="fig" data-census="states_absent" href="#census-states_absent">{counts.states_absent}</a>
   </li>
 </ul>

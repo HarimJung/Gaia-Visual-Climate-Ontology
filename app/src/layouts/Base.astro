@@ -4,9 +4,18 @@
 // standing independence line, and the honest maturity line — on every page
 // (R16, AD-11).
 import '../styles/site.css';
+// The design canon, through the one codegen door it has (docs/DESIGN.md):
+// the six generated <pattern> tiles, inlined once per page so every SVG on it
+// can fill from url(#t-hatch-45) and friends, and the token file the browser
+// bar's colour is read from — never a hex written here.
+// engine/gates/r11-front-imports.mjs permits exactly these two generated
+// design artefacts and nothing else under engine/.
+import textures from '../../../engine/generated/textures.svg?raw';
+import designTokens from '../../../engine/generated/design-tokens.json';
 import { census, engineViews } from '../lib/data.mjs';
 
 const PRODUCT = 'National Climate Record Runtime';
+const paper = designTokens.tokens['colour.paper'].value;
 const { title, description } = Astro.props;
 // A placeholder is not provenance: the commit row renders only when a build
 // actually supplied one, on a product whose whole pitch is provenance.
@@ -17,25 +26,17 @@ const canonical = new URL(Astro.url.pathname, 'https://harimjung.github.io/Gaia-
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0B0D0F" />
+    <meta name="theme-color" content={paper} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {/* Archivo is the comps' display face (Main.dc.html, Dial.dc.html,
-        Motion.dc.html all load exactly this family). Pinned to the four
-        weights the kit uses; licensed OFL 1.1, recorded in data/licenses.csv
-        (archivo-google-fonts) and docs/LICENSES.md.
-        Behind it the stack falls back to the house kit's LOCALLY shipped
-        Hanken Grotesk, preloaded here: if fonts.googleapis.com never answers
-        the page is still set in a grotesque, not in a browser default. */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap"
-    />
+    {/* The canon's three faces (tokens_record.csv: type.display, type.sans,
+        type.code), all shipped from this repo under OFL 1.1 with their
+        licence texts beside them — nothing is fetched from a font CDN, so a
+        blocked third party cannot change what the page is set in. */}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/bricolage-grotesque-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/hanken-grotesk-400.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/ibm-plex-mono-500.woff2" crossorigin />
     <title>{title === PRODUCT ? title : `${title} — ${PRODUCT}`}</title>
@@ -48,6 +49,9 @@ const canonical = new URL(Astro.url.pathname, 'https://harimjung.github.io/Gaia-
     <meta property="og:url" content={canonical.href} />
   </head>
   <body>
+    {/* the generated texture tiles: one <defs> per page, so reason-family
+        marks fill from the canon's own patterns and never a local copy */}
+    <Fragment set:html={textures.replace('<svg ', '<svg class="vc-textures" ')} />
     <a class="skip" href="#main">Skip to content</a>
     <header class="bar">
       <div class="wrap">

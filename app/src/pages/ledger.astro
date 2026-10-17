@@ -11,13 +11,14 @@ import { views, census, countryEntry, fmt, REPO_BLOB } from '../lib/data.mjs';
 
 const ledgerUrl = REPO_BLOB + census.ledger;
 
-// The four-state material band: the same vocabulary StateLegend spells out,
-// keyed to the census rows on this page. The story cover carries it too.
+// The four-state band: the same vocabulary StateLegend spells out, named in
+// plain English — a legend states the reading, never the token behind it —
+// and keyed to the census rows on this page. The story cover carries it too.
 const band = [
-  { state: 'observed', material: 'metal', key: 'states_observed' },
-  { state: 'pledged', material: 'glass', key: 'states_pledged' },
-  { state: 'unknown', material: 'unverified', key: 'states_unknown' },
-  { state: 'absent', material: 'void', key: 'states_absent' },
+  { state: 'observed', reading: 'read', key: 'states_observed' },
+  { state: 'pledged', reading: 'pledged, not measured', key: 'states_pledged' },
+  { state: 'unknown', reading: 'on file, not read', key: 'states_unknown' },
+  { state: 'absent', reading: 'confirmed absent', key: 'states_absent' },
 ];
 
 // ── The tray: one identical case per country, filled a pip per document ──
@@ -77,7 +78,7 @@ const trayUnits = entries.map(({ v, e }, i) => {
           <li>
             <span class="lbl">
               <span class={`sw sw-${s.state}`} aria-hidden="true" />
-              {s.state} · {s.material}
+              {s.state} · {s.reading}
             </span>
             <a class="fig cnt" data-census={s.key} href={`#census-${s.key}`}>
               {fmt(census.counts[s.key])}
@@ -98,8 +99,9 @@ const trayUnits = entries.map(({ v, e }, i) => {
       how full the inside is"), re-driven by counts this runtime holds and
       with its one dishonest part removed. The comp filled each unit with a
       conic sweep, which is a gauge; ours fills a cell per document, so every
-      unit is COUNTABLE: one pip per document on record, a machined pip where
-      the bytes are held and hashed, a hatched pip where they are not. Every
+      unit is COUNTABLE: one pip per document on record, a solid pip where
+      the bytes are held and hashed, an outlined empty cell where they are
+      not — source family, so the ramp and the hatch, never a hue. Every
       case links to the country's own ledger row. Server-rendered: the tray is
       as complete with JavaScript off as with it. */}
   <section aria-labelledby="tray-h" id="tray">

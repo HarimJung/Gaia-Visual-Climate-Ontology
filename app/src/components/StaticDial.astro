@@ -1,35 +1,37 @@
 ---
-// The dial as flat SVG: no three.js, no client boundary. Ported from the
-// frozen predecessor (static-dial.tsx for the frame, Dial.dc.html and
-// Main.dc.html for the surfaces and devices — owner decision 2026-10-16) and
-// remapped onto this runtime's honest data. This is NOT a leftover: with
-// JavaScript off, with WebGL lost, or under a reduced-data browser, this IS
-// the instrument, so it carries every device the comps carry.
+// The dial as flat SVG: no three.js, no client boundary. The geometry is the
+// frozen predecessor's (static-dial.tsx for the frame, the comps for the
+// devices — owner decision 2026-10-16); the material is Visual Climate's own
+// light system, every value of it from engine/generated/design-tokens.css
+// through styles/scene.css. This is NOT a leftover: with JavaScript off, with
+// WebGL lost, or under a reduced-data browser, this IS the instrument, so it
+// carries every device the rich layer carries.
 //
 // Device by device, and the data behind each:
 //
 //   · ENGRAVED TICK BEZEL — a fine machined edge (decoration, no reading),
 //     plus one bold tick per document on record, each tick inked by that
 //     document's own state.
-//   · BARREL RING (Main.dc.html's forty barrels) — one barrel per document on
-//     record. LIVE = the bytes are held and hashed, lit amber. VOID = the
-//     document is on record and this runtime never held its bytes: a sunken,
-//     machined, empty socket in clay red. Every barrel is a link to that
-//     document's receipt.
-//   · AMBER FLOW PATHS + travelling spark (the PULSE motion) — one path from
-//     each live barrel into the escapement. It animates EVIDENCE MOVING INTO
-//     THE RECORD; it is never a number and it never counts up.
+//   · BARREL RING — one barrel per document on record. HELD = the bytes are
+//     held and hashed, so the barrel is the dial face carrying the treaty
+//     edge the canon binds to it. VOID = the document is on record and this
+//     runtime never held its bytes: a sunken well with the absent edge. No
+//     hue separates the states; the material does. Every barrel is a link to
+//     that document's receipt.
+//   · FLOW PATHS + travelling spark (the PULSE motion) — one path from each
+//     held barrel into the escapement. It animates EVIDENCE MOVING INTO THE
+//     RECORD; it is never a number and it never counts up.
 //   · CONCENTRIC HAIRLINE GUIDES and the PLEDGE GHOST RING — dashed, with its
 //     reason etched under the bezel, because no pledge figure was read from
 //     any filing.
-//   · COTES MAINPLATE — the comps' 112 degree Geneva stripe under a raking
-//     key light.
-//   · BTR SUBDIAL — the report's eight parts: a part this runtime has read
-//     seats a jewel, a pledged part a glass bore, an absent part a plugged
-//     void, and an unread part stays an empty machined bore, which is the
-//     thesis rather than a blank.
-//   · ESCAPEMENT — the TICK, the one permanent loop, with the single amber
-//     jewel at the point where evidence enters the record.
+//   · MAINPLATE — a raised paper face with a load-bearing rim.
+//   · BTR SUBDIAL — the report's eight parts, on the reporting axis, so a
+//     part this runtime has read seats a jewel in the reporting hue; a
+//     pledged part takes the dial track, an absent part a plugged well, and
+//     an unread part stays an empty bore hatched at the canon's unknown
+//     angle, which is the thesis rather than a blank.
+//   · ESCAPEMENT — the TICK, the one permanent loop, with the single jewel
+//     at the point where evidence enters the record.
 //   · SATELLITE on a dashed tether — a real case, not an illustration: a
 //     document on record whose bytes this runtime never held. It exists, it
 //     is addressed, it is not engaged. It carries that document's own title
@@ -39,12 +41,8 @@
 // The centre readout is two census figures inside their links (R6). No ratio,
 // no percentage, no gauge, no count-up anywhere on the dial.
 import { SOCKETS, SCENE_COPY } from '../lib/story-content.mjs';
-import { nextUid } from '../lib/derive.mjs';
 
 const { counts, href, onRecordHref = href, sockets = [], rows = [], iso3 = '' } = Astro.props;
-// every fragment id on this instance is suffixed, so three dials on one page
-// do not all paint from the first one's defs
-const U = nextUid();
 const C = 500;
 const pol = (r, deg) => [
   C + r * Math.cos(((deg - 90) * Math.PI) / 180),
@@ -142,60 +140,13 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
 {/* 1000 wide, 1072 tall: the ghost ring's reason is etched UNDER the bezel,
     not across its ticks */}
 <svg viewBox="0 0 1000 1072" class="static-dial" role="group" aria-label="Record dial">
-  <defs>
-    {/* côtes de Genève: the comp's 112° hairline pitch, re-tokened. The
-        mainplate is a surface, not a colour fill — it is what separates a
-        machined part from an extruded shape. */}
-    <pattern id={`dial-cotes-${U}`} width="15" height="15" patternUnits="userSpaceOnUse" patternTransform="rotate(112)">
-      <rect width="15" height="15" fill="rgba(0,0,0,.24)"></rect>
-      <rect width="15" height="3" fill="rgba(255,255,255,.085)"></rect>
-    </pattern>
-    <radialGradient id={`dial-halo-${U}`} cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FF8A3D" stop-opacity=".10"></stop>
-      <stop offset="38%" stop-color="#FF8A3D" stop-opacity=".03"></stop>
-      <stop offset="66%" stop-color="#FF8A3D" stop-opacity="0"></stop>
-    </radialGradient>
-    {/* the comp's own mainplate stops (Main.dc.html) */}
-    <radialGradient id={`dial-plate-${U}`} cx="32%" cy="24%" r="78%">
-      <stop offset="0%" stop-color="#6E777E"></stop>
-      <stop offset="46%" stop-color="#4A5257"></stop>
-      <stop offset="100%" stop-color="#2C3236"></stop>
-    </radialGradient>
-    <radialGradient id={`dial-escape-${U}`} cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FF8A3D" stop-opacity=".34"></stop>
-      <stop offset="52%" stop-color="#FF8A3D" stop-opacity=".06"></stop>
-      <stop offset="72%" stop-color="#FF8A3D" stop-opacity="0"></stop>
-    </radialGradient>
-    <radialGradient id={`dial-metal-r-${U}`} cx="34%" cy="28%" r="78%">
-      <stop offset="0%" stop-color="#838C93"></stop>
-      <stop offset="52%" stop-color="#525A60"></stop>
-      <stop offset="100%" stop-color="#2F353A"></stop>
-    </radialGradient>
-    <radialGradient id={`dial-live-${U}`} cx="34%" cy="28%" r="78%">
-      <stop offset="0%" stop-color="#FFD3AA"></stop>
-      <stop offset="42%" stop-color="#FF9B52"></stop>
-      <stop offset="100%" stop-color="#A85B22"></stop>
-    </radialGradient>
-    <radialGradient id={`dial-jewel-${U}`} cx="34%" cy="28%" r="78%">
-      <stop offset="0%" stop-color="#E3EBF1"></stop>
-      <stop offset="46%" stop-color="#9FB0BC"></stop>
-      <stop offset="100%" stop-color="#5A6B78"></stop>
-    </radialGradient>
-    {/* the raking key light, 118° as in every comp */}
-    <linearGradient id={`dial-rake-${U}`} x1="0" y1="0" x2="1" y2="1" gradientTransform="rotate(-28 .5 .5)">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity=".16"></stop>
-      <stop offset="26%" stop-color="#ffffff" stop-opacity=".02"></stop>
-      <stop offset="46%" stop-color="#ffffff" stop-opacity="0"></stop>
-      <stop offset="100%" stop-color="#000000" stop-opacity=".20"></stop>
-    </linearGradient>
-    <filter id={`dial-amber-${U}`} x="-120%" y="-120%" width="340%" height="340%">
-      <feGaussianBlur stdDeviation="7" result="b"></feGaussianBlur>
-      <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-    </filter>
-  </defs>
-
-  {/* the ambient halo the comps put behind the plate */}
-  <circle cx={C} cy={C} r="500" fill={`url(#dial-halo-${U})`}></circle>
+  {/* No <defs> here. Every surface on this dial is a token: the plate is
+      --paper-raised, the bezel --rule-strong, the barrels and bores the four
+      state materials, and the unread bore fills from the canon's own
+      generated tile, url(#t-hatch-45), inlined once per page by the layout
+      (engine/generated/textures.svg). The dark instrument study's gradients,
+      its cotes pattern, its raking light and its amber glow filter are gone:
+      they model a near-black studio, and there is none. */}
 
   {/* ── engraved tick bezel: a fine machined edge, then one bold tick per
          document on record, inked by that document's own state ─────── */}
@@ -212,11 +163,11 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
   {/* the black case ring: what the bezel's ticks are cut into */}
   <circle cx={C} cy={C} r={CASE} class="d-case"></circle>
 
-  {/* ── côtes mainplate under the raking key light ───────────────────── */}
-  <circle cx={C} cy={C} r={PLATE} class="d-plate" fill={`url(#dial-plate-${U})`}></circle>
-  <circle cx={C} cy={C} r={PLATE} fill={`url(#dial-cotes-${U})`}></circle>
-  <circle cx={C} cy={C} r={PLATE} fill={`url(#dial-rake-${U})`}></circle>
+  {/* ── the mainplate: a raised paper face with a load-bearing rim ────── */}
+  <circle cx={C} cy={C} r={PLATE} class="d-plate"></circle>
   <circle cx={C} cy={C} r={PLATE} class="d-plate-edge"></circle>
+  {/* the bevel: the lit top edge a turned rim catches */}
+  <circle cx={C} cy={C} r={PLATE - 3} class="d-bevel"></circle>
 
   {/* ── concentric hairline guides (the comps' machining lines) ──────── */}
   <circle cx={C} cy={C} r={G1} class="d-hair"></circle>
@@ -244,8 +195,6 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
             cy={f1(b.y)}
             r={b.r}
             class={`d-barrel ${b.live ? 'live' : 'void'}`}
-            fill={b.live ? `url(#dial-live-${U})` : undefined}
-            filter={b.live ? `url(#dial-amber-${U})` : undefined}
           ></circle>
         </a>
       ) : (
@@ -262,7 +211,6 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
       cy={f1(b.y)}
       r="15"
       class={`d-bore ${b.state === 'observed' ? 'jewel' : b.state === 'pledged' ? 'glass' : b.state === 'absent' ? 'plug' : 'bore'}`}
-      fill={b.state === 'observed' ? `url(#dial-jewel-${U})` : undefined}
     ></circle>
   ))}
   {bores.map((b) => (
@@ -272,7 +220,6 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
   ))}
 
   {/* ── the escapement: TICK, the only permanent loop ────────────────── */}
-  <circle cx={C} cy={C} r="216" fill={`url(#dial-escape-${U})`} aria-hidden="true"></circle>
   <g class="d-escape" aria-hidden="true">
     {teeth.map((a) => {
       const [x0, y0] = pol(166, a);
@@ -280,8 +227,8 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
       return <line x1={f1(x0)} y1={f1(y0)} x2={f1(x1)} y2={f1(y1)}></line>;
     })}
   </g>
-  {/* the single amber jewel: where evidence enters the record */}
-  <circle cx={C} cy={C - 178} r="13" class="d-jewel-core" fill={`url(#dial-live-${U})`} filter={`url(#dial-amber-${U})`} aria-hidden="true"></circle>
+  {/* the single jewel, in the reporting hue: where evidence enters the record */}
+  <circle cx={C} cy={C - 178} r="13" class="d-jewel-core" aria-hidden="true"></circle>
 
   {/* ── centre readout: two census figures, each inside its link (R6) ── */}
   <text x={C} y="452" text-anchor="middle" class="d-cap">DOCUMENTS HASHED</text>

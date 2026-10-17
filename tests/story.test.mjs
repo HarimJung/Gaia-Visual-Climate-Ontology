@@ -158,11 +158,12 @@ test('the dial carries the comps\' devices, and each one carries real data', { s
   const bold = svg.slice(svg.indexOf('class="d-bold"'));
   const ticks = [...bold.slice(0, bold.indexOf('</g>')).matchAll(/<line /g)].length;
   assert.equal(ticks, anyCountry.rows.length, 'one bold bezel tick per document on record');
-  // the cotes mainplate, the escapement and the pledge ghost ring are present
-  assert.match(svg, /patternTransform="rotate\(112\)"/, 'the mainplate is cut in 112-degree cotes');
+  // the mainplate, its turned bevel, the escapement and the ghost ring
+  assert.match(svg, /class="d-plate"/, 'the mainplate is a real face on the sheet');
+  assert.match(svg, /class="d-bevel"/, 'and it is turned at the rim, so it reads as an object');
   assert.match(svg, /class="d-escape"/, 'the escapement is on the plate');
   assert.match(svg, /class="d-ghost"/, 'the unread pledge path is a ghost ring');
-  // PULSE: one amber flow path per LIVE barrel, and never one more. The flow
+  // PULSE: one flow path per HELD barrel, and never one more. The flow
   // animates evidence moving; it is not allowed to become a reading.
   const sparks = [...svg.matchAll(/class="d-spark"/g)].length;
   const held = anyCountry.rows.filter((r) => r.sha256).length;
@@ -250,15 +251,23 @@ test('source families: a family with nothing on this record keeps its wheel, wit
   assert.deepEqual(sourceFamilies([{ doc_type: 'treaty-status_list' }], []).map((f) => f.label), ['treaty status list']);
 });
 
-test('hero movement: the comp is ported, not re-approximated, and its loops are stoppable', () => {
+test('hero movement: the comp\'s geometry is ported and its loops are stoppable', () => {
   const css = readFileSync(join(repo, 'app', 'src', 'styles', 'movement.css'), 'utf8');
-  // the provenance of a lifted design is part of the deliverable
+  // the provenance of a lifted geometry is part of the deliverable
   assert.match(css, /references\/Main\/Main\.dc\.html/, 'the ported sheet names the comp it came from');
-  // the comp's own declarations, spot-checked where an approximation would show
-  assert.match(css, /radial-gradient\(120% 90% at 78% 8%, #1E242A 0%, #12161A 42%, #0A0C0E 100%\)/, 'the ground is the comp\'s own');
-  assert.match(css, /repeating-linear-gradient\(112deg/, 'the mainplate is cut in the comp\'s 112-degree cotes');
-  assert.match(css, /repeating-conic-gradient\(from 0deg, rgba\(190, 202, 210, \.55\) 0deg 0\.28deg/, 'the engraved tick bezel is the comp\'s');
-  assert.match(css, /radial-gradient\(circle at 34% 28%, #FFD3AA 0%, #FF9B52 42%, #A85B22 100%\)/, 'the lit barrel is the comp\'s sphere');
+  // the comp's own pixel geometry, driven through ONE ratio, spot-checked
+  // where an approximation would show
+  assert.match(css, /--u: calc\(min\(100vw, 1760px\) \/ 1440\)/, 'one ratio drives the comp\'s pixel geometry');
+  for (const n of [618, 800, 712, 672, 588, 470, 286, 132, 108]) {
+    assert.match(css, new RegExp(`calc\\(${n} \\* var\\(--u\\)\\)`), `the comp's own ${n} is kept`);
+  }
+  // the SURFACE is not the comp's: the dark study is gone and every value
+  // comes from the shipped product's tokens, which the gate holds at zero
+  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b/, 'the hero spends no colour literal');
+  assert.match(css, /var\(--dial-face\)/, 'the plate is a real face');
+  assert.match(css, /var\(--shadow-2\)/, 'and it is seated on the sheet');
+  assert.match(css, /\.vc-barrel\.vc-live \{ background: var\(--un\)/,
+    'a document whose bytes are held is FILLED in the treaty hue, never outlined in it');
   // the keyframes are renamed, because scene.css already owns vc-flow/vc-tick
   // globally and a second definition would re-point the SVG dial's animation
   assert.match(css, /@keyframes vcm-(flow|tick|breathe)/, 'the ported keyframes carry their own names');
@@ -308,28 +317,32 @@ test('the case-back carries source, run time and checksum, and is complete witho
   assert.doesNotMatch(html, /data-flip-ready/, 'the flip is added at runtime, never baked in');
 });
 
-test('the instrument world is declared once, with its faces and its AA math', () => {
+test('the shipped product\'s stylesheet is ported, and the seed matches it', () => {
   const css = readFileSync(join(repo, 'app', 'src', 'styles', 'site.css'), 'utf8');
-  const root = css.slice(css.indexOf(':root'), css.indexOf('* { box-sizing'));
-  // the dark ground and the one amber, in the tokens the whole product reads
-  assert.match(root, /--bg:\s*#0B0D0F/i, 'the ground is the near-black of the comps');
-  assert.match(root, /--acc:\s*#FF8A3D/i, 'the accent is the comps\' amber');
-  assert.match(root, /color-scheme:\s*dark/, 'the page declares its scheme');
-  // Archivo is pinned AND falls back to a face this repo actually ships
-  assert.match(root, /--f-d:\s*"Archivo"[^;]*"Hanken Grotesk"/, 'the display stack falls back to a shipped grotesque');
-  assert.match(root, /--f-m:\s*"IBM Plex Mono"/, 'figures stay in the mono');
+  // one canon, reached one way: the generated token file, imported
+  assert.match(css, /@import '\.\.\/\.\.\/\.\.\/engine\/generated\/design-tokens\.css';/,
+    'the root sheet imports the generated tokens');
+  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b(?![^(]*\))/, 'and declares no colour of its own');
+  // the three faces are the canon's, shipped from this repo — a blocked font
+  // host cannot change what the page is set in
+  assert.match(css, /--font-display: var\(--type-display\)/, 'the display voice is the canon\'s');
+  assert.match(css, /--font-sans: var\(--type-sans\)/, 'the reading voice is the canon\'s');
+  assert.match(css, /--font-code: var\(--type-code\)/, 'and the code voice is the canon\'s');
+  // their system deliberately points the mono name at the sans: one family
+  // sets the voice, the reading and the figures
+  assert.match(css, /--font-mono: var\(--font-sans\)/, 'figures are set in the reading face, as the product sets them');
   const base = readFileSync(join(repo, 'app', 'src', 'layouts', 'Base.astro'), 'utf8');
-  assert.match(base, /family=Archivo:wght@400;500;600;800/, 'the family is pinned to its four weights');
-  // a new face is a new licence row, or the build is lying about its deps
+  assert.doesNotMatch(base, /fonts\.googleapis\.com|fonts\.gstatic\.com/, 'no face is fetched from a third party');
+  assert.match(base, /bricolage-grotesque-latin\.woff2/, 'the display face is preloaded from this repo');
+  // a shipped face is a licence row, or the build is lying about its deps
   const licenses = readFileSync(join(repo, 'data', 'licenses.csv'), 'utf8');
-  assert.match(licenses, /^archivo-google-fonts,/m, 'Archivo has a row in the licence register');
-  assert.match(licenses, /Open Font License 1\.1[\s\S]{0,400}Archivo|Archivo[\s\S]{0,400}Open Font License 1\.1/,
-    'the row states the licence');
-  assert.match(readFileSync(join(repo, 'docs', 'LICENSES.md'), 'utf8'), /## Archivo \(Google Fonts\)/,
+  assert.match(licenses, /^vc-kit-fonts,/m, 'the shipped webfonts have a row in the licence register');
+  assert.match(licenses, /Bricolage Grotesque/, 'and the row names the display face');
+  assert.match(readFileSync(join(repo, 'docs', 'LICENSES.md'), 'utf8'), /Bricolage Grotesque/,
     'and the register prose carries it too');
-  // the AA numbers are stated, not assumed
-  assert.match(css, /17\.28:1/, 'the body ink contrast on the ground is written down');
-  assert.match(css, /8\.31:1/, 'the accent contrast on the ground is written down');
+  // the page is a printed sheet: the sheen and the tooth, both from the seed
+  assert.match(css, /var\(--sheen\)/, 'the sheet carries the loupe lamp over it');
+  assert.match(css, /mix-blend-mode: var\(--grain-blend\)/, 'and its own tooth');
 });
 
 test('reduced motion stops the instrument\'s permanent loops, not just their speed', () => {

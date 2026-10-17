@@ -4,11 +4,42 @@
 
 The tokens are Visual Climate's own. Every value in
 `engine/seed/platform/design/tokens_record.csv` was read from the running
-product at `visual-climate.visualclimate.workers.dev` on 2026-10-17: the
-colours, the type faces, the type and space scales, the radius, the gutter, the
-durations, the easings and the two shadows. Nothing in the seed was chosen
-here. The textures and the axis→channel map in the same directory were read
-from the same product's rendered patterns and its existing use of colour.
+product at `visual-climate.visualclimate.workers.dev`: the colours, the type
+faces, the type and space scales, the radius, the gutter, the durations, the
+easings and the shadows. Nothing in the seed was chosen here. The textures and
+the axis→channel map in the same directory were read from the same product's
+rendered patterns and its existing use of colour.
+
+On 2026-10-17 the app's stylesheets were **ported wholesale** from that
+product's own source (`app/globals.css` and `app/styles/{chrome,story,stage,
+record,world,figure}.css`, owner authorisation for a direct visual port on the
+record, 2026-10-16). Their rule bodies, gradients, shadows, radii, spacing and
+type rules were carried across as written; what changed is only which selector
+a body hangs on, where our markup differs from theirs.
+
+The seed is the canon and it must MATCH that stylesheet. Where their CSS
+carried a value the seed did not — the sheen over the sheet and its
+transparent stop, the paper's grain (blend and opacity), the selection wash,
+the coverage map's own sheet, the bevel a raised part is turned with, and the
+inner shadow a socket is cut with — that value entered the seed **at their
+number**, not approximated:
+
+| Token | Value | What it is for |
+|---|---|---|
+| `colour.sheen` / `colour.sheen-fade` | `#fffefa` / `#f4f2ec00` | the loupe lamp over the sheet, and the stop it fades to |
+| `colour.wash` | `#e9ecf7` | selection and the quietest pale ground |
+| `colour.map-ground` | `#f4f9fc` | the coverage map's own sheet |
+| `dial.bevel-hi` / `dial.bevel-lo` | `#fdfdfb` / `#a8b0b4` | the lit and turned-away edges of a raised part |
+| `grain.blend` / `grain.opacity` | `multiply` / `.1` | the printed sheet's tooth |
+| `shadow.well` | `inset 1px 1px 2px #0e1a1f80` | the well a sunken socket sits in |
+
+`dur` was corrected from `.3s` to the product's own `200ms` by the same rule.
+If the two ever disagree again, their stylesheet wins and the seed is
+corrected — never the other way round.
+
+Translucency is written as `color-mix(in srgb, var(--token) N%, transparent)`,
+which is how their own sheet writes it. It is never a four-channel literal, so
+depth costs the gate nothing.
 
 The seed is the canon, the same way `engine/seed/platform/` is the canon for
 the vocabulary. The app reads only what codegen emits:
@@ -32,6 +63,14 @@ into a dash: `dial.face` → `--dial-face`, `dur.quick` → `--dur-quick`,
 Each axis of the record is read through exactly one visual channel, and no
 channel serves two axes. A reader who learns that hue means meaning never has
 to unlearn it on the next screen.
+
+A mark that carries an established reading is **filled** in the colour of what
+it means; the same mark **outlined** in the same colour is that meaning on
+file and not yet established. That is the shipped product's own filings grid —
+solid for read, dashed for on-file-but-unread — and it is why a fill is never
+swapped for an outline to make a screen quieter: the two say different things.
+A legend names the state in plain English and its count. The token behind a
+swatch is never shown in the interface.
 
 | Axis | Channel | Tokens |
 |---|---|---|
@@ -90,11 +129,21 @@ Four canon fills are light and bounded: `meaning.un` (2.93:1) by
 `neutral.src-a` (5.96:1). `#009edb` is the UN's own blue and `#bf8b2e` the
 product's gold; they are brand canon and do not move.
 
-One rule ships written in full and switched off behind a named constant in the
-gate, because the material it judges is not ready: `no-literal-colour`, since
-the app still carries its pre-canon palette inline. It prints a per-file tally
-of what it would refuse on every run, so the count falls visibly as the pages
-are re-skinned. Flipping the constant is the whole change.
+### no-literal-colour, live
+
+`no-literal-colour` is **on**, and the app is at zero. It scans every `.css`
+and `.astro` file under `app/src` — stylesheet, style block, SVG presentation
+attribute and frontmatter alike — and refuses a hex or an `rgb`/`hsl`
+function anywhere, comments included. The only things that are not a colour
+choice are `currentColor`, `transparent` and `none`; the only exempt region is
+an SVG `<defs>`/`<pattern>` block, which carries a generated texture tile's
+own literals.
+
+Nothing else is exempt, and no file is. A value the seed does not carry is a
+row to add to the seed. That rule is what forced the surface tokens above into
+existence: the first re-skin reached zero by deleting the product's depth,
+which was the wrong answer to the right rule. The rule was right; the token
+set was incomplete.
 
 ## Adding a source family
 
