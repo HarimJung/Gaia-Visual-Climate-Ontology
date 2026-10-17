@@ -1,0 +1,727 @@
+{
+  "tokens": {
+    "colour.paper": {
+      "value": "#fbfbfa",
+      "group": "colour",
+      "note": "page ground",
+      "css_var": "--paper",
+      "border_token": ""
+    },
+    "colour.paper-raised": {
+      "value": "#ffffff",
+      "group": "colour",
+      "note": "raised surface: card and document faces",
+      "css_var": "--paper-raised",
+      "border_token": ""
+    },
+    "colour.paper-sunken": {
+      "value": "#f1f1ee",
+      "group": "colour",
+      "note": "sunken surface: wells and texture fill",
+      "css_var": "--paper-sunken",
+      "border_token": ""
+    },
+    "colour.ink": {
+      "value": "#111417",
+      "group": "colour",
+      "note": "primary text",
+      "css_var": "--ink",
+      "border_token": ""
+    },
+    "colour.ink-2": {
+      "value": "#333c43",
+      "group": "colour",
+      "note": "secondary prose",
+      "css_var": "--ink-2",
+      "border_token": ""
+    },
+    "colour.ink-3": {
+      "value": "#5d666d",
+      "group": "colour",
+      "note": "captions and eyebrows",
+      "css_var": "--ink-3",
+      "border_token": ""
+    },
+    "colour.ink-4": {
+      "value": "#6c737a",
+      "group": "colour",
+      "note": "texture ink and the quietest mark",
+      "css_var": "--ink-4",
+      "border_token": ""
+    },
+    "colour.rule": {
+      "value": "#e3e3df",
+      "group": "colour",
+      "note": "hairline rule",
+      "css_var": "--rule",
+      "border_token": ""
+    },
+    "colour.rule-strong": {
+      "value": "#c8c8c2",
+      "group": "colour",
+      "note": "load-bearing border",
+      "css_var": "--rule-strong",
+      "border_token": ""
+    },
+    "meaning.un": {
+      "value": "#009edb",
+      "group": "meaning",
+      "note": "treaty & pledge",
+      "css_var": "--un",
+      "border_token": "meaning.un-ink"
+    },
+    "meaning.un-ink": {
+      "value": "#00689d",
+      "group": "meaning",
+      "note": "treaty & pledge — label weight on paper",
+      "css_var": "--un-ink",
+      "border_token": ""
+    },
+    "meaning.inv": {
+      "value": "#3f7e44",
+      "group": "meaning",
+      "note": "measured",
+      "css_var": "--inv",
+      "border_token": ""
+    },
+    "meaning.btr": {
+      "value": "#dd1367",
+      "group": "meaning",
+      "note": "reporting",
+      "css_var": "--btr",
+      "border_token": ""
+    },
+    "meaning.fin": {
+      "value": "#bf8b2e",
+      "group": "meaning",
+      "note": "finance",
+      "css_var": "--fin",
+      "border_token": "meaning.fin-ink"
+    },
+    "meaning.fin-ink": {
+      "value": "#8a6208",
+      "group": "meaning",
+      "note": "finance — label weight on paper",
+      "css_var": "--fin-ink",
+      "border_token": ""
+    },
+    "meaning.warn": {
+      "value": "#b23a26",
+      "group": "meaning",
+      "note": "failure",
+      "css_var": "--warn",
+      "border_token": ""
+    },
+    "neutral.src-a": {
+      "value": "#4d6477",
+      "group": "neutral",
+      "note": "source-family ramp step 1 of 3",
+      "css_var": "--src-a",
+      "border_token": ""
+    },
+    "neutral.src-b": {
+      "value": "#8fa3b3",
+      "group": "neutral",
+      "note": "source-family ramp step 2 of 3",
+      "css_var": "--src-b",
+      "border_token": "neutral.src-a"
+    },
+    "neutral.src-c": {
+      "value": "#c2ced8",
+      "group": "neutral",
+      "note": "source-family ramp step 3 of 3",
+      "css_var": "--src-c",
+      "border_token": "neutral.src-a"
+    },
+    "quant.q1": {
+      "value": "#a1dafc",
+      "group": "quant",
+      "note": "sequential quantity ramp step 1 of 4",
+      "css_var": "--q1",
+      "border_token": ""
+    },
+    "quant.q2": {
+      "value": "#3aa7dd",
+      "group": "quant",
+      "note": "sequential quantity ramp step 2 of 4",
+      "css_var": "--q2",
+      "border_token": ""
+    },
+    "quant.q3": {
+      "value": "#0072a8",
+      "group": "quant",
+      "note": "sequential quantity ramp step 3 of 4",
+      "css_var": "--q3",
+      "border_token": ""
+    },
+    "quant.q4": {
+      "value": "#004066",
+      "group": "quant",
+      "note": "sequential quantity ramp step 4 of 4",
+      "css_var": "--q4",
+      "border_token": ""
+    },
+    "dial.face": {
+      "value": "#f1f1ee",
+      "group": "dial",
+      "note": "dial face material",
+      "css_var": "--dial-face",
+      "border_token": ""
+    },
+    "dial.edge": {
+      "value": "#cfcfc8",
+      "group": "dial",
+      "note": "dial bezel edge",
+      "css_var": "--dial-edge",
+      "border_token": ""
+    },
+    "dial.track": {
+      "value": "#e2e2dc",
+      "group": "dial",
+      "note": "dial track material",
+      "css_var": "--dial-track",
+      "border_token": ""
+    },
+    "dial.absent": {
+      "value": "#4c565c",
+      "group": "dial",
+      "note": "absent mark on the dial",
+      "css_var": "--dial-absent",
+      "border_token": ""
+    },
+    "dial.socket": {
+      "value": "#a294b3",
+      "group": "dial",
+      "note": "dial socket",
+      "css_var": "--dial-socket",
+      "border_token": ""
+    },
+    "dial.engrave": {
+      "value": "#4c565c",
+      "group": "dial",
+      "note": "engraved line on the dial",
+      "css_var": "--dial-engrave",
+      "border_token": ""
+    },
+    "type.display": {
+      "value": "\"Bricolage Grotesque\"",
+      "group": "type",
+      "note": "display face",
+      "css_var": "--type-display",
+      "border_token": ""
+    },
+    "type.sans": {
+      "value": "\"Hanken Grotesk\"",
+      "group": "type",
+      "note": "body face",
+      "css_var": "--type-sans",
+      "border_token": ""
+    },
+    "type.code": {
+      "value": "\"IBM Plex Mono\"",
+      "group": "type",
+      "note": "figures hashes and ids",
+      "css_var": "--type-code",
+      "border_token": ""
+    },
+    "size.t0": {
+      "value": "12px",
+      "group": "size",
+      "note": "type scale step 0",
+      "css_var": "--t0",
+      "border_token": ""
+    },
+    "size.t1": {
+      "value": "13px",
+      "group": "size",
+      "note": "type scale step 1",
+      "css_var": "--t1",
+      "border_token": ""
+    },
+    "size.t2": {
+      "value": "14px",
+      "group": "size",
+      "note": "type scale step 2",
+      "css_var": "--t2",
+      "border_token": ""
+    },
+    "size.t3": {
+      "value": "15px",
+      "group": "size",
+      "note": "type scale step 3",
+      "css_var": "--t3",
+      "border_token": ""
+    },
+    "size.t4": {
+      "value": "17px",
+      "group": "size",
+      "note": "type scale step 4",
+      "css_var": "--t4",
+      "border_token": ""
+    },
+    "size.t5": {
+      "value": "21px",
+      "group": "size",
+      "note": "type scale step 5",
+      "css_var": "--t5",
+      "border_token": ""
+    },
+    "size.t6": {
+      "value": "27px",
+      "group": "size",
+      "note": "type scale step 6",
+      "css_var": "--t6",
+      "border_token": ""
+    },
+    "size.t7": {
+      "value": "34px",
+      "group": "size",
+      "note": "type scale step 7",
+      "css_var": "--t7",
+      "border_token": ""
+    },
+    "size.t8": {
+      "value": "48px",
+      "group": "size",
+      "note": "type scale step 8",
+      "css_var": "--t8",
+      "border_token": ""
+    },
+    "size.t9": {
+      "value": "64px",
+      "group": "size",
+      "note": "type scale step 9",
+      "css_var": "--t9",
+      "border_token": ""
+    },
+    "space.s1": {
+      "value": "4px",
+      "group": "space",
+      "note": "spacing step 1",
+      "css_var": "--s1",
+      "border_token": ""
+    },
+    "space.s2": {
+      "value": "8px",
+      "group": "space",
+      "note": "spacing step 2",
+      "css_var": "--s2",
+      "border_token": ""
+    },
+    "space.s3": {
+      "value": "12px",
+      "group": "space",
+      "note": "spacing step 3",
+      "css_var": "--s3",
+      "border_token": ""
+    },
+    "space.s4": {
+      "value": "16px",
+      "group": "space",
+      "note": "spacing step 4",
+      "css_var": "--s4",
+      "border_token": ""
+    },
+    "space.s5": {
+      "value": "24px",
+      "group": "space",
+      "note": "spacing step 5",
+      "css_var": "--s5",
+      "border_token": ""
+    },
+    "space.s6": {
+      "value": "32px",
+      "group": "space",
+      "note": "spacing step 6",
+      "css_var": "--s6",
+      "border_token": ""
+    },
+    "space.s7": {
+      "value": "48px",
+      "group": "space",
+      "note": "spacing step 7",
+      "css_var": "--s7",
+      "border_token": ""
+    },
+    "space.s8": {
+      "value": "64px",
+      "group": "space",
+      "note": "spacing step 8",
+      "css_var": "--s8",
+      "border_token": ""
+    },
+    "space.s9": {
+      "value": "96px",
+      "group": "space",
+      "note": "spacing step 9",
+      "css_var": "--s9",
+      "border_token": ""
+    },
+    "radius": {
+      "value": "3px",
+      "group": "radius",
+      "note": "corner radius",
+      "css_var": "--radius",
+      "border_token": ""
+    },
+    "gutter": {
+      "value": "clamp(20px,3.4vw,54px)",
+      "group": "gutter",
+      "note": "page gutter",
+      "css_var": "--gutter",
+      "border_token": ""
+    },
+    "dur.quick": {
+      "value": ".18s",
+      "group": "dur",
+      "note": "quick duration",
+      "css_var": "--dur-quick",
+      "border_token": ""
+    },
+    "dur": {
+      "value": ".3s",
+      "group": "dur",
+      "note": "standard duration",
+      "css_var": "--dur",
+      "border_token": ""
+    },
+    "dur.slow": {
+      "value": ".64s",
+      "group": "dur",
+      "note": "slow duration",
+      "css_var": "--dur-slow",
+      "border_token": ""
+    },
+    "ease": {
+      "value": "cubic-bezier(.2,0,0,1)",
+      "group": "ease",
+      "note": "standard easing",
+      "css_var": "--ease",
+      "border_token": ""
+    },
+    "ease.out": {
+      "value": "cubic-bezier(.16,1,.3,1)",
+      "group": "ease",
+      "note": "decelerated easing",
+      "css_var": "--out",
+      "border_token": ""
+    },
+    "ease.emph": {
+      "value": "cubic-bezier(.05,.7,.1,1)",
+      "group": "ease",
+      "note": "emphasised easing",
+      "css_var": "--emph",
+      "border_token": ""
+    },
+    "ease.in": {
+      "value": "cubic-bezier(.3,0,1,1)",
+      "group": "ease",
+      "note": "accelerated easing",
+      "css_var": "--in",
+      "border_token": ""
+    },
+    "shadow.1": {
+      "value": "0 1px 2px #2a271f0d,0 8px 22px #2a271f0a",
+      "group": "shadow",
+      "note": "raised one step",
+      "css_var": "--shadow-1",
+      "border_token": ""
+    },
+    "shadow.2": {
+      "value": "0 2px 6px #2a271f10,0 20px 46px #2a271f14",
+      "group": "shadow",
+      "note": "raised two steps",
+      "css_var": "--shadow-2",
+      "border_token": ""
+    }
+  },
+  "css_vars": {
+    "--paper": "#fbfbfa",
+    "--paper-raised": "#ffffff",
+    "--paper-sunken": "#f1f1ee",
+    "--ink": "#111417",
+    "--ink-2": "#333c43",
+    "--ink-3": "#5d666d",
+    "--ink-4": "#6c737a",
+    "--rule": "#e3e3df",
+    "--rule-strong": "#c8c8c2",
+    "--un": "#009edb",
+    "--un-ink": "#00689d",
+    "--inv": "#3f7e44",
+    "--btr": "#dd1367",
+    "--fin": "#bf8b2e",
+    "--fin-ink": "#8a6208",
+    "--warn": "#b23a26",
+    "--src-a": "#4d6477",
+    "--src-b": "#8fa3b3",
+    "--src-c": "#c2ced8",
+    "--q1": "#a1dafc",
+    "--q2": "#3aa7dd",
+    "--q3": "#0072a8",
+    "--q4": "#004066",
+    "--dial-face": "#f1f1ee",
+    "--dial-edge": "#cfcfc8",
+    "--dial-track": "#e2e2dc",
+    "--dial-absent": "#4c565c",
+    "--dial-socket": "#a294b3",
+    "--dial-engrave": "#4c565c",
+    "--type-display": "\"Bricolage Grotesque\"",
+    "--type-sans": "\"Hanken Grotesk\"",
+    "--type-code": "\"IBM Plex Mono\"",
+    "--t0": "12px",
+    "--t1": "13px",
+    "--t2": "14px",
+    "--t3": "15px",
+    "--t4": "17px",
+    "--t5": "21px",
+    "--t6": "27px",
+    "--t7": "34px",
+    "--t8": "48px",
+    "--t9": "64px",
+    "--s1": "4px",
+    "--s2": "8px",
+    "--s3": "12px",
+    "--s4": "16px",
+    "--s5": "24px",
+    "--s6": "32px",
+    "--s7": "48px",
+    "--s8": "64px",
+    "--s9": "96px",
+    "--radius": "3px",
+    "--gutter": "clamp(20px,3.4vw,54px)",
+    "--dur-quick": ".18s",
+    "--dur": ".3s",
+    "--dur-slow": ".64s",
+    "--ease": "cubic-bezier(.2,0,0,1)",
+    "--out": "cubic-bezier(.16,1,.3,1)",
+    "--emph": "cubic-bezier(.05,.7,.1,1)",
+    "--in": "cubic-bezier(.3,0,1,1)",
+    "--shadow-1": "0 1px 2px #2a271f0d,0 8px 22px #2a271f0a",
+    "--shadow-2": "0 2px 6px #2a271f10,0 20px 46px #2a271f14"
+  },
+  "channels": {
+    "epistemic-state": {
+      "channel": "material",
+      "token_prefix": "dial.",
+      "note": "the dial's own material: face track absent mark"
+    },
+    "meaning": {
+      "channel": "colour",
+      "token_prefix": "meaning.",
+      "note": "the five meanings; nothing else may spend hue"
+    },
+    "source-family": {
+      "channel": "neutral-ramp",
+      "token_prefix": "neutral.",
+      "note": "three greyscale-separable steps"
+    },
+    "reason-family": {
+      "channel": "texture",
+      "token_prefix": "texture.",
+      "note": "one pattern per reason; see textures_record.csv"
+    },
+    "quantity": {
+      "channel": "sequential",
+      "token_prefix": "quant.",
+      "note": "four-step sequential ramp"
+    },
+    "doc-type": {
+      "channel": "glyph",
+      "token_prefix": "glyph.",
+      "note": "glyph set; no token carries it yet"
+    },
+    "anchor-kind": {
+      "channel": "receipt-structure",
+      "token_prefix": "",
+      "note": "structural: the receipt's own layout carries it"
+    },
+    "authoring-verdict": {
+      "channel": "border-stamp",
+      "token_prefix": "",
+      "note": "structural: a stamped border carries it"
+    },
+    "staleness": {
+      "channel": "desaturation",
+      "token_prefix": "",
+      "note": "derived: applied to whichever colour the row already has"
+    }
+  },
+  "encodings": {
+    "epistemic-state": {
+      "absent": {
+        "tokens": [
+          "dial.absent"
+        ],
+        "note": "the absent mark cut into the face"
+      },
+      "observed": {
+        "tokens": [
+          "dial.face",
+          "meaning.un"
+        ],
+        "note": "face material carrying the treaty hue"
+      },
+      "pledged": {
+        "tokens": [
+          "dial.track"
+        ],
+        "note": "track material: pledged but not measured"
+      },
+      "unknown": {
+        "tokens": [
+          "texture.hatch-45"
+        ],
+        "note": "unknown is hatched never coloured"
+      }
+    },
+    "reason-family": {
+      "bracketed": {
+        "tokens": [
+          "texture.cross"
+        ],
+        "note": ""
+      },
+      "bytes-not-held": {
+        "tokens": [
+          "texture.hatch-135"
+        ],
+        "note": ""
+      },
+      "depositary-blank": {
+        "tokens": [
+          "texture.hatch-0"
+        ],
+        "note": ""
+      },
+      "document-refused": {
+        "tokens": [
+          "texture.dots"
+        ],
+        "note": ""
+      },
+      "listing-silent": {
+        "tokens": [
+          "texture.hatch-45"
+        ],
+        "note": ""
+      },
+      "name-unresolved": {
+        "tokens": [
+          "texture.hatch-90"
+        ],
+        "note": ""
+      }
+    },
+    "source-family": {
+      "btr-listing": {
+        "tokens": [
+          "texture.hatch-135"
+        ],
+        "note": "listing-only: no bytes held"
+      },
+      "country-seed": {
+        "tokens": [
+          "colour.paper-raised"
+        ],
+        "note": "hand-seeded: the paper itself"
+      },
+      "ndc-docs": {
+        "tokens": [
+          "neutral.src-b"
+        ],
+        "note": ""
+      },
+      "registry": {
+        "tokens": [
+          "neutral.src-c"
+        ],
+        "note": ""
+      },
+      "untc": {
+        "tokens": [
+          "neutral.src-a"
+        ],
+        "note": ""
+      }
+    }
+  },
+  "textures": {
+    "cross": {
+      "kind": "cross",
+      "angles": [
+        "45",
+        "0"
+      ],
+      "stroke": "1.4",
+      "tile": 5,
+      "fill_token": "colour.paper-sunken",
+      "fill": "#f1f1ee",
+      "ink_token": "colour.ink-4",
+      "ink": "#6c737a",
+      "note": "two sets crossed: 45 degrees over horizontal"
+    },
+    "dots": {
+      "kind": "dots",
+      "angles": [],
+      "stroke": "1.1",
+      "tile": 5,
+      "fill_token": "colour.paper-sunken",
+      "fill": "#f1f1ee",
+      "ink_token": "colour.ink-4",
+      "ink": "#6c737a",
+      "note": "stroke column carries the dot radius for this kind"
+    },
+    "hatch-0": {
+      "kind": "hatch",
+      "angles": [
+        "0"
+      ],
+      "stroke": "1.4",
+      "tile": 5,
+      "fill_token": "colour.paper-sunken",
+      "fill": "#f1f1ee",
+      "ink_token": "colour.ink-4",
+      "ink": "#6c737a",
+      "note": "horizontal"
+    },
+    "hatch-135": {
+      "kind": "hatch",
+      "angles": [
+        "135"
+      ],
+      "stroke": "1.4",
+      "tile": 5,
+      "fill_token": "colour.paper-sunken",
+      "fill": "#f1f1ee",
+      "ink_token": "colour.ink-4",
+      "ink": "#6c737a",
+      "note": "diagonal falling"
+    },
+    "hatch-45": {
+      "kind": "hatch",
+      "angles": [
+        "45"
+      ],
+      "stroke": "1.4",
+      "tile": 5,
+      "fill_token": "colour.paper-sunken",
+      "fill": "#f1f1ee",
+      "ink_token": "colour.ink-4",
+      "ink": "#6c737a",
+      "note": "diagonal rising"
+    },
+    "hatch-90": {
+      "kind": "hatch",
+      "angles": [
+        "90"
+      ],
+      "stroke": "1.4",
+      "tile": 5,
+      "fill_token": "colour.paper-sunken",
+      "fill": "#f1f1ee",
+      "ink_token": "colour.ink-4",
+      "ink": "#6c737a",
+      "note": "vertical"
+    }
+  }
+}

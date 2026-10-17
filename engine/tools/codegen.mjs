@@ -1,5 +1,8 @@
-// Codegen (R2): engine/seed/platform/ CSVs → engine/generated/vocab.ts + vocab.json.
-// The seed is the single vocabulary canon; this output is deterministic (stable order).
+// Codegen (R2): engine/seed/platform/ CSVs → engine/generated/vocab.ts + vocab.json,
+// and engine/seed/platform/design/ CSVs → engine/generated/design-tokens.css,
+// design-tokens.json, textures.svg.
+// The seed is the single vocabulary and design canon; this output is
+// deterministic (stable order).
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,6 +18,10 @@ const seedDir = join(root, 'engine', 'seed', 'platform');
 
 if (!existsSync(seedDir)) {
   console.error('no platform seed');
+  process.exit(2);
+}
+if (!existsSync(join(seedDir, 'design'))) {
+  console.error('no design seed');
   process.exit(2);
 }
 
@@ -46,9 +53,8 @@ const FAMILIES = {
   },
 };
 
-function readFamily(name) {
-  const { prefix, header } = FAMILIES[name];
-  const dir = join(seedDir, name);
+function readSeedCSVs(dirName, prefix, header) {
+  const dir = join(seedDir, dirName);
   if (!existsSync(dir)) return [];
   const rows = [];
   const files = readdirSync(dir).filter((f) => f.startsWith(prefix) && f.endsWith('.csv')).sort();
@@ -57,14 +63,19 @@ function readFamily(name) {
     try {
       parsed = parseCSVWithHeader(readFileSync(join(dir, f), 'utf8'));
     } catch (e) {
-      die(`${name}/${f}: ${e.message}`);
+      die(`${dirName}/${f}: ${e.message}`);
     }
     if (parsed.header.join(',') !== header) {
-      die(`${name}/${f}: header must be exactly "${header}"`);
+      die(`${dirName}/${f}: header must be exactly "${header}"`);
     }
     rows.push(...parsed.rows);
   }
   return rows;
+}
+
+function readFamily(name) {
+  const { prefix, header } = FAMILIES[name];
+  return readSeedCSVs(name, prefix, header);
 }
 
 function codes(rows, col, kind) {
@@ -154,11 +165,181 @@ const json =
     2,
   ) + '\n';
 
+// ---------------------------------------------------------------- design canon
+// One axis, one channel (docs/DESIGN.md). The seed carries the tokens, the
+// axis→channel map, the entity→token bindings and the texture patterns; the
+// three generated files below are the only shape the app is allowed to read.
+const DESIGN = {
+  tokens: { prefix: 'tokens_', header: 'token,value,group,note,border_token' },
+  channels: { prefix: 'channels_', header: 'axis,channel,token_prefix,note' },
+  encodings: { prefix: 'encodings_', header: 'axis,entity,token,note' },
+  textures: { prefix: 'textures_', header: 'texture,kind,angle,stroke,note' },
+};
+const design = Object.fromEntries(
+  Object.entries(DESIGN).map(([k, { prefix, header }]) => [k, readSeedCSVs('design', prefix, header)]),
+);
+
+// Custom-property names are derived from the token id, never chosen: these
+// groups spend their prefix on the id's meaning only, so the prefix is dropped
+// (colour.paper -> --paper, ease.out -> --out); every other prefix is kept with
+// the dot turned into a dash (dial.face -> --dial-face, dur.quick -> --dur-quick).
+const DROP_PREFIX = new Set(['colour', 'meaning', 'neutral', 'quant', 'size', 'space', 'ease']);
+function cssVar(id) {
+  const dot = id.indexOf('.');
+  const body = dot !== -1 && DROP_PREFIX.has(id.slice(0, dot)) ? id.slice(dot + 1) : id;
+  return `--${body.replace(/\./g, '-')}`;
+}
+
+const tokens = {};
+const cssVars = {};
+for (const r of design.tokens) {
+  if (!r.token) die('design/tokens row with an empty token id');
+  if (tokens[r.token]) die(`duplicate design token "${r.token}"`);
+  if (!r.value) die(`design token "${r.token}" has no value`);
+  if (!/^[a-z0-9-]+$/.test(r.group)) die(`design token "${r.token}" group "${r.group}" is not a lower-case slug`);
+  const v = cssVar(r.token);
+  if (cssVars[v] !== undefined) die(`design tokens collide on custom property "${v}" ("${r.token}")`);
+  // border_token: the border a light fill must carry on paper. Whether it is
+  // required, present and dark enough is the design-canon gate's job
+  // (bounded-light-fill); codegen only carries it through.
+  tokens[r.token] = { value: r.value, group: r.group, note: r.note, css_var: v, border_token: r.border_token };
+  cssVars[v] = r.value;
+}
+const tokenValue = (id) => {
+  if (!tokens[id]) die(`design seed references token "${id}" which tokens_record.csv does not carry`);
+  return tokens[id].value;
+};
+
+const channels = {};
+for (const r of design.channels) {
+  if (!r.axis || !r.channel) die('design/channels row missing axis or channel');
+  if (channels[r.axis]) die(`duplicate axis "${r.axis}" in design/channels`);
+  channels[r.axis] = { channel: r.channel, token_prefix: r.token_prefix, note: r.note };
+}
+
+const encodings = {};
+for (const r of design.encodings) {
+  if (!r.axis || !r.entity) die('design/encodings row missing axis or entity');
+  if (!channels[r.axis]) die(`design/encodings names axis "${r.axis}" which design/channels does not carry`);
+  encodings[r.axis] ??= {};
+  if (encodings[r.axis][r.entity]) die(`duplicate binding ${r.axis}/${r.entity} in design/encodings`);
+  encodings[r.axis][r.entity] = { tokens: r.token.split('+').filter(Boolean), note: r.note };
+}
+// Whether every binding names a token that exists is the design-canon gate's
+// job (encoding-orphan), not codegen's: codegen emits, the gate validates.
+
+// Every texture is one 5×5 tile. Direction is the line's own angle from the
+// horizontal, so the path is chosen by angle and never rotated at use time;
+// corner-to-corner and mid-tile lines both tile seamlessly.
+const TILE = 5;
+const MID = TILE / 2;
+const HATCH_PATH = {
+  0: `M0,${MID} H${TILE}`,
+  45: `M0,${TILE} L${TILE},0`,
+  90: `M${MID},0 V${TILE}`,
+  135: `M0,0 L${TILE},${TILE}`,
+};
+const TEXTURE_FILL = 'colour.paper-sunken';
+const TEXTURE_INK = 'colour.ink-4';
+
+const textures = {};
+const patterns = [];
+for (const r of design.textures) {
+  if (!r.texture) die('design/textures row with an empty texture id');
+  if (textures[r.texture]) die(`duplicate texture "${r.texture}"`);
+  const fill = tokenValue(TEXTURE_FILL);
+  const ink = tokenValue(TEXTURE_INK);
+  const angles = r.angle.split('+').filter(Boolean);
+  const body = [`      <rect width="${TILE}" height="${TILE}" fill="${fill}"/>`];
+  if (r.kind === 'dots') {
+    if (angles.length > 0) die(`texture "${r.texture}" is a dot field and carries no angle`);
+    body.push(`      <circle cx="${MID}" cy="${MID}" r="${r.stroke}" fill="${ink}"/>`);
+  } else if (r.kind === 'hatch' || r.kind === 'cross') {
+    if (r.kind === 'hatch' ? angles.length !== 1 : angles.length < 2) {
+      die(`texture "${r.texture}" (${r.kind}) carries the wrong number of angles: "${r.angle}"`);
+    }
+    for (const a of angles) {
+      if (!HATCH_PATH[a]) die(`texture "${r.texture}" names angle "${a}" — only 0, 45, 90 and 135 are drawn`);
+      body.push(
+        `      <path d="${HATCH_PATH[a]}" stroke="${ink}" stroke-width="${r.stroke}" fill="none"/>`,
+      );
+    }
+  } else {
+    die(`texture "${r.texture}" has unknown kind "${r.kind}"`);
+  }
+  textures[r.texture] = {
+    kind: r.kind,
+    angles,
+    stroke: r.stroke,
+    tile: TILE,
+    fill_token: TEXTURE_FILL,
+    fill,
+    ink_token: TEXTURE_INK,
+    ink,
+    note: r.note,
+  };
+  patterns.push(
+    `    <pattern id="t-${r.texture}" width="${TILE}" height="${TILE}" patternUnits="userSpaceOnUse">`,
+    ...body,
+    '    </pattern>',
+  );
+}
+
+const BANNER = [
+  'GENERATED — do not edit.',
+  'Design canon is the seed: engine/seed/platform/design/tokens_record.csv,',
+  'channels_record.csv, encodings_record.csv, textures_record.csv.',
+  'Regenerate with: node engine/tools/codegen.mjs',
+];
+
+const cssLines = ['/* ' + BANNER.join('\n   ') + ' */', ':root {'];
+let group = null;
+for (const t of Object.values(tokens)) {
+  if (t.group !== group) {
+    if (group !== null) cssLines.push('');
+    cssLines.push(`  /* ${t.group} */`);
+    group = t.group;
+  }
+  cssLines.push(`  ${t.css_var}: ${t.value};`);
+}
+cssLines.push('}', '');
+
+const designJson =
+  JSON.stringify(
+    {
+      tokens,
+      css_vars: cssVars,
+      channels,
+      encodings,
+      textures,
+    },
+    null,
+    2,
+  ) + '\n';
+
+const svg = [
+  `<!-- ${BANNER.join('\n     ')} -->`,
+  '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false">',
+  '  <defs>',
+  ...patterns,
+  '  </defs>',
+  '</svg>',
+  '',
+].join('\n');
+
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'vocab.ts'), lines.join('\n'));
 writeFileSync(join(outDir, 'vocab.json'), json);
+writeFileSync(join(outDir, 'design-tokens.css'), cssLines.join('\n'));
+writeFileSync(join(outDir, 'design-tokens.json'), designJson);
+writeFileSync(join(outDir, 'textures.svg'), svg);
 console.log(
   `vocab: ${classCodes.length} classes, ${relationCodes.length} relations, ` +
     `${attributeCodes.length} attributes, ${unitCodes.length} units, ` +
     `${Object.keys(facetValues).length} facets -> ${outDir}`,
+);
+console.log(
+  `design: ${Object.keys(tokens).length} tokens, ${Object.keys(channels).length} channels, ` +
+    `${Object.values(encodings).reduce((n, a) => n + Object.keys(a).length, 0)} bindings, ` +
+    `${Object.keys(textures).length} textures -> ${outDir}`,
 );

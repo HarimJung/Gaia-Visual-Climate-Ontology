@@ -1,0 +1,33 @@
+<!-- GENERATED — do not edit.
+     Design canon is the seed: engine/seed/platform/design/tokens_record.csv,
+     channels_record.csv, encodings_record.csv, textures_record.csv.
+     Regenerate with: node engine/tools/codegen.mjs -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="t-cross" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#f1f1ee"/>
+      <path d="M0,5 L5,0" stroke="#6c737a" stroke-width="1.4" fill="none"/>
+      <path d="M0,2.5 H5" stroke="#6c737a" stroke-width="1.4" fill="none"/>
+    </pattern>
+    <pattern id="t-dots" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#f1f1ee"/>
+      <circle cx="2.5" cy="2.5" r="1.1" fill="#6c737a"/>
+    </pattern>
+    <pattern id="t-hatch-0" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#f1f1ee"/>
+      <path d="M0,2.5 H5" stroke="#6c737a" stroke-width="1.4" fill="none"/>
+    </pattern>
+    <pattern id="t-hatch-135" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#f1f1ee"/>
+      <path d="M0,0 L5,5" stroke="#6c737a" stroke-width="1.4" fill="none"/>
+    </pattern>
+    <pattern id="t-hatch-45" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#f1f1ee"/>
+      <path d="M0,5 L5,0" stroke="#6c737a" stroke-width="1.4" fill="none"/>
+    </pattern>
+    <pattern id="t-hatch-90" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#f1f1ee"/>
+      <path d="M2.5,0 V5" stroke="#6c737a" stroke-width="1.4" fill="none"/>
+    </pattern>
+  </defs>
+</svg>

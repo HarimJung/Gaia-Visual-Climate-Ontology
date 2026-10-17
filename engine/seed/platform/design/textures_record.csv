@@ -1,0 +1,7 @@
+texture,kind,angle,stroke,note
+cross,cross,45+0,1.4,two sets crossed: 45 degrees over horizontal
+dots,dots,,1.1,stroke column carries the dot radius for this kind
+hatch-0,hatch,0,1.4,horizontal
+hatch-135,hatch,135,1.4,diagonal falling
+hatch-45,hatch,45,1.4,diagonal rising
+hatch-90,hatch,90,1.4,vertical

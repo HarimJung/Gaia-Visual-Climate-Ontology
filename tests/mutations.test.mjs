@@ -225,6 +225,26 @@ function platformSeed() {
     'engine/seed/platform/units/units_core.csv':
       'unit_code,symbol_canonical,symbol_variants,quantity_kind,factor_to_si,external_ref\n' +
       'pct,%,,dimensionless,0.01,\n',
+    // The platform seed carries five layers since 0.3.0; design is one of
+    // them, so codegen refuses a seed without it (exit 2). Mutations of the
+    // design layer itself live in tests/design.test.mjs.
+    'engine/seed/platform/design/tokens_record.csv':
+      'token,value,group,note,border_token\n' +
+      'colour.paper,#fbfbfa,colour,page ground,\n' +
+      'colour.ink,#111417,colour,primary text,\n' +
+      'colour.paper-sunken,#f1f1ee,colour,texture fill,\n' +
+      'colour.ink-4,#6c737a,colour,texture ink,\n' +
+      'neutral.src-a,#4d6477,neutral,ramp step 1 of 2,\n' +
+      'neutral.src-b,#8fa3b3,neutral,ramp step 2 of 2,neutral.src-a\n',
+    'engine/seed/platform/design/channels_record.csv':
+      'axis,channel,token_prefix,note\n' +
+      'source-family,neutral-ramp,neutral.,two separable steps\n',
+    'engine/seed/platform/design/encodings_record.csv':
+      'axis,entity,token,note\n' +
+      'source-family,alpha,neutral.src-a,\n',
+    'engine/seed/platform/design/textures_record.csv':
+      'texture,kind,angle,stroke,note\n' +
+      'hatch-45,hatch,45,1.4,diagonal rising\n',
   };
 }
 

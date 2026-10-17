@@ -1,0 +1,16 @@
+axis,entity,token,note
+epistemic-state,absent,dial.absent,the absent mark cut into the face
+epistemic-state,observed,dial.face+meaning.un,face material carrying the treaty hue
+epistemic-state,pledged,dial.track,track material: pledged but not measured
+epistemic-state,unknown,texture.hatch-45,unknown is hatched never coloured
+reason-family,bracketed,texture.cross,
+reason-family,bytes-not-held,texture.hatch-135,
+reason-family,depositary-blank,texture.hatch-0,
+reason-family,document-refused,texture.dots,
+reason-family,listing-silent,texture.hatch-45,
+reason-family,name-unresolved,texture.hatch-90,
+source-family,btr-listing,texture.hatch-135,listing-only: no bytes held
+source-family,country-seed,colour.paper-raised,hand-seeded: the paper itself
+source-family,ndc-docs,neutral.src-b,
+source-family,registry,neutral.src-c,
+source-family,untc,neutral.src-a,

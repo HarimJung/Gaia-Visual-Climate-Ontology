@@ -1,0 +1,10 @@
+axis,channel,token_prefix,note
+epistemic-state,material,dial.,the dial's own material: face track absent mark
+meaning,colour,meaning.,the five meanings; nothing else may spend hue
+source-family,neutral-ramp,neutral.,three greyscale-separable steps
+reason-family,texture,texture.,one pattern per reason; see textures_record.csv
+quantity,sequential,quant.,four-step sequential ramp
+doc-type,glyph,glyph.,glyph set; no token carries it yet
+anchor-kind,receipt-structure,,structural: the receipt's own layout carries it
+authoring-verdict,border-stamp,,structural: a stamped border carries it
+staleness,desaturation,,derived: applied to whichever colour the row already has
