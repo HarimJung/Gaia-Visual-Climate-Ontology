@@ -248,7 +248,10 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
           title's own numerals are never a figure standing free (R6) */}
       <a href={`/receipt/${iso3}/${orphan.id}/`} data-receipt={orphan.id}>
         <title>{orphan.title} — on record, bytes not held</title>
-        <circle cx={f1(satX)} cy={f1(satY)} r="18" class="d-barrel void"></circle>
+        {/* the satellite is its own device, not a ring barrel: the ring holds
+            exactly one barrel per document, and this is that document shown
+            again, off the plate, because nothing engages it */}
+        <circle cx={f1(satX)} cy={f1(satY)} r="18" class="d-sat-barrel"></circle>
         <text x={f1(satX)} y={f1(satY - 34)} text-anchor="middle" class="d-sat-lbl">NOT ENGAGED</text>
         <text x={f1(satX)} y={f1(satY - 56)} text-anchor="middle" class="d-cap">{satTitle.toUpperCase()}</text>
       </a>

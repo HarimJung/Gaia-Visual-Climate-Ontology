@@ -93,6 +93,9 @@
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: var(--t3); line-height: 1.6; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
 h1, h2, h3 { font-family: var(--font-display); color: var(--ink); text-wrap: balance; overflow-wrap: break-word; }
+/* prose holds a readable measure by default; a class that needs more says so */
+p { max-width: 68ch; }
+td p, th p, .facts p, .bandkey p, .legend p { max-width: none; }
 a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
 a:hover, a:focus-visible { color: var(--un-ink); text-decoration-color: currentColor; }
 button { font: inherit; }
@@ -137,7 +140,6 @@ body::after {
 .bar nav a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--un); }
 
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 24px; margin-top: var(--s8); padding: 22px 0 48px; border-top: 1px solid var(--rule); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
-footer .wrap { max-width: none; }
 footer p { margin: 0 0 6px; max-width: 72ch; }
 footer p:first-child { display: flex; align-items: center; gap: 10px; color: var(--ink-2); }
 footer p:first-child::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--un); }
@@ -147,7 +149,7 @@ footer p:first-child::before { content: ""; flex: none; width: 7px; height: 7px;
 .hero .eyebrow [data-meta] { white-space: nowrap; }
 .head { padding-block: clamp(30px, 4vw, 56px) clamp(22px, 2.6vw, 34px); }
 /* a name you can read across a room */
-.head h1 { margin: var(--s3) 0 var(--s4); font-family: var(--font-display); font-weight: 600; font-size: clamp(44px, 7.4vw, 96px); line-height: .94; letter-spacing: -.035em; color: var(--ink); }
+.head h1 { margin: var(--s3) 0 var(--s4); font-family: var(--font-display); font-weight: 800; font-size: clamp(38px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -.028em; color: var(--ink); max-width: 18ch; }
 .treaty { margin: var(--s4) 0 0; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 62ch; text-wrap: pretty; }
 .treaty b { color: var(--ink); font-weight: 500; }
 .treaty .sep { color: var(--rule-strong); padding: 0 .45em; }
@@ -235,12 +237,13 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
 .hero .action { margin: var(--s5) 0 0; padding-top: var(--s3); border-top: 1px solid var(--rule); font-size: var(--t3); color: var(--ink-2); max-width: 72ch; }
 .hero .action b { color: var(--ink); font-weight: 600; }
 .stripsec { margin: 0 0 var(--s7); }
-.stripsec h2 { font-family: var(--font-display); font-weight: 600; font-size: var(--t5); letter-spacing: -.02em; color: var(--ink); margin: 0 0 var(--s3); }
+.stripsec h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.6vw, 30px); letter-spacing: -.024em; line-height: 1.06; color: var(--ink); margin: 0 0 var(--s3); max-width: 20ch; }
 
 /* ── rows and tables: hairlines, no cards ───────────────────────────────── */
 .tablewrap { overflow-x: auto; position: relative; }
 .table { width: 100%; border-collapse: collapse; font-size: var(--t2); }
-.table th { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule-strong); text-align: left; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); white-space: nowrap; }
+/* the header holds its ground down a long table */
+.table th { position: sticky; top: var(--top-h, 64px); z-index: 2; background: var(--paper); padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule-strong); text-align: left; font: 500 var(--t1) var(--font-sans); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
 .table td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; color: var(--ink-2); }
 .table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .table tbody tr { transition: background var(--dur) var(--ease); }
@@ -279,7 +282,10 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
 .crumb { font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); margin: 0 0 var(--s5); }
 .receipt section + section { margin-top: clamp(36px, 3.6vw, 56px); }
 .rblock { padding: var(--s4) 0 var(--s5); border-top: 1px solid var(--rule); max-width: 1080px; }
-.rblock h3, .rblock h2 { margin: 0 0 var(--s3); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
+/* a section announces itself: the mono label is an eyebrow above the name,
+   never the name itself */
+.rblock h3, .rblock h2 { margin: 0 0 var(--s3); font-family: var(--font-display); font-weight: 700; font-size: clamp(21px, 2.1vw, 27px); line-height: 1.1; letter-spacing: -.022em; color: var(--ink); }
+.rblock h3 .lbl, .rblock h2 .lbl { display: block; margin-bottom: 6px; font: 500 var(--t0)/1.6 var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
 /* the sentence a figure was read out of, quoted whole */
 .quote { margin: 0; max-width: 72ch; font-size: var(--t4); line-height: 1.7; color: var(--ink-2); border-left: 2px solid var(--un); padding-left: var(--s3); }
 .quote .qtext { color: var(--ink); }
@@ -291,8 +297,8 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
 .placeholder .tag { display: block; margin-bottom: 6px; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
 /* facts: a two-column list, the label in ink-3 and the value in tabular
    figures, one hairline per row (their .rec-facts, as a plain <dl>) */
-.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0 var(--s5); margin: 0; font-size: var(--t2); }
-.facts > dt { padding: var(--s2) 0; border-bottom: 1px solid var(--rule); color: var(--ink-3); }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0; margin: 0; font-size: var(--t2); }
+.facts > dt { padding: var(--s2) var(--s5) var(--s2) 0; border-bottom: 1px solid var(--rule); color: var(--ink-3); }
 .facts > dd { margin: 0; padding: var(--s2) 0; border-bottom: 1px solid var(--rule); color: var(--ink); overflow-wrap: anywhere; }
 .prov { margin: 0; padding-left: 1.1em; font-size: var(--t2); line-height: 1.6; color: var(--ink-2); }
 .prov li + li { margin-top: 6px; }

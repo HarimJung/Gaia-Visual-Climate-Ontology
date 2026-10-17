@@ -10,23 +10,15 @@
 // map, dial and full text (AD-6R baseline).
 import Base from '../layouts/Base.astro';
 import SceneStage from '../components/SceneStage.astro';
-import StaticDial from '../components/StaticDial.astro';
-import HeroMovement from '../components/HeroMovement.astro';
 import { views, census, countryEntry, fmt, richestView, REPO_BLOB } from '../lib/data.mjs';
 import { sceneDataFor } from '../lib/scene-data.mjs';
 import { STORY, WORLD_STEPS, MACHINE_CARDS } from '../lib/story-content.mjs';
-import { chapterStart } from '../lib/scene/explosion-motion.mjs';
 import { binGeom, blockGeom, plotGeom } from '../lib/scene/world-stage.mjs';
 import basemap from '../../public/data/basemap.json';
 import '../styles/scene.css';
 import '../styles/stage.css';
 
 const ledgerUrl = REPO_BLOB + census.ledger;
-
-// The hero's four-state legend and its wheels read the same two things: the
-// world census (the legend's totals) and every row the runtime holds (the
-// source-family universe the wheels are cut from). Both go through the door.
-const allRows = views.flatMap((v) => v.rows);
 
 // ── World stage data: one bead and one column per country ────────────────
 // Centroid of the largest subpath of a country's base-map shape (predecessor
@@ -156,6 +148,24 @@ const SCREENS = 10;
 const CHAPTERS = MACHINE_CARDS.length;
 const cardTop = (k) => (1 + ((k + 0.5) / CHAPTERS) * (SCREENS - 2)) / SCREENS;
 const cardFig = (key) => ({ value: entry.counts[key], href: `/country/${iso3}/#census-${key}` });
+// the hero caption numbers the chapter the opening is playing, as the shipped
+// product's does: "03 · …". Two digits, so the row does not reflow at ten.
+const chapterNo = (phase) => String(phase + 1).padStart(2, '0');
+
+// ── The hero's glass card and legend (unchanged wording) ──────────────────
+const c = entry.counts;
+// the reason is the first unread row's own recorded words, verbatim, with the
+// document it was recorded on linked. No row carries one: the card carries
+// only the sentence, and nothing is written to fill the slot.
+const unread = walked.rows.find((r) => !r.sha256 && r.state_reason) ?? null;
+// the four-state legend over the world census. The second word is the READING
+// in plain English — what the state means for a document.
+const legend = [
+  { state: 'observed', reading: 'read', key: 'states_observed' },
+  { state: 'pledged', reading: 'pledged, not measured', key: 'states_pledged' },
+  { state: 'unknown', reading: 'on file, not read', key: 'states_unknown' },
+  { state: 'absent', reading: 'confirmed absent', key: 'states_absent' },
+];
 
 // ── One document opens: the walked record's quoted, hashed row ────────────
 const doc = walked.rows.find((r) => r.quote && r.sha256);
@@ -172,21 +182,123 @@ for (const v of views) {
 ---
 
 <Base title="National Climate Record Runtime">
-  {/* THE HERO — the predecessor comp Main.dc.html, lifted (see
-      styles/movement.css for the provenance note) and bound to the walked
-      record: one barrel per document, one wheel per source family with its
-      documents as teeth, the comp's glass card carrying this record's own
-      counts. Server-rendered HTML; complete with JavaScript off. */}
-  <HeroMovement
-    view={walked}
-    entry={entry}
-    iso3={iso3}
-    census={census}
-    allRows={allRows}
-    eyebrow={STORY.eyebrow}
-    title={STORY.title}
-    lede={STORY.lede}
-  />
+  {/* THE HERO — the shipped product's opening: the machine itself, mounted
+      from the same SceneStage the country pages use (never a second copy of
+      it), with the server-rendered dial as its fallback, so the page is
+      complete with JavaScript off and when WebGL is lost. The opening plays
+      the assembly once and names the chapter it is in; the scroll chapter
+      further down still drives the same machine through the whole story. */}
+  <section class="hero-machine" data-hero aria-label="One record, as a machine">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        <span>{STORY.eyebrow} · as of <span data-meta="as_of">{census.as_of}</span></span>
+      </p>
+      <h1>{STORY.title}</h1>
+      <p class="hero-lede">{STORY.lede}</p>
+    </div>
+
+    <div class="hero-right">
+      <div class="dial-stage hero-stage">
+        <SceneStage
+          scene={scene}
+          counts={entry.counts}
+          rows={walked.rows}
+          dialHref={`/country/${iso3}/#census-documents_with_bytes`}
+          onRecordHref={`/country/${iso3}/#census-documents_on_record`}
+          start={0}
+        />
+      </div>
+      {/* the caption row: which chapter the opening is playing, what it says,
+          and the figures that chapter rests on. A chapter this record holds no
+          figure for states none — the plate, the sockets and the support cog
+          carry no count here rather than borrow one. With JavaScript off the
+          first chapter's caption is the one that shows. */}
+      <div class="hcaps">
+        <span class="hdots" aria-hidden="true">
+          {MACHINE_CARDS.map((card) => <span class="hdot" data-hdot={card.phase} />)}
+        </span>
+        <div class="hcapcol">
+          {
+            MACHINE_CARDS.map((card) => (
+              <p class={`hcap${card.phase === 0 ? ' is-on' : ''}`} data-hcap={card.phase}>
+                <a class="hcap-t" href="#machine">{chapterNo(card.phase)} · {card.title}</a>
+                <span class="hcap-b">{card.body}</span>
+                {card.phase === 2 && (
+                  <span class="hcap-f">
+                    <a class="fig" data-census="states_pledged" href={cardFig('states_pledged').href}>
+                      {cardFig('states_pledged').value}
+                    </a>{' '}
+                    pledge figures read from this record — the ring stays ghosted.
+                  </span>
+                )}
+                {card.phase === 3 && (
+                  <span class="hcap-f">
+                    <a class="fig" data-census="documents_with_bytes" href={cardFig('documents_with_bytes').href}>
+                      {cardFig('documents_with_bytes').value}
+                    </a>{' '}
+                    hashed of{' '}
+                    <a class="fig" data-census="documents_on_record" href={cardFig('documents_on_record').href}>
+                      {cardFig('documents_on_record').value}
+                    </a>{' '}
+                    on record for this country.
+                  </span>
+                )}
+              </p>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-aside">
+      {/* the glass card: one true sentence, every figure inside its link */}
+      <div class="hcard">
+        <div class="hcard-head">
+          <span class="hcard-eyebrow">what this runtime holds</span>
+          <span class="hcard-tag">counted</span>
+        </div>
+        <div class="hcard-body">
+          On <a class="hcard-strong" href={`/country/${iso3}/`}>{walked.country.name_en}</a>’s record this
+          runtime holds{' '}
+          <a data-census="documents_on_record" href={`/country/${iso3}/#census-documents_on_record`}>{fmt(c.documents_on_record)}</a>{' '}
+          documents; the bytes of{' '}
+          <a data-census="documents_with_bytes" href={`/country/${iso3}/#census-documents_with_bytes`}>{fmt(c.documents_with_bytes)}</a>{' '}
+          are held and hashed here, and{' '}
+          <a data-census="documents_without_bytes" href={`/country/${iso3}/#census-documents_without_bytes`}>{fmt(c.documents_without_bytes)}</a>{' '}
+          are on record without them.
+        </div>
+        {
+          unread && (
+            <p class="hcard-reason reason">
+              “{unread.state_reason}” —{' '}
+              <a href={`/receipt/${iso3}/${unread.doc_id}/#state`} data-receipt={unread.doc_id}>
+                {unread.title}
+              </a>
+            </p>
+          )
+        }
+      </div>
+
+      {/* the legend: the state, its reading in plain English, its count */}
+      <ul class="hlegend">
+        {
+          legend.map((s) => (
+            <li>
+              <span class={`sw sw-${s.state}`} aria-hidden="true" />
+              <span class="hlbl">
+                {s.state} · {s.reading}{' '}
+                <a data-census={s.key} href={`/ledger/#census-${s.key}`}>{fmt(census.counts[s.key])}</a>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="hero-action">
+        <a href="/ledger/">The world ledger holds every row →</a>
+      </p>
+    </div>
+  </section>
 
   <section class="scrolly" id="world" data-world aria-label="The world's records, step by step">
     <div class="wsteps">
@@ -524,6 +636,65 @@ for (const v of views) {
      the chapter heads, the figures, the ways and the four materials all come
      from styles/site.css, which is the shipped product's stylesheet. Only
      what is particular to this page is declared here. */
+  /* ── THE HERO ────────────────────────────────────────────────────────
+     Their proportion: the words on the left, the machine on the right at
+     roughly half the frame, the caption row under it. The stage is the
+     shipped .dial-stage box (so .scene-stage still fills it), only taller,
+     because here the machine is the first thing on the page. */
+  .hero-machine {
+    display: grid; align-items: center;
+    grid-template-columns: 5fr 7fr;
+    grid-template-areas: "copy stage" "aside stage";
+    gap: var(--s5) clamp(28px, 3.6vw, 60px);
+    padding: clamp(20px, 4svh, 48px) 0 clamp(28px, 5svh, 56px);
+  }
+  .hero-copy { grid-area: copy; align-self: end; min-width: 0; }
+  .hero-right { grid-area: stage; min-width: 0; }
+  .hero-aside { grid-area: aside; align-self: start; min-width: 0; }
+  .hero-copy h1 { margin: var(--s3) 0 var(--s4); font: 800 clamp(40px, 4.4vw, 66px)/1 var(--font-display); letter-spacing: -.03em; max-width: 14ch; }
+  .hero-lede { margin: 0; max-width: 40ch; font-size: var(--t4); line-height: 1.55; color: var(--ink-2); }
+  .hero-stage { aspect-ratio: 1 / 1.08; max-height: min(74svh, 660px); min-height: 360px; margin: 0; }
+
+  /* the caption row: the dots, then the chapter the opening is playing */
+  .hcaps { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s4); margin-top: var(--s2); padding-top: var(--s4); border-top: 1px solid var(--rule); }
+  .hdots { display: flex; align-items: center; gap: 7px; padding-top: 7px; }
+  .hdot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule-strong); transition: background var(--dur) var(--ease); }
+  .hdot.is-done { background: var(--ink-4); }
+  .hdot.is-on { background: var(--un); }
+  /* one caption per chapter, server-rendered; CSS alone shows the first, so
+     the row is complete and honest with no script at all */
+  .hcap { display: none; margin: 0; }
+  .hcap.is-on { display: block; }
+  .hcap-t { font: 600 var(--t3)/1.35 var(--font-sans); color: var(--ink); text-decoration-color: var(--rule); font-variant-numeric: tabular-nums; }
+  .hcap-b { display: block; margin-top: 5px; max-width: 58ch; font-size: var(--t2); line-height: 1.5; color: var(--ink-3); }
+  .hcap-f { display: block; margin-top: 7px; font-size: var(--t1); line-height: 1.5; color: var(--ink-3); }
+
+  /* the glass card: a raised sheet carrying one true sentence */
+  .hcard { padding: var(--s4) var(--s4) var(--s4) var(--s5); border: 1px solid var(--rule); border-left: 4px solid var(--un); background: var(--paper-raised); box-shadow: var(--shadow-1); }
+  .hcard-head { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s3); }
+  .hcard-eyebrow { font: 500 var(--t0)/1.2 var(--font-mono); letter-spacing: 0; color: var(--ink-4); }
+  .hcard-tag { padding: 1px 9px; border: 1px solid currentColor; border-radius: 999px; font: 600 var(--t0)/1.5 var(--font-sans); letter-spacing: .04em; text-transform: uppercase; color: var(--un-ink); }
+  .hcard-body { font-size: var(--t2); line-height: 1.62; color: var(--ink-2); }
+  .hcard-body .hcard-strong { color: var(--ink); font-weight: 600; }
+  .hcard-reason { margin: var(--s3) 0 0; line-height: 1.55; }
+
+  .hlegend { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin: var(--s4) 0 0; padding: 0; list-style: none; }
+  .hlegend li { display: flex; align-items: center; gap: 9px; }
+  .hlegend .hlbl { font: var(--t1)/1.4 var(--font-mono); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
+  .hlegend a { color: var(--ink); text-decoration-color: var(--rule-strong); }
+  .hero-action { margin: var(--s4) 0 0; }
+  .hero-action a { font: 600 var(--t3)/1.4 var(--font-sans); color: var(--un-ink); text-decoration-color: var(--rule-strong); }
+
+  /* phone: one column, and the machine comes before the card — the opening
+     is still the first thing the page shows */
+  @media (max-width: 860px) {
+    .hero-machine { grid-template-columns: 1fr; grid-template-areas: "copy" "stage" "aside"; gap: var(--s5); }
+    .hero-copy h1 { font-size: clamp(34px, 9vw, 46px); max-width: none; }
+    .hero-lede { max-width: none; }
+    .hero-stage { aspect-ratio: 4 / 3.6; max-height: none; min-height: 0; }
+    .hlegend .hlbl { white-space: normal; }
+  }
+
   .scrolly { margin-top: 10svh; }
   .docopen, .voids, .closer { padding: clamp(64px, 12svh, 140px) 0 0; max-width: 1080px; }
   .docopen h2, .voids h2, .closer h2 { margin: 0 0 var(--s4); font: 700 clamp(26px, 3vw, var(--t7))/1.05 var(--font-display); letter-spacing: -.03em; }
@@ -551,6 +722,55 @@ for (const v of views) {
   // The world stage: middle-band stepper over one mounted SVG.
   const world = document.querySelector('[data-world]');
   if (world) mountWorldStage(world);
+
+  // ── The opening: the hero machine plays the assembly once, on load ──────
+  // Driven by the same chapter data the scrub uses — the chapterStart knots
+  // and the scene's own cyclePhase — so the caption and the dots can never
+  // name a chapter the machine is not in. Reduced motion skips the travel and
+  // lands on the assembled resting pose with the caption row static.
+  const hero = document.querySelector('[data-hero]');
+  const heroStage = hero && hero.querySelector('.scene-stage');
+  const heroControls = heroStage && heroStage.sceneControls;
+  if (hero && heroControls) {
+    const caps = [...hero.querySelectorAll('[data-hcap]')];
+    const hdots = [...hero.querySelectorAll('[data-hdot]')];
+    const lastChapter = caps.length - 1;
+    const show = (k) => {
+      for (const cap of caps) cap.classList.toggle('is-on', Number(cap.dataset.hcap) === k);
+      for (const dot of hdots) {
+        const n = Number(dot.dataset.hdot);
+        dot.classList.toggle('is-on', n === k);
+        dot.classList.toggle('is-done', n < k);
+      }
+    };
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      heroControls.progress = 100;
+      show(lastChapter);
+    } else {
+      // one run over the whole assembly, every chapter given the same share of
+      // it (trackToProgress), starting on the first live frame so the opening
+      // is not half over by the time the canvas arrives. If the rich layer
+      // never comes up the server-rendered dial is already the whole picture,
+      // and the row rests on the assembled chapter.
+      const knots = hdots.map((d) => chapterStart(Number(d.dataset.hdot)));
+      const RUN = 9000;
+      let began = 0, giveUp = 0;
+      const step = (now) => {
+        if (!began && !heroStage.classList.contains('is-live')) {
+          if (!giveUp) giveUp = now + 5000;
+          if (now < giveUp) { requestAnimationFrame(step); return; }
+          show(lastChapter);
+          return;
+        }
+        if (!began) began = now;
+        const t = Math.min(1, (now - began) / RUN);
+        heroControls.progress = trackToProgress(t, knots) * 100;
+        show(Math.min(lastChapter, cyclePhase(heroControls.progress / 100)));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+  }
 
   // The pinned scrub (predecessor pattern): N×100svh chapter with a sticky
   // stage; a rAF-throttled scroll listener maps chapter travel to the

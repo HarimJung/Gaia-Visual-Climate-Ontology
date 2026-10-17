@@ -88,6 +88,9 @@
 .d-barrel { stroke-width: 1.3; }
 .d-barrel.live { fill: var(--un); stroke: var(--un-ink); }
 .d-barrel.void { fill: var(--paper-raised); stroke: var(--rule-strong); stroke-width: 2; stroke-dasharray: 4 3; }
+/* the satellite wears the void's face, but it is not one of the ring's barrels */
+.d-sat-barrel { fill: var(--paper-raised); stroke: var(--rule-strong); stroke-width: 2; stroke-dasharray: 4 3; }
+.static-dial a:hover .d-sat-barrel, .static-dial a:focus-visible .d-sat-barrel { stroke: var(--ink); }
 /* PULSE: the spark travelling a flow path from a held barrel into the
    centre. It animates EVIDENCE MOVING, never a number, and it carries no
    reading of its own — the counts are in the readout and in the step cards. */

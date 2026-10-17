@@ -18,27 +18,8 @@ export function countsFromRows(rows, keys) {
   return counts;
 }
 
-// THE SOURCE FAMILIES — one per kind of source the runtime reads, which is
-// what the hero's complication wheels are cut from. The universe comes from
-// every row the runtime holds (so the set is the same object on every
-// record); the tooth count comes from ONE record's rows. A family that
-// record has nothing from keeps its wheel and gets zero teeth — the
-// instrument never drops a wheel it cannot fill, and never invents teeth
-// for one. Order: how much of the whole record each family carries, then by
-// name, so the layout is deterministic and no number sets a position.
-export function sourceFamilies(allRows, rows) {
-  const total = new Map();
-  for (const r of allRows) total.set(r.doc_type, (total.get(r.doc_type) ?? 0) + 1);
-  return [...total.keys()]
-    .sort((a, b) => total.get(b) - total.get(a) || (a < b ? -1 : 1))
-    .map((key) => {
-      const docs = rows.filter((r) => r.doc_type === key);
-      return { key, label: String(key).replace(/[-_]/g, ' '), n: docs.length, first: docs[0] ?? null };
-    });
-}
-
 // A build-unique suffix for SVG fragment ids. The dial is rendered more than
-// once on a page (the cover's hero, the pinned instrument's fallback, the
+// once on a page (the hero machine's fallback, the pinned instrument's, the
 // record stage's seated hero); without this every copy would define the same
 // `dial-cotes` and the whole page would paint from the first one's defs.
 let n = 0;
