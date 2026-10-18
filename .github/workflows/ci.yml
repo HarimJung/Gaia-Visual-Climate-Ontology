@@ -26,44 +26,56 @@ jobs:
       # App build only — static output to app/dist, never published from here (R8).
       - run: npm run build
       - run: node --test
+      # R19 is base-aware: it checks the links of the build it was handed.
       - run: node engine/gates/run.mjs
 
-# ── Deploy job skeleton — THE one deploy path (R8 / AD-11), not enabled ──────
-# Enabling this is the owner's act, and it is one secret away: when a host is
-# chosen, add DEPLOY_TOKEN under Settings → Secrets and variables → Actions,
-# then uncomment the job and fill in the single placeholder publish step with
-# the chosen host's publish action, reading only that secret. Publish
-# credentials exist ONLY as CI secrets — no local publish path exists, and the
-# r8 gate keeps any manual command out of the docs. Even uncommented, the job
-# refuses to run until the secret exists (env guard below), so nothing can
-# deploy by accident. See docs/LAUNCH.md §2.
+# ── THE one deploy path (R8 / AD-11): GitHub Pages, built by this workflow ───
+# Credentials: none. Pages publishes through the workflow's own identity, so
+# no token exists anywhere, locally or as a secret.
 #
-#  deploy:
-#    needs: checks
-#    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-#    runs-on: ubuntu-latest
-#    env:
-#      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
-#    steps:
-#      - name: Refuse without the deploy secret (owner enables by adding it)
-#        run: test -n "$DEPLOY_TOKEN" || { echo "DEPLOY_TOKEN secret not set — deploy refused"; exit 1; }
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-node@v4
-#        with:
-#          node-version: 22
-#      - run: npm ci
-#      # Rebuild the exact pipeline the checks job verified; GITHUB_SHA is in
-#      # the environment, so the footer stamps this commit's hash (AD-11).
-#      - run: npm run codegen
-#      - run: npm run graph
-#      - run: npm run verify
-#      - run: npm run build:views
-#      - run: npm run build
-#      - name: Publish app/dist to the chosen host
-#        run: echo "placeholder — replace with the chosen host's publish step, authenticated by DEPLOY_TOKEN only" && exit 1
-#      # R16 dead-man switch: ping the heartbeat on every completed publish;
-#      # the heartbeat service alarms when pings stop (incl. the 60-day
-#      # schedule auto-disable). Add HEARTBEAT_URL as a secret with the host.
-#      - name: Heartbeat ping
-#        if: always()
-#        run: test -z "${{ secrets.HEARTBEAT_URL }}" || curl -fsS --retry 3 "${{ secrets.HEARTBEAT_URL }}"
+# The owner's enabling act is two settings, both in this repository:
+#   1. Settings → Pages → Source: GitHub Actions
+#   2. Settings → Secrets and variables → Actions → Variables → new variable
+#      DEPLOY_PAGES = true
+# Until that variable is set this job is skipped, so nothing deploys by
+# accident and CI stays green. Optional variables SITE_ORIGIN and SITE_BASE
+# override the address when a custom domain replaces the project path.
+# See docs/LAUNCH.md §2.
+  deploy:
+    needs: checks
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_PAGES == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      SITE_ORIGIN: ${{ vars.SITE_ORIGIN || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
+      SITE_BASE: ${{ vars.SITE_BASE || format('/{0}', github.event.repository.name) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      # The exact pipeline the checks job verified, rebuilt here; GITHUB_SHA is
+      # in the environment, so the footer stamps this commit's hash (AD-11).
+      - run: npm run codegen
+      - run: npm run graph
+      - run: npm run verify
+      - run: npm run build:views
+      # build:pages = the same static build, then the base-path prefix.
+      - run: npm run build:pages
+      - run: node --test
+      # Gates run against the artifact that is about to ship, base and all:
+      # a dead link under the deploy path fails here, before anyone sees it.
+      - run: node engine/gates/run.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+      - id: deploy
+        uses: actions/deploy-pages@v4

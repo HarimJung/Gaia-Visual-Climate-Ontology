@@ -14,7 +14,8 @@
     "verify": "node engine/build/verify.mjs",
     "build:views": "node engine/views/generate.mjs",
     "build": "astro build --root app",
-    "test": "node --test"
+    "test": "node --test",
+    "build:pages": "npm run build && node scripts/base-prefix.mjs"
   },
   "devDependencies": {
     "@types/three": "0.180.0",

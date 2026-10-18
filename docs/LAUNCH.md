@@ -21,25 +21,32 @@ failure class of predecessor systems: the `www` host serves the site while the
 bare apex returns a 404, so every shared link that drops the `www` dies. The
 apex answering is the pass criterion, not an optional extra.
 
-## 2. Single CI deploy path — credentials as CI secrets only
+## 2. Single CI deploy path — no publish credential exists
 
-**What:** Publishing happens through exactly one path: the deploy job in
-`.github/workflows/ci.yml`. It ships commented out with a placeholder publish
-step. No publish command is ever run from a local machine, and no such command
-is written down anywhere in this repository (the r8 gate scans for one).
+**What:** Publishing happens through exactly one path: the `deploy` job in
+`.github/workflows/ci.yml`, which builds the site on GitHub Pages' own
+runner and publishes it through the workflow's identity. There is no deploy
+token, so there is nothing to leak and nothing to run by hand. No publish
+command is written down anywhere in this repository (the r8 gate scans for
+one), and no local path to publish exists.
 
-**How:** When the host is chosen: (1) in the repository settings, under
-Secrets and variables → Actions, add the host's publish token as the
-`DEPLOY_TOKEN` secret — that one addition is the enabling act; (2) uncomment
-the deploy job and fill in its placeholder publish step with the host's
-publish action or CLI invocation, reading the token only from that secret;
-(3) push, and let CI publish. The token must exist nowhere else — not in a
-local shell profile, not in a dotfile, not in a password manager entry marked
-"for local deploys".
+**How (the owner's enabling act, two settings, both in this repository):**
+(1) Settings → Pages → Source: GitHub Actions. (2) Settings → Secrets and
+variables → Actions → Variables: add `DEPLOY_PAGES` = `true`. Until that
+variable exists the deploy job is skipped, so CI stays green and nothing
+publishes by accident. The next push to `main` then publishes, but only if
+the checks job is green first: the deploy job rebuilds the whole pipeline,
+runs the tests and runs every gate against the artifact it is about to ship.
 
-**Pass:** The live site updates on a push to `main` with all gates green, and
-there is no credential on any machine that could publish outside CI. The job
-refuses to run when the secret is absent.
+**Address:** by default the project path,
+`https://<owner>.github.io/<repo>/`. The build is authored root-relative and
+`npm run build:pages` moves every URL under `SITE_BASE` after the build, so
+the base path lives in one step rather than in sixty links; R19 then checks
+that every internal link resolves under that base before anything ships. To
+move to a custom domain later, set the repository variables `SITE_ORIGIN`
+(e.g. `https://record.visualclimate.org`) and `SITE_BASE` (`/`), add the
+domain under Settings → Pages, and point the DNS record at Pages. §1 of this
+document is the check that both forms of the address answer.
 
 ## 3. Dead-man heartbeat on every scheduled job
 

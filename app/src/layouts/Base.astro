@@ -22,7 +22,8 @@ const { title, description } = Astro.props;
 const commit = (process.env.GITHUB_SHA || process.env.BUILD_COMMIT || '').slice(0, 7);
 const desc = description
   || 'A runtime that reads national climate records and refuses to say more than it can prove: every figure links to the receipt it rests on — document, verbatim quote, SHA-256.';
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const origin = Astro.site.href.endsWith('/') ? Astro.site.href : `${Astro.site.href}/`;
+const canonical = new URL(Astro.url.pathname.replace(/^\//, ''), origin);
 ---
 
 <!doctype html>
