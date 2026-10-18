@@ -11,20 +11,20 @@ export function getStaticPaths() {
     const iso3 = view.country.iso3.toLowerCase();
     return view.rows.map((row) => ({
       params: { iso3, id: row.doc_id },
-      props: { row, iso3 },
+      props: { row, iso3, country: view.country.name_en },
     }));
   });
 }
 
-const { row, iso3 } = Astro.props;
+const { row, iso3, country } = Astro.props;
 // Receipt-page figures point at the evidence they rest on: the hash when bytes
 // are held, otherwise the recorded state and its reason.
 const figHref = row.sha256 ? '#sha256' : '#state';
 ---
 
-<Base title={`Receipt — ${row.title}`}>
+<Base title={`${country} — ${row.title}`}>
   <article class="receipt">
-    <p class="crumb"><a href={`/country/${iso3}/#row-${row.doc_id}`}>← ledger row</a></p>
+    <p class="crumb"><a href={`/country/${iso3}/#row-${row.doc_id}`}>← {country}</a></p>
     {/* the document's own title carries over from whichever list named it.
         A doc_id repeats across countries — the depositary list is one document
         for all of them — so the name is namespaced by record, or the browser
@@ -72,7 +72,7 @@ const figHref = row.sha256 ? '#sha256' : '#state';
         Both faces are plain stacked blocks until the script marks the block
         ready, so JavaScript off loses no fact. */}
     <section class="rblock" id="sha256" aria-labelledby={`hash-h-${row.doc_id}`}>
-      <h2 id={`hash-h-${row.doc_id}`}>SHA-256 — the case-back</h2>
+      <h2 id={`hash-h-${row.doc_id}`}>SHA-256 of the file as fetched</h2>
       {
         row.sha256 ? (
           <div class="caseback" data-caseback>
@@ -88,7 +88,7 @@ const figHref = row.sha256 ? '#sha256' : '#state';
                 <dl>
                   <dt>source</dt>
                   <dd>
-                    {row.source_url ? <a href={row.source_url}>{row.source_url}</a> : <span class="chip chip-absent">none recorded</span>}
+                    {row.source_url ? <a href={row.source_url}>{row.source_url}</a> : <span class="chip chip-unknown">none recorded</span>}
                   </dd>
                   <dt>run time</dt>
                   <dd><span data-meta="as_of">{census.as_of}</span></dd>
@@ -100,7 +100,7 @@ const figHref = row.sha256 ? '#sha256' : '#state';
           </div>
         ) : (
           <div class="void">
-            <span class="chip chip-absent">no bytes held</span>
+            <span class="chip chip-unknown">no bytes held</span>
             <span class="reason"> {row.state_reason}</span>
           </div>
         )
@@ -119,7 +119,7 @@ const figHref = row.sha256 ? '#sha256' : '#state';
               two rows down already gets */}
           {row.date
             ? <a class="fig" data-receipt={row.doc_id} href={figHref}>{row.date}</a>
-            : <span class="chip chip-absent">no date on record</span>}
+            : <span class="chip chip-unknown">no date on record</span>}
         </dd>
         {
           row.size_bytes !== null && (
@@ -150,7 +150,7 @@ const figHref = row.sha256 ? '#sha256' : '#state';
         <dd>{row.official_english}</dd>
         <dt>source URL</dt>
         <dd>
-          {row.source_url ? <a href={row.source_url}>{row.source_url}</a> : <span class="chip chip-absent">none recorded</span>}
+          {row.source_url ? <a href={row.source_url}>{row.source_url}</a> : <span class="chip chip-unknown">none recorded</span>}
         </dd>
       </dl>
     </section>

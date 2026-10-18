@@ -143,7 +143,7 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
     {
       view.rows.length === 0 ? (
         <div class="void">
-          <span class="chip chip-absent">no documents held</span>
+          <span class="chip chip-unknown">no documents held</span>
           <span class="reason"> This runtime holds no document rows for this country; the void is stated, not hidden.</span>
         </div>
       ) : (
@@ -197,7 +197,7 @@ const scene = { ...sceneDataFor(view, entry), selectHref: '#ledger-h' };
                           {r.sha256.slice(0, 8)}…
                         </a>
                       ) : (
-                        <a class="chip chip-absent" data-receipt={r.doc_id} href={`/receipt/${iso3}/${r.doc_id}/#sha256`}>
+                        <a class="chip chip-unknown" data-receipt={r.doc_id} href={`/receipt/${iso3}/${r.doc_id}/#sha256`}>
                           no bytes held
                         </a>
                       )}

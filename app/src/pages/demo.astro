@@ -48,8 +48,8 @@ const ev = treaty.events[0];
     <li>
       <h2><a href={`/receipt/${iso3}/${doc.doc_id}/`}>Its receipt</a></h2>
       <p>
-        {doc.title} — source URL, the{' '}
-        <a href={`/receipt/${iso3}/${doc.doc_id}/#quote`}>page-one quote</a>, and the recorded state, at
+        {doc.title} — the recorded state, the{' '}
+        <a href={`/receipt/${iso3}/${doc.doc_id}/#quote`}>page-one quote</a>, and the SHA-256 of the file as fetched, at
         one URL of its own.
       </p>
     </li>
@@ -60,9 +60,9 @@ const ev = treaty.events[0];
     <li>
       <h2><a href="/author/">Your own sentence</a></h2>
       <p>
-        Authoring: cite a receipt token in a .docx draft and the checker returns it with a verdict
+        Authoring: cite a receipt token in a .docx draft and the checker returns it with a status
         comment — anchored, outdated, or unsupported — on each cited sentence. The grammar, the
-        verdict rules and the CLI are documented at <a href="/author/">/author/</a>; no upload UI is
+        status rules and the CLI are documented at <a href="/author/">/author/</a>; no upload UI is
         mocked, because this site is static.
       </p>
     </li>

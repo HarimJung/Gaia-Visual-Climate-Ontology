@@ -64,7 +64,7 @@ export const WORLD_STEPS = [
     step: 'parties',
     title: 'The parties take their places',
     body:
-      'Beads leave the map and form the roster of records that carry a treaty event — signature, ratification, accession — each date read from the depositary’s own status list. The few without one stand apart in the margin; they are not painted in.',
+      'Beads leave the map and form the roster of records that carry a treaty event (signature, ratification, accession), each date read from the depositary’s own status list. The few without one stand apart in the margin; they are not painted in.',
     figs: [
       { label: 'paris agreement parties counted', key: 'untc_paris_agreement_parties', scope: 'graph' },
       { label: 'framework convention parties counted', key: 'untc_unfccc_parties', scope: 'graph' },
@@ -84,7 +84,7 @@ export const WORLD_STEPS = [
     step: 'voids',
     title: 'Every blank, filed under its own reason',
     body:
-      'The marks re-sort into blocks — one block per reason this runtime recorded for an unknown, in the order the rows carry them, each reason kept verbatim and linked to the receipt it was read on. Unknown is not one shrug; it is a taxonomy you can audit.',
+      'The marks re-sort into blocks — one block per reason this runtime recorded for an unknown, in the order the rows carry them, each reason kept verbatim and linked to the receipt it was read on.',
     figs: [
       { label: 'documents without bytes', key: 'documents_without_bytes' },
       { label: 'states unknown', key: 'states_unknown' },
@@ -128,7 +128,7 @@ export const RECORD_STEPS = [
     eyebrow: 'bytes held',
     title: 'Hashed on the left, on record only on the right',
     body:
-      'The single hardest line in the product: documents whose bytes were fetched and hashed, against documents this runtime has only seen listed. The right-hand block is not a failure; it is the part of the record still unproven.',
+      'Documents whose bytes this runtime fetched and hashed, against documents it has only seen listed. The right-hand block is the part of the record still unproven.',
     figs: ['documents_with_bytes', 'documents_without_bytes'],
   },
   {
@@ -144,7 +144,7 @@ export const RECORD_STEPS = [
     eyebrow: 'the report',
     title: 'Eight components, eight empty bores',
     body:
-      'The transparency report has eight parts. This runtime has read none of them for any country, so every seat renders as a machined empty bore rather than a blank. The bore is the most precisely cut thing on the stage.',
+      'The transparency report has eight parts. This runtime has read none of them for any country, so every seat renders as a machined empty bore rather than a blank.',
     figs: ['states_unknown'],
   },
   {
@@ -158,7 +158,7 @@ export const RECORD_STEPS = [
   {
     step: 'dial',
     eyebrow: 'assembled',
-    title: 'The marks gather and the instrument is seated',
+    title: 'Every document takes its place on the ring',
     body:
       'Every document takes a place on the ring, and the dial seats in the middle: one barrel per document, the dial face carrying the treaty edge where the bytes are held and hashed, an empty well where they are not. No sweep, no gauge — barrels you can count, each one its own receipt.',
     figs: ['documents_with_bytes', 'documents_on_record'],
@@ -201,12 +201,12 @@ export const MACHINE_CARDS = [
     eyebrow: 'the report',
     title: 'Eight sockets, read one at a time',
     body:
-      'The reporting bridge rises with a seat for each component. A part that was read seats a jewel; a part never read stays an empty bore. Nothing is screwed in on faith.',
+      'The reporting bridge rises with a seat for each component. A part that was read seats a jewel; a part never read stays an empty bore.',
   },
   {
     phase: 5,
     eyebrow: 'support',
-    title: 'The cog that never meshes on its own',
+    title: 'Support needed, support received',
     body:
       'Support needed and support received are separate facts. With no figure read, the gold cog is ghosted — receiving finance is not fulfilling a condition.',
   },
@@ -222,7 +222,7 @@ export const MACHINE_CARDS = [
     eyebrow: 'reassembly',
     title: 'One by one, back into one machine',
     body:
-      'Ring, gears, bridge and cog return to the plate in dependency order. What was ghost goes home ghost; the machine closes honestly.',
+      'Ring, gears, bridge and cog return to the plate in dependency order. What went out ghosted comes back ghosted.',
   },
 ];
 
@@ -230,21 +230,21 @@ export const STORY = {
   eyebrow: 'national climate record',
   title: 'Every figure, on its receipt',
   lede:
-    'A runtime that reads national climate records and refuses to say more than it can prove. One action everywhere: click a figure, get the receipt it rests on — document, verbatim quote, SHA-256.',
+    'A runtime that reads national climate records and refuses to say more than it can prove. One action everywhere: click a figure, get the receipt it rests on: document, verbatim quote, SHA-256.',
   machineHeading: 'the instrument',
   docEyebrow: 'one document opens',
   docTitle: 'Down to the sentence, down to the byte',
   docBody:
-    'Behind each figure is a document; behind the document, a page-one quote; behind the quote, the hash of the fetched file. This is the case-back of every number on these screens.',
+    'Behind each figure is a document; behind the document, a page-one quote; behind the quote, the hash of the fetched file.',
   voidsEyebrow: 'what it will not say',
-  voidsTitle: 'The voids are the thesis',
+  voidsTitle: 'Where no figure was read, nothing fills in',
   voidsBody:
-    'Where this runtime could not read a figure, nothing spins and nothing fills. The pledge ring stays ghost, the sockets stay bores — and one refusal is kept verbatim on the record:',
+    'Where this runtime could not read a figure, nothing spins and nothing fills. The pledge ring stays ghost, the sockets stay bores, and one refusal is kept verbatim on the record:',
   voidsNote: 'Unknown and absent describe this runtime’s reading, not the country.',
   closeEyebrow: 'one action',
   closeTitle: 'Click a figure, get its receipt',
   closeBody:
-    'The whole product is that one move. Open the world ledger, follow any number to its country, its document, its quote, its hash.',
+    'Open the world ledger, follow any number to its country, its document, its quote, its hash. Want this reading on your own data? See it working before you sign: a ten-day prototype, built by Visual Climate.',
   ctaLedger: 'Open the world ledger',
   ctaCountry: 'Walk one record',
 };

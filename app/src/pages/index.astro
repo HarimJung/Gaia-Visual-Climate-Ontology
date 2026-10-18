@@ -559,7 +559,7 @@ for (const v of views) {
           on one plate (predecessor Motion.dc.html 05). Both faces are plain
           stacked blocks until the script marks the block ready. */}
       <div class="rblock" id="story-sha256">
-        <h3>SHA-256 — the case-back</h3>
+        <h3>SHA-256 of the file as fetched</h3>
         <div class="caseback" data-caseback>
           <div class="cb-plate">
             <div class="cb-face cb-front">
@@ -571,7 +571,7 @@ for (const v of views) {
                 <dd>
                   {doc.source_url
                     ? <a href={doc.source_url}>{doc.source_url}</a>
-                    : <span class="chip chip-absent">none recorded</span>}
+                    : <span class="chip chip-unknown">none recorded</span>}
                 </dd>
                 <dt>run time</dt>
                 <dd><span data-meta="as_of">{census.as_of}</span></dd>
