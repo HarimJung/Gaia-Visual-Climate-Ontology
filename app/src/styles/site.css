@@ -209,13 +209,13 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
    the treaty hue, a pledge is that hue at a quarter, unknown is the dashed
    socket, absent is the socket filled and sunk */
 .sw, .state-token i { display: inline-block; width: 10px; height: 10px; flex-shrink: 0; border: 1px solid var(--un); border-radius: 50%; background: var(--un); }
-.sw-pledged, .state-token.pledged i { border-color: var(--un); background: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); }
-.sw-unknown, .state-token.unknown i { border: 1px dashed var(--dial-socket); background: none; }
-.sw-absent, .state-token.absent i { border-color: var(--dial-absent); background: var(--dial-absent); box-shadow: var(--shadow-well); }
+.sw-pledged, .state-token.pledged i { border-color: var(--un-ink); background: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); }
+.sw-unknown, .state-token.unknown i { border: 1px solid var(--rule-strong); background: var(--paper-raised); background-image: var(--t-hatch-45); }
+.sw-absent, .state-token.absent i { border-color: var(--rule-strong); background: var(--paper-sunken); box-shadow: var(--shadow-well); }
 
 /* the chips our rows carry, in the same four materials */
 .chip { display: inline-flex; align-items: center; gap: var(--s2); padding: 4px 9px; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--paper-raised); font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); white-space: nowrap; }
-.chip-observed { border-color: var(--un); background: color-mix(in srgb, var(--un) 10%, var(--paper-raised)); color: var(--un-ink); }
+.chip-observed { border-color: var(--un-ink); background: color-mix(in srgb, var(--un) 10%, var(--paper-raised)); color: var(--un-ink); }
 .chip-pledged { border-color: var(--rule-strong); background: var(--paper-raised); color: var(--ink-3); }
 .chip-unknown { border-style: dashed; border-color: var(--dial-socket); background: none; color: var(--ink-3); }
 .chip-absent { border-color: var(--dial-absent); background: var(--dial-absent); color: var(--paper-raised); box-shadow: var(--shadow-well); }
@@ -228,17 +228,17 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
    that is the difference between established and not. */
 .worldband { display: flex; gap: 2px; height: clamp(54px, 7vw, 78px); margin: var(--s5) 0 0; }
 .worldband .seg { min-width: 0; }
-.worldband .seg-absent, .worldband .seg-pledged, .worldband .seg-zero { flex: 0 0 28px; }
+
 .strip { display: flex; gap: 2px; height: 26px; }
 .strip .seg { min-width: 0; }
 .seg-observed { background: var(--un); }
-.seg-pledged { background: var(--paper-raised); box-shadow: inset 0 0 0 1.5px var(--un); }
+.seg-pledged { background: var(--paper-raised); box-shadow: inset 0 0 0 1.5px var(--un-ink); }
 .seg-unknown { background: var(--paper-raised); box-shadow: inset 0 0 0 1px var(--rule-strong); background-image: var(--t-hatch-45); }
-.seg-absent { background: var(--paper-sunken); box-shadow: inset 0 0 0 1px var(--rule-strong), var(--shadow-well); flex: 0 0 26px; }
-.strip .seg-zero, .ministrip .seg-zero { flex: 0 0 14px; }
-.ministrip { display: flex; gap: 2px; height: 12px; max-width: 240px; margin: 0 0 6px; }
+.seg-absent { background: var(--paper-sunken); box-shadow: inset 0 0 0 1px var(--rule-strong), var(--shadow-well); }
+.worldband .seg-zero, .strip .seg-zero, .ministrip .seg-zero { flex: 0 0 2px; background: var(--rule-strong); background-image: none; box-shadow: none; }
+.ministrip { display: flex; gap: 2px; height: 12px; width: calc(var(--n, 14) * 17px); max-width: 240px; margin: 0 0 6px; }
 .ministrip .seg { min-width: 0; }
-.ministrip .seg-absent { flex: 0 0 12px; }
+
 .ministrip-key, .strip-key { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); list-style: none; margin: var(--s3) 0 0; padding: 0; font: var(--t0) var(--font-mono); letter-spacing: 0; color: var(--ink-3); }
 .strip-key li, .ministrip-key li { display: inline-flex; align-items: center; gap: 7px; }
 .strip-key .sw, .ministrip-key .sw { margin-right: 0; }
@@ -295,7 +295,7 @@ a.fig:focus-visible { outline: 2px solid var(--un-ink); outline-offset: 2px; }
 .traykey li { display: inline-flex; align-items: center; gap: 7px; }
 .traykey .tsw { width: 12px; height: 12px; border-radius: 2px; flex: none; }
 .traykey .t-held { background: var(--src-a); }
-.traykey .t-listed { background: var(--src-d), var(--paper-raised); border: 1px solid var(--rule-strong); }
+.traykey .t-listed { background: var(--paper); border: 1px solid var(--rule-strong); }
 .traykey .t-case { background: var(--paper); border: 1px solid var(--rule-strong); }
 
 /* ── the receipt: a document, ruled in hairlines ─────────────────────────── */

@@ -228,7 +228,7 @@ const trayUnits = entries.map(({ v, e }, i) => {
                   </td>
                   <td class="statecell" data-l="what's been read">
                     {e.counts.documents_on_record > 0 && (
-                      <div class="ministrip" aria-hidden="true">
+                      <div class="ministrip" aria-hidden="true" style={`--n:${e.counts.documents_on_record}`}>
                         {held.map((s) => (
                           <div class={`seg seg-${s.state}`} style={`flex-grow:${e.counts[s.census_key]}`} />
                         ))}

@@ -54,11 +54,11 @@
 .d-bold line { stroke-width: 3; }
 .d-bold line.metal { stroke: var(--un); }
 .d-bold line.hair { stroke: var(--dial-absent); }
-.d-bold line.unv { stroke: var(--rule-strong); }
+.d-bold line.unv { stroke: var(--ink-4); }
 /* the pledge path: no figure was read, so the ring is a dashed ghost with
    its reason etched under the bezel — never a guessed arc */
 .d-ghost { fill: none; stroke: var(--rule-strong); stroke-width: 6; stroke-dasharray: 5 13; }
-.d-etch { fill: var(--ink-4); font-size: 19px; letter-spacing: 1px; }
+.d-etch { fill: var(--ink-4); font-size: 24px; letter-spacing: 1px; }
 .d-plate { fill: var(--dial-face); filter: drop-shadow(0 10px 22px color-mix(in srgb, var(--ink) 14%, transparent)); }
 .d-plate-edge { fill: none; stroke: var(--dial-edge); stroke-width: 3; }
 .d-bevel { fill: none; stroke: var(--sheen); stroke-width: 2; }
@@ -69,12 +69,12 @@
 .d-bore { stroke: var(--rule-strong); }
 .d-bore.bore { fill: var(--paper-raised); stroke-dasharray: 5 4; }
 .d-bore.jewel { fill: var(--btr); stroke: none; }
-.d-bore.glass { fill: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); stroke: var(--un); }
+.d-bore.glass { fill: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); stroke: var(--un-ink); }
 .d-bore.plug { fill: var(--dial-absent); stroke: none; }
 /* the dial is drawn in a 1000-unit frame and shown between 520 and 900 CSS
    pixels wide, so a unit is roughly half a pixel: these are the comps' own
    sizes multiplied back up. */
-.d-cap { fill: var(--ink-4); font-size: 18px; letter-spacing: .5px; }
+.d-cap { fill: var(--ink-4); font-size: 24px; letter-spacing: .5px; }
 .d-read { fill: var(--ink); font-size: 96px; font-weight: 800; font-family: var(--font-display); letter-spacing: -3px; }
 .d-of { fill: var(--ink-3); font-size: 24px; }
 .d-of-n { fill: var(--ink); font-weight: 600; }
@@ -106,7 +106,7 @@
 
 /* the satellite: a part that exists but is NOT engaged, on a dashed tether */
 .d-tether { fill: none; stroke: var(--rule-strong); stroke-width: 1.8; stroke-dasharray: 6 8; }
-.d-sat-lbl { fill: var(--ink-4); font-size: 19px; letter-spacing: .5px; font-weight: 600; }
+.d-sat-lbl { fill: var(--ink-4); font-size: 24px; letter-spacing: .5px; font-weight: 600; }
 
 /* ── Labels projected onto the canvas: hairline tags, never floating cards */
 .projected-labels { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 1; }
@@ -164,8 +164,8 @@
    scaled by the frame it lands in: on a phone the same 18-unit cap that
    reads at 900px wide is 6 CSS pixels. */
 @media (max-width: 860px) {
-  .d-cap { font-size: 24px; }
-  .d-etch, .d-sat-lbl { font-size: 28px; }
+  .d-cap { font-size: 48px; }
+  .d-etch, .d-sat-lbl { font-size: 52px; }
   .d-read { font-size: 120px; }
   .d-of { font-size: 32px; }
 }

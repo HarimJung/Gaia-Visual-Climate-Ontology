@@ -78,7 +78,7 @@ const RING = 357;
 const barrels = docs.map((d, i) => {
   const a = (i / docs.length) * 360;
   const [x, y] = pol(RING, a);
-  return { ...d, a, x, y, r: d.live ? 17 : 14 };
+  return { ...d, a, x, y, r: 16 };
 });
 // PULSE: one flow path per live barrel, curving into the escapement rim the
 // way the comp's gear-train energy paths curve into the balance.
@@ -98,7 +98,7 @@ const flows = barrels
 // the bezel: a fine engraved ring, and one bold tick per document on record
 const fine = Array.from({ length: 90 }, (_, i) => i * 4);
 const boldTick = barrels.map((b) => ({
-  cls: b.live ? 'metal' : b.state === 'unknown' ? 'unv' : 'hair',
+  cls: b.live ? 'metal' : 'unv',
   a: b.a,
 }));
 
@@ -132,7 +132,6 @@ const teeth = Array.from({ length: 72 }, (_, i) => i * 5);
 // A real row or nothing at all; never an illustration of a case we do not
 // have. It sits outside the bezel on a dashed tether, unengaged.
 const orphan = docs.find((d) => !d.live && d.id);
-const satTitle = orphan ? (orphan.title.length > 30 ? orphan.title.slice(0, 29) + '…' : orphan.title) : '';
 const [satX, satY] = pol(478, 35);
 const [tethX, tethY] = pol(PLATE + 6, 35);
 ---
@@ -252,8 +251,7 @@ const [tethX, tethY] = pol(PLATE + 6, 35);
             exactly one barrel per document, and this is that document shown
             again, off the plate, because nothing engages it */}
         <circle cx={f1(satX)} cy={f1(satY)} r="18" class="d-sat-barrel"></circle>
-        <text x={f1(satX)} y={f1(satY - 34)} text-anchor="middle" class="d-sat-lbl">BYTES NOT HELD</text>
-        <text x={f1(satX)} y={f1(satY - 56)} text-anchor="middle" class="d-cap">{satTitle}</text>
+        <text x={f1(satX)} y={f1(satY - 40)} text-anchor="middle" class="d-sat-lbl">BYTES NOT HELD</text>
       </a>
     </g>
   )}

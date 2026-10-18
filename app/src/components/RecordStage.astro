@@ -239,7 +239,7 @@ const wrap = (s, n, lines = 3) => {
         </g>
         <g class="r-ann g-sizes">
           <line x1="40" y1={H - 182} x2={W - 40} y2={H - 182}></line>
-          <text x="40" y={H - 156} class="r-lbl">area to scale · recorded size in bytes</text>
+          <text x="40" y={H - 156} class="r-lbl">{docs.every((d) => d.b == null) ? 'no size on record for any document here' : 'area to scale · recorded size in bytes'}</text>
           <text x={W - 40} y={H - 156} text-anchor="end" class="r-lbl">hairline square · no size on record</text>
         </g>
       </svg>

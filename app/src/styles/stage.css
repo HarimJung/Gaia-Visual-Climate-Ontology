@@ -29,6 +29,8 @@
 /* the marks the copy points at are never the faintest marks on the page */
 .stage-bead.ctx { fill: var(--ink-3); fill-opacity: .9; }
 .stage-bead.ghost { fill: none; stroke: var(--rule-strong); stroke-width: 1.25; vector-effect: non-scaling-stroke; fill-opacity: 0; }
+/* the no-bytes lane is its own labelled place, not a third reading of ghost */
+.stage-bead.lane { fill: var(--ink-3); fill-opacity: .9; }
 .stage-bead.off { opacity: 0; }
 
 /* ── Cells: one keyed unit-rect per country, placed and sized by transform */
@@ -106,8 +108,8 @@
 .r-stamp.off { opacity: 0; pointer-events: none; }
 .r-card { fill: var(--paper-raised); stroke: var(--rule-strong); stroke-dasharray: 5 4; }
 .r-card.observed { fill: var(--un); stroke: none; stroke-dasharray: none; }
-.r-card.pledged { fill: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); stroke: var(--un); stroke-dasharray: none; }
-.r-card.unknown { fill: var(--paper-raised); stroke: var(--un); }
+.r-card.pledged { fill: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); stroke: var(--un-ink); stroke-dasharray: none; }
+.r-card.unknown { fill: var(--paper-raised); stroke: var(--un-ink); }
 .r-card.absent { fill: var(--paper-sunken); stroke: var(--rule-strong); stroke-dasharray: none; }
 .r-kind { font: 600 14px/1 var(--font-sans); letter-spacing: .08em; fill: var(--ink-3); text-transform: uppercase; }
 .r-title { font: 700 21px/1 var(--font-display); fill: var(--ink); letter-spacing: -.02em; }
@@ -122,7 +124,7 @@
 .r-cell { transition: transform var(--dur-slow) var(--out), fill var(--dur) var(--ease), opacity var(--dur) var(--ease); transition-delay: var(--d, 0ms); will-change: transform; }
 .r-cell.off { opacity: 0; }
 .r-cell.observed, .r-cell.metal { fill: var(--un); }
-.r-cell.pledged { fill: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); stroke: var(--un); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.r-cell.pledged { fill: color-mix(in srgb, var(--un) 22%, var(--paper-raised)); stroke: var(--un-ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 .r-cell.hair { fill: var(--paper-raised); stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
 .r-cell.absent { fill: var(--dial-absent); }
 .r-cell.bore { fill: var(--paper-raised); stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }

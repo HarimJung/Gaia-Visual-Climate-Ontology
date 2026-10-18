@@ -222,7 +222,9 @@ export function recordLayout(step, data) {
     // ── Area to scale, from the size recorded in bytes ───────────────────
     case 'sizes': {
       const max = Math.max(0, ...docs.map((d) => d.b || 0));
-      const MAXS = 250, BLANK = 52, GAP = 9;
+      // BLANK stays under the 30 floor every known size clears, so a size
+      // that is not on record can never outsize one that is.
+      const MAXS = 250, BLANK = 24, GAP = 9;
       const side = (d) => (d.b == null || !max ? BLANK : Math.max(30, Math.sqrt(d.b / max) * MAXS));
       const order = [...docs].sort((a, b) => (b.b || -1) - (a.b || -1) || a.i - b.i);
       const total = order.reduce((s, d) => s + side(d), 0) + GAP * (order.length - 1);

@@ -106,14 +106,19 @@ const famLines = (s) => {
   const per = Math.max(5, Math.floor((BLK.colW - 18) / FAM_CH));
   const out = [];
   let line = '';
+  let cut = false;
   for (const word of String(s).split(/\s+/)) {
     if (!line) line = word;
     else if ((line + ' ' + word).length <= per) line += ' ' + word;
+    else if (out.length === 2) { cut = true; break; }
     else { out.push(line); line = word; }
-    if (out.length === 3) break;
   }
-  if (out.length < 3 && line) out.push(line);
-  return out.map((l) => (l.length > per ? l.slice(0, Math.max(1, per - 1)) + '…' : l));
+  if (line) out.push(line);
+  const clip = (l) => l.slice(0, Math.max(1, per - 1)) + '…';
+  return out.map((l, i) => {
+    if (l.length > per) return clip(l);
+    return cut && i === out.length - 1 ? clip(l) : l;
+  });
 };
 const binStack = new Map();
 const binAt = (c) => {
@@ -395,7 +400,8 @@ for (const v of views) {
                 <text x={BG.x0 + b * BG.pitch} y={BG.base + BG.step + 34} text-anchor="middle">{b}</text>
               </a>
             ))}
-            <text x={BG.x0 - BG.pitch / 2} y={BG.top - 26} class="w-blk">documents hashed, per record →</text>
+            <text x={BG.x0 - BG.pitch / 2} y={BG.top - 26} class="w-blk">↑ records in this bin</text>
+            <text x={BG.x0 + (BG.bins - 0.5) * BG.pitch} y={BG.base + BG.step + 34} text-anchor="end" class="w-blk">documents hashed, per record →</text>
           </g>
           <g class="stage-ann g-voids">
             {/* one block label per family, on its own tick line: the label is
@@ -420,6 +426,16 @@ for (const v of views) {
           <g class="stage-ann g-scatter">
             <line class="w-axis" x1={PLT.l - 16} y1={PLT.b + 18} x2={PLT.r} y2={PLT.b + 18} />
             <line class="w-axis" x1={PLT.l - 16} y1={PLT.t - 14} x2={PLT.l - 16} y2={PLT.b + 18} />
+            {Array.from({ length: Math.floor(PLT.maxX / Math.max(1, Math.ceil(PLT.maxX / 8))) + 1 }, (_, i) => i * Math.max(1, Math.ceil(PLT.maxX / 8))).map((v) => (
+              <a href="/ledger/#census-documents_on_record">
+                <text x={PLT.sx(v)} y={PLT.b + 44} text-anchor="middle">{v}</text>
+              </a>
+            ))}
+            {Array.from({ length: Math.floor(PLT.maxY / Math.max(1, Math.ceil(PLT.maxY / 6))) + 1 }, (_, i) => i * Math.max(1, Math.ceil(PLT.maxY / 6))).map((v) => (
+              <a href="/ledger/#census-documents_with_bytes">
+                <text x={PLT.l - 30} y={PLT.sy(v) + 8} text-anchor="end">{v}</text>
+              </a>
+            ))}
             <text x={PLT.l - 16} y={PLT.t - 40} class="w-blk">↑ documents hashed</text>
             <text x={PLT.r} y={PLT.b + 48} text-anchor="end" class="w-blk">documents on record →</text>
             {/* the break rule and the lane: a record with no bytes held at all

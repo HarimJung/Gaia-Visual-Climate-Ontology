@@ -64,7 +64,7 @@ export const WORLD_STEPS = [
     step: 'parties',
     title: 'The parties take their places',
     body:
-      'Beads leave the map and form the roster of records that carry a treaty event (signature, ratification, accession), each date read from the depositary’s own status list. The few without one stand apart in the margin; they are not painted in.',
+      'Beads leave the map and form the roster of records that carry a treaty event (signature, ratification, accession), each date read from the depositary’s own status list. The marks count records on file here; the figures beside them are the depositary’s own counted lists. The few without one stand apart in the margin; they are not painted in.',
     figs: [
       { label: 'paris agreement parties counted', key: 'untc_paris_agreement_parties', scope: 'graph' },
       { label: 'framework convention parties counted', key: 'untc_unfccc_parties', scope: 'graph' },
@@ -74,7 +74,7 @@ export const WORLD_STEPS = [
     step: 'bytes',
     title: 'What the runtime actually holds',
     body:
-      'Each record’s column rises to the number of documents whose bytes are held and hashed — files this runtime fetched and can prove, not titles it has merely seen. The bead sits exactly as high as the evidence under it.',
+      'One mark per record, stacked in the bin for how many of its documents this runtime fetched and hashed. Along the bottom: documents hashed. Up each column: how many records sit at that number. An empty bin stays empty.',
     figs: [
       { label: 'documents with bytes', key: 'documents_with_bytes' },
       { label: 'of documents on record', key: 'documents_on_record' },

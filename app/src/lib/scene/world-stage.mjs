@@ -149,12 +149,16 @@ export function layoutOf(step, data) {
       const total = new Map();
       for (const c of countries) if (c.b > 0) total.set(at(c), (total.get(at(c)) ?? 0) + 1);
       const seen = new Map();
-      let m = 0;
+      const laneAt = new Map();
       return {
         bead: (c) => {
           if (c.b === 0) {
-            const k = m++;
-            return { x: g.l + (k % 8) * 19, y: g.lane + Math.floor(k / 8) * 19, s: 1.45, cls: 'ghost', d: 300 + k * 24 };
+            // In the lane, but at its true place on the x axis: a record with
+            // one document on record and no bytes held is not a zero.
+            const x = c.b + c.o;
+            const k = laneAt.get(x) ?? 0;
+            laneAt.set(x, k + 1);
+            return { x: g.sx(x), y: g.lane + k * 15, s: 1.45, cls: 'lane', d: 300 + k * 24 };
           }
           const key = at(c);
           const k = seen.get(key) ?? 0;
@@ -166,7 +170,7 @@ export function layoutOf(step, data) {
           return {
             x: g.sx(c.b + c.o) + ((k % cols) - (cols - 1) / 2) * step,
             y: g.sy(c.b) + (Math.floor(k / cols) - (rows - 1) / 2) * step,
-            s: 1.4, cls: c.u > 0 ? 'ctx' : 'on', d: Math.min(500, (c.b + c.o) * 22 + k * 2),
+            s: 1.4, cls: c.u > 0 ? 'ghost' : 'on', d: Math.min(500, (c.b + c.o) * 22 + k * 2),
           };
         },
         cell: () => null,
